@@ -1,0 +1,50 @@
+# https://github.com/dandavison/delta
+
+[user]
+	name = newkub
+	email = newkubise@gmail.com
+[core]
+	editor = \"C:\\Users\\Veerapong\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
+	pager = git-split-diffs --color | less -+LFX
+	autocrlf = false
+[delta]
+ 	side-by-side = true
+[diff]
+	colorMoved = default
+[init]
+	defaultBranch = main
+[gitbutler]
+	aiOpenAIKeyOption = butlerAPI
+	aiModelProvider = openai
+	gitbutlerCommitter = 0
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[push]
+	autoSetupRemote = true
+	default = current
+[merge]
+	conflictstyle = diff3
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+	trustExitCode = true
+[alias]
+	undo = "reset --soft HEAD^"
+	aic = "!f() { git add . && aicommits; }; f"
+	opencommit = "!f() { git add . && opencommit; }; f"
+	czgai = "!f() { git add . && czg ai; }; f"
+    up = "!f() { git add . && git commit -m \"$1\"; }; f"
+	upp = "!f() { ni && git add . && git commit -m \"$1\" && git push -u origin main; }; f"
+[safe]
+	directory = C:/Users/Veerapong/scoop/apps/scoop/current
+	directory = D:/wrikka/learn-wrikka-com
+[credential]
+	helper = manager
+[credential "helperselector"]
+	selected = manager
+[split-diffs]
+	theme-name = dark
