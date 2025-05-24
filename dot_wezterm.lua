@@ -7,14 +7,15 @@ wezterm.on("gui-startup", function(cmd)
 end)
 return {
     
-    default_cwd = 'D:\\learn-wrikka-com',
+    default_cwd = 'D:\\wrikka\\learn-wrikka-com',
     default_prog = {"pwsh"},
     font = wezterm.font("MesloLGL Nerd Font Mono"),
-    font_size = 12.0,
+    font_size = 13.0,
     -- color_scheme = "Gruvbox Dark",
     hide_tab_bar_if_only_one_tab = true,
     default_cursor_style = "SteadyBar",
     enable_scroll_bar = true,
+    window_close_confirmation = "NeverPrompt",
     keys = {
         {key = "t",mods = "CTRL",action = wezterm.action { SpawnTab = "CurrentPaneDomain" }},
         {key = "n",mods = "CTRL",action = wezterm.action { SplitHorizontal = { domain = "CurrentPaneDomain" } }},
