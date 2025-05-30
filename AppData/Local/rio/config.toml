@@ -1,0 +1,108 @@
+
+working-dir = 'D:\\wrikka\\learn-wrikka-com' 
+
+env-vars = []
+
+confirm-before-quit = false
+
+
+
+[keyboard]
+use-kitty-keyboard-protocol = false
+disable-ctlseqs-alt = false
+
+placeholder = "▲"
+
+
+
+theme = "lucario"
+
+
+[cursor]
+shape = 'beam'
+blinking = false
+blinking-interval = 800
+hide-if-single = true
+
+
+[renderer]
+performance = "High"
+backend = "Automatic"
+disable-unfocused-render = false
+level = 1
+
+
+
+[fonts]
+family = "MesloLGL Nerd Font Mono"
+size = 16
+features = ["ss01", "ss02", "ss03", "ss04", "calt", "liga"]
+hinting = true
+
+
+[fonts.regular]
+family = "MesloLGL Nerd Font Mono"
+style = "Normal"
+weight = 400
+
+[fonts.bold]
+family = "MesloLGL Nerd Font Mono"
+style = "Normal"
+weight = 800
+
+[fonts.italic]
+family = "MesloLGL Nerd Font Mono"
+style = "Italic"
+weight = 400
+
+[fonts.bold-italic]
+family = "MesloLGL Nerd Font Mono"
+style = "Italic"
+weight = 800
+
+
+[scroll]
+multiplier = 3.0
+divider = 1.0
+
+
+
+[window]
+mode = "Maximized"
+blur = true
+opacity = 0.5
+decorations = "enabled"
+width = 600
+height = 400
+
+
+
+
+
+[navigation]
+mode = "bookmark"
+clickable = true
+hide-if-single = true
+use-split = true
+use-current-path = false
+color-automation = []
+
+
+[shell]
+program = "pwsh"
+
+[platform]
+windows.shell.program = "pwsh"
+windows.shell.args = ["-l"]
+#
+# # Linux overwrite
+linux.shell.program = "tmux"
+linux.shell.args = ["new-session", "-c", "/var/www"]
+
+
+[developer]
+log-level = "OFF"
+enable-log-file = false
+
+
+
