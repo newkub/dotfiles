@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 f705ae9a787f31a093814e41b39a9f646a103f4a Newkub <vpnise@gmail.com> 1735845828 +0700	commit (initial): feat: add initial configuration for NvChad setup
+f705ae9a787f31a093814e41b39a9f646a103f4a fdda8dbadd9f9a580d4871d47cb6c2741abae09d Newkub <vpnise@gmail.com> 1735846143 +0700	commit: feat(init.lua): auto open Nvdash on startup when no file is specified
+fdda8dbadd9f9a580d4871d47cb6c2741abae09d 9cb9c5ff39b4821938fa2da136bfc8ff08ab52b5 Newkub <vpnise@gmail.com> 1735846896 +0700	commit: feat(plugins): enable nvim-treesitter with additional configurations
+9cb9c5ff39b4821938fa2da136bfc8ff08ab52b5 21b7632d08938788ee089ddc9ee29143dabee3d0 Newkub <vpnise@gmail.com> 1735847053 +0700	commit: feat(plugins): add keybindings for exiting specific file types
+21b7632d08938788ee089ddc9ee29143dabee3d0 7c93da21e4d94610f6ce757fb3381f8207879f09 Newkub <vpnise@gmail.com> 1735848429 +0700	commit: feat(configs): modularize plugin configurations for better maintainability
+7c93da21e4d94610f6ce757fb3381f8207879f09 daca00778effbe9c6ecb7c23f898c69fe9e0095f Newkub <vpnise@gmail.com> 1735848668 +0700	commit: docs(README.md): expand documentation with detailed setup and usage instructions

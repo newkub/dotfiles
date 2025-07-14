@@ -1,0 +1,33 @@
+type=conventional
+includeBody=true
+locale=en
+systemPrompt="
+Generate a {type} commit message in {locale}.=true
+The message should not exceed {maxLength} characters.=true
+Please provide {generate} messages.=true
+Remember to follow these guidelines:=true
+1. Use the imperative mood=true
+2. Be concise and clear=true
+3. Explain the 'why' behind the change=true
+"=true
+
+[OPENAI]
+key=""
+generate=1
+model=gpt-4o
+disabled=true
+
+[ANTHROPIC]
+key=sk-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
+generate=1
+disabled=true
+model=claude-3-5-sonnet-20241022
+
+[DEEPSEEK]
+key=sk-270ab4fcbf014f07b031aa32272ccda6
+generate=1
+model=deepseek-chat
+disabled=false
+
+[GEMINI]
+key=AIzaSyA5nlQmedO6Cb-i7vGtt0SslPn7vUX7uJ8

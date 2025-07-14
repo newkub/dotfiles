@@ -1,0 +1,3 @@
+docs(README.md): expand documentation with detailed setup and usage instructions
+
+Enhance the README with comprehensive instructions for setting up and customizing the NvChad-based Neovim configuration. This includes installation steps, configuration structure, plugin details, keyboard shortcuts, and credits. The expanded documentation aims to provide users with a clear understanding of how to install, use, and modify the configuration, making it more accessible and user-friendly.
