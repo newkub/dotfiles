@@ -1,49 +1,63 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
+-- Define the leader key BEFORE loading lazy
 vim.g.mapleader = " "
 
--- bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-
-if not vim.uv.fs_stat(lazypath) then
-  local repo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
+-- Set up lazy.nvim plugin manager
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
-
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require "configs.lazy"
+-- Basic settings
+vim.opt.termguicolors = true
+vim.opt.background = "dark"
 
--- Auto Insert Mode โดยอัตโนมัติเมื่อเปิด Neovim
+-- Enhanced swap file settings to prevent E325 errors
+vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
+vim.opt.swapfile = true
 
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
-  },
+-- Create swap directory if it doesn't exist
+local swap_dir = vim.fn.stdpath("data") .. "/swap/"
+if vim.fn.isdirectory(swap_dir) == 0 then
+  vim.fn.mkdir(swap_dir, "p")
+end
 
-  { import = "plugins" },
-}, lazy_config)
+-- Additional swap file management settings to reduce conflicts
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.updatetime = 8000  -- Increase update time to reduce swap file writes
+vim.opt.swapfile = true  -- Explicitly enable swap files
+vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"  -- Ensure proper swap directory
 
--- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+-- Git integration settings
+vim.opt.signcolumn = "yes"  -- Always show sign column for Git signs
 
-require "options"
-require "nvchad.autocmds"
-
-vim.schedule(function()
-  require "mappings"
-end)
-
--- Auto open Nvdash on startup
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    -- Only run if no file arguments were passed
-    if vim.fn.argc() == 0 then
-      vim.cmd("Nvdash")
+-- Add error handling for vim.schedule callbacks
+local original_schedule = vim.schedule
+vim.schedule = function(fn)
+  return original_schedule(function()
+    local status, result = pcall(fn)
+    if not status then
+      vim.notify("Error in scheduled callback: " .. tostring(result), vim.log.levels.ERROR)
     end
-  end,
-})
+  end)
+end
+
+-- Load plugins
+require("lazy").setup("plugins")
+
+-- Load theme settings
+require("theme")
+
+-- Load autocmds
+require("autocmds")
+
+-- Load key mappings
+require("mappings")
