@@ -1,0 +1,42 @@
+[tasks.update]
+description = "update scoop, winget, bun, mise"
+run = "mise cleanup && mise chezmoi-update-and-push && scoop update * && winget upgrade --all && bun update -g && mise upgrade && mise self-update -y && rustup update stable"
+
+
+# chezmoi tasks
+[tasks.chezmoi-update-and-push]
+description = "chezmoi update and push"
+run = "cd C:/Users/Veerapong/.local/share/chezmoi && git commit -m update && git push -u origin main"
+
+
+
+[tasks.cleanup]
+description = "cleanup"
+run = "scoop cleanup * && mise prune"
+
+
+[tasks.commit]
+description = "commit"
+run = "git add . && czg ai" 
+
+
+[tasks.start-podman]
+description = "start podman"
+run = "podman machine start" 
+
+
+
+
+
+
+#[tasks.commitfile]
+#description = "commit file"
+#run = "!f() { git add \"$1\" and czg ai }; f"  
+
+[tasks.copy-path]
+description = "copy current path"
+run = "(Get-Location).Path | Set-Clipboard"
+
+
+[env]
+OPENAI_API_KEY = "${env:OPENAI_API_KEY}"
