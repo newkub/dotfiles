@@ -20,7 +20,7 @@ end)
 
 return {
     default_cwd = 'D:',
-    default_prog = {"pwsh"},
+    default_prog = {"nu"},
     font = wezterm.font("MesloLGL Nerd Font"),
     font_size = 14.0,
 

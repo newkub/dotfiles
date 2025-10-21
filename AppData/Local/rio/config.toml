@@ -1,5 +1,4 @@
-
-working-dir = 'D:\\wrikka\\learn-wrikka-com' 
+working-dir = 'D:\\learn-wrikka-com' 
 
 env-vars = []
 
@@ -11,11 +10,11 @@ confirm-before-quit = false
 use-kitty-keyboard-protocol = false
 disable-ctlseqs-alt = false
 
-placeholder = "▲"
 
 
+placeholder = "❯"
 
-theme = "lucario"
+
 
 
 [cursor]
@@ -33,37 +32,16 @@ level = 1
 
 
 
+
 [fonts]
-family = "MesloLGL Nerd Font Mono"
-size = 16
+family = "MesloLGL Nerd Font"
+size = 20
 features = ["ss01", "ss02", "ss03", "ss04", "calt", "liga"]
+use-drawable-chars = true
+symbol-map = []
+disable-warnings-not-found = false
+additional-dirs = []
 hinting = true
-
-
-[fonts.regular]
-family = "MesloLGL Nerd Font Mono"
-style = "Normal"
-weight = 400
-
-[fonts.bold]
-family = "MesloLGL Nerd Font Mono"
-style = "Normal"
-weight = 800
-
-[fonts.italic]
-family = "MesloLGL Nerd Font Mono"
-style = "Italic"
-weight = 400
-
-[fonts.bold-italic]
-family = "MesloLGL Nerd Font Mono"
-style = "Italic"
-weight = 800
-
-
-[scroll]
-multiplier = 3.0
-divider = 1.0
 
 
 
@@ -92,17 +70,13 @@ color-automation = []
 program = "pwsh"
 
 [platform]
-windows.shell.program = "pwsh"
-windows.shell.args = ["-l"]
-#
-# # Linux overwrite
-linux.shell.program = "tmux"
-linux.shell.args = ["new-session", "-c", "/var/www"]
+windows.shell.program = "nu"
+windows.shell.args = []
+
+linux.shell.program = "nu"
+linux.shell.args = []
 
 
 [developer]
 log-level = "OFF"
 enable-log-file = false
-
-
-

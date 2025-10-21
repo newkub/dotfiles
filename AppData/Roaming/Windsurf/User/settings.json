@@ -1,247 +1,273 @@
 {
-    "[css]": {
-      "editor.defaultFormatter": "biomejs.biome"
-    },
-    "[html]": {
-      "editor.defaultFormatter": "biomejs.biome"
-    },
-    "[javascript]": {
-      "editor.defaultFormatter": "biomejs.biome"
-    },
-    "[json,jsonc]": {
-      "editor.defaultFormatter": "biomejs.biome"
-    },
-    "[jsx, tsx]": {
-      "editor.defaultFormatter": "biomejs.biome"
-    },
-    "[markdown]": {
-      "editor.defaultFormatter": "vscode.markdown-language-features"
-    },
-    "[mdx]": {
-      "editor.defaultFormatter": "vscode.markdown-language-features"
-    },
-    "[scss]": {
-      "editor.defaultFormatter": "biomejs.biome"
-    },
-   // "terminal.integrated.suggest.enabled": true,
-    //"terminal.integrated.suggest.quickSuggestions": true,
-    "[tailwindcss]": {
-      "editor.defaultFormatter": "bradlc.vscode-tailwindcss"
-    },
-    "[typescript]": {
-      "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
-    "aicommit.endpoint": "https://api.deepseek.com",
-    "aicommit.model": "deepseek-coder",
-    "aicommit.provider": "openai-compatible",
-    "aide.aiCommand": "aider #{filesRelativePath}",
-    "aide.openaiKey": "",
-    "aide.openaiModel": "gpt-4o",
-    "alva.model": "ChatGPT",
-    "askcodi.apiKey": "euoXW8U5idJYUgJlus1O",
-    "biome.rename": true,
-    "breadcrumbs.enabled": false,
-    "chat.detectParticipant.enabled": true,
-    "cloudcode.duetAI.project": "",
-    "code-runner.executorMap": {
-      "javascript": "node",
-      "typescript": "node"
-    },
-    "vue.codeActions.askNewComponentName": true,
-    "vue.format.script.initialIndent": true,
-    "vue.format.style.initialIndent": true,
-    "vue.format.template.initialIndent": true,
-    "vue.format.template": true,
-    "vue.codeActions.enabled": true,
-    "vue.autoInsert.bracketSpacing": true,
-    "vue.autoInsert.dotValue": true,
-    "vue.doctor.status": true,
-    "vue.format.wrapAttributes": "auto",
-    "vue.complete.defineAssignment": true,
-    "vue.complete.casing.props": "autoKebab",
-    "vue.codeLens.enabled": true,
-    "vue.complete.casing.tags": "autoPascal",
-    "vue.splitEditors.icon": false,
-    "vue.inlayHints.destructuredProps": true,
-    "vue.inlayHints.optionsWrapper": true,
-    //"vue.inlayHints.inlineHandlerLeading": true,
-    "vue.trace.server": "off",
-    "vue.server.includeLanguages": [
-      "vue"
-    ],
-    "vue.splitEditors.layout.left": [
-      "script",
-      "scriptSetup",
-      "styles"
-    ],
-    "vue.splitEditors.layout.right": [
-      "template"
-    ],
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json,jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsx, tsx]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[markdown]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[mdx]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	// "terminal.integrated.suggest.enabled": true,
+	//"terminal.integrated.suggest.quickSuggestions": true,
+	"[tailwindcss]": {
+		"editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"aicommit.endpoint": "https://api.deepseek.com",
+	"aicommit.model": "deepseek-coder",
+	"aicommit.provider": "openai-compatible",
+	"aide.aiCommand": "aider #{filesRelativePath}",
+	"aide.openaiKey": "",
+	"aide.openaiModel": "gpt-4o",
+	"alva.model": "ChatGPT",
+	"biome.rename": true,
+	"breadcrumbs.enabled": false,
+	"chat.detectParticipant.enabled": true,
+	"cloudcode.duetAI.project": "",
+	"code-runner.executorMap": {
+		"javascript": "node",
+		"typescript": "node"
+	},
+	"vue.codeActions.askNewComponentName": true,
+	"vue.format.script.initialIndent": true,
+	"vue.format.style.initialIndent": true,
+	"vue.format.template.initialIndent": true,
+	"vue.format.template": true,
+	"vue.codeActions.enabled": true,
+	"vue.autoInsert.bracketSpacing": true,
+	"vue.autoInsert.dotValue": true,
+	"vue.doctor.status": true,
+	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
+    "windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
+	"vue.format.wrapAttributes": "auto",
+	"vue.complete.defineAssignment": true,
+	"vue.complete.casing.props": "autoKebab",
+	"vue.codeLens.enabled": true,
+	"vue.complete.casing.tags": "autoPascal",
+	"vue.splitEditors.icon": false,
+	"vue.inlayHints.destructuredProps": true,
+	"vue.inlayHints.optionsWrapper": true,
+	//"vue.inlayHints.inlineHandlerLeading": true,
+	"vue.trace.server": "off",
+	"vue.server.includeLanguages": ["vue"],
+	"vue.splitEditors.layout.left": ["script", "scriptSetup", "styles"],
+	"vue.splitEditors.layout.right": ["template"],
 
-    "code-runner.saveAllFilesBeforeRun": true,
-    "code-runner.saveFileBeforeRun": true,
-    "CodeGPT.apiKey": "Groq",
-    "codeium.enableCodeLens": false,
-    "codeium.enableConfig": {
-      "*": true,
-      "markdown": true
-    },
-    "codesnap-plus.containerPadding": "1em",
-    "cody.autocomplete.enabled": false,
-    "cody.commandCodeLenses": true,
-    "cody.debug.verbose": true,
-    "console-ninja.featureSet": "Community",
-    "continue.enableQuickActions": true,
-    "continue.enableTabAutocomplete": false,
-    "cssVariables.trace.server": "messages",
-    "database-client.autoSync": true,
-    "debug.openDebug": "openOnDebugBreak",
-    "debug.showInStatusBar": "always",
-    "deepsource.highlightAffectedLines": false,
-    "deepsource.installationUrl": "https://app.deepsource.com",
-    "deepsource.showCodelens": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports.biome": "explicit"
-    },
-    "editor.defaultFormatter": "biomejs.biome",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.inlineSuggest.suppressSuggestions": true,
-    "editor.inlineSuggest.syntaxHighlightingEnabled": true,
-    "editor.minimap.enabled": true,
-    "editor.stickyScroll.enabled": false,
-    "editor.suggest.showWords": false,
-    "editor.wordWrap": "on",
-    "excalidraw.image": {
-      "exportScale": 1,
-      "exportWithBackground": false
-    },
-    "excalidraw.theme": "auto",
-    "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": false,
-    "explorer.confirmPasteNative": false,
-    "extensions.ignoreRecommendations": true,
-    "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 1,
-    "geminicodeassist.project": "",
-    "git.autorefresh": true,
-    "git.confirmSync": false,
-    "git.enableSmartCommit": true,
-    "git.showPushSuccessNotification": true,
-    "github.copilot.advanced": {
-      "authProvider": "github-enterprise"
-    },
-    "githubIssues.queries": [
-      {
-        "label": "My Issues",
-        "query": "default"
-      },
-      {
-        "label": "Created Issues",
-        "query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
-      },
-      {
-        "label": "Recent Issues",
-        "query": "state:open repo:${owner}/${repository} sort:updated-desc"
-      }
-    ],
-    "githubLocalActions.dockerDesktopPath": "C:/Program Files/Docker/Docker/Docker Desktop.exe",
-    "GitLive.Issue tracker integration": "Disabled",
-    "GitLive.Special branches": "main|master|trunk|dev|develop|qa|test|release[-/].*",
-    "javascript-repl.coverageTimes": false,
-    "javascript-repl.explorer": false,
-    "javascript-repl.outputChannel": true,
-    "javascript-repl.useWorkers": true,
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "json.schemas": [
-      {
-        "fileMatch": [
-          "*dev-docs.json"
-        ],
-        "url": "c:\\Users\\Veerapong\\.vscode\\extensions\\dev-docs.dev-docs-0.186.0\\devDocsSchema.json"
-      }
-    ],
-    "mdnDocs.openInBrowser": true,
-    "notebook.defaultFormatter": "biomejs.biome",
-    "notebook.lineNumbers": "on",
-    "notebook.stickyScroll.enabled": true,
-    "npm-intellisense.packageSubfoldersIntellisense": true,
-    "nuxtr.vueFiles.style.addStyleTag": false,
-    "pieces.cloudCapabilities": "Blended",
-    "pieces.OS.launchOnStartup": "Yes",
-    "pieces.telemetry": true,
-    "quokka.automaticRestart": true,
-    "remote.downloadExtensionsLocally": true,
-    "remote.SSH.defaultExtensions": [
-      "daytonaio.daytona"
-    ],
-    "security.promptForLocalFileProtocolHandling": false,
-    "security.workspace.trust.untrustedFiles": "open",
-    "symbols.hidesExplorerArrows": false,
-    "tailwindCSS.classAttributes": [
-      "class",
-      "className",
-      "ngClass",
-      "class:list"
-    ],
-    "task.allowAutomaticTasks": "on",
-    "terminal.integrated.cursorStyle": "line",
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "terminal.integrated.env.windows": {},
-    "terminal.integrated.focusAfterRun": "terminal",
-    "terminal.integrated.fontFamily": "MesloLGM Nerd Font",
-    "terminal.integrated.gpuAcceleration": "on",
-    "terminal.integrated.persistentSessionReviveProcess": "never",
-    "terminal.integrated.profiles.windows": {
-      "NuShell": {
-        "path": "nu.exe"
-      }
-    },
-    "terminal.integrated.rightClickBehavior": "default",
-    "todo-tree.general.tags": [
-      "TODO",
-      "ISSUE",
-      "REVIEW"
-    ],
-    "todo-tree.highlights.customHighlight": {
-      "ISSUE": {
-        "background": "#ff0000",
-        "foreground": "#ffffff",
-        "gutterIcon": true,
-        "icon": "check",
-        "iconColour": "#ff0000",
-        "type": "tag-and-subTag"
-      },
-      "REVIEW": {
-        "background": "#fc03d7",
-        "foreground": "#ffffff",
-        "gutterIcon": true,
-        "icon": "check",
-        "iconColour": "#fc03d7",
-        "type": "tag-and-subTag"
-      },
-      "TODO": {
-        "background": "#0fb12c",
-        "foreground": "#ffffff",
-        "icon": "check",
-        "iconColour": "#0fb12c",
-        "type": "tag-and-subTag"
-      }
-    },
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "vue.inlayHints.missingProps": true,
-    "vue.inlayHints.vBindShorthand": true,
-    "workbench.colorTheme": "GitHub Dark Dimmed",
-    "workbench.iconTheme": "symbols",
-    "zencoder.inlineSuggestions.enable": false,
-    "files.eol": "\r\n",
-    "windsurf.explainAndFixInCurrentConversation": false,
-    "windsurf.autocompleteSpeed": "fast",
-    "windsurf.autoExecutionPolicy": "off",
-    "windsurf.chatFontSize": "default",
-    "windsurf.rememberLastModelSelection": true,
-    "windsurf.openRecentConversation": true,
-    "mise.binPath": "C:\\Users\\Veerapong\\scoop\\shims\\mise.exe",
-    "editor.tabCompletion": "on"
-  }
+	"code-runner.saveAllFilesBeforeRun": true,
+	"code-runner.saveFileBeforeRun": true,
+	"CodeGPT.apiKey": "Groq",
+	"codeium.enableCodeLens": false,
+	"codeium.enableConfig": {
+		"*": true,
+		"markdown": true
+	},
+	"codesnap-plus.containerPadding": "1em",
+	"cody.autocomplete.enabled": false,
+	"cody.commandCodeLenses": true,
+	"cody.debug.verbose": true,
+	"console-ninja.featureSet": "Community",
+	"continue.enableQuickActions": true,
+	"continue.enableTabAutocomplete": false,
+	"cssVariables.trace.server": "messages",
+	"database-client.autoSync": true,
+	"debug.openDebug": "openOnDebugBreak",
+	"debug.showInStatusBar": "always",
+	"deepsource.highlightAffectedLines": false,
+	"deepsource.installationUrl": "https://app.deepsource.com",
+	"deepsource.showCodelens": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit",
+		"source.action.useSortedKeys.biome": "explicit",
+		"source.action.useSortedProperties.biome": "explicit",
+		"source.action.useSortedAttributes.biome": "explicit",
+		"source.fixAll.biome": "explicit"
+	},
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnType": true,
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
+	"editor.minimap.enabled": true,
+	"editor.stickyScroll.enabled": false,
+	"editor.suggest.showWords": false,
+	"editor.wordWrap": "on",
+	"excalidraw.image": {
+		"exportScale": 1,
+		"exportWithBackground": false
+	},
+	"terminal.integrated.shellIntegration.enabled": true,
+	"excalidraw.theme": "auto",
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmPasteNative": false,
+	"extensions.ignoreRecommendations": true,
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 1,
+	"geminicodeassist.project": "",
+	"git.autorefresh": true,
+	"git.confirmSync": false,
+	"git.enableSmartCommit": true,
+	"git.showPushSuccessNotification": true,
+	"github.copilot.advanced": {
+		"authProvider": "github-enterprise"
+	},
+	"githubIssues.queries": [
+		{
+			"label": "My Issues",
+			"query": "default"
+		},
+		{
+			"label": "Created Issues",
+			"query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+		},
+		{
+			"label": "Recent Issues",
+			"query": "state:open repo:${owner}/${repository} sort:updated-desc"
+		}
+	],
+	"githubLocalActions.dockerDesktopPath": "C:/Program Files/Docker/Docker/Docker Desktop.exe",
+	"GitLive.Issue tracker integration": "Disabled",
+	"GitLive.Special branches": "main|master|trunk|dev|develop|qa|test|release[-/].*",
+	"javascript-repl.coverageTimes": false,
+	"javascript-repl.explorer": false,
+	"javascript-repl.outputChannel": true,
+	"javascript-repl.useWorkers": true,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"json.schemas": [
+		{
+			"fileMatch": ["*dev-docs.json"],
+			"url": "c:\\Users\\Veerapong\\.vscode\\extensions\\dev-docs.dev-docs-0.186.0\\devDocsSchema.json"
+		}
+	],
+	"mdnDocs.openInBrowser": true,
+	"notebook.defaultFormatter": "biomejs.biome",
+	"notebook.lineNumbers": "on",
+	"notebook.stickyScroll.enabled": true,
+	"npm-intellisense.packageSubfoldersIntellisense": true,
+	"nuxtr.vueFiles.style.addStyleTag": false,
+	"pieces.cloudCapabilities": "Blended",
+	"pieces.OS.launchOnStartup": "Yes",
+	"pieces.telemetry": true,
+	"quokka.automaticRestart": true,
+	"remote.downloadExtensionsLocally": true,
+	"remote.SSH.defaultExtensions": ["daytonaio.daytona"],
+	"security.promptForLocalFileProtocolHandling": false,
+	"security.workspace.trust.untrustedFiles": "open",
+	"symbols.hidesExplorerArrows": false,
+	"tailwindCSS.classAttributes": [
+		"class",
+		"className",
+		"ngClass",
+		"class:list"
+	],
+	"task.allowAutomaticTasks": "on",
+	"terminal.integrated.cursorStyle": "line",
+	"terminal.integrated.defaultProfile.windows": "pwsh",
+	"terminal.integrated.env.windows": {},
+	"terminal.integrated.focusAfterRun": "terminal",
+	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",
+	"terminal.integrated.gpuAcceleration": "on",
+	"terminal.integrated.persistentSessionReviveProcess": "never",
+	"terminal.integrated.profiles.windows": {
+		"NuShell": {
+			"path": "C:\\Users\\Veerapong\\scoop\\apps\\nu\\current\\nu.exe"
+		},
+		"PowerShell": {
+			"path": "pwsh.exe"
+		}
+	},
+	"terminal.integrated.rightClickBehavior": "default",
+	"todo-tree.general.tags": ["TODO", "ISSUE", "REVIEW"],
+	"todo-tree.highlights.customHighlight": {
+		"ISSUE": {
+			"background": "#ff0000",
+			"foreground": "#ffffff",
+			"gutterIcon": true,
+			"icon": "check",
+			"iconColour": "#ff0000",
+			"type": "tag-and-subTag"
+		},
+		"REVIEW": {
+			"background": "#fc03d7",
+			"foreground": "#ffffff",
+			"gutterIcon": true,
+			"icon": "check",
+			"iconColour": "#fc03d7",
+			"type": "tag-and-subTag"
+		},
+		"TODO": {
+			"background": "#0fb12c",
+			"foreground": "#ffffff",
+			"icon": "check",
+			"iconColour": "#0fb12c",
+			"type": "tag-and-subTag"
+		}
+	},
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"vue.inlayHints.missingProps": true,
+	"vue.inlayHints.vBindShorthand": true,
+	"workbench.iconTheme": "symbols",
+	"zencoder.inlineSuggestions.enable": false,
+	"files.eol": "\r\n",
+	"windsurf.explainAndFixInCurrentConversation": false,
+	"windsurf.autocompleteSpeed": "fast",
+	"windsurf.autoExecutionPolicy": "off",
+	"windsurf.chatFontSize": "default",
+	"windsurf.rememberLastModelSelection": true,
+	"windsurf.openRecentConversation": true,
+	"mise.binPath": "C:\\Users\\Veerapong\\scoop\\shims\\mise.exe",
+	"editor.tabCompletion": "on",
+	"window.newWindowDimensions": "maximized",
+	"codeSight.telemetry.enablement": false,
+	"unocss.autocomplete.strict": true,
+	"amp.tab.enabled": false,
+	"yaml.schemas": {
+		"c:\\Users\\Veerapong\\.windsurf\\extensions\\continue.continue-1.1.49\\config-yaml-schema.json": [
+			".continue/**/*.yaml"
+		]
+	},
+	"superdesign.aiModelProvider": "openrouter",
+	"superdesign.aiModel": "deepseek/deepseek-r1",
+	"package-manager-enhancer.enablePackageJsonDependenciesCodeLens": false,
+	"[vue]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"workbench.experimental.share.enabled": true,
+	"[dockercompose]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2,
+		"editor.autoIndent": "advanced",
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"[github-actions-workflow]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"window.openFoldersInNewWindow": "on",
+	"workbench.colorCustomizations": {
+		"pings.custom_color-fa6c00": "#fa6c00",
+		"pings.custom_color-d600e6": "#d600e6",
+		"pings.custom_color-00e60f": "#00e60f",
+		"pings.custom_color-e67a00": "#e67a00"
+	},
+	"workbench.colorTheme": "GitHub Dark Dimmed",
+	"docker.extension.enableComposeLanguageServer": false,
+}
