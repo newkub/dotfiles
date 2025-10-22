@@ -181,7 +181,7 @@
 	],
 	"task.allowAutomaticTasks": "on",
 	"terminal.integrated.cursorStyle": "line",
-	"terminal.integrated.defaultProfile.windows": "pwsh",
+	"terminal.integrated.defaultProfile.windows": "Nushell",
 	"terminal.integrated.env.windows": {},
 	"terminal.integrated.focusAfterRun": "terminal",
 	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",

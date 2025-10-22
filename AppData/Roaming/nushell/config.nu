@@ -51,8 +51,7 @@ alias b = broot --show-git-info --git-ignored
 alias b = broot
 alias y = yazi
 alias w = windsurf
-alias dir = eza
-
+alias dir = eza --grid
 
 
 # เพิ่ม aliases สำหรับ directory พร้อมคำสั่ง cd

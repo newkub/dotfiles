@@ -1,23 +1,23 @@
 [tasks.update]
 description = "update scoop, winget, bun, mise"
-run = "mise cleanup && mise chezmoi-update-and-push && scoop update * && winget upgrade --all && bun update -g && mise upgrade && mise self-update -y && rustup update stable"
+run = "mise cleanup and scoop update * and winget upgrade --all and bun update -g and mise upgrade and mise self-update -y and rustup update stable"
 
 
 # chezmoi tasks
 [tasks.chezmoi-update-and-push]
 description = "chezmoi update and push"
-run = "cd C:/Users/Veerapong/.local/share/chezmoi && git commit -m update && git push -u origin main"
+run = "chezmoi re-add and git commit -m update and git push -u origin main"
 
 
 
 [tasks.cleanup]
 description = "cleanup"
-run = "scoop cleanup * && mise prune"
+run = "scoop cleanup * and mise prune"
 
 
 [tasks.commit]
 description = "commit"
-run = "git add . && czg ai" 
+run = "git add . and czg ai" 
 
 
 [tasks.start-podman]
