@@ -56,7 +56,7 @@
 	"vue.autoInsert.dotValue": true,
 	"vue.doctor.status": true,
 	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
-    "windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
+	"windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
 	"vue.format.wrapAttributes": "auto",
 	"vue.complete.defineAssignment": true,
 	"vue.complete.casing.props": "autoKebab",
@@ -181,7 +181,7 @@
 	],
 	"task.allowAutomaticTasks": "on",
 	"terminal.integrated.cursorStyle": "line",
-	"terminal.integrated.defaultProfile.windows": "Nushell",
+	"terminal.integrated.defaultProfile.windows": "pwsh",
 	"terminal.integrated.env.windows": {},
 	"terminal.integrated.focusAfterRun": "terminal",
 	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",
@@ -270,4 +270,5 @@
 	},
 	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"docker.extension.enableComposeLanguageServer": false,
+	"editor.pasteAs.preferences": []
 }

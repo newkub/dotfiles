@@ -20,7 +20,7 @@ end)
 
 return {
     default_cwd = 'D:',
-    default_prog = {"nu"},
+    default_prog = {"pwsh"},
     font = wezterm.font("MesloLGL Nerd Font"),
     font_size = 14.0,
 
@@ -85,8 +85,8 @@ return {
                 window:perform_action(wezterm.action{CopyTo = "Clipboard"}, pane)
             end
         end)},
-        -- Change search shortcut from Ctrl+F to Ctrl+Shift+F
-        {key = "f", mods = "CTRL|SHIFT", action = wezterm.action.Search{CaseInSensitiveString = ""}},
+        -- เปลี่ยน key binding สำหรับการค้นหา
+        {key = "f", mods = "CTRL", action = wezterm.action.Search{CaseInSensitiveString = ""}},
         {key = "a", mods = "CTRL", action = wezterm.action{SendString = "\x01"}},
         -- ลบ ctrl + left 
         -- เปลี่ยน ctrl + right เป็น ctrl + shift right

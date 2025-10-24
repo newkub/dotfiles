@@ -53,47 +53,12 @@ foreach ($key in $locationMap.Keys) {
     Set-Item -Path "Function:$key" -Value ([ScriptBlock]::Create("Set-Location '$($locationMap[$key])'"))
 }
 
-function dev {
-    nr dev
-}
-
-function build {
-    nr build
-}
-
-
-function test {
-    nr test
-}
-
-
-function lint {
-    nr lint
-}
-
-
-function fix {
-    nr fix
-}
-
-
-function review {
-    nr review
-}
 
 
 
 # alias
 Set-Alias -Name b -Value broot
-Set-Alias -Name rd dev
-Set-Alias -Name rb build
-Set-Alias -Name rl lint 
-Set-Alias -Name rt test
-Set-Alias -Name rf fix
-Set-Alias -Name rr review
-Set-Alias -Name bb -Value "nr build"
-Set-Alias -Name bl -Value "nr lint"
-Set-Alias -Name test -Value "nr test"
+Set-Alias -Name new new-Item
 Set-Alias -Name y -Value yazi
 Set-Alias -Name w -Value windsurf
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
