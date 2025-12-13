@@ -1,5 +1,8 @@
 [install.cache]
+# the directory to use for the cache
 dir = "D:/.cache/bun"
 
-disable = false
 
+# when true, don't load from the global cache.
+# Bun may still write to node_modules/.cache
+disable = false
