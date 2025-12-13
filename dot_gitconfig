@@ -1,0 +1,66 @@
+[user]
+	email = newkubise@gmail.com
+	name = Veerapong
+
+[core]
+autocrlf = false
+defaultBranch = main
+	pager = git-split-diffs --color X
+	editor = windsurf --wait
+
+[gitbutler]
+aiOpenAIKeyOption = butlerAPI
+aiModelProvider = openai
+gitbutlerCommitter = 0
+
+[filter "lfs"]
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
+
+[pager]
+	diff = true
+
+
+[fetch]
+prune = true
+all = true
+auto = true
+
+[push]
+default = simple
+followTags = true
+
+[pull]
+rebase = true
+
+[init]
+	defaultBranch = main
+
+[rebase]
+autoStash = true
+
+[merge]
+conflictstyle = diff3
+tool = vscode
+
+[mergetool "vscode"]
+cmd = code --wait $MERGED
+trustExitCode = true
+
+
+[alias]
+diff = diff -- . ':(exclude)*lock*' ':(exclude)package-lock.json' ':(exclude)pnpm-lock.yaml'
+opencommit = "!f() { git add . && opencommit; }; f"
+czgai = "!f() { git add . && czg ai; }; f"
+up = "!f() { git add . && git commit -m \"$1\"; }; f"
+upp = "!f() { git add . && git commit -m \"$1\" && git push; }; f"
+l = "log --oneline"
+s = "status -s"
+b = "branch"
+unstage = "reset HEAD"
+edit-commit = "commit --amend"
+edit-commit-custom = "!f() { git rebase -i HEAD~$1; }; f"
+undo = "reset HEAD~"
+sync = "!f() { git pull && git push && git submodule sync --recursive && git submodule update --init --recursive --remote; }; f"

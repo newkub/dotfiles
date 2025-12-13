@@ -1,0 +1,89 @@
+[
+    // New terminal (when terminal focused)
+    {
+        "key": "ctrl+m",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    },
+    // Open Problems panel
+    {
+        "key": "ctrl+shift+p",
+        "command": "workbench.actions.view.problems"
+    },
+    // Kill terminal (when terminal focused)
+    {
+        "key": "ctrl+w",
+        "command": "workbench.action.terminal.kill",
+        "when": "terminalFocus"
+    },
+    // Focus next terminal pane (when terminal focused)
+    {
+        "key": "shift+tab",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus"
+    },
+    // Focus terminal (when not in terminal)
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    },
+    // Open folder (when not in terminal)
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.files.openFolder",
+        "when": "!terminalFocus"
+    },
+    // Open new terminal (when in terminal)
+    {
+        "key": "ctrl+t",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalFocus"
+    },
+    // Rename file
+    {
+        "key": "f2",
+        "command": "renameFile"
+    },
+    // Focus source control
+    {
+        "key": "alt+g",
+        "command": "workbench.scm.focus"
+    },
+    // Close all editor groups
+    {
+        "key": "alt+w",
+        "command": "workbench.action.closeAllEditors"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "workbench.action.closeAllGroups"
+    },
+    {
+        "key": "ctrl+shift+t",
+        "command": "-workbench.action.reopenClosedEditor"
+    },
+    {
+        "key": "ctrl+shift+right",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+shift+left",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "workbench.action.focusActiveEditorGroup"
+    },
+    {
+        "key": "ctrl+m",
+        "command": "workbench.action.terminal.focus"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "explorer.newFile",
+        "when": "explorerViewletFocus"
+    }
+]

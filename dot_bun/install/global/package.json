@@ -1,0 +1,7 @@
+{
+  "name": "bun-global",
+  "dependencies": {
+    "taze": "^19.9.2",
+    "turbo": "^2.6.3"
+  }
+}

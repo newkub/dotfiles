@@ -1,0 +1,252 @@
+{
+	"[css]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[dockercompose]": {
+		"editor.autoIndent": "advanced",
+		"editor.defaultFormatter": "redhat.vscode-yaml",
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
+	},
+	"[github-actions-workflow]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[json,jsonc]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[jsx, tsx]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[markdown]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[mdx]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[tailwindcss]": {
+		"editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"amp.tab.enabled": false,
+	"breadcrumbs.enabled": false,
+	"chat.detectParticipant.enabled": true,
+	"code-runner.saveAllFilesBeforeRun": true,
+	"code-runner.saveFileBeforeRun": true,
+	"CodeGPT.apiKey": "Groq",
+	"codeium.enableCodeLens": false,
+	"codeium.enableConfig": {
+		"*": true,
+		"markdown": true
+	},
+	"codesnap-plus.containerPadding": "1em",
+	"console-ninja.featureSet": "Community",
+	"continue.enableQuickActions": true,
+	"continue.enableTabAutocomplete": false,
+	"cssVariables.trace.server": "messages",
+	"database-client.autoSync": true,
+	"debug.openDebug": "openOnDebugBreak",
+	"debug.showInStatusBar": "always",
+	"deepsource.highlightAffectedLines": false,
+	"deepsource.installationUrl": "https://app.deepsource.com",
+	"deepsource.showCodelens": true,
+	"docker.extension.enableComposeLanguageServer": false,
+	"editor.codeActionsOnSave": {
+		"source.action.useSortedAttributes.biome": "always",
+		"source.action.useSortedKeys.biome": "always",
+		"source.action.useSortedProperties.biome": "always",
+		"source.fixAll.biome": "always",
+		"source.organizeImports.biome": "always"
+	},
+	"editor.defaultFormatter": "dprint.dprint",
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.formatOnType": true,
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
+	"editor.pasteAs.preferences": [],
+	"editor.stickyScroll.enabled": false,
+	"editor.suggest.showWords": false,
+	"editor.tabCompletion": "on",
+	"editor.wordWrap": "on",
+	"excalidraw.image": {
+		"exportScale": 1,
+		"exportWithBackground": false
+	},
+	"excalidraw.theme": "auto",
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmPasteNative": false,
+	"extensions.ignoreRecommendations": true,
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 1,
+	"files.eol": "\r\n",
+	"geminicodeassist.project": "",
+	"git.autorefresh": true,
+	"git.enableSmartCommit": true,
+	"git.showPushSuccessNotification": true,
+	"githubIssues.queries": [
+		{
+			"label": "My Issues",
+			"query": "default"
+		},
+		{
+			"label": "Created Issues",
+			"query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
+		},
+		{
+			"label": "Recent Issues",
+			"query": "state:open repo:${owner}/${repository} sort:updated-desc"
+		}
+	],
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"json.schemas": [
+		{
+			"fileMatch": [
+				"*dev-docs.json"
+			],
+			"url": "c:\\Users\\Veerapong\\.vscode\\extensions\\dev-docs.dev-docs-0.186.0\\devDocsSchema.json"
+		}
+	],
+	"mdnDocs.openInBrowser": true,
+	"mise.binPath": "C:\\Users\\Veerapong\\scoop\\shims\\mise.exe",
+	"notebook.defaultFormatter": "dprint.dprint",
+	"notebook.lineNumbers": "on",
+	"notebook.stickyScroll.enabled": true,
+	"npm-intellisense.packageSubfoldersIntellisense": true,
+	"nuxtr.vueFiles.firstTag": "script",
+	"nuxtr.vueFiles.style.addStyleTag": false,
+	"package-manager-enhancer.enablePackageJsonDependenciesCodeLens": false,
+	"quokka.automaticRestart": true,
+	"remote.downloadExtensionsLocally": true,
+	"security.workspace.trust.untrustedFiles": "open",
+	"task.allowAutomaticTasks": "on",
+	"terminal.integrated.cursorStyle": "line",
+	"terminal.integrated.defaultProfile.windows": "PowerShell",
+	"terminal.integrated.env.windows": {},
+	"terminal.integrated.focusAfterRun": "terminal",
+	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",
+	"terminal.integrated.gpuAcceleration": "on",
+	"terminal.integrated.persistentSessionReviveProcess": "never",
+	"terminal.integrated.profiles.windows": {
+		"NuShell": {
+			"path": "C:\\Users\\Veerapong\\scoop\\apps\\nu\\current\\nu.exe"
+		},
+		"PowerShell": {
+			"path": "pwsh.exe"
+		}
+	},
+	"terminal.integrated.rightClickBehavior": "default",
+	"terminal.integrated.shellIntegration.enabled": true,
+	"todo-tree.general.tags": [
+		"TODO",
+		"ISSUE",
+		"REVIEW"
+	],
+	"todo-tree.highlights.customHighlight": {
+		"ISSUE": {
+			"background": "#ff0000",
+			"foreground": "#ffffff",
+			"gutterIcon": true,
+			"icon": "check",
+			"iconColour": "#ff0000",
+			"type": "tag-and-subTag"
+		},
+		"REVIEW": {
+			"background": "#fc03d7",
+			"foreground": "#ffffff",
+			"gutterIcon": true,
+			"icon": "check",
+			"iconColour": "#fc03d7",
+			"type": "tag-and-subTag"
+		},
+		"TODO": {
+			"background": "#0fb12c",
+			"foreground": "#ffffff",
+			"icon": "check",
+			"iconColour": "#0fb12c",
+			"type": "tag-and-subTag"
+		}
+	},
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"unocss.autocomplete.strict": true,
+	"vue.autoInsert.bracketSpacing": true,
+	"vue.autoInsert.dotValue": true,
+	"vue.codeActions.askNewComponentName": true,
+	"vue.format.script.initialIndent": true,
+	"vue.format.style.initialIndent": true,
+	"vue.format.template.initialIndent": true,
+	"vue.inlayHints.destructuredProps": true,
+	"vue.inlayHints.missingProps": true,
+	"vue.inlayHints.optionsWrapper": true,
+	"vue.inlayHints.vBindShorthand": true,
+	"vue.server.includeLanguages": [
+		"vue"
+	],
+	"vue.trace.server": "off",
+	"window.newWindowDimensions": "maximized",
+	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
+	"windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
+	"workbench.colorCustomizations": {
+		"pings.custom_color-00e60f": "#00e60f",
+		"pings.custom_color-d600e6": "#d600e6",
+		"pings.custom_color-e67a00": "#e67a00",
+		"pings.custom_color-fa6c00": "#fa6c00"
+	},
+	"workbench.colorTheme": "GitHub Dark Dimmed",
+	"workbench.iconTheme": "symbols",
+	"yaml.schemas": {
+		"c:\\Users\\Veerapong\\.windsurf\\extensions\\continue.continue-1.1.49\\config-yaml-schema.json": [
+			".continue/**/*.yaml"
+		]
+	},
+	"workbench.experimental.share.enabled": true,
+	"npm.scriptRunner": "bun",
+	"window.customTitleBarVisibility": "windowed",
+	"chronicler.ffmpeg-binary": "C:\\Users\\Veerapong\\scoop\\shims\\ffmpeg.exe",
+	"git.autoStash": true,
+	"git.autofetch": true,
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"git.defaultCloneDirectory": "d:\\cli",
+	"favorites.disablePreviewWarning": true,
+	"git.confirmSync": false,
+	"terminal.integrated.stickyScroll.enabled": false,
+	"app": {
+		"configGeneralDisplayLanguage": "en-us",
+		"configGeneralAiResponseLanguage": "en-us",
+		"configGeneralImprovementPlan": "agree",
+		"configGeneralImportSettings": "VS Code",
+		"configCompletionEnableNES": true,
+		"configChatWebToolsMode": "Auto-execute",
+		"configChatAskModeUseTools": true,
+		"configChatEditFileTool": false,
+		"configChatTerminalRunMode": "askEveryTime",
+		"configChatCommandDenyList": "rm,mv,sudo,wget,curl,chown",
+		"configChatCommandAllowlist": "",
+		"configChatAutoRunMcpTools": true,
+		"configChatMethodQuickOperation": false,
+		"configChatShowSelectionToolbar": true,
+		"configQuestEnable": true,
+		"configMemoryAutoGenerate": true,
+		"configAdvancedAutoUpdate": true,
+		"configAdvancedProxyMode": "system",
+		"configAdvancedProxyURL": ""
+	},
+	"redhat.telemetry.enabled": false,
+	"[json]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"nuxt-intellisense.showWelcomeMessage": false
+}

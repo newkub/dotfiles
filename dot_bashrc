@@ -1,0 +1,10 @@
+[ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
+
+# VibeKit alias - do not modify
+alias claude="vibekit claude"
+
+# VibeKit alias - do not modify
+alias gemini="vibekit gemini"
+
+# VibeKit alias - do not modify
+alias codex="vibekit codex"

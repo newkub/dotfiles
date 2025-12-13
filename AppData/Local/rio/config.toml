@@ -1,0 +1,82 @@
+working-dir = 'D:\\learn-wrikka-com' 
+
+env-vars = []
+
+confirm-before-quit = false
+
+
+
+[keyboard]
+use-kitty-keyboard-protocol = false
+disable-ctlseqs-alt = false
+
+
+
+placeholder = "❯"
+
+
+
+
+[cursor]
+shape = 'beam'
+blinking = false
+blinking-interval = 800
+hide-if-single = true
+
+
+[renderer]
+performance = "High"
+backend = "Automatic"
+disable-unfocused-render = false
+level = 1
+
+
+
+
+[fonts]
+family = "MesloLGL Nerd Font"
+size = 20
+features = ["ss01", "ss02", "ss03", "ss04", "calt", "liga"]
+use-drawable-chars = true
+symbol-map = []
+disable-warnings-not-found = false
+additional-dirs = []
+hinting = true
+
+
+
+[window]
+mode = "Maximized"
+blur = true
+opacity = 0.5
+decorations = "enabled"
+width = 600
+height = 400
+
+
+
+
+
+[navigation]
+mode = "bookmark"
+clickable = true
+hide-if-single = true
+use-split = true
+use-current-path = false
+color-automation = []
+
+
+[shell]
+program = "pwsh"
+
+[platform]
+windows.shell.program = "nu"
+windows.shell.args = []
+
+linux.shell.program = "nu"
+linux.shell.args = []
+
+
+[developer]
+log-level = "OFF"
+enable-log-file = false

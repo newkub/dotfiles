@@ -1,0 +1,1 @@
+fix(autocmds): prevent file picker from opening when files are provided

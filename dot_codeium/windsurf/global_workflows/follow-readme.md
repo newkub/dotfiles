@@ -1,0 +1,34 @@
+---
+description: Guidelines for updating the README.md file with standard sections
+auto_execution_mode: 3
+---
+
+อัพเดท โดยอ่าน package.json, entry point file เพื่ือทำความเข้าใจ และเขียนให้มีหัวข้อ
+
+หมายเหตุ : ให้ภาษาอังกฤษทั้งหมด
+
+## Introduction
+
+- เขียน features
+
+## Design Principles
+
+- ให้มี emojiด้วย
+
+## Installation
+
+หมายเหตุ 
+- ให้มี npm, pnpm, yarn, bun เขียนในตาราง
+
+## Usage
+
+- ยกตัวอย่างการใช้งาน เช่น cli, sdk
+
+
+## Examples
+
+- เขียนตาม usag
+## License
+
+เขียน license mit
+
