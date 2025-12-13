@@ -3,11 +3,17 @@ description: Guidelines for setting up a Turborepo project
 auto_execution_mode: 3
 ---
 
-ทำ 3 ข้อนี้
 
-## 1. package.json
+## 1. install
 
-- ให้มี name, version, private, packageManager, workspaces, scripts, etc. โดย scripts ต้องมีด้านล่างเป็นอย่างนี้
+1. bunx turbo link --yes
+
+## 2. root
+
+2. กำหนดใน package.json
+
+
+``` json [package.json (root)]
 {
   "scripts": {
     "build": "turbo build",
@@ -19,21 +25,20 @@ auto_execution_mode: 3
     "review": "bun update:deps && bun format && bun lint && bun test && bun build"
   },
 }
+```
 
-## 2. turbo.json
+3. กำหนดใน turbo.json
+
 
 - ให้มี schema, tasks โดย tasks ให้มีตาม scripts ใน package.json
 
-## 3. แต่ละ workspaces ต้องมี 
+## 3. workspaces
 
-- scripts ที่ตรงกับ scripts ที่ root ที่เป็น turbo
-- test/ สำหรับ vitest
-- README.md
-- tsconfig.json ที่ extends มาจาก root
-- biome.json ที่มีแค่ root : true, extends : "//"
-- ต้องการ examples
 
-## 4. .gitignore ต้องมี .gitignore ที่ root
+1. /follow-setup-base-project
+2. ใน package.json 
+- มี name ที่ตรงกับ folder
+- มี scripts ที่ตรงกับ turbo ใน package.json (root)
+3. /follow-build-package
 
-## 5. ที่ README.md ที่ root ให้มีไฟล์ แต่ไม่ต้องเขียนอะไร ให้ว่างไว้
 

@@ -1,0 +1,1 @@
+1. bunx rimraf node_modules dist .output .cache .turbo

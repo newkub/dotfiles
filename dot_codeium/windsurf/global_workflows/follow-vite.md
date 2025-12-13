@@ -1,4 +1,18 @@
-1. ให้มี config เหล่านี้เป็นอย่างน้อย และติดตั้งใน package.json ให้ด้วย
+## package.json
+
+
+``` json
+{
+	"scripts": {
+		"dev" : "vite dev",
+		"build" : "vite build",
+		"preview" : "vite preview",
+	}
+}
+```
+
+
+## vite.config.ts 
 
 ```ts
 import { defineConfig } from 'vite';
@@ -60,3 +74,14 @@ export default defineConfig({
 	]
 })
 ```
+
+## tsconfig.json
+
+กำหนดใน tsconfig.json
+
+``` json
+ "compilerOptions": {
+    "types": [ "vite/client"]
+  }
+```
+

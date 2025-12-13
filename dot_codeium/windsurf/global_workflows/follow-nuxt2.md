@@ -11,6 +11,7 @@ auto_execution_mode: 3
 4. /follow-oxlint
 5. /follow-lefthook
 6. /run-prepare
+7. /follow-cloudflare-nitro
 
 ## package.json
 
@@ -41,7 +42,13 @@ export default defineNuxtConfig({
         preset: "cloudflare_module",
         cloudflare: {
             deployConfig: true,
-            nodeCompat: true
+            nodeCompat: true,
+            "routes": [
+            {
+                "pattern": "*.wrikka.com", // กำหนด * ตามชื่อ folder
+                "custom_domain": true
+            }
+            ]
         },
     },
     icon: {

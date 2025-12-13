@@ -1,1 +1,1 @@
-- /follow-dprint
+1. /follow-biome เฉพาะในส่วน format

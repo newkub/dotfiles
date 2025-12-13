@@ -1,12 +1,23 @@
 1. กำหนด review ใน package.json
+1. /follow-taze
+2. /follow-lefthook
+2. /follow-biome
 
-"scripts": {
-    "preapre": "bunx taze -r -w && bunx lefthook install && bunx format fmt"
- },
+## 1. ติดตั้ง
+- /follow-package-json
+- /follow-lefthook
+- /follow/biome
 
-โดยที่ 
-- /run-format
-- /follow-taze
 
-2. /run-review
+
+``` json
+{       
+    "scripts": {
+        "preapre": "bun update:deps && lefthook install && bun format",
+        "update:deps" : "taze -r -w"
+    },
+}
+```
+
+
 
