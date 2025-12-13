@@ -1,0 +1,1 @@
+ไม่ต้องใช้ @file และ /edit-relative
