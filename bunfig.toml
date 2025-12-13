@@ -1,0 +1,5 @@
+[install.cache]
+dir = "D:/.cache/bun"
+
+disable = false
+
