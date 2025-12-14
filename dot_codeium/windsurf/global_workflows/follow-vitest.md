@@ -4,9 +4,8 @@ auto_execution_mode: 3
 ---
 
 
-## 1. vite in workspace
 
-1.  bun add -d vitest @vitest/coverage-v8 @vitest/browser-preview @vitest/browser-playwright
+1.  bun add -d vitest @vitest/coverage-v8 @vitest/browser-preview @vitest/browser-playwright @nuxt/test-utils
 
 2. กำหนดใน package.json
 
@@ -21,48 +20,80 @@ auto_execution_mode: 3
 }
 ``` 
 
-3. กำหนดใน vitest.config.ts
+3. folder structure
+
+``` 
+test/
+├── e2e/
+│   └── ssr.test.ts
+├── nuxt/
+│   ├── components.test.ts
+│   └── composables.test.ts
+├── unit/
+│   └── utils.test.ts
+``` 
+
+3. กำหนดใน vitest.config.ts เป็นอย่างน้อย
 
 ``` ts
 import { defineConfig } from 'vitest/config'
 import { playwright } from '@vitest/browser-playwright'
+import { defineVitestProject } from '@nuxt/test-utils/config'
+
 
 export default defineConfig({
+  plugins: [vue()],   // ถ้ามีอย่างอื่นก็กำหนดให้เหมาะสม
   test: {
-    environment: 'node',
-    globals: true,
-    env: {
-      NODE_ENV: 'test'
-    },
+    projects: [
+      {
+        test: {
+          name: 'unit',
+          include: ['test/{e2e,unit}/*.{test,spec}.ts'],
+          environment: 'node',
+        },
+      },
+      await defineVitestProject({
+        test: {
+          name: 'nuxt',
+          include: ['test/nuxt/*.{test,spec}.ts'],
+          environment: 'nuxt',
+        },
+      }),
+    environment: 'node', // กำหนดให้เหมาะสมว่าจะใช้ node, edge-runtime, jsdom
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html']
+      reporter: ['verbose']
     },
-    testTimeout: 10000,
     typecheck: {
       checker: 'lint'
     },
     browser: {
-      provider: playwright(),
       enabled: true,
+      provider: playwright(),
+      trace: 'on',
       headless: true,
-      instances: [{ browser: 'chromium' }]
+       instances: [
+        { browser: 'chromium' },
+        { browser: 'firefox' },
+        { browser: 'webkit' },
+      ],
     },
   }
 })
 ```
 
-## 2. vite monorepo workspace (ถ้ามี)
+หมายเหตุ
+- ถ้าใน package.json ใช้ nuxt ให้ใช้ environment: 'nuxt' และให้ bun i -d @nuxt/test-utils
 
-1. สร้าง vitest.config.ts ที่ root โดย projects: ให้กำหนดเหมือนที่กำหนดใน workspace
-
-``` ts [vitest.ts]
+``` ts
 import { defineConfig } from 'vitest/config'
+import { defineVitestConfig } from '@nuxt/test-utils/config'
+
 
 export default defineConfig({
   test: {
-    projects: ['packages/*'],
-  },
+    environment: 'nuxt',
+  }
 })
 ```
 

@@ -1,0 +1,1 @@
+- ใช้ ast-grep mcp server

@@ -103,7 +103,6 @@ bat = "latest"
 rust-analyzer = "latest"
 rust = "latest"
 fastfetch = "latest"
-gitleaks = "latest"
 "cargo:open" = "latest"
 zoxide = "latest"
 "cargo:git-x" = "latest"
@@ -119,6 +118,7 @@ dprint = "latest"
 ripgrep = "latest"
 rmz = "latest"
 hyperfine = "latest"
+gitleaks = "latest"
 
 
 [settings]

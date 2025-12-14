@@ -29,16 +29,61 @@ auto_execution_mode: 3
 
 3. กำหนดใน turbo.json
 
+- ให้มี config เหล่านี้เป็นอย่างน้อย
+- ที่ tasks กำหนดให้ตรงกับ scripts ใน package.json 
+     
 
-- ให้มี schema, tasks โดย tasks ให้มีตาม scripts ใน package.json
+``` json
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "stream",
+  "globalDependencies": [
+    // ปรับเปลี่ยนเพิ่มได้
+    "**/.env.*local",
+    "**/nuxt.config.*",
+    "**/app.config.*",
+    "**/tailwind.config.*",
+    "**/uno.config.*"
+  ],
+  "tasks": {
+    "format": {
+      "dependsOn": [],
+      "cache" : true
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    
+    "test": {
+      "dependsOn": ["^build"],
+      "cache" : true
+    },
+     "preview": {
+      "dependsOn": ["^build"],
+      "otputs": [],
+      "cache": false
+    },
+   
+
+  }
+}
+```
+
+
 
 ## 3. workspaces
 
 
-1. /follow-setup-base-project
-2. ใน package.json 
-- มี name ที่ตรงกับ folder
-- มี scripts ที่ตรงกับ turbo ใน package.json (root)
-3. /follow-build-package
+1. /follow-setup-project
+2. /follow-build-package
 
 

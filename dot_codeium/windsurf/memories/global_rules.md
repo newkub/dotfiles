@@ -2,7 +2,15 @@
 
 ## setup (ทำทุกครั้ง)
 
-1. /setup-project
+1. .project คือพื้นที่สำหรับ ai ในจด ทด ออกแบบ และทำสิ่งต่างๆ และเพิ่ม .project/ ใน .gitignore ด้วย
+
+``` pwsh
+project-root/
+├─ goal.md           # ผมเขียนเอง
+├─ plan.md           # ai update ทุกครั้ง และผมสามาารถเขียนเองได้
+├─ design.md         # ai update ทุกครั้ง
+``` 
+
 
 ## ถ้า
 

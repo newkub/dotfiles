@@ -1,14 +1,3 @@
-# ------------------------------------------------------------------------------
-# PowerShell Profile
-# Organized by Cascade
-# ------------------------------------------------------------------------------
-
-# ==============================================================================
-# >> INITIALIZATION & SHELL ENHANCEMENTS
-# Scripts and modules that enhance the shell experience.
-# ==============================================================================
-
-
 
 
 # --- Starship Prompt ---
@@ -96,7 +85,7 @@ $locationMap = @{
     "downloads" = "$HOME\Downloads"
     "desktop" = "$HOME\Desktop"
     "docs" = "$HOME\Documents"
-    "d" = "D:"
+    "d" = "D:\"
     "images" = "$HOME\Pictures"
     "videos" = "$HOME\Videos"
     "projects" = "$HOME\Projects"
@@ -152,10 +141,7 @@ function runreview {
     ni && bun run review
 }
 
-# --- File & Path Utilities ---
-function fe {
-    fd -t f | fzf | ForEach-Object { nvim $_ }
-}
+
 
 function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
@@ -164,6 +150,8 @@ function f {
 function ff {
     fd -t d | fzf | ForEach-Object { windsurf $_ }
 }
+
+
 
 function cpath {
     $PWD.Path | Set-Clipboard
