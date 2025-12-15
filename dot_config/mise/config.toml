@@ -1,10 +1,10 @@
 [tasks.update]
 description = "mise cleanup && update scoop, winget, bun, mise"
-run = "scoop update * && winget upgrade --all && bun update -g && mise up && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && mise chezmoi-update"
+run = "scoop update * && winget upgrade --all && bun update -g && mise up && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
 
 [tasks.cleanup]
 description = "cleanup"
-run = "scoop cleanup * && mise prune && podman system prune -a && npm cache clean --force && git gc --prune=now"
+run = "scoop cleanup * && mise prune && podman system prune -a && git gc --prune=now"
 
 [tasks.commit]
 description = "commit"
@@ -30,10 +30,7 @@ description = "open windsurf global workflows"
 dir = "c:/Users/Veerapong/.codeium/windsurf/global_workflows"
 run = "windsurf ."
 
-[tasks.open-chezmoi-config]
-description = "open chezmoi config files"
-dir = "~/.local/share/chezmoi"
-run = "dir"
+
 
 [env]
 OPENAI_API_KEY = "${env:OPENAI_API_KEY}"
