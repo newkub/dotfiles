@@ -22,11 +22,10 @@
         "command": "workbench.action.terminal.focusNext",
         "when": "terminalFocus"
     },
-    // Focus terminal (when not in terminal)
+    // Open new terminal
     {
         "key": "ctrl+shift+t",
-        "command": "workbench.action.terminal.focus",
-        "when": "!terminalFocus"
+        "command": "workbench.action.terminal.new"
     },
     // Open folder (when not in terminal)
     {
@@ -34,10 +33,10 @@
         "command": "workbench.action.files.openFolder",
         "when": "!terminalFocus"
     },
-    // Open new terminal (when in terminal)
+    // Split terminal (when in terminal)
     {
         "key": "ctrl+t",
-        "command": "workbench.action.terminal.new",
+        "command": "workbench.action.terminal.split",
         "when": "terminalFocus"
     },
     // Rename file
