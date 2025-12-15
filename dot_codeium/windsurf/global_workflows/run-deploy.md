@@ -1,2 +1,4 @@
-1. กำหนด     "deploy": "bun run build && wrangler deploy"
- package.json 
+
+- ถ้าใช้ next => deploy vercel
+
+- ถ้าใช้ nuxt => deploy cloudflare

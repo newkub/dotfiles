@@ -4,73 +4,61 @@ auto_execution_mode: 3
 ---
 
 
-## 1. install
+## setup remote caching
 
-1. bunx turbo link --yes
+- bunx turbo link --yes
 
-## 2. root
+## package.json (root)
 
-2. กำหนดใน package.json
+1. bun add -d typescript @biomejs/biome lefthook taze turbo
+
+2. scripts
 
 
-``` json [package.json (root)]
+``` json
 {
+  "name" : "repo",
+  "packageManager" : "bun@", // ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
   "scripts": {
+    "prepare": "lefthook install",
+    "lint": "turbo lint",
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "turbo format",
     "test": "turbo test",
-    "update:deps": "taze -r -w && ni ",
-    "review": "bun update:deps && bun format && bun lint && bun test && bun build"
+    "review": "turbo review",
+    "format": "turbo format",
+    "update:deps": "taze -r -w -i"
   },
 }
 ```
 
-3. กำหนดใน turbo.json
 
-- ให้มี config เหล่านี้เป็นอย่างน้อย
-- ที่ tasks กำหนดให้ตรงกับ scripts ใน package.json 
-     
+
+## turbo.jsonc
 
 ``` json
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies": [
-    // ปรับเปลี่ยนเพิ่มได้
-    "**/.env.*local",
-    "**/nuxt.config.*",
-    "**/app.config.*",
-    "**/tailwind.config.*",
-    "**/uno.config.*"
-  ],
+  "globalDependencies": [ // think],
   "tasks": {
-    "format": {
-      "dependsOn": [],
-      "cache" : true
-    },
-    "lint": {
-      "dependsOn": ["^build"],
-      "cache": true
-    },
-    "dev": {
+     "dev": {
       "cache": false,
       "persistent": true
     },
-    "build": {
-      "dependsOn": ["^build"],
-      "cache": true
+     "build": {
+      "dependsOn": ["^lint"],
     },
-    
+    "format": {
+      "dependsOn": [],
+    },
+    "lint": {},
     "test": {
-      "dependsOn": ["^build"],
-      "cache" : true
+      "dependsOn": ["^lint", "^build" ],
     },
+    "review": {},
      "preview": {
       "dependsOn": ["^build"],
-      "otputs": [],
-      "cache": false
     },
    
 
@@ -78,12 +66,10 @@ auto_execution_mode: 3
 }
 ```
 
+## workspace
 
+- name ใน package.json ต้องตั้งเช่น name:"repo/workspace"
+- /follow-package-json ทำให้เหมาะสม
 
-## 3. workspaces
-
-
-1. /follow-setup-project
-2. /follow-build-package
 
 

@@ -1,1 +1,1 @@
-1. /follow-ast-grep
+1. run check ใน package.json

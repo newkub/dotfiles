@@ -1,46 +1,48 @@
-**ทำตามหัวข้อ ด้านล่างอย่างเคร่งครัด**
 
-## setup (ทำทุกครั้ง)
-
-1. .project คือพื้นที่สำหรับ ai ในจด ทด ออกแบบ และทำสิ่งต่างๆ และเพิ่ม .project/ ใน .gitignore ด้วย
-
-``` pwsh
-project-root/
-├─ goal.md           # ผมเขียนเอง
-├─ plan.md           # ai update ทุกครั้ง และผมสามาารถเขียนเองได้
-├─ design.md         # ai update ทุกครั้ง
-``` 
-
-
-## ถ้า
-
-- package manager => ใช้ bun ไม่ใช่ node
-- shell => ใช้ pwsh
-- before edit => ลองดู "C:/Users/Veerapong/.codeium/windsurf/global_workflows" ว่ามีอะไรให้ใช้บ้าง
-
-
-
-## talk-with-me
-
+[talk-with-me]
 
 - ตอบเป็นภาษาไทย
 - อะไรที่คำศัพท์เฉพาะ ไมต้องพยายามแปล
 
 
-## Agent loops
+[variables]
 
-1. planning
-- 1.1 analyze prompt ว่าต้องการอะไร
-- 1.2 ดูไฟล์ที่เกี่ยวข้องทั้งหมด
-- 1.3 plan tasks => ว่าต้องทำอะไรบ้าง
+- {global_workflows} = "C:/Users/Veerapong/.codeium/windsurf/global_workflows"
+
+[every-workspace]
+
+- ต้องมี README.md, .gitignore 
 
 
-2. edit
-- 2.1 ลงมือทำตาม tasks ทุกข้อ
-- 2.2 ถ้าแก้ไขหลายไม่ผ่าน ลองใช้เครื่อง @web : search
-- 2.3 อะไรที่เป็น pattern ซ้ำซ้อนสร้าง .ts ใน scripts ชั่วคราว แล้ว run lint, test ไฟล์ที่สร้า ก่อน run จริง 
+[every-project]
 
-  
+- ทุก workspace ต้องมี .windsurf/user-goal.md
 
+[when-analyze-user-requirement]
+
+- /compact
+
+
+[task]
+
+- /analyze-project ก่อน ก่อน planing
+- ทุกครั้งก่อนจบ task ต้อง /run-lint 
+
+
+[when-use-terminal]
+
+- search =>  ast-grep
+- file operation => pwsh
+- package manager => bun
+
+
+[when-edit-file]
+
+- /follow-global-workflows
+
+
+[when-see-word-in-file] 
+
+- Think => /analyze-project แล้วแก้ไขเพิ่มเติม
 
 

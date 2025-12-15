@@ -3,20 +3,6 @@ description: Follow these rules for Nuxt 2 project structure and data flow
 auto_execution_mode: 3
 ---
 
-## setup ที่ต้องมีเสมอ
-
-1. /follow-lefthook
-2. /follow-unocss
-3. /follow-dprint
-4. /follow-oxlint
-5. /follow-lefthook
-6. /run-prepare
-7. /follow-cloudflare-nitro
-
-## package.json
-
-1. /follow-package-json
-2. bun i -d vue-tsc
 
 ## nuxt.config.ts
 

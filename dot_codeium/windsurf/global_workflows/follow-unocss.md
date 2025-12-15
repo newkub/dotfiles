@@ -3,29 +3,9 @@ description: UnoCSS best practices and setup for Vite/Nuxt projects
 auto_execution_mode: 3
 ---
 
-1. ติดตั้ง
 
-ถ้าใช้ nuxt 
-- bun add -d unocss @unocss/nuxt
+## uno.config.ts 
 
-ถ้าใช้ next
-- bun add -d unocss @unocss/postcss
-- กำหนดใน postcss.config.mjs
-
-``` [postcss.config.mjs]
-export default {
-  plugins: {
-    '@unocss/postcss': {
-      content: ['./app/**/*.{html,js,ts,jsx,tsx}'],
-    },
-  },
-}
-```
-- import `@unocss all` ใน global css
-
-2. กำหนด uno.config.ts
-
-ให้ config เหล่านี้ เป็นอย่างน้อย
 
 ``` ts
 import { defineConfig, presetIcons, presetWind4, transformerVariantGroup, transformerDirectives, transformerCompileClass } from 'unocss'
@@ -53,3 +33,35 @@ export default defineConfig({
 })
 ```
 
+## for next 
+
+1. bun add -d unocss @unocss/postcss
+
+2. postcss.config.ts 
+
+``` ts [postcss.config.mjs]
+export default {
+  plugins: {
+    '@unocss/postcss': {
+      content: ['./app/**/*.{html,js,ts,jsx,tsx}'],
+    },
+  },
+}
+```
+3. import `@unocss all` ใน global css
+
+
+
+
+## for nuxt
+
+1. bun add -d unocss @unocss/nuxt
+
+2. nuxt.config.ts
+
+``` ts
+export default defineNuxtConfig({
+  modules: [
+    '@unocss/nuxt',
+  ],
+})

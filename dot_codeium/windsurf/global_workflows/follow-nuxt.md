@@ -301,4 +301,3 @@ export default defineConfig({
   theme: { colors: { primary: '#3b82f6', secondary: '#6b7280' } }
 })
 ```
-

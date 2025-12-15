@@ -3,6 +3,8 @@ description: Guidelines for updating the README.md file with standard sections
 auto_execution_mode: 3
 ---
 
+1. สร้าง README.md 
+
 ## 1. เขียน README.md แต่ละ workspace 
 
 แต่ละ workspace เขียนตามรูปแบบนี้
@@ -23,8 +25,7 @@ auto_execution_mode: 3
 
 ## Installation
 
-หมายเหตุ 
-- ให้มี npm, pnpm, yarn, bun เขียนในตาราง
+
 
 ## Usage
 
