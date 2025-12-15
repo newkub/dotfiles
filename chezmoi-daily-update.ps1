@@ -1,19 +1,23 @@
-# chezmoi-daily-update.ps1
 $logFile = "$env:USERPROFILE\chezmoi-daily-update.log"
 
-# แก้ PATH ให้ Task / NoProfile เจอ chezmoi
+# เพิ่ม PATH ของ Scoop
 $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
-# Log เริ่ม
-"Starting chezmoi re-add at $(Get-Date)" | Out-File -FilePath $logFile
+"Starting chezmoi re-add at $(Get-Date)" | Out-File $logFile
 
-# ตรวจสอบว่า chezmoi หาเจอหรือไม่
-$cmd = Get-Command chezmoi -ErrorAction SilentlyContinue
-if ($cmd) {
-    "Found chezmoi at $($cmd.Source)" | Out-File -FilePath $logFile -Append
-    chezmoi re-add *>> $logFile
-} else {
-    "chezmoi not found in PATH" | Out-File -FilePath $logFile -Append
-}
+# รัน chezmoi re-add แบบ verbose
+chezmoi re-add -v *>> $logFile
+
+# ไปที่โฟลเดอร์ chezmoi repo
+Set-Location "$env:USERPROFILE\.local\share\chezmoi"  # ปรับ path ตามเครื่องคุณ
+
+# add all changes (รวม empty commit)
+git add -A
+
+# commit - ถ้าไม่มี change ให้ force empty commit
+git commit -m "Daily update $(Get-Date -Format yyyy-MM-dd)" --allow-empty *>> $logFile
+
+# push ขึ้น GitHub
+git push *>> $logFile
 
 "Finished at $(Get-Date)" | Out-File -FilePath $logFile -Append
