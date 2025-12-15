@@ -15,7 +15,7 @@ run = "git add . && czg ai"
 [tasks.chezmoi-update]
 description = "chezmoi update && push"
 dir = "C:/Users/Veerapong/.local/share/chezmoi"
-run = "chezmoi re-add && git add . && git commit -m update && git push -u origin main"
+run = "chezmoi re-add"
 
 [tasks.start-podman]
 description = "start podman"
