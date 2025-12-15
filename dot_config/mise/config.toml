@@ -1,34 +1,52 @@
 [tasks.update]
-description = "mise cleanup && update scoop, winget, bun, mise"
+description = "update scoop, winget, bun(global), mise, rustup, gh extensions, chezmoi"
 run = "scoop update * && winget upgrade --all && bun update -g && mise up && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
 
 [tasks.cleanup]
-description = "cleanup"
+description = "cleanup scoop, mise, podman, git gc"
 run = "scoop cleanup * && mise prune && podman system prune -a && git gc --prune=now"
 
 [tasks.commit]
-description = "commit"
+description = "git add all && commit with czg ai"
 run = "git add . && czg ai"
 
 
 # chezmoi tasks
 [tasks.chezmoi-update]
-description = "chezmoi update && push"
+description = "chezmoi re-add (sync local changes)"
 dir = "C:/Users/Veerapong/.local/share/chezmoi"
 run = "chezmoi re-add"
 
 [tasks.start-podman]
-description = "start podman"
+description = "start podman machine"
 run = "podman machine start"
 
 [tasks.stop-podman]
-description = "stop podman"
+description = "stop podman machine"
 run = "podman machine stop"
 
+
 [tasks.open-windsurf-global]
-description = "open windsurf global workflows"
+description = "open windsurf global_workflows directory"
 dir = "c:/Users/Veerapong/.codeium/windsurf/global_workflows"
-run = "windsurf ."
+run = "dir"
+
+[tasks.git-submodule-update]
+description = "git submodule update with init and recursive"
+run = "git submodule update --init --recursive"
+
+[tasks.add-ast-grep-rules]
+description = "add ast-grep rules as git submodule"
+run = "git submodule add https://github.com/newkub/rules"
+
+[tasks.create-nuxt]
+description = "nuxt minimal"
+run = "bun create nuxt --template minimal --packageManager bun --force --gitInit"
+
+[tasks.update-node-deps]
+description = "bunx taze -r -w"
+run = "bunx taze -r -w"
+
 
 
 
@@ -39,6 +57,7 @@ CLAUDE_API_KEY = "${env:CLAUDE_API_KEY}"
 OPENROUTER_API_KEY = "${env:OPENROUTER_API_KEY}"
 DEEPSEEK_API_KEY = "${env:OPENROUTER_API_KEY}"
 XAI_API_KEY = "${env:XAI_API_KEY}"
+
 
 [tools]
 "cargo:rmz" = "latest"
@@ -51,7 +70,5 @@ XAI_API_KEY = "${env:XAI_API_KEY}"
 [settings]
 windows_shim_mode = "hardlink"
 
-
 [settings.npm]
 bun = true
-

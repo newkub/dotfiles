@@ -1,2 +1,1 @@
-1. /analyze-project
-2. เขียน readme ใหม่ ตามรูปแบบ/follow-readme
+1. อัพเดท README.md ใหม่ทุกไฟล์เลย /analyze-project ก่อน

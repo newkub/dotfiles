@@ -62,7 +62,7 @@
 	"deepsource.showCodelens": true,
 	"docker.extension.enableComposeLanguageServer": false,
 	"editor.codeActionsOnSave": {
-		"source.action.useSortedAttributes.biome": "always",
+		"source.action.useSortedAttributes.biome": "explicit",
 		"source.action.useSortedKeys.biome": "always",
 		"source.action.useSortedProperties.biome": "always",
 		"source.fixAll.biome": "always",

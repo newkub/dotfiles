@@ -26,8 +26,14 @@
 [task]
 
 - /analyze-project ก่อน ก่อน planing
+- /follow-global-workflows
 - ทุกครั้งก่อนจบ task ต้อง /run-lint 
 
+[tech-stack]
+
+- ถ้าสร้าง browse extensions ใช้ wxt
+- ถ้าสร้าง website => ใช้ nuxt
+- ถ้าสร้าง cli => ใช้ bun
 
 [when-use-terminal]
 
@@ -43,6 +49,6 @@
 
 [when-see-word-in-file] 
 
-- Think => /analyze-project แล้วแก้ไขเพิ่มเติม
+- think => /analyze-project แล้วแก้ไขเพิ่มเติม
 
 

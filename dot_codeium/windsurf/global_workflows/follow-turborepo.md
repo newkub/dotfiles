@@ -36,11 +36,11 @@ auto_execution_mode: 3
 
 ## turbo.jsonc
 
-``` json
+``` json [turbo.json]
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies": [ // think],
+  "globalDependencies": // think,
   "tasks": {
      "dev": {
       "cache": false,
@@ -52,16 +52,16 @@ auto_execution_mode: 3
     "format": {
       "dependsOn": [],
     },
-    "lint": {},
+    "lint": {
+      "cache": true
+    },
     "test": {
       "dependsOn": ["^lint", "^build" ],
     },
     "review": {},
      "preview": {
       "dependsOn": ["^build"],
-    },
-   
-
+    }, 
   }
 }
 ```

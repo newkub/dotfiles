@@ -3,6 +3,24 @@ description: Follow these rules for Nuxt 2 project structure and data flow
 auto_execution_mode: 3
 ---
 
+## package.json
+
+
+``` json [package.json]
+{
+    "scripts" : {
+        "postinstall" : "nuxt prepare",
+        "dev" : "nuxt dev",
+        "build" : "nuxt build",
+        "preview" : "nuxt preview",
+        "format" : "biome format --write",
+        "lint" : "nuxt typecheck && biome lint --write"
+    }
+
+}
+
+```
+
 
 ## nuxt.config.ts
 

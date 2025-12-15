@@ -24,8 +24,13 @@
     },
     // Open new terminal
     {
-        "key": "ctrl+shift+t",
+        "key": "ctrl+shift+r",
         "command": "workbench.action.terminal.new"
+    },
+    // Open run task
+    {
+        "key": "ctrl+shift+t",
+        "command": "workbench.action.tasks.runTask"
     },
     // Open folder (when not in terminal)
     {
