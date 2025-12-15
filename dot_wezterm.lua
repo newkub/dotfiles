@@ -21,21 +21,21 @@ config.colors = {
   },
 }
 
--- Startup: 1 tab with pwsh, maximize
-wezterm.on('gui-startup', function()
-  -- Create first window with 2 tabs
-  local tab1, pane1, window = wezterm.mux.spawn_window({
-    args = {'pwsh.exe', '-NoLogo'}
-  })
-  
-  -- Create second tab
-  local tab2 = window:spawn_tab({
-    args = {'pwsh.exe', '-NoLogo'}
-  })
-  
-  -- Maximize the window and focus on the first tab
+wezterm.on('gui-startup', function(cmd)
+  -- Create the first window and get its components
+  local tab1, _, window = wezterm.mux.spawn_window(cmd or {})
   window:gui_window():maximize()
+
+  -- Create the second tab
+  window:spawn_tab({})
+
+  -- IMPORTANT: Activate the first tab to ensure we are operating on it
   tab1:activate()
+
+  -- Now that the first tab is guaranteed to be active, get its active pane and split it.
+  -- This avoids issues with stale pane references.
+  local pane1 = tab1:active_pane()
+  pane1:split({ direction = 'Right', size = { Percent = 50 } })
 end)
 
 -- Leader Key

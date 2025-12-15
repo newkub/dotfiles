@@ -89,5 +89,6 @@
         "key": "ctrl+t",
         "command": "explorer.newFile",
         "when": "explorerViewletFocus"
-    }
+    },
+
 ]
