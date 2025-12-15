@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "git submodule update",
+      "type": "shell",
+      "command": "git submodule update --init --recursive",
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "close": true
+      }
+    },
+    {
+      "label": "add ast-grep rules",
+      "type": "shell",
+      "command": "git submodule add https://github.com/newkub/rules",
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "close": true
+      }
+    }
+  ]
+}
