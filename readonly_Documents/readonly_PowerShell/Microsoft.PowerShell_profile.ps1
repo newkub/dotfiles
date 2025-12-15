@@ -147,9 +147,6 @@ function t {
    mise task run
 }
 
-function n {
-   nvim
-}
 
 # --- Bun Script Runners ---
 function rd {
@@ -181,6 +178,21 @@ function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
 }
 
+function n {
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$files
+    )
+
+    if ($files) {
+        nvim @files
+    } else {
+        nvim
+    }
+}
+
+
+
 function ff {
     param(
         [string]$query = ""
@@ -198,6 +210,7 @@ function ff {
 function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
 }
+
 
 function owindsurf_global_workflows {
     cd "C:\Users\Veerapong\.codeium\windsurf\global_workflows" | fd -t f | fzf | ForEach-Object { windsurf $_ }
@@ -222,7 +235,16 @@ function openqoder {
 }
 
 function openwindsurf {
-     windsurf .
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$Arguments
+    )
+
+    if ($Arguments.Count -gt 0) {
+        windsurf $Arguments
+    } else {
+        windsurf .
+    }
 }
 
 

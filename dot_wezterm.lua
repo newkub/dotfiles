@@ -2,7 +2,7 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-
+ch
 
 -- Basic Settings
 config.default_cwd = 'D:\\'

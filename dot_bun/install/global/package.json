@@ -25,7 +25,7 @@
     "loadtest": "^8.2.0",
     "npkill": "^0.12.2",
     "nuxt": "^4.2.2",
-    "opencode-ai": "^1.0.153",
+    "opencode-ai": "^1.0.155",
     "opencommit": "^3.2.10",
     "oxlint": "^1.32.0",
     "pake-cli": "^3.6.2",
