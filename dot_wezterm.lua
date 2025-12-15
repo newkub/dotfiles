@@ -2,7 +2,7 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-ch
+
 
 -- Basic Settings
 config.default_cwd = 'D:\\'
@@ -73,7 +73,19 @@ config.keys = {
   { key = 'F11', mods = '', action = wezterm.action.ToggleFullScreen },
   { key = 'n', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnWindow },
   { key = 'c', mods = 'LEADER', action = wezterm.action.ActivateCopyMode },
+
+  -- Focus next pane with Ctrl+Tab
+  { key = 'Tab', mods = 'CTRL', action = wezterm.action.ActivatePaneDirection 'Next' },
 }
+
+-- Switch to specific tabs with Ctrl + 1-9
+for i = 1, 9 do
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'CTRL',
+    action = wezterm.action.ActivateTab(i - 1),
+  })
+end
 
 
 return config
