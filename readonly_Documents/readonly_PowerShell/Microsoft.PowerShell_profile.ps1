@@ -47,29 +47,20 @@ if ($profileContent -notcontains $profileEntry) {
 }
 Remove-Item Alias:ni -Force -ErrorAction Ignore
 
+Remove-Item Alias:rd
+
+
 # --- General Aliases ---
 
-Set-Alias -Name b -Value broot
 Set-Alias -Name c -Value cls
 Remove-Item -Path Alias:dir -Force
-Set-Alias -Name dir -Value pwshdir
-Set-Alias -Name e -Value openexplorer
-Set-Alias -Name n -Value nvim
 Set-Alias -Name q -Value openqoder
 Set-Alias -Name w -Value openwindsurf
 Set-Alias -Name qoder-workflows -Value cdqoderworkflows
-Set-Alias -Name l -Value pwshdir
-Set-Alias -Name t -Value misetask
 Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
 
-# --- Bun Script Aliases ---
-Set-Alias -Name rb -Value runbuild
-Set-Alias -Name rd -Value rundev
-Set-Alias -Name rl -Value runlint
-Set-Alias -Name rr -Value runreview
-Set-Alias -Name rt -Value runtest
 
 # --- Other Aliases ---
 Set-Alias -Name s -Value google
@@ -108,6 +99,38 @@ function od {
     explorer "C:\Users\Veerapong\downloads"
 }
 
+function b {
+    broot
+}
+
+
+
+# remove all like rimraf, rima
+function rmr {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Path,
+        [int]$RetryCount = 3,
+        [int]$DelaySec = 1
+    )
+
+    if (-Not (Test-Path $Path)) { return }
+
+    for ($i=0; $i -lt $RetryCount; $i++) {
+        try {
+            # ลบโฟลเดอร์และไฟล์ทั้งหมด
+            Get-ChildItem $Path -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            # ลบโฟลเดอร์หลัก
+            Remove-Item $Path -Recurse -Force -ErrorAction SilentlyContinue
+            return
+        } catch {
+            Start-Sleep -Seconds $DelaySec
+        }
+    }
+    Write-Warning "Failed to remove: $Path"
+}
+
+
 
 # ==============================================================================
 # >> CUSTOM UTILITY FUNCTIONS
@@ -115,40 +138,73 @@ function od {
 # ==============================================================================
 
 # --- Directory Listing with eza ---
-function pwshdir {
+function dir {
     eza --long --git --git-repos --octal-permissions --total-size --time-style=relative --group-directories-first --color-scale=age,size --header --all
 }
 
 # --- mise task run ---
-function misetask {
+function t {
    mise task run
 }
 
+function n {
+   nvim
+}
+
 # --- Bun Script Runners ---
-function rundev {
+function rd {
     ni && bun run dev
 }
-function runbuild {
+function rb {
     ni && bun run build
 }
-function runlint {
+function rl {
     ni && bun run lint
 }
-function runtest {
+function rt {
     ni && bun run test
 }
-function runreview {
+function rr {
     ni && bun run review
 }
-
-
+function rs {
+    ni && bun run start
+}
+function rf {
+    ni && bun run format
+}
+function rc {
+    ni && bun run check
+}
 
 function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
 }
 
 function ff {
-    fd -t d | fzf | ForEach-Object { windsurf $_ }
+    param(
+        [string]$query = ""
+    )
+
+    # ถ้ามี query ให้ใส่ -i สำหรับ ignore case
+    if ($query) {
+        fd -t d $query | fzf | ForEach-Object { windsurf $_ }
+    } else {
+        fd -t d | fzf | ForEach-Object { windsurf $_ }
+    }
+}
+
+
+function f {
+    fd -t f | fzf | ForEach-Object { windsurf $_ }
+}
+
+function owindsurf_global_workflows {
+    cd "C:\Users\Veerapong\.codeium\windsurf\global_workflows" | fd -t f | fzf | ForEach-Object { windsurf $_ }
+}
+
+function op {
+    cd D:\ && fd -t d | fzf | ForEach-Object { windsurf $_ }
 }
 
 
@@ -157,7 +213,7 @@ function cpath {
     $PWD.Path | Set-Clipboard
 }
 
-function openexplorer {
+function o {
     explorer .
 }
 
