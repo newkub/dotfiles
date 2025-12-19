@@ -1,7 +1,7 @@
 ---
-description: Playwright configuration, test structure, and best practices
 auto_execution_mode: 3
 ---
+
 
 ## 1. playwright.config.ts
 
@@ -192,5 +192,6 @@ test('login test', async ({ page }) => {
 - Test ใน multiple browsers
 - ใช้ trace viewer สำหรับ debugging
 - เก็บ test data แยกจาก test logic
+
 
 

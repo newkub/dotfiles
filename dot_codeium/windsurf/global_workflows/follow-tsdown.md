@@ -1,7 +1,7 @@
 ---
-description: Install and configure tsdown for the project
 auto_execution_mode: 3
 ---
+
 
 ใช้ tsdown กับทุก packages/
 
@@ -13,4 +13,5 @@ auto_execution_mode: 3
 "scripts": {
    "build": "tsdown  --exports --dts",
 },
+
 

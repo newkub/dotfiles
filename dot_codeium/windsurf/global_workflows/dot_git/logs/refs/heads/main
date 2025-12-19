@@ -1,2 +1,15 @@
 0000000000000000000000000000000000000000 528eb9dccf977e946c61b93e108511f9685911f3 Veerapong <newkubise@gmail.com> 1765490697 +0700	commit (initial): feat: add all workflow files
 528eb9dccf977e946c61b93e108511f9685911f3 8eec3f7355a505eee8a0f1a7fbe3860633326244 Veerapong <newkubise@gmail.com> 1765490736 +0700	commit: feat: add and update all workflow files
+8eec3f7355a505eee8a0f1a7fbe3860633326244 bdcacce340f82bf774eea02aed95ac0ddbc9972d Veerapong <newkubise@gmail.com> 1765908990 +0700	commit: refactor(workflows): remove redundant files
+bdcacce340f82bf774eea02aed95ac0ddbc9972d e367d1c4f491e91c5f976f932e7c336ea8ee4312 Veerapong <newkubise@gmail.com> 1765909024 +0700	commit: docs(workflows): improve and format workflow files
+e367d1c4f491e91c5f976f932e7c336ea8ee4312 bd6e558935c842cb30c19b853789fda47a8240b0 Veerapong <newkubise@gmail.com> 1766089299 +0700	commit: feat: add new workflow templates and guidelines
+bd6e558935c842cb30c19b853789fda47a8240b0 caa734c615fc2b2be31f645b6c3717dffdb15c2a Veerapong <newkubise@gmail.com> 1766089312 +0700	commit: docs: update workflow templates with latest guidelines
+caa734c615fc2b2be31f645b6c3717dffdb15c2a 6f6e9371ee1846381128351ad53b88417aaaa786 Veerapong <newkubise@gmail.com> 1766089321 +0700	commit: docs: enhance code quality and feature guidelines
+6f6e9371ee1846381128351ad53b88417aaaa786 dbb9f2d1aacefc3dae418ae6be857d8df2c7f6ed Veerapong <newkubise@gmail.com> 1766089334 +0700	commit: chore: update run scripts and tooling configurations
+dbb9f2d1aacefc3dae418ae6be857d8df2c7f6ed 541f173dcb4062c4b4008056e4ae5eb2c4606c62 Veerapong <newkubise@gmail.com> 1766089387 +0700	commit: chore: remove deprecated workflow files
+541f173dcb4062c4b4008056e4ae5eb2c4606c62 1b307a0bccd8c144402a56dbb51194e4876d4dc1 Veerapong <newkubise@gmail.com> 1766090979 +0700	commit: fix(workflows): update ast-grep command in scan script
+1b307a0bccd8c144402a56dbb51194e4876d4dc1 d8fcaf11d605fc28e8765cda58a648c64aadd7d7 Veerapong <newkubise@gmail.com> 1766091057 +0700	commit: feat(workflows): add postinstall script for dependency updates
+d8fcaf11d605fc28e8765cda58a648c64aadd7d7 415d5380c7913af26f2151b4818a83765699b2cf Veerapong <newkubise@gmail.com> 1766092804 +0700	commit: docs(workflow): update run command workflows
+415d5380c7913af26f2151b4818a83765699b2cf 91258bc90d10fedec4c33a64578a55c5a7c19998 Veerapong <newkubise@gmail.com> 1766092845 +0700	commit: docs(workflow): update follow workflows
+91258bc90d10fedec4c33a64578a55c5a7c19998 1b0c81a0beef8e04fde8fdcf7489d94b42bc37eb Veerapong <newkubise@gmail.com> 1766092924 +0700	commit: docs(workflow): update use workflows
+1b0c81a0beef8e04fde8fdcf7489d94b42bc37eb 6a4c6db66244e63188774681a632c6bd33811df2 Veerapong <newkubise@gmail.com> 1766092982 +0700	commit: docs(workflow): update various workflows

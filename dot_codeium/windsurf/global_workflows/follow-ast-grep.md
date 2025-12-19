@@ -1,7 +1,7 @@
 ---
-description: Follow ast-grep setup by installing CLI and downloading config
 auto_execution_mode: 3
 ---
+
 
 1. bun i -d @ast-grep/cli 
 2. git submodule add https://github.com/newkub/rules
@@ -11,8 +11,9 @@ auto_execution_mode: 3
 ``` json
 {       
     "scripts": {
-        "scan": "sg scan -r",
+        "scan": "ast-grep scan -r",
     },
 }
 ```
+
 

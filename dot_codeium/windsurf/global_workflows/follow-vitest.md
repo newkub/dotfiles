@@ -1,8 +1,6 @@
 ---
-description: Vitest Best Practices - Comprehensive Rules
 auto_execution_mode: 3
 ---
-
 
 
 1.  bun add -d vitest @vitest/coverage-v8 @vitest/browser-preview @vitest/browser-playwright @nuxt/test-utils
@@ -96,4 +94,6 @@ export default defineConfig({
   }
 })
 ```
+
+
 

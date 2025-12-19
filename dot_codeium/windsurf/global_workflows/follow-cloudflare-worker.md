@@ -1,3 +1,8 @@
+---
+auto_execution_mode: 3
+---
+
+
 1. bun add wrangler
 
 2. wrangler.jsonc
@@ -14,4 +19,5 @@
   ]
 }
 ```
+
 

@@ -54,16 +54,12 @@ Remove-Item Alias:rd
 
 Set-Alias -Name c -Value cls
 Remove-Item -Path Alias:dir -Force
-Set-Alias -Name q -Value openqoder
-Set-Alias -Name w -Value openwindsurf
 Set-Alias -Name qoder-workflows -Value cdqoderworkflows
 Set-Alias -Name new -Value New-Item
+Set-Alias -Name w -Value windsurf
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
 
-
-# --- Other Aliases ---
-Set-Alias -Name s -Value google
 
 
 # ==============================================================================
@@ -102,6 +98,15 @@ function od {
 function b {
     broot
 }
+
+
+function cc {
+    param(
+        [string]$file
+    )
+    Get-Content $file -Raw | Set-Clipboard
+}
+
 
 
 
@@ -158,14 +163,23 @@ function rb {
 function rl {
     ni && bun run lint
 }
+function wrl {
+    ni && turbo watch bun run lint
+}
 function rt {
     ni && bun run test
+}
+function wrt {
+    ni && turbo watch bun run test
 }
 function rr {
     ni && bun run review
 }
 function rs {
     ni && bun run start
+}
+function wrs {
+    ni && turbo watch bun run test
 }
 function rf {
     ni && bun run format
@@ -206,6 +220,76 @@ function ff {
     }
 }
 
+function cff {
+    param(
+        [string]$query = ""
+    )
+
+    # เลือก directory ด้วย fd + fzf
+    $selected = if ($query) {
+        fd -t d $query | fzf
+    } else {
+        fd -t d | fzf
+    }
+
+    # ถ้าเลือก directory ได้ ให้ cd เข้าไป
+    if ($selected) {
+        Set-Location $selected
+    }
+}
+
+function crm {
+    param(
+        [string]$query = ""
+    )
+
+    # เลือก directory ด้วย fd + fzf
+    $selected = if ($query) {
+        fd -t d $query | fzf
+    } else {
+        fd -t d | fzf
+    }
+
+    if ($selected) {
+        # ยืนยันก่อนลบ
+        $confirm = Read-Host "Delete '$selected'? (y/n)"
+        if ($confirm -eq 'y') {
+            Remove-Item -Recurse -Force $selected
+            Write-Host "Deleted: $selected"
+        } else {
+            Write-Host "Canceled"
+        }
+    }
+}
+
+
+
+function op {
+    param([string]$query = "")
+    $selected = if ($query) { fd -t d $query D:\ | fzf } else { fd -t d D:\ | fzf }
+    if ($selected) { windsurf $selected }  
+}
+
+
+function e {
+    explorer .
+}
+
+function nn {
+    param(
+        [string]$query = ""
+    )
+
+    # ถ้ามี query ให้ใส่ -i สำหรับ ignore case
+    if ($query) {
+        fd -t f $query | fzf | ForEach-Object { nvim $_ }
+    } else {
+        fd -t f | fzf | ForEach-Object { nvim $_ }
+    }
+}
+
+
+
 
 function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
@@ -226,13 +310,13 @@ function cpath {
     $PWD.Path | Set-Clipboard
 }
 
-function o {
-    explorer .
-}
+
 
 function openqoder {
      qoder .
 }
+
+
 
 function openwindsurf {
     param(
@@ -248,6 +332,11 @@ function openwindsurf {
 }
 
 
+function new-repo {
+    $name = Read-Host "Enter repo name"
+    gh repo create $name --public --clone
+}
+
 
 function cdqoderworkflows {
     cd C:\Users\Veerapong\.codeium\windsurf\global_workflows && dir
@@ -260,12 +349,12 @@ function repo {
     if ($LASTEXITCODE -eq 0) {
         gh repo view --web
     } else {
-        start "https://github.com/newkub?tab=repositories"
+        open "https://github.com/newkub?tab=repositories"
     }
 }
 
 # --- Open Google ---
-function google {
-    start "https://google.com"
+function s {
+    open "https://www.google.com"
 }
 

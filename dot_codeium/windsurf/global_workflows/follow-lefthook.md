@@ -1,7 +1,7 @@
 ---
-description: Install lefthook and download its configuration
 auto_execution_mode: 3
 ---
+
 
 1. package.json
 
@@ -56,4 +56,5 @@ pre-merge-commit:
       run: test $(git merge-base HEAD origin/main) = $(git rev-parse origin/main)
 
 ```
+
 

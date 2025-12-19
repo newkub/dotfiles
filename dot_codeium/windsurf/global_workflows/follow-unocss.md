@@ -1,34 +1,33 @@
 ---
-description: UnoCSS best practices and setup for Vite/Nuxt projects
 auto_execution_mode: 3
 ---
 
+
+## Rules 
+
+- ทุก .vue ต้องใช้ class ที่ตรงกับ uno.config.theme
+- ใน uno.config.ts theme ต้องรองรับ theme และ color ใช้hsl โดยกำหนดให้ตรงกับ assets/theme.css
+- สร้าง theme.css ให้ตรงกับ unoconfig theme
+- 
 
 ## uno.config.ts 
 
 
 ``` ts
 import { defineConfig, presetIcons, presetWind4, transformerVariantGroup, transformerDirectives, transformerCompileClass } from 'unocss'
-import { createExternalPackageIconLoader } from '@iconify/utils/lib/loader/external-pkg'
-
 
 export default defineConfig({
 	presets: [
 		presetWind4({
-			preflights: {
-				reset: true,
-			}
+			preflights: { 
+				reset: true, 
+			} 
 		}),
-		presetIcons({
-			autoInstall: true,
-			collections: createExternalPackageIconLoader('@iconify-json/mdi')
-			collections: createExternalPackageIconLoader('@iconify-json/logos')
-		})
-		transformers: [
-			transformerVariantGroup(),
-			transformerDirectives(),
-			transformerCompileClass()
-		],
+	],
+	transformers: [
+		transformerVariantGroup(),
+		transformerDirectives(),
+		transformerCompileClass()
 	],
 })
 ```

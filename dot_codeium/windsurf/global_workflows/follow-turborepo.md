@@ -1,40 +1,36 @@
 ---
-description: Guidelines for setting up a Turborepo project
 auto_execution_mode: 3
 ---
 
 
-## setup remote caching
+## setup 
 
-- bunx turbo link --yes
+1. bunx turbo link --yes
 
-## package.json (root)
+2. package.json (root)
 
-1. bun add -d typescript @biomejs/biome lefthook taze turbo
-
-2. scripts
-
+- bun add -d typescript @biomejs/biome lefthook taze turbo
 
 ``` json
 {
   "name" : "repo",
   "packageManager" : "bun@", // ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
   "scripts": {
+    "start" : "turbo watch check",
+    "postinstall" : "taze -r -w -i",
     "prepare": "lefthook install",
     "lint": "turbo lint",
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --ui tui",
     "test": "turbo test",
-    "review": "turbo review",
+    "check": "turbo check",
     "format": "turbo format",
     "update:deps": "taze -r -w -i"
   },
 }
 ```
 
-
-
-## turbo.jsonc
+3. turbo.jsonc
 
 ``` json [turbo.json]
 {
@@ -42,6 +38,10 @@ auto_execution_mode: 3
   "ui": "stream",
   "globalDependencies": // think,
   "tasks": {
+     "start": {
+      "cache": false,
+      "persistent": true
+    },
      "dev": {
       "cache": false,
       "persistent": true
@@ -58,18 +58,21 @@ auto_execution_mode: 3
     "test": {
       "dependsOn": ["^lint", "^build" ],
     },
-    "review": {},
-     "preview": {
+    "check": {},
+     "check": {
       "dependsOn": ["^build"],
     }, 
   }
 }
 ```
 
-## workspace
+4. เพิ่ม .turbo ใน .gitignore
+
+## check
 
 - name ใน package.json ต้องตั้งเช่น name:"repo/workspace"
 - /follow-package-json ทำให้เหมาะสม
+
 
 
 

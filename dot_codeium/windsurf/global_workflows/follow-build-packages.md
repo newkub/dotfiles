@@ -1,7 +1,7 @@
 ---
-description: Workflow for building packages, including analysis, testing, and documentation
 auto_execution_mode: 3
 ---
+
 
 1. /analyze-project
 2. /use-packages
@@ -14,10 +14,11 @@ auto_execution_mode: 3
 7. /make-completely
 8. /test-examples
 9. /update-readme
-10. /run-review
+10. /run-check
 
 
 
 หมายเหตุ :
 1. ถ้าสร้างใน utils/ แต่ละ utils ต้องมี file.test.ts และ file.usage.ts แต่ละ file
+
 

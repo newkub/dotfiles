@@ -4,11 +4,22 @@ run = "scoop update * && winget upgrade --all && bun update -g && mise up && mis
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
-run = "scoop cleanup * && mise prune && podman system prune -a && git gc --prune=now"
+run = '''
+scoop cleanup * &&
+mise prune &&
+git gc &&
+pwsh -Command "Clear-RecycleBin -Force -ErrorAction SilentlyContinue" &&
+pwsh -Command "Get-ChildItem -Path $env:TEMP -Recurse -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue" &&
+pwsh -Command "Get-ChildItem -Path C:\Windows\Temp -Recurse -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue" &&
+pwsh -Command "Remove-Item -Path C:\Users\Veerapong\scoop\cache\* -Recurse -Force -ErrorAction SilentlyContinue"
+'''
+
 
 [tasks.commit]
 description = "git add all && commit with czg ai"
 run = "git add . && czg ai"
+
+
 
 
 # chezmoi tasks
@@ -65,6 +76,12 @@ XAI_API_KEY = "${env:XAI_API_KEY}"
 "cargo:git-x" = "latest"
 "cargo:xh" = "latest"
 "github:kristoferlund/ostt" = "latest"
+"cargo:node_module-nuke" = "latest"
+"cargo:clean-dev-dirs" = "latest"
+"cargo:procs" = "latest"
+biome = "latest"
+oxlint = "latest"
+"cargo:selene" = "latest"
 
 
 [settings]

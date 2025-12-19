@@ -1,3 +1,8 @@
+---
+auto_execution_mode: 3
+---
+
+
 ## add
 
 1. git submodules add <remote-url>
@@ -13,3 +18,4 @@
 ## submodules list 
 
 - git submodule status
+

@@ -1,54 +1,38 @@
 
-[talk-with-me]
 
-- ตอบเป็นภาษาไทย
-- อะไรที่คำศัพท์เฉพาะ ไมต้องพยายามแปล
+## Chat
 
-
-[variables]
-
-- {global_workflows} = "C:/Users/Veerapong/.codeium/windsurf/global_workflows"
-
-[every-workspace]
-
-- ต้องมี README.md, .gitignore 
+- ตอบเป็นภาษาไทย ให้กระชับ
 
 
-[every-project]
+## Edit 
 
-- ทุก workspace ต้องมี .windsurf/user-goal.md
-
-[when-analyze-user-requirement]
-
-- /compact
+- ทำตาม follow- ใน /follow-windsurf-global-workflows
+- ถ้าเจอ comment ที่ @ai คุณต้องคิดและทำสิ่งนั้นด้วย
+- ก่อนจะจบ task ถ้าทดสอบเสมอ เช่น /run-lint
 
 
-[task]
+## Tools
 
-- /analyze-project ก่อน ก่อน planing
-- /follow-global-workflows
-- ทุกครั้งก่อนจบ task ต้อง /run-lint 
-
-[tech-stack]
-
-- ถ้าสร้าง browse extensions ใช้ wxt
-- ถ้าสร้าง website => ใช้ nuxt
-- ถ้าสร้าง cli => ใช้ bun
-
-[when-use-terminal]
-
-- search =>  ast-grep
+- view folder structure => eza --tree --git-ignore --ignore-glob='.gitignore'
+- search => ใช้ ast-grep 
+- replace => ใช้ ast-grep
+- rename => pwsh
+- delete-file => pwsh
+- move => pwsh
 - file operation => pwsh
-- package manager => bun
+- package manager => bun, uv, scoop, cargo, mise, winget
 
+หมายเหตุ
+- ถ้า program ไหนยังไม่ติดตั้งให้ติดตั้งให้ด้วย (ใช้ scoop, mise, bun หลัก) 
+- ถ้าไม่แน่ใจ ลอง --help เพื่อดูคำคำสั่งทั้งหมด
 
-[when-edit-file]
+## Tech Stack
 
-- /follow-global-workflows
+- ใช้ picocolors ไม่ใช้ chalk 
 
+## don't
 
-[when-see-word-in-file] 
-
-- think => /analyze-project แล้วแก้ไขเพิ่มเติม
-
+- ไม่ใช้ biome-ignore, ts-ignore และ ignore ทั้งหมด
+- ห้ามแก้ไข config file ต่างๆเอง => ให้ /follow-windsurf-workflows
 

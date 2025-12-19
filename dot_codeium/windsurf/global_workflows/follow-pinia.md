@@ -1,7 +1,7 @@
 ---
-description: Pinia best practices for setup, composition, persistence, and component usage
 auto_execution_mode: 3
 ---
+
 
 ## Best Practices
 
@@ -71,5 +71,6 @@ const { fetchUser } = userStore // actions ไม่ต้อง storeToRefs
 - business logic ทั้งหมดอยู่ใน actions
 - ไม่ mutate state นอก store
 - Test stores แยกจาก components
+
 
 

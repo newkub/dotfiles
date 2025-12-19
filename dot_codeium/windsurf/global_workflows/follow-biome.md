@@ -1,7 +1,7 @@
 ---
-description: Follow Biome configuration for root and workspace packages
 auto_execution_mode: 3
 ---
+
 
 1. bun add -d @biomejs/biome
 2. กำหนดใน package.json
@@ -15,7 +15,37 @@ auto_execution_mode: 3
 }
 ```
 
-3. gh download gh download https://github.com/newkub/my-config/blob/main/biome.json
+3. biome.jsonc
+
+``` json
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedKeys": "on",
+				"useSortedProperties": "on"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	}
+}
+```
 
 4. ถ้าเป็น monorepo ใน workspace ต่างๆให้กำหนดอย่างนี้
 
@@ -25,3 +55,4 @@ auto_execution_mode: 3
    "extends": "//",
 }
 ```
+

@@ -1,12 +1,48 @@
 ---
-description: Setup release-it with changelogen and configure package.json for publishing
 auto_execution_mode: 3
 ---
 
-1. ติดตั้ง release-it ใน และ release-it-changelogen devDependencies
-2. รัน xh https://raw.githubusercontent.com/newkub/dev-config/refs/heads/main/.release-it.json --json --body --download
-3. ต้องการ README.md
-4. ใน package.json ต้องเป็น private : false, keyword, author, license, fil, ต้องมี bin 
-5. ต้องมี License
+
+
+1. กำหนด bunx release-it ใน scripts package.json 
+
+``` json [package..json]
+{
+    "scripts" : "bunx release-it"
+}
+``` 
+
+2. .releaseit.json
+
+``` json [.releaseit.json]
+{
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}",
+    "requireCleanWorkingDir": false,
+    "requireUpstream": false,
+    "push": true,
+    "commit": true,
+    "tag": true
+  },
+  "npm": {
+    "publish": true,
+    "publishPath": "."
+  },
+  "github": {
+    "release": false
+  },
+  "hooks": {
+    "before:init": [
+      "bun run pre-release"
+    ],
+    "after:release": [
+      "echo ✅ Successfully released ${name}@${version} to npm!",
+      "echo 📦 Install with: bun add ${name}"
+    ]
+  }
+}
+``` 
+
 
 

@@ -1,8 +1,6 @@
 ---
-description: Follow Drizzle ORM best practices
 auto_execution_mode: 3
 ---
-
 
 
 ## package.json

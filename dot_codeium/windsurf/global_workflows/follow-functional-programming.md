@@ -1,7 +1,7 @@
 ---
-description: Strictly follow these functional programming rules with TypeScript
 auto_execution_mode: 3
 ---
+
 
 follow ทำตามกฏเหล่านี้อย่างเคร่งครัด
 
@@ -313,5 +313,6 @@ test('logger',async()=>{
   expect(await Effect.runPromise(p.pipe(Effect.provide(TestLogger)))).toBe('ok')
 })
 ```
+
 
 

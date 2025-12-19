@@ -1,8 +1,7 @@
 return {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  config = function(_, opts)
-    require("which-key").setup(opts)
-    require("mappings").setup()
-  end,
+	"folke/which-key.nvim",
+	event = "VimEnter",
+	config = function(_, opts)
+		require("which-key").setup(opts)
+	end,
 }

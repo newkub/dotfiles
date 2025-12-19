@@ -1,303 +1,89 @@
 ---
-description: Strictly follow these rules for Nuxt 4
 auto_execution_mode: 3
 ---
 
-follow ทำตามกฏเหล่านี้อย่างเคร่งครัด (Nuxt 4)
 
-## Nuxt 4 Project Structure
+1. /follow-package-json 
+2. refactor
 
-```
-my-nuxt-app/
-├── app/                    # Client code
-│   ├── assets/             # CSS, images (processed)
-│   ├── components/         # Vue components (auto-import)
-│   ├── composables/        # Composition API (auto-import)
-│   ├── layouts/            # Layout components
-│   ├── middleware/         # Route middleware
-│   ├── pages/              # File-based routing
-│   ├── plugins/            # Vue/Nuxt plugins
-│   ├── utils/              # Helpers (auto-import)
-│   ├── app.vue             # Root component
-│   ├── app.config.ts       # Runtime config
-│   └── error.vue           # Error page
-├── content/                # Nuxt Content (optional)
-├── public/                 # Static files
-├── shared/                 # Client + Server shared
-│   ├── types/              # Shared types
-│   └── utils/              # Shared utils
-├── server/                 # Server code
-│   ├── api/                # API endpoints
-│   ├── middleware/         # Server middleware
-│   └── utils/              # Server utils
-├── nuxt.config.ts
-└── tsconfig.json
-```
+- refactor pages => components, composables
+- refactor layouts => components, composables
+- refactor components => smaller components, composables, shared/utils
+- refactor composables => smaller composables, shared/utils
+- refactor stores => composables, shared/types (or keep in `app/stores/` if complex)
+- refactor app/middleware => composables, shared/utils
+- refactor plugins => composables, shared/utils
+- refactor server/api => server/utils, server/db
+- refactor server/middleware => server/utils
+- refactor server/db => shared/types, server/utils
+- refactor app.vue => layouts, components
+- refactor error.vue => layouts, components
 
-## Core Concepts
+4. แต่ะไฟล์ให้ทำตาม rules ด้านล่าง
 
-### Architecture Overview
-```
-                ┌────────────────────────────────────────────────┐
-                │   Nuxt 4 Architecture (Auto-imports + SSR)     │
-                └────────────────────────────────────────────────┘
+- app.vue
+ - กำหนด max-width
+ - ใช้ <NuxtLayout>, <NuxtPage> เสมอ
 
-                              ┌──────────────┐
-                              │shared/types/ │
-                              └──────┬───────┘
-                                     │ TypeScript types (client + server)
-                                     │
-                      ┌──────────────┼──────────────┐
-                      │              │              │
-                      ▼              ▼              ▼
-              ┌───────────────┐           ┌─────────────────┐
-              │  Client Side  │           │   Server Side   │
-              └───────────────┘           └─────────────────┘
+- `pages/`
+  - Data Fetching: ใช้ `useAsyncData` หรือ `useFetch` เป็นหลัก
+    - ใส่ `key` ที่ไม่ซ้ำกันเสมอเพื่อป้องกัน data ซ้ำซ้อน
+    - จัดการ error state และ loading state ให้ครบถ้วน
+    - พิจารณาใช้ `lazy: true` สำหรับ non-critical data เพื่อปรับปรุง LCP (Largest Contentful Paint)
+  - Component Composition: รักษา page component ให้เล็กและอ่านง่าย
+    - แยก logic ที่ซับซ้อนและนำกลับมาใช้ใหม่ได้ไปที่ `composables/`
+    - แยก UI ที่ซับซ้อนเป็น `components/` ย่อยๆ
 
-         ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
-         │composable│  │  stores/ │  │server/api│  │server/   │
-         └─────┬────┘  └─────┬────┘  └─────┬────┘  │utils/    │
-               │             │             │       └──────────┘
-               │             │             │        • Helpers
-               │ • useState  │ • Pinia     │        • DB utils
-               │ • useFetch  │ • Setup     │        • Validators
-               │ • useAsync  │ • Reactive  │
-               │ • useRoute  │ • Global    │        • Event handlers
-               │ • useCookie │             │        • DB queries
-               │             │             │        • Business logic
-               └──────┬──────┴──────┬──────┘
-                      │             │
-           ┌──────────┼─────────────┼──────────┐
-           │          │             │          │
-           ▼          ▼             ▼          ▼
-      ┌─────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
-      │app/utils│ │ plugins/ │ │middleware│ │  pages/  │
-      └─────────┘ └──────────┘ └──────────┘ └─────┬────┘
-       • Helpers   • Vue        • Route      │
-       • Format    • Global     • Auth       │ • index.vue
-       • Pure fn   • .client    • Redirects  │ • [id].vue
-                   • .server    • *.global   │ • [...slug].vue
-                                              │ • error.vue
-           │            │            │        │
-           └────────────┬────────────┴────────┘
-                        │
-              ┌─────────┼─────────┐
-              │                   │
-              ▼                   ▼
-        ┌───────────┐       ┌──────────┐
-        │components/│       │ layouts/ │
-        └─────┬─────┘       └──────────┘
-              │              • default.vue
-              │ • Base       • custom.vue
-              │ • UI         • <NuxtLayout>
-              │ • Form       • <slot />
-              │ (auto-import)
-              │
-              └─────────┬─────────┘
-                        │
-              ┌─────────┼─────────┐
-              │                   │
-              ▼                   ▼
-        ┌──────────┐        ┌──────────┐
-        │app.config│        │  Build   │
-        └──────────┘        └──────────┘
-         • Runtime           • Nitro
-         • Theme             • Auto-imports
-         • Constants         • Type generation
-              │
-              ▼
-    ┌─────────────────────────────────────┐
-    │    Data & State Management          │
-    └─────────────────────────────────────┘
-              │
-     ┌────────┼────────┐
-     │        │        │
-     ▼        ▼        ▼
-┌──────────┐ ┌──────────┐ ┌──────────┐
-│ Database │ │ External │ │  Cache   │
-└──────────┘ └──────────┘ └──────────┘
- • Prisma     • $fetch     • Nitro
- • Drizzle    • useFetch   • Route rules
- • SQL        • API calls  • State cache
-```
+- `components/`: Auto-imported Vue components.
+  - Structure: ใช้ `<script setup lang="ts">` และ `<script>` อยู่ด้านบน `<template>`
+  - Reusability: ออกแบบ component เพื่อการนำกลับมาใช้ใหม่ (reusability) และไม่ขึ้นตรงกับ page ใด page หนึ่ง
+    - หลีกเลี่ยงการใช้ logic ที่ผูกกับ route หรือ page ปัจจุบันโดยตรง
+  - Props & Emits:
+    - กำหนด type ของ props ให้ชัดเจนด้วย `defineProps<{...}>()`
+    - กำหนด events ที่ component สามารถส่งออกได้ด้วย `defineEmits<{...}>()`
+  - Organization: จัดกลุ่มตาม feature หรือ domain เพื่อให้ง่ายต่อการค้นหา
+    - เช่น `components/ui/`, `components/products/`, `components/auth/`
+  - Styling:
+    - เน้นใช้ UnoCSS เป็นหลัก
+    - ใช้ `<style scoped>` เมื่อจำเป็นสำหรับ component-specific overrides จริงๆ เท่านั้น
+  - Client-side Rendering:
+    - ใช้ `.client.vue` หรือ `<ClientOnly>` สำหรับ component ที่ต้องทำงานบน client เท่านั้น (เช่น component ที่ใช้ browser-specific APIs อย่าง `window` หรือ `document`)
 
-### Core Principles
-- **New Structure**: `app/` separated from root → faster file watchers, better IDE
-- **Auto-imports**: Components, composables, utils - no import statements needed
-- **File-based Routing**: `app/pages/` → automatic routes
-- **Shared Code**: `shared/` directory for code used by both client & server
-- **TypeScript Projects**: Separate tsconfig for app, server, shared (better inference)
-- **Smart Data Fetching**: `useFetch/useAsyncData` with auto-share, auto-cleanup, reactive keys
-- **SSR-First**: Server-side rendering by default, hydration on client
+- `composables/`: Reusable logic (auto-imported).
+  - Naming: ตั้งชื่อไฟล์ขึ้นต้นด้วย `use` เช่น `useAuth.ts`, `useCart.ts`
+  - Scope: เป็นที่รวมของ business logic, state management, และ data fetching logic
+  - State Management:
+    - ใช้ `useState` สำหรับ state ง่ายๆ ที่แชร์กันระหว่าง components
+    - ใช้ Pinia สำหรับ global state ที่ซับซ้อนและต้องการ devtools
+  - SSR Safety:
+    - ใช้ `useState` เพื่อสร้าง state ที่ปลอดภัยในการทำงานฝั่ง SSR
+    - Pinia จะจัดการเรื่องนี้ให้โดยอัตโนมัติ ไม่ต้องกังวลเรื่อง state รั่วข้าม requests
 
-### Data Flow
-```
-shared/types → composables → components
-       ↓             ↓
-   server/api ←— app/pages (SSR)
-       ↓
-   stores (Pinia - global state)
-```
+- `server/`: Server-side logic (Nitro).
+  - `api/`: สำหรับสร้าง API endpoints
+    - ไฟล์ `server/api/products/[id].get.ts` จะ map ไปที่ `GET /api/products/:id`
+    - ใช้ `defineEventHandler` ในการสร้าง handler
+    - ต้องมี test file (.spec.ts) ด้วย Vitest
+  - `db/`: สำหรับส่วนจัดการฐานข้อมูล
+    - เช่น logic เกี่ยวกับการเชื่อมต่อ, query, หรือ schema definition
+  - `middleware/`: Server middleware ที่ทำงานทุก request ที่เข้ามา
+    - เหมาะสำหรับ authentication, logging, หรือการเพิ่มข้อมูลลงใน event context
+  - `utils/`: Server-only utility functions
+    - ฟังก์ชันที่ใช้ภายใน server routes/api เท่านั้น และจะไม่ถูก bundle ไปกับ client-side code
+  - Secrets & Runtime Config:
+    - จัดการ environment variables และ secrets ผ่าน `useRuntimeConfig()`
+    - ข้อมูลใน `runtimeConfig` (default) จะอยู่ฝั่ง server เท่านั้น
+    - ข้อมูลที่ต้องการให้ client เข้าถึงได้ ต้องใส่ไว้ใน `runtimeConfig.public`
 
-### Key Technologies
-- **Framework**: Nuxt 4 (Vue 3 + Composition API)
-- **Styling**: UnoCSS (utility-first, no runtime)
-- **Icons**: UnoCSS + Iconify (@iconify-json/mdi)
-- **State**: Pinia (setup stores, Composition API style)
-- **Database**: Prisma (type-safe ORM)
-- **Validation**: Zod (runtime schema validation)
-- **Testing**: Vitest + @vue/test-utils
+- `shared/utils/`: Utilities ที่แชร์ระหว่าง server และ client (auto-imported)
+  - เป็นที่เก็บ utility functions ที่สามารถใช้ได้ทั้งฝั่ง server และ client (isomorphic)
+  - ควรเป็น pure functions (ไม่มี side effects) เพื่อให้ predictable และทดสอบง่าย
+  - เช่น `formatDate()`, `calculateDiscount()`
 
-## Folder Rules
+- `shared/types/`: สำหรับเก็บ TypeScript type definitions
+  - สำหรับเก็บ TypeScript type definitions และ interfaces
+  - ใช้ Zod, Valibot, or ArkType ในการสร้าง schema เพื่อ validate ข้อมูลที่รับมาจาก API หรือ form input
+    - ช่วยป้องกัน runtime errors และเพิ่มความปลอดภัยของข้อมูล
 
-### app/components/
-- <Purpose> => Vue components (auto-import)
-- <Do> => `<script setup lang="ts">`, Composition API, folders `ui/form/`, `defineProps/defineEmits<T>()`
-- <Don't> => business logic (→composables), API ตรง, Options API, ชื่อเดี่ยว, `any`
-- <Naming> => `PascalCase.vue`, Subfolder `ui/Button.vue`→`<UiButton/>`
-- <Type Safety> => typed props, `defineProps<Props>()`, ห้าม `any`
-- <Styling> => UnoCSS classes จาก `uno.config.ts`, สร้าง shortcuts ใน theme, ห้าม inline/hardcode
-- <Icons> => `presetIcons` + `@iconify-json/mdi`, ใช้ class `i-mdi-{icon-name}`
-- <Testing> => Vitest + @vue/test-utils
-- <Example>
-```vue
-<script setup lang="ts">
-interface Props{title:string}
-interface Emits{(e:'click',id:string):void}
-defineProps<Props>()
-const emit=defineEmits<Emits>()
-</script>
-<template>
-  <div class="card">
-    <h1 class="text-lg font-bold">{{title}}</h1>
-    <button class="btn-primary flex items-center gap-2" @click="emit('click','123')">
-      <div class="i-mdi-home text-xl"/>Click
-    </button>
-  </div>
-</template>
-```
-
-
-### app/pages/
-<Purpose> => File-based routing
-<Do> => kebab-case, `definePageMeta()`, dynamic `[id]/[...slug]`, `useFetch`, `useSeoMeta`
-<Don't> => business logic (→composables), PascalCase
-<Naming> => `kebab-case.vue`, Dynamic `[id]`, Catch-all `[...slug]`
-<Type Safety> => Type route params
-<Example>
-```vue
-<script setup lang="ts">
-definePageMeta({layout:'dashboard',middleware:'auth'})
-useSeoMeta({title:'Users'})
-const {data:users}=await useFetch<User[]>('/api/users')
-</script>
-<template>
-  <div><h1>Users</h1>
-    <ul><li v-for="u in users" :key="u.id">{{u.name}}</li></ul>
-  </div>
-</template>
-```
-
-
-### app/stores/ (Pinia)
-<Purpose> => Global state management
-<Do> => Pinia setup stores, prefix `usePascalCaseStore`, `defineStore()`, export functions
-<Don't> => local state, Options API, `any`
-<Naming> => `usePascalCaseStore.ts`, Actions `camelCase` กริยา
-<Type Safety> => type state, actions
-<Example>
-```typescript
-export const useUserStore=defineStore('user',()=>{
-  const user=ref<User|null>(null)
-  const isLoggedIn=computed(()=>!!user.value)
-  const login=async(creds)=>{
-    const data=await $fetch('/api/auth/login',{method:'POST',body:creds})
-    user.value=data.user
-  }
-  return {user:readonly(user),isLoggedIn,login}
-})
-```
-
-
-## Configuration Files
-
-### app.config.ts
-```typescript
-export default defineAppConfig({theme:{primary:'#3b82f6'}})
-```
-
-### error.vue
-```vue
-<script setup lang="ts">
-defineProps<{error:{statusCode:number}}>()
-</script>
-<template>
-  <div><h1>{{error.statusCode}}</h1></div>
-</template>
-```
-
-### nuxt.config.ts
-```typescript
-export default defineNuxtConfig({
-  devtools: { enabled: true },
-  
-  modules: [
-    '@unocss/nuxt',
-    '@pinia/nuxt',
-    '@vueuse/nuxt'
-  ],
-  
-  css: [
-    '@unocss/reset/tailwind-compat.css',
-    '~/assets/token.css'
-  ],
-  
-  runtimeConfig: {
-    apiSecret: process.env.API_SECRET, // server-only
-    public: {
-      apiBase: '/api' // client + server
-    }
-  },
-  
-  typescript: {
-    strict: true
-  },
-  
-  vite: {
-    plugins: [
-      checker({
-        overlay: { initialIsOpen: false },
-        typescript: true,
-        vueTsc: true,
-        biome: { command: 'lint' }
-      })
-    ]
-  }
-})
-```
-
-### tsconfig.json
-- รัน /setup-tsconfig
-**Note**: Auto-generated, แยก projects app/server/shared → autocompletion + type inference ดีกว่า
-
-### uno.config.ts
-```typescript
-import { defineConfig, presetWind, presetIcons } from 'unocss'
-export default defineConfig({
-  presets: [
-    presetWind(),
-    presetIcons({
-      collections: {
-        mdi: () => import('@iconify-json/mdi/icons.json').then(i => i.default)
-      }
-    })
-  ],
-  shortcuts: {
-    'btn-primary': 'px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700',
-    'btn-secondary': 'px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700',
-    'card': 'p-4 bg-white rounded shadow',
-    'input-field': 'px-3 py-2 border rounded focus:outline-blue-500'
-  },
-  theme: { colors: { primary: '#3b82f6', secondary: '#6b7280' } }
-})
-```
+notes
+- ถ้าใช้ import ใช้ alias แบบ @ 

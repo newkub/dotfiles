@@ -1,3 +1,8 @@
+---
+auto_execution_mode: 3
+---
+
+
 ## package.json
 
 
@@ -26,12 +31,10 @@ import TurboConsole from 'unplugin-turbo-console/vite';
 import Terminal from 'vite-plugin-terminal';
 import { analyzer } from 'vite-bundle-analyzer';
 import Inspect from 'vite-plugin-inspect';
-import AST from 'unplugin-ast/vite'
-import Macros from 'unplugin-macros/vite'
-import UnpluginUnused from 'unplugin-unused'
-import UnpluginIsolatedDecl from 'unplugin-isolated-decl/vite'
-import Icons from 'unplugin-icons/vite'
-import Replace from 'unplugin-replace/vite'
+import AST from 'unplugin-ast/vite';
+import Macros from 'unplugin-macros/vite';
+import UnpluginIsolatedDecl from 'unplugin-isolated-decl/vite';
+import Icons from 'unplugin-icons/vite';
 
 export default defineConfig({
 	plugins: [
@@ -40,17 +43,15 @@ export default defineConfig({
 			imports: ['vue'],
 			dts: true
 		}),
-        AST(),
-        Icons({
-            autoInstall: true,
-        }),
-        UnpluginIsolatedDecl(),
-        UnpluginUnused(),
-        Macros(),
+		AST(),
+		Icons({
+			autoInstall: true,
+		}),
+		UnpluginIsolatedDecl(),
+		Macros(),
 		Replace(),
 		TurboConsole({}),
 		Terminal(),
-        Replace(),
 		analyzer(),
 		Inspect(),
 		Unused({
@@ -63,16 +64,16 @@ export default defineConfig({
 			depKinds: ['dependencies', 'peerDependencies'],
 		}),
 		tsconfigPaths(),
-		checker({ 
+		checker({
 			overlay: {
-                initialIsOpen : false,
-              },
-              typescript: true,
-              vueTsc: true,
-              oxlint: true,
+				initialIsOpen: false,
+			},
+			typescript: true,
+			vueTsc: true,
+			oxlint: true,
 		})
 	]
-})
+});
 ```
 
 ## tsconfig.json
@@ -84,4 +85,5 @@ export default defineConfig({
     "types": [ "vite/client"]
   }
 ```
+
 

@@ -1,7 +1,7 @@
 ---
-description: Guidelines for Functional Rust project structure and best practices
 auto_execution_mode: 3
 ---
+
 
 # Functional Rust Project Structure
 
@@ -133,6 +133,13 @@ name = "functional-rust-cli"
 version = "0.1.0"
 edition = "2021"
 
+[aliases]
+dev = "run"
+build-release = "build --release" 
+lint = "clippy"
+foromat = "fmt",
+test = "test",
+
 [dependencies]
 thiserror = "1.0"
 anyhow = "1.0"
@@ -143,6 +150,8 @@ serde = { version = "1.0", features = ["derive"] }
 [dev-dependencies]
 proptest = "1.4"
 ```
+
+
 
 #### main.rs
 ```rust
@@ -218,5 +227,6 @@ cargo fmt            # Format
 cargo build --release # Release build
 cargo doc --open     # Docs
 ```
+
 
 

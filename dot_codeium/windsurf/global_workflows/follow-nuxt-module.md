@@ -1,7 +1,7 @@
 ---
-description: Follow Nuxt module best practices
 auto_execution_mode: 3
 ---
+
 
 1. ให้มี folder structure ตามนี้คือ
 
@@ -13,12 +13,21 @@ auto_execution_mode: 3
 
 
 
+ต้องมีเหล่านี้ เป็นอย่างนี้ 
+
+
+
 
 - tsdown.config.ts
 - .gitignore
 - package.json
 - README.md
-- examples/
+- app/
+- app/
+- server/
+  - server/api
+  - server/db
+  - server/lib
 - src/
   - runtime
   - module.ts

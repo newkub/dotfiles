@@ -1,3 +1,8 @@
+---
+auto_execution_mode: 3
+---
+
+
 ## restructure
 - เข้า branch ชื่อ restructure
 
@@ -10,5 +15,6 @@
 
 ## review
 - เข้า branch ชื่อ review
+
 
 

@@ -1,3 +1,8 @@
+---
+auto_execution_mode: 3
+---
+
+
 ผมต้องการรวม commit 
 
 1. git log --oneline

@@ -1,9 +1,23 @@
 ---
-description: Run the release script from package.json until it succeeds.
 auto_execution_mode: 3
 ---
 
-1. /follow-package-json
-2. /follow-release-it
-3. run release ใน package.json จนกว่าจะผ่าน
+
+## release to npm
+
+release ด้วย release it
+
+1. กำหนดใน package.json
+
+- name ต้องชื่อว่า @newkub/<folder>-<workspace> เช่น @newkub/template-cli
+- เพิ่ม keyword ให้เหมาะสม ให้รองรับ SEO
+- กำหนด "private" : false
+- กำหนด prerelease, release โดย prerelease กำหนดว่า bun check โดยทำตาม /run-check
+- bun -v และกำหนด packageManager version ล่าสุด
+
+
+2. /update-readme
+
+3. /run-release
+
 

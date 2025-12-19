@@ -1,7 +1,7 @@
 ---
-description: Strictly follow these rules for Next.js 15 App Router
 auto_execution_mode: 3
 ---
+
 
 follow ทำตามกฏเหล่านี้อย่างเคร่งครัด (Next.js 15 App Router)
 
@@ -193,5 +193,6 @@ export function middleware(req){
 }
 export const config={matcher:['/dashboard/:path*']}
 ```
+
 
 

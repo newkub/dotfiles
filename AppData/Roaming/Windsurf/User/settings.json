@@ -250,5 +250,6 @@
 	},
 	"nuxt-intellisense.showWelcomeMessage": false,
 	"typescript.experimental.useTsgo": true,
-	"git.openRepositoryInParentFolders": "never"
+	"git.openRepositoryInParentFolders": "never",
+	"update.mode": "none"
 }

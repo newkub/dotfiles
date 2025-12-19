@@ -1,7 +1,7 @@
 ---
-description: Guidelines for updating the README.md file with standard sections
 auto_execution_mode: 3
 ---
+
 
 1. สร้าง README.md 
 

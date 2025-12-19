@@ -1,3 +1,8 @@
+---
+auto_execution_mode: 3
+---
+
+
 1. ใช้ vue plugins tauri 
 - bun i -d vite-plugin-tauri @tauri-apps/cli
 - เพิ่มใน vite.config.json

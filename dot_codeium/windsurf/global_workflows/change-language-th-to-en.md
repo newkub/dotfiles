@@ -1,7 +1,8 @@
 ---
-description: Change all language to English
 auto_execution_mode: 3
 ---
 
+
 เปลี่ยนภาษาทั้งหมดให้เป็นภาษาอังกฤ
+
 

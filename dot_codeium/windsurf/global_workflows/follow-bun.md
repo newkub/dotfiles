@@ -1,7 +1,7 @@
 ---
-description: Configure project for Bun, including build scripts and tsconfig
 auto_execution_mode: 3
 ---
+
 
 1. bun add @types/bun
 
@@ -24,6 +24,7 @@ auto_execution_mode: 3
     "types": [ "@types/bun"]
   }
 ```
+
 
 
 
