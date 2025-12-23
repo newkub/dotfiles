@@ -251,5 +251,8 @@
 	"nuxt-intellisense.showWelcomeMessage": false,
 	"typescript.experimental.useTsgo": true,
 	"git.openRepositoryInParentFolders": "never",
-	"update.mode": "none"
+	"update.mode": "none",
+	"vue.inlayHints.inlineHandlerLeading": true,
+	"nuxtr.defaultPackageManager": "Bun",
+
 }

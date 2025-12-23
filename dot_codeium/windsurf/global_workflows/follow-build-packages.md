@@ -3,18 +3,29 @@ auto_execution_mode: 3
 ---
 
 
+## node
+
 1. /analyze-project
 2. /use-packages
-3. /follow-functional-programming
+3. /follow-node-functional-programming
 4. /follow-turborepo
 5. /follow-vitest
 6. /follow-tsdown
+7. /follow-gitignore
+8. /make-completely
+11. /run-verify
+
+## bun native
+
+1. /analyze-project
+2. /use-packages
+3. /follow-bun-functional-programming
+4. /follow-turborepo
+5. /follow-tsdown
 6. /follow-gitignore
-6. /follow-readme
-7. /make-completely
-8. /test-examples
-9. /update-readme
-10. /run-check
+8. /make-completely
+11. /run-verify
+
 
 
 

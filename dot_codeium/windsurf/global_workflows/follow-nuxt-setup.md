@@ -3,7 +3,7 @@ auto_execution_mode: 3
 ---
 
 
-## 1. Init
+## 1. Init 
 
 1. ใช้ eza --tree --git-ignore --ignore-glob='.gitignore' ดูว่ามีอะไรบ้างหรือยัง 
 2. ถ้ามีแล้วให้ ข้ามไป
@@ -74,7 +74,7 @@ my-nuxt-app/
 import checker from "vite-plugin-checker";
 
 export default defineNuxtConfig({
-    compatibilityDate: "2025-12-17",
+    compatibilityDate: "", // @ai กำหนด ณ วันที่ปัจจุบัน
     devtools: { enabled: true },
     modules: [
         "@vue-macros/nuxt",
@@ -86,6 +86,8 @@ export default defineNuxtConfig({
         "@nuxt/icon",
         "@scalar/nuxt"
     ],
+
+
 
     scalar: {
         theme: 'nuxt',
@@ -137,7 +139,7 @@ export default defineNuxtConfig({
 
 ```json [tsconfig.json]
 {
-    "extends": "./.nuxt/tsconfig.json"
+    "extends": "./.nuxt/tsconfig.json",
 }
 ```
 

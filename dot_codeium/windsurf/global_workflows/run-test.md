@@ -2,17 +2,10 @@
 auto_execution_mode: 3
 ---
 
+1. /follow-windsurf-global-workflows
+2. ต้องเขียน test 
+3. run test แล้วแก้ error, warning ทั้งหมดตาม /follow-code-quanlty จนไม่มีเหลือ
 
-## node
-
-1. กำหนด test ใน scripts package.json ลองดู /follow-package-json
-
-
-2. run test ใน package.json แล้วแก้ error, warning ทั้งหมดจนไม่มีเหลือ
-
-3. run test ใน package.json แล้วแก้ไข error ทั้งหมด จนไม่มีเหลือ
-
-4. run test:coverage ใน package.json จนกว่าจะมากกว่า 90%
-
-
+- node => ดูใน /follow-node
+- rust => ดูใน /follow-rust
 

@@ -3,87 +3,196 @@ auto_execution_mode: 3
 ---
 
 
-1. /follow-package-json 
-2. refactor
+# แนวทางการพัฒนาโปรเจกต์ด้วย Nuxt.js
 
-- refactor pages => components, composables
-- refactor layouts => components, composables
-- refactor components => smaller components, composables, shared/utils
-- refactor composables => smaller composables, shared/utils
-- refactor stores => composables, shared/types (or keep in `app/stores/` if complex)
-- refactor app/middleware => composables, shared/utils
-- refactor plugins => composables, shared/utils
-- refactor server/api => server/utils, server/db
-- refactor server/middleware => server/utils
-- refactor server/db => shared/types, server/utils
-- refactor app.vue => layouts, components
-- refactor error.vue => layouts, components
+เอกสารนี้สรุปแนวทางปฏิบัติที่ดีที่สุดสำหรับการพัฒนาแอปพลิเคชันด้วย Nuxt.js โดยมีเป้าหมายเพื่อสร้างโค้ดที่สะอาด, บำรุงรักษาง่าย และมีประสิทธิภาพสูง
 
-4. แต่ะไฟล์ให้ทำตาม rules ด้านล่าง
+## 1. แนวคิดหลัก (Core Concepts)
 
-- app.vue
- - กำหนด max-width
- - ใช้ <NuxtLayout>, <NuxtPage> เสมอ
+- **Component-Based Architecture:** สร้าง UI จากส่วนประกอบย่อยที่นำกลับมาใช้ใหม่ได้ (Components) ทำให้โค้ดเป็นสัดส่วนและจัดการง่าย
+- **Composition API:** ใช้ฟังก์ชัน `setup` และ `composables` เพื่อจัดระเบียบและแยก Logic ที่ซับซ้อนออกจาก UI ทำให้โค้ดอ่านง่ายและทดสอบได้สะดวก
+- **File-based Routing:** Nuxt สร้าง Routing ให้อัตโนมัติจากโครงสร้างไฟล์ในโฟลเดอร์ `pages/` ช่วยลดความซับซ้อนในการตั้งค่า
+- **Auto-imports:** Components, Composables, และ Utilities จะถูก import ให้อัตโนมัติ ทำให้โค้ดกระชับขึ้นและลด Boilerplate
+- **Universal Rendering:** โค้ดสามารถทำงานได้ทั้งบน Server (SSR) และ Client (CSR) เพื่อเพิ่มประสิทธิภาพ SEO และลดเวลาในการโหลดครั้งแรก
+- **Isomorphic Code:** เขียนฟังก์ชัน (ใน `shared/`) ที่สามารถทำงานได้ทั้งในฝั่ง Server และ Client โดยไม่ต้องแก้ไข
 
-- `pages/`
-  - Data Fetching: ใช้ `useAsyncData` หรือ `useFetch` เป็นหลัก
-    - ใส่ `key` ที่ไม่ซ้ำกันเสมอเพื่อป้องกัน data ซ้ำซ้อน
-    - จัดการ error state และ loading state ให้ครบถ้วน
-    - พิจารณาใช้ `lazy: true` สำหรับ non-critical data เพื่อปรับปรุง LCP (Largest Contentful Paint)
-  - Component Composition: รักษา page component ให้เล็กและอ่านง่าย
-    - แยก logic ที่ซับซ้อนและนำกลับมาใช้ใหม่ได้ไปที่ `composables/`
-    - แยก UI ที่ซับซ้อนเป็น `components/` ย่อยๆ
+## 2. โครงสร้างโปรเจกต์ (Project Structure)
 
-- `components/`: Auto-imported Vue components.
-  - Structure: ใช้ `<script setup lang="ts">` และ `<script>` อยู่ด้านบน `<template>`
-  - Reusability: ออกแบบ component เพื่อการนำกลับมาใช้ใหม่ (reusability) และไม่ขึ้นตรงกับ page ใด page หนึ่ง
-    - หลีกเลี่ยงการใช้ logic ที่ผูกกับ route หรือ page ปัจจุบันโดยตรง
-  - Props & Emits:
-    - กำหนด type ของ props ให้ชัดเจนด้วย `defineProps<{...}>()`
-    - กำหนด events ที่ component สามารถส่งออกได้ด้วย `defineEmits<{...}>()`
-  - Organization: จัดกลุ่มตาม feature หรือ domain เพื่อให้ง่ายต่อการค้นหา
-    - เช่น `components/ui/`, `components/products/`, `components/auth/`
-  - Styling:
-    - เน้นใช้ UnoCSS เป็นหลัก
-    - ใช้ `<style scoped>` เมื่อจำเป็นสำหรับ component-specific overrides จริงๆ เท่านั้น
-  - Client-side Rendering:
-    - ใช้ `.client.vue` หรือ `<ClientOnly>` สำหรับ component ที่ต้องทำงานบน client เท่านั้น (เช่น component ที่ใช้ browser-specific APIs อย่าง `window` หรือ `document`)
+โครงสร้างที่ชัดเจนช่วยให้ทีมทำงานร่วมกันได้ง่ายและหาโค้ดเจอได้รวดเร็ว
 
-- `composables/`: Reusable logic (auto-imported).
-  - Naming: ตั้งชื่อไฟล์ขึ้นต้นด้วย `use` เช่น `useAuth.ts`, `useCart.ts`
-  - Scope: เป็นที่รวมของ business logic, state management, และ data fetching logic
-  - State Management:
-    - ใช้ `useState` สำหรับ state ง่ายๆ ที่แชร์กันระหว่าง components
-    - ใช้ Pinia สำหรับ global state ที่ซับซ้อนและต้องการ devtools
-  - SSR Safety:
-    - ใช้ `useState` เพื่อสร้าง state ที่ปลอดภัยในการทำงานฝั่ง SSR
-    - Pinia จะจัดการเรื่องนี้ให้โดยอัตโนมัติ ไม่ต้องกังวลเรื่อง state รั่วข้าม requests
+```plaintext
+my-nuxt-app/
+├── app/         # โค้ดฝั่ง Client ทั้งหมด
+│   ├── components/  # Vue components ที่ใช้ซ้ำ (auto-imported)
+│   ├── composables/ # ฟังก์ชัน Composition API ที่ใช้ซ้ำ (auto-imported)
+│   ├── layouts/     # โครงสร้างหลักของหน้าเว็บ
+│   ├── pages/       # หน้าเว็บและ Routing (file-based)
+│   └── app.vue      # Component หลักของแอปพลิเคชัน
+│
+├── server/      # โค้ดฝั่ง Server ทั้งหมด
+│   ├── api/         # API endpoints (e.g., /api/users)
+│   └── utils/       # Utility functions สำหรับฝั่ง Server เท่านั้น
+│
+├── shared/      # โค้ดที่ใช้ร่วมกันระหว่าง Client และ Server
+│   ├── types/       # TypeScript types และ interfaces
+│   └── utils/       # Utility functions ที่ใช้ได้ทั้งสองฝั่ง
+│
+├── public/      # Assets ที่ไม่ต้องผ่านการประมวลผล (e.g., favicon.ico)
+└── nuxt.config.ts # ไฟล์ตั้งค่าหลักของ Nuxt
+```
 
-- `server/`: Server-side logic (Nitro).
-  - `api/`: สำหรับสร้าง API endpoints
-    - ไฟล์ `server/api/products/[id].get.ts` จะ map ไปที่ `GET /api/products/:id`
-    - ใช้ `defineEventHandler` ในการสร้าง handler
-    - ต้องมี test file (.spec.ts) ด้วย Vitest
-  - `db/`: สำหรับส่วนจัดการฐานข้อมูล
-    - เช่น logic เกี่ยวกับการเชื่อมต่อ, query, หรือ schema definition
-  - `middleware/`: Server middleware ที่ทำงานทุก request ที่เข้ามา
-    - เหมาะสำหรับ authentication, logging, หรือการเพิ่มข้อมูลลงใน event context
-  - `utils/`: Server-only utility functions
-    - ฟังก์ชันที่ใช้ภายใน server routes/api เท่านั้น และจะไม่ถูก bundle ไปกับ client-side code
-  - Secrets & Runtime Config:
-    - จัดการ environment variables และ secrets ผ่าน `useRuntimeConfig()`
-    - ข้อมูลใน `runtimeConfig` (default) จะอยู่ฝั่ง server เท่านั้น
-    - ข้อมูลที่ต้องการให้ client เข้าถึงได้ ต้องใส่ไว้ใน `runtimeConfig.public`
+## 3. กฎและตัวอย่าง (Folder Rules & Examples)
 
-- `shared/utils/`: Utilities ที่แชร์ระหว่าง server และ client (auto-imported)
-  - เป็นที่เก็บ utility functions ที่สามารถใช้ได้ทั้งฝั่ง server และ client (isomorphic)
-  - ควรเป็น pure functions (ไม่มี side effects) เพื่อให้ predictable และทดสอบง่าย
-  - เช่น `formatDate()`, `calculateDiscount()`
+### `shared/types/`
+- **หน้าที่:** กำหนดโครงสร้างข้อมูลหลักด้วย TypeScript Interfaces หรือ Types และ Schema สำหรับ Validation
+- **Do:**
+    - ใช้ Zod, Valibot, หรือ ArkType เพื่อสร้าง Schema ที่ตรวจสอบความถูกต้องของข้อมูล
+    - Export Type และ Schema เพื่อให้ `composables` และ `server/api` นำไปใช้ได้
+- **Don't:**
+    - ใส่ Logic การทำงานใดๆ ในไฟล์เหล่านี้
 
-- `shared/types/`: สำหรับเก็บ TypeScript type definitions
-  - สำหรับเก็บ TypeScript type definitions และ interfaces
-  - ใช้ Zod, Valibot, or ArkType ในการสร้าง schema เพื่อ validate ข้อมูลที่รับมาจาก API หรือ form input
-    - ช่วยป้องกัน runtime errors และเพิ่มความปลอดภัยของข้อมูล
+```typescript
+// shared/types/user.ts
+import { z } from 'zod';
 
-notes
-- ถ้าใช้ import ใช้ alias แบบ @ 
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(2),
+  email: z.string().email(),
+});
+
+export type User = z.infer<typeof UserSchema>;
+```
+
+### `shared/utils/`
+- **หน้าที่:** เก็บฟังก์ชันบริสุทธิ์ (Pure Functions) ที่ใช้ได้ทั้งฝั่ง Client และ Server
+- **Do:**
+    - สร้างฟังก์ชันที่รับ Input และคืนค่า Output โดยไม่มี Side Effects
+    - เหมาะสำหรับฟังก์ชันจัดรูปแบบข้อมูล, คำนวณ, หรือจัดการข้อความ
+- **Don't:**
+    - เรียกใช้ Browser/Node-specific APIs (เช่น `window` หรือ `process`)
+
+```typescript
+// shared/utils/formatters.ts
+export function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-US').format(date);
+}
+```
+
+### `composables/`
+- **หน้าที่:** เป็นหัวใจของ Business Logic ฝั่ง Client, จัดการ State, และดึงข้อมูลจาก API
+- **Do:**
+    - ตั้งชื่อด้วย `use...` (เช่น `useUser`, `useCart`)
+    - ใช้ `useFetch` หรือ `useAsyncData` สำหรับการดึงข้อมูล
+    - ใช้ `useState` สำหรับ State ง่ายๆ หรือ Pinia สำหรับ State ที่ซับซ้อน
+- **Don't:**
+    - ใส่โค้ดที่จัดการ DOM โดยตรง (ควรทำใน Component)
+
+```typescript
+// composables/useUser.ts
+import type { User } from '~/shared/types/user';
+
+export const useUser = (userId: string) => {
+  return useFetch<User>(`/api/users/${userId}`, {
+    // Zod validation can be added here with .transform
+  });
+};
+```
+
+### `components/`
+- **หน้าที่:** สร้าง UI ที่นำกลับมาใช้ใหม่ได้
+- **Do:**
+    - ออกแบบ Component ให้รับ Props และส่ง Events (Props in, Events out)
+    - จัดกลุ่มตาม Feature (เช่น `components/products/Card.vue`)
+    - ใช้ UnoCSS สำหรับ Styling เป็นหลัก
+- **Don't:**
+    - ดึงข้อมูลโดยตรง (ควรทำผ่าน `composables`)
+    - ใส่ Business Logic ที่ซับซ้อน
+
+```vue
+<!-- components/UserProfile.vue -->
+<script setup lang="ts">
+import type { User } from '~/shared/types/user';
+
+defineProps<{ user: User }>();
+</script>
+
+<template>
+  <div>
+    <h1>{{ user.name }}</h1>
+    <p>{{ user.email }}</p>
+  </div>
+</template>
+```
+
+### `pages/`
+- **หน้าที่:** ประกอบ `components` และ `composables` เข้าด้วยกันเพื่อสร้างหน้าเว็บที่สมบูรณ์
+- **Do:**
+    - เรียกใช้ `composables` เพื่อดึงข้อมูลและจัดการ State
+    - ส่งข้อมูลที่ได้ไปยัง `components` ผ่าน Props
+    - จัดการ Loading และ Error states
+- **Don't:**
+    - เขียน UI ที่ซับซ้อนโดยตรง (ควรแยกเป็น Component)
+
+```vue
+<!-- pages/users/[id].vue -->
+<script setup lang="ts">
+const route = useRoute();
+const { data: user, pending, error } = useUser(route.params.id as string);
+</script>
+
+<template>
+  <div>
+    <p v-if="pending">Loading...</p>
+    <p v-else-if="error">Error loading user.</p>
+    <UserProfile v-else-if="user" :user="user" />
+  </div>
+</template>
+```
+
+### `server/api/`
+- **หน้าที่:** สร้าง API Endpoints เพื่อจัดการข้อมูลฝั่ง Server
+- **Do:**
+    - ใช้ `defineEventHandler` เพื่อสร้าง Route Handler
+    - อ่านและตรวจสอบข้อมูลนำเข้า (เช่น `body`, `params`) โดยใช้ Schema จาก `shared/types/`
+    - แยก Logic ที่ซับซ้อน (เช่น การติดต่อฐานข้อมูล) ไปไว้ใน `server/utils/`
+- **Don't:**
+    - เขียน Business Logic ทั้งหมดลงในไฟล์เดียว
+
+```typescript
+// server/api/users/[id].get.ts
+import { UserSchema } from '~/shared/types/user';
+
+export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id');
+  // Fetch user from database...
+  const user = await db.users.find(id);
+
+  // Validate output before sending
+  return UserSchema.parse(user);
+});
+```
+
+## 4. การตั้งค่าโปรเจกต์ (Project Setup)
+
+- **`package.json`**: กำหนด Scripts สำหรับการพัฒนา, build, และ linting
+```json
+{
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "lint": "vue-tsc --noEmit && biome lint --write",
+    "postinstall": "bunx taze -r -w -i && nuxt prepare"
+  }
+}
+```
+
+- **`nuxt.config.ts`**: เปิดใช้งาน Modules ที่จำเป็น เช่น `@unocss/nuxt`, `@pinia/nuxt`, และ `@vueuse/nuxt`
+
+- **`tsconfig.json`**: ตั้งค่าให้ `extends` จาก `./.nuxt/tsconfig.json` เพื่อให้ Type-checking ทำงานได้ถูกต้อง
+
+## 5. แนวปฏิบัติที่ดีที่สุด (Best Practices)
+
+- **Refactor Driven by Responsibility:** เมื่อไฟล์หรือฟังก์ชันทำหน้าที่หลายอย่างเกินไป ให้แยกมันออกตามหน้าที่ เช่น แยก Logic จาก Component ไปที่ Composable, แยกการเชื่อมต่อ Database ออกจาก API Endpoint
+- **Type Safety End-to-End:** ใช้ Schema Validation (เช่น Zod) ทั้งในฝั่ง Server (ก่อนตอบกลับ) และฝั่ง Client (หลังรับข้อมูล) เพื่อให้แน่ใจว่าข้อมูลถูกต้องเสมอ
+- **Error Handling:** จัดการข้อผิดพลาดในทุกขั้นตอน, ตั้งแต่ `server/api` จนถึง `composables` และแสดงผลที่เหมาะสมใน `pages`

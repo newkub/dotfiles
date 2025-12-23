@@ -11,5 +11,5 @@ auto_execution_mode: 3
 - Scalable
 - Reliable
 - Interoperable
-3. /improve/uxui
-4. /make-completely
+3. /improve-uxui
+4. /follow-code-quanlity

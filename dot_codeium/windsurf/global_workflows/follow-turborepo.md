@@ -3,75 +3,83 @@ auto_execution_mode: 3
 ---
 
 
-## setup 
 
 1. bunx turbo link --yes
-
 2. package.json (root)
-
-- bun add -d typescript @biomejs/biome lefthook taze turbo
 
 ``` json
 {
-  "name" : "repo",
-  "packageManager" : "bun@", // ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
+  "name" : "",        // @ai name ให้มีแค่ชือ่ folder ไม่ต้องมี @
+  "packageManager" : "bun@", // @ai ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
   "scripts": {
-    "start" : "turbo watch check",
+    "start" : "turbo watch verify",
     "postinstall" : "taze -r -w -i",
     "prepare": "lefthook install",
     "lint": "turbo lint",
     "build": "turbo build",
-    "dev": "turbo dev --ui tui",
+    "dev": "turbo dev",
     "test": "turbo test",
-    "check": "turbo check",
-    "format": "turbo format",
-    "update:deps": "taze -r -w -i"
+    "verify": "turbo verify",
+    "format": "turbo format"
   },
 }
 ```
 
 3. turbo.jsonc
 
+กำหนด task ให้ครบตรงกับใน package.json (root)
+
 ``` json [turbo.json]
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies": // think,
-  "tasks": {
-     "start": {
+  "globalDependencies": // @ai ดูให้หนอ่ย ควรมีอะไรบ้าง,
+   "tasks": {
+    "start": {
       "cache": false,
       "persistent": true
     },
-     "dev": {
+    "dev": {
       "cache": false,
       "persistent": true
     },
-     "build": {
-      "dependsOn": ["^lint"],
+    "prepare": {
+      "cache": false
     },
     "format": {
-      "dependsOn": [],
+      "dependsOn": ["^prepare"]
     },
     "lint": {
-      "cache": true
+      "dependsOn": ["^format"]
+    },
+    "build": {
+      "dependsOn": ["^lint"],
+      "outputs": [".output/**", "target/release/**"]
     },
     "test": {
-      "dependsOn": ["^lint", "^build" ],
+      "dependsOn": ["^build"]
     },
-    "check": {},
-     "check": {
-      "dependsOn": ["^build"],
-    }, 
+    "verify": {
+      "dependsOn": ["^test"]
+    },
+    "preview": {
+      "dependsOn": ["^verify"]
+    }
   }
 }
 ```
 
-4. เพิ่ม .turbo ใน .gitignore
+4. package.json (workspace)
 
-## check
 
-- name ใน package.json ต้องตั้งเช่น name:"repo/workspace"
-- /follow-package-json ทำให้เหมาะสม
+- กำหนด name ให้ตรงกับ folder
+- กำหนด task ให้ตรง scripts ที่มี turbo ใน package.json (root) 
+- ต้องมี examples/, test/, src/, package.json, README.md, tsconfig.json, biome.jsonc, .gitignore
+
+5. .gitignore
+
+- เพิ่ม .turbo ใน .gitignore
+
 
 
 

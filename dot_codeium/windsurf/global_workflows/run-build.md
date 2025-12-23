@@ -3,9 +3,12 @@ auto_execution_mode: 3
 ---
 
 
-1. /follow-package-json
-2. /run-lint 
-3. run build ใน package.json แล้วแก้ไข error, warning ทั้งหมดจนไม่มีเหลือ
-4. /commit
+1. /follow-windsurf-global-workflows
+2. run build ใน package.json แล้วแก้ error, warning จนไม่มีเหลือ
+
+- ไม่ใช่สักแต่ละแก้ให้ผ่าน ให้แก้ตาม /follow-code-quanlity และถ้าเป็น
+    - node => /follow-node
+    - node => /follow-rust
+
 
 

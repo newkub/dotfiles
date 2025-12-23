@@ -3,196 +3,184 @@ auto_execution_mode: 3
 ---
 
 
-follow ทำตามกฏเหล่านี้อย่างเคร่งครัด (Next.js 15 App Router)
+# แนวทางการพัฒนาโปรเจกต์ด้วย Next.js 15 (App Router)
 
-## Next.js 15 Project Structure
+เอกสารนี้เป็นแนวทางสำหรับการพัฒนาโปรเจกต์ด้วย Next.js โดยเน้นที่ App Router เพื่อสร้างแอปพลิเคชันที่มีประสิทธิภาพ, บำรุงรักษาง่าย, และทันสมัย
 
-```
+## 1. แนวคิดหลัก (Core Concepts)
+
+- **Server Components by Default:** คอมโพเนนต์ทั้งหมดใน `app/` เป็น Server Components ซึ่งทำงานบนเซิร์ฟเวอร์เท่านั้น ทำให้สามารถดึงข้อมูลได้โดยตรงและปลอดภัย ลดขนาด JavaScript ที่ส่งให้ client
+- **Client Components Opt-in:** สำหรับคอมโพเนントที่ต้องการ tương tác กับผู้ใช้ (เช่น state, event listeners) ต้องประกาศ `'use client'` ที่บรรทัดบนสุดของไฟล์อย่างชัดเจน
+- **Server Actions:** ฟังก์ชันที่ทำงานบนเซิร์ฟเวอร์อย่างปลอดภัย ใช้สำหรับการเปลี่ยนแปลงข้อมูล (data mutations) โดยไม่ต้องสร้าง API endpoints เพิ่มเติม และต้องประกาศ `'use server'`
+- **File-based Routing:** ระบบ Routing ถูกสร้างขึ้นอัตโนมัติตามโครงสร้างโฟลเดอร์ภายใน `app/` โดยใช้ชื่อไฟล์พิเศษเช่น `page.tsx`, `layout.tsx`
+- **Composition:** สร้าง UI ที่ซับซ้อนโดยการประกอบ Server และ Client Components เข้าด้วยกัน โดย Server Components สามารถ import Client Components ได้
+
+## 2. โครงสร้างโปรเจกต์ (Project Structure)
+
+โครงสร้างที่แนะนำถูกออกแบบมาเพื่อแยกส่วนของโค้ดตามหน้าที่อย่างชัดเจน:
+
+```plaintext
 my-next-app/
-├── app/                    # App Router
-│   ├── (auth)/             # Route groups (no URL)
-│   ├── api/                # API Routes
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Home page
-│   ├── loading.tsx         # Loading UI
-│   ├── error.tsx           # Error UI
-│   └── not-found.tsx       # 404 page
-├── components/             # React components
-├── lib/                    # Utilities & helpers
-├── hooks/                  # Custom React hooks
-├── types/                  # TypeScript types
-├── actions/                # Server Actions
-├── middleware.ts           # Middleware
-├── public/                 # Static files
-├── next.config.js
-├── tsconfig.json
-└── package.json
+├── app/             # App Router: Routing, Layouts, Pages
+│   ├── (features)/  # Route Groups สำหรับจัดระเบียบ
+│   ├── api/         # API Route Handlers
+│   ├── layout.tsx   # Root Layout (Server Component)
+│   └── page.tsx     # Home Page (Server Component)
+├── components/      # Shared React Components
+│   ├── ui/          # Dumb UI Components (e.g., Button, Input)
+│   └── features/    # Feature-specific components
+├── lib/             # Utility functions, DB connection, etc.
+├── types/           # TypeScript types & Zod schemas
+├── actions/         # Server Actions
+├── middleware.ts    # Request Middleware
+├── public/          # Static assets
+├── next.config.mjs  # Next.js configuration
+└── package.json     # Project dependencies and scripts
 ```
 
-## Core Concepts
+## 3. กฎและตัวอย่าง (Folder Rules & Examples)
 
-### Architecture Overview
-```
-                    ┌─────────────────────────────────────────────┐
-                    │   Next.js 15 App Router Architecture (RSC)  │
-                    └─────────────────────────────────────────────┘
+### `app/`
+- **หน้าที่:** เป็นศูนย์กลางของแอปพลิเคชัน จัดการ routing, layouts, และการดึงข้อมูลหลัก
+- **Do:**
+    - ใช้ `async/await` ใน Server Components (`page.tsx`, `layout.tsx`) เพื่อดึงข้อมูลโดยตรง
+    - ใช้ Route Groups `(folder)` เพื่อจัดระเบียบโค้ดโดยไม่กระทบ URL
+    - กำหนด Metadata สำหรับ SEO ใน `layout.tsx` หรือ `page.tsx`
+- **Don't:**
+    - ใช้ Hooks (`useState`, `useEffect`) หรือ Browser APIs (`window`) ใน Server Components
+    - ดึงข้อมูลใน Client Component โดยตรง (ควรทำใน Server Component แล้วส่งเป็น props)
 
-                                  ┌──────────┐
-                                  │  types/  │
-                                  └─────┬────┘
-                                        │ TypeScript interfaces & types
-                                        │
-                          ┌─────────────┼─────────────┐
-                          │             │             │
-                          ▼             ▼             ▼
-                    ┌──────────┐  ┌──────────┐  ┌──────────┐
-                    │   lib/   │  │ config/  │  │ actions/ │
-                    └─────┬────┘  └──────────┘  └─────┬────┘
-                          │        • env vars         │
-                          │        • constants        │ • 'use server'
-                          │ • cn() helper             │ • Mutations
-                          │ • db (Drizzle)            │ • revalidate
-                          │ • Zod schemas             │
-                          │                           │
-                          └───────────┬───────────────┘
-                                      │
-                                      ▼
-                              ┌───────────────┐
-                              │  components/  │
-                              └───────┬───────┘
-                                      │ • Server (default)
-                                      │ • Client ('use client')
-                                      │ • UI Library
-                                      │
-                      ┌───────────────┼───────────────┐
-                      │               │               │
-                      ▼               ▼               ▼
-                ┌─────────┐     ┌─────────┐     ┌─────────┐
-                │ pages/  │     │ hooks/  │     │  api/   │
-                └────┬────┘     └─────────┘     └─────────┘
-                     │           • useUser        • REST
-                     │           • useAuth        • Webhooks
-                     │ • page.tsx (Route)
-                     │ • layout.tsx (Nested)
-                     │ • loading.tsx (Suspense)
-                     │ • error.tsx (Boundary)
-                     │
-                ┌────┴────┐
-                │         │
-                ▼         ▼
-          ┌──────────┐ ┌──────────────┐
-          │middleware│ │ Route Groups │
-          └────┬─────┘ └──────────────┘
-               │        • (auth)/ Private
-               │ • Auth • (marketing)/ Public
-               │ • i18n • @modal Parallel
-               │
-               └───────┬──────────┘
-                       │
-                       ▼
-            ┌──────────────────────────┐
-            │  Data & State Management │
-            └──────────┬───────────────┘
-                       │
-              ┌────────┼────────┐
-              │        │        │
-              ▼        ▼        ▼
-         ┌────────┐ ┌────────┐ ┌────────┐
-         │Database│ │External│ │ Cache  │
-         └────────┘ └────────┘ └────────┘
-          • Drizzle  • fetch    • Next Cache
-          • Pool     • axios    • ISR/SSG
-```
-
-### Core Principles
-- **App Router**: Use `app/` directory (not `pages/`)
-- **Server Components**: Default - async/await, zero JS to client
-- **Client Components**: Opt-in with `'use client'` for interactivity
-- **Server Actions**: Use `'use server'` for mutations (replace API routes for forms)
-- **File-based Routing**: `page.tsx` = routes, `layout.tsx` = layouts
-- **Streaming & Suspense**: Progressive rendering with React Suspense
-
-### Data Flow
-```
-types → lib/utils → components
-  ↓              ↓
-actions ←———  app/pages (Server Components)
-  ↓
-api/routes (webhooks, external)
-```
-
-### Key Technologies
-- **Styling**: UnoCSS (utility-first, no runtime)
-- **Icons**: UnoCSS + Iconify (@iconify-json/mdi)
-- **Database**: Drizzle ORM (type-safe SQL ORM)
-- **Validation**: Zod (runtime schema validation)
-- **Utils**: clsx (conditional classes)
-
-## Folder Rules
-
-### app/
-- <Purpose> => App Router - file-based routing, Server Components
-- <Do> => Server Components default (async/await), `'use client'` สำหรับ interactivity, route groups `(folder)`, dynamic `[id]/[...slug]`, export `metadata`
-- <Don't> => `useState/useEffect/useContext` ใน Server, export Client จาก Server ตรง, browser APIs ใน Server, non-serializable props
-- <Naming> => Special `page/layout/loading/error.tsx`, groups `(name)`, dynamic `[param]`
-- <Type Safety> => `Metadata`, `{ params: { id: string } }`, `{ searchParams: { q?: string } }`
-- <Routing> => Static `page.tsx`→`/`, Dynamic `[slug]/page.tsx`→`/:slug`, Catch-all `[...slug]`, Group `(folder)`→no URL
-
-- <Example> =>
 ```tsx
-export default async function Page() {
-  const users = await db.select().from(usersTable)
-  return <div>{users.map(u => <div key={u.id}>{u.name}</div>)}</div>
+// app/page.tsx (Server Component)
+async function getPosts() {
+  const res = await fetch('https://api.example.com/posts');
+  return res.json();
+}
+
+export default async function HomePage() {
+  const posts = await getPosts();
+  return <ul>{posts.map(post => <li key={post.id}>{post.title}</li>)}</ul>;
 }
 ```
 
+### `components/`
+- **หน้าที่:** เก็บ React components ที่ใช้ซ้ำได้ โดยแยกตามความรับผิดชอบ
+- **Do:**
+    - วาง Dumb UI components ที่ไม่มี logic ใน `components/ui` และประกาศ `'use client'` หากจำเป็น
+    - วาง Feature-specific components ใน `components/features`
+    - ออกแบบให้รับ Props และส่ง Events (Props in, Events out)
+- **Don't:**
+    - ใส่ Business Logic ที่ซับซ้อน (ควรอยู่ใน `actions/` หรือ `lib/`)
 
-### lib/
-- <Purpose> => Utilities, DB clients, API configs
-- <Do> => export named, pure functions, singleton (DB/API), จัดกลุ่ม `db/api/utils.ts`
-- <Don't> => export default, side effects, business logic, hooks
-- <Libraries> => **clsx** (cn helper), **Drizzle** (ORM), **Zod** (validation)
-- <Example> => `export const cn = (...inputs: ClassValue[]) => clsx(inputs)`
+```tsx
+// components/ui/CounterButton.tsx (Client Component)
+'use client';
 
+import { useState } from 'react';
 
-### actions/ (Server Actions)
-<Purpose> => Server mutations
-<Do> => `'use server'` บรรทัดแรก, return serializable, `revalidatePath/Tag()`, Zod validate, try-catch
-<Don't> => return non-serializable, expose sensitive
-<Naming> => `*.actions.ts`, `camelCase` กริยา
-<Type Safety> => Type FormData, Zod schemas
-<Error Handling> => Return `{success,error?,data?}`
-<Example>
-```typescript
-'use server'
-const s=z.object({name:z.string().min(2),email:z.string().email()})
-export async function createUser(fd:FormData){
-  try{
-    const d=s.parse({name:fd.get('name'),email:fd.get('email')})
-    await db.insert(usersTable).values(d)
-    revalidatePath('/users')
-    return {success:true}
-  }catch{return {success:false,error:'Failed'}}
+export function CounterButton() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
 }
 ```
 
+### `lib/`
+- **หน้าที่:** เก็บฟังก์ชัน Utility, การตั้งค่า, หรือโค้ดที่ใช้ร่วมกันและไม่เกี่ยวกับ React UI
+- **Do:**
+    - สร้างฟังก์ชันให้เป็น Pure Functions ให้มากที่สุด
+    - แยกไฟล์ตามหน้าที่ เช่น `lib/db.ts`, `lib/utils.ts`
+- **Don't:**
+    - Import React components หรือ Hooks เข้ามาในโฟลเดอร์นี้
 
-### middleware.ts
-<Purpose> => Edge middleware (auth, redirects)
-<Do> => export `middleware`, `config` with `matcher`, Edge Runtime
-<Don't> => heavy computations, Node.js APIs, DB ตรง
-<Type Safety> => `NextRequest`, `NextResponse`
-<Example>
 ```typescript
-export function middleware(req){
-  const token=req.cookies.get('token')
-  if(req.nextUrl.pathname.startsWith('/dashboard')&&!token){
-    return NextResponse.redirect(new URL('/login',req.url))
+// lib/utils.ts
+export function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-US').format(date);
+}
+```
+
+### `types/`
+- **หน้าที่:** เป็นศูนย์รวมของ TypeScript types และ Zod schemas
+- **Do:**
+    - ใช้ `z.infer<>` จาก Zod schema เป็น Single Source of Truth สำหรับ Type
+    - แยกประเภทของ Type เช่น `types/api.ts`, `types/db.ts`
+- **Don't:**
+    - Import DB-specific types เข้าไปใน Client Components โดยตรง
+
+```typescript
+// types/user.ts
+import { z } from 'zod';
+
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(2),
+});
+
+export type User = z.infer<typeof UserSchema>;
+```
+
+### `actions/`
+- **หน้าที่:** จัดการ Data Mutations ผ่าน Server Actions
+- **Do:**
+    - ขึ้นต้นไฟล์ด้วย `'use server'`
+    - ตรวจสอบ Input ด้วย Zod schema เป็นอันดับแรก
+    - จัดการข้อผิดพลาดด้วย `try-catch` และคืนค่าผลลัพธ์ที่ชัดเจน
+    - เรียก `revalidatePath` หรือ `revalidateTag` หลังจากการทำงานสำเร็จ
+- **Don't:**
+    - เปิดเผยข้อมูลที่ละเอียดอ่อนใน error message
+
+```typescript
+// actions/createUser.ts
+'use server';
+
+import { revalidatePath } from 'next/cache';
+import { UserSchema } from '@/types/user';
+
+export async function createUser(formData: FormData) {
+  const validatedFields = UserSchema.safeParse({
+    name: formData.get('name'),
+  });
+
+  if (!validatedFields.success) {
+    return { error: 'Invalid name' };
   }
-  return NextResponse.next()
+
+  // ... save to database
+  revalidatePath('/');
+  return { success: true };
 }
-export const config={matcher:['/dashboard/:path*']}
 ```
 
+## 4. การตั้งค่าโปรเจกต์ (Project Setup)
 
+- **`package.json`**: กำหนด Scripts สำหรับการพัฒนา, build, และ linting
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check --write .",
+    "postinstall": "bunx taze -r -w -i"
+  }
+}
+```
 
+- **`next.config.mjs`**: เปิดใช้งานฟีเจอร์ที่สำคัญเช่น `serverActions` และตั้งค่าอื่นๆ
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    serverActions: true,
+  },
+};
+
+export default nextConfig;
+```
+
+## 5. แนวปฏิบัติที่ดีที่สุด (Best Practices)
+
+- **Push Client Components to the Leaves:** พยายามให้ Client Components มีขนาดเล็กและอยู่ที่ปลายสุดของ Component Tree เพื่อให้ส่วนใหญ่ของแอปยังคงเป็น Server Components
+- **Validate on the Server:** ตรวจสอบข้อมูลนำเข้าทั้งหมดบนเซิร์ฟเวอร์เสมอ (ใน Server Actions หรือ API Routes) อย่าเชื่อถือข้อมูลที่มาจาก Client
+- **Use Streaming with Suspense:** ใช้ `loading.tsx` และ React Suspense เพื่อสร้าง UI ที่ตอบสนองได้ดีขึ้น โดยการแสดงผลเนื้อหาแบบ streaming ขณะที่ข้อมูลกำลังถูกโหลด

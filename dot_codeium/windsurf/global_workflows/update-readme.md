@@ -3,5 +3,10 @@ auto_execution_mode: 3
 ---
 
 
-analyze ไล่ดูทุกไฟล์ ย้ำว่าทุกไฟล์ เพื่อเข้าใจ context แล้วเขียน readme ใหม่ โดย /follow-readme
+1. /analyze-project
+
+2. เขียน README.md ทุกไฟล์เลย
+
+- เขียนให้ให้ละเอียด ให้ครบ
+- ให้มีหัวข้อคือ Introduction, Design Principles, Installation, Usage, Examples, License
 

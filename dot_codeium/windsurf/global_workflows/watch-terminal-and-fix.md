@@ -1,16 +1,15 @@
 ---
-description: Watch the terminal session and fix any issues that arise.
 auto_execution_mode: 3
 ---
 
-1. ดู terminal session ที่เปิดอยู่ ใน @terminal: (ให้ดูนะไม่ใช่ให้ run ใหม่)
 
-2. ดูว่ามีอะไรที่ต้องแก้ไขไหม
-- ไม่แสดงอะไรเลย
-- มี error, warning
-- uxui ไม่ดี ใช้งานยาก 
+1. ดู terminal session ที่เปิดอยู่ 
 
-1. แก้ไขให้หมดจนคิดว่าดี
+2. แก้ไข error, warning, recommend จาก terminal ให้ครบจนไม่มีเหลือ
 
-2. แก้ไขจนหมด
+
+หมายเหตุ
+
+- ห้าม run command ใหม่ ให้ watch terminal ที่ส่งให้เท่านั้น และแก้ไขจนกว่าจะไม่มี error, warning
+
 

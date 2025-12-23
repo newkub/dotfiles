@@ -56,7 +56,6 @@ Set-Alias -Name c -Value cls
 Remove-Item -Path Alias:dir -Force
 Set-Alias -Name qoder-workflows -Value cdqoderworkflows
 Set-Alias -Name new -Value New-Item
-Set-Alias -Name w -Value windsurf
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
 
@@ -157,6 +156,11 @@ function t {
 function rd {
     ni && bun run dev
 }
+
+function rw {
+    ni && bun run watch
+}
+
 function rb {
     ni && bun run build
 }
@@ -187,6 +191,9 @@ function rf {
 function rc {
     ni && bun run check
 }
+
+
+
 
 function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
@@ -270,6 +277,9 @@ function op {
     if ($selected) { windsurf $selected }  
 }
 
+function w {
+    windsurf .
+}
 
 function e {
     explorer .
@@ -354,7 +364,7 @@ function repo {
 }
 
 # --- Open Google ---
-function s {
+function g {
     open "https://www.google.com"
 }
 

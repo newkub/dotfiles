@@ -3,27 +3,42 @@ auto_execution_mode: 3
 ---
 
 
-1. bun add @types/bun
+1. package.json 
 
-2. กำหนดใน package.json
-
-``` json
+``` json [package.json]
 {
-	"packageManager": "", // ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
-    "scripts": {
-        "lint" : "biome lint --write",
-        "format" : "biome format --write"
-    }
-}
+  "name": "",     // @ai ชื่อให้ตรงกับ folder
+  "packageManager": "", // @ai ใช้ bun upgrade && bun -v และกำหนด version ล่าสุด
+  "type": "module",
+  "scripts": {
+    "start" : "bun --watch dev"
+    "prepare" : "lefthook install",
+    "postinstall" : "taze -w -r -i", 
+    "dev": "bun run src/index.ts", 
+    "lint": "tsc --noEmit && biome lint --write",
+    "build": "bun build",
+    "format": "biome format --write", 
+    "test": "bun test",
+    "verify" : "bun format && bun lint && bun test && bun audit && run build"
+  },
+
 ```
 
-3. กำหนดใน tsconfig.json 
+หมายเหตุ
+
+- ถ้าใช้ monorepo แล้ว ไม่ต้องมี lefthook, taze ที่ workspace
+
+2. tsconfig.json
 
 ``` json
  "compilerOptions": {
     "types": [ "@types/bun"]
   }
 ```
+
+3. /follow-bun-functional-programming
+
+
 
 
 

@@ -1,38 +1,35 @@
 
 
-## Chat
+## Rules กฏของคุณมี 7 ข้อ ต้องทำตามทุกครั้งอย่างเคร่งครัด 
 
-- ตอบเป็นภาษาไทย ให้กระชับ
+1. คุยกับผมเป็นภาษาไทย ที่กระชับ
 
+2. เริ่มทุกครั้ง ให้ /analyze-project ทุกครั้ง
 
-## Edit 
+3. เวลาดูไฟล์ทั้งหมด ใช้ eza --tree --git-ignore --ignore-glob='.gitignore' เท่านั้น
 
-- ทำตาม follow- ใน /follow-windsurf-global-workflows
-- ถ้าเจอ comment ที่ @ai คุณต้องคิดและทำสิ่งนั้นด้วย
-- ก่อนจะจบ task ถ้าทดสอบเสมอ เช่น /run-lint
+4. เวลาจะแก้ไฟล์อะไรทุกครั้งให้ไปดู "C:/Users/Veerapong/.codeium/windsurf/global_workflows" ว่ามีอะไรให้ใช้บ้าง แล้วทำตามนั้น
 
+5. ถ้าเจอ @ai ใน comment ในไฟล์ต่างๆให้ทำสิ่งนั้นด้วย
 
-## Tools
+6. ผมสามารถ interrupt ได้ คุณต้องเข้ามาอ่าน .windsurf/TODO.md ก่อนจบ task เสมอๆ แล้วทำ TODO ให้ครบ เมื่อทำแล้วให้ลบ bullet ออกด้วย
 
-- view folder structure => eza --tree --git-ignore --ignore-glob='.gitignore'
-- search => ใช้ ast-grep 
-- replace => ใช้ ast-grep
-- rename => pwsh
-- delete-file => pwsh
-- move => pwsh
+7. ถ้าต้องการ analyze ไฟล์จำนวนมากๆ สามารถสร้าง .ts ใน .windsurf/scripts/ เพื่อ analyze ได้ แต่ก่อนรันจริง ต้อง bunx tsc --noEmit <file> ก่อน
+
+8. เครื่องมือ
+
 - file operation => pwsh
 - package manager => bun, uv, scoop, cargo, mise, winget
 
-หมายเหตุ
-- ถ้า program ไหนยังไม่ติดตั้งให้ติดตั้งให้ด้วย (ใช้ scoop, mise, bun หลัก) 
-- ถ้าไม่แน่ใจ ลอง --help เพื่อดูคำคำสั่งทั้งหมด
+9. ควรทำ
 
-## Tech Stack
+- ถ้าไม่มั่นใจ อย่ามั่ว ให้ search ก่อนเสมอ
+- ทำทำ best practics ของ lib นั้น ๆเสมอๆ
+- ทำให้ type safe เสมอ
 
-- ใช้ picocolors ไม่ใช้ chalk 
 
-## don't
+10. ห้ามทำ
 
-- ไม่ใช้ biome-ignore, ts-ignore และ ignore ทั้งหมด
-- ห้ามแก้ไข config file ต่างๆเอง => ให้ /follow-windsurf-workflows
+- ไม่ใช้ "*-ignore" ต่างๆ"
+- อย่าทำอะไรมักง่าย
 

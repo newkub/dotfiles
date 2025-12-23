@@ -7,11 +7,10 @@ auto_execution_mode: 3
 
 2. กำหนดใน package.json
 
-``` json
+``` json [package.json]
 {
   "scripts" : {
-    "test": "vitest run",
-    "test:watch": "vitest watch",
+    "test": "vitest --run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
   }
@@ -57,7 +56,7 @@ export default defineConfig({
           environment: 'nuxt',
         },
       }),
-    environment: 'node', // กำหนดให้เหมาะสมว่าจะใช้ node, edge-runtime, jsdom
+    environment: 'node', // กำหนดให้เหมาะสมว่าจะใช้ node, edge-runtime, jsdom, happy-dom
     coverage: {
       provider: 'v8',
       reporter: ['verbose']
