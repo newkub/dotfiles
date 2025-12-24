@@ -3,7 +3,6 @@ return {
 	priority = 1001, -- สูงกว่า snacks (1000) เพื่อให้ load และ setup Tab key ก่อน
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"hrsh7th/nvim-cmp",
 	},
 	event = "InsertEnter",
 	config = function()
@@ -13,10 +12,10 @@ return {
 				enabled = true,
 				manual = false,
 				idle_delay = 75,
-				map_keys = true,
+				map_keys = false,
 				key_bindings = {
-					-- ใช้ Tab สำหรับ accept Windsurf suggestion
-					accept = "<Tab>",
+					-- ใช้ custom mapping ใน lua/mappings/system.lua
+					accept = false,
 					accept_word = false,
 					accept_line = false,
 					next = "<M-]>",

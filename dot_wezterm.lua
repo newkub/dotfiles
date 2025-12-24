@@ -53,6 +53,12 @@ wezterm.on('gui-startup', function(cmd)
 
   window:gui_window():maximize()
   tab:activate()
+  pcall(function()
+    left_pane:activate()
+  end)
+  pcall(function()
+    window:perform_action(wezterm.action.ActivatePaneByIndex(0), left_pane)
+  end)
 end)
 
 

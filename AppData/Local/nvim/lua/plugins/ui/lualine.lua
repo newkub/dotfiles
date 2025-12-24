@@ -58,6 +58,11 @@ return {
 						end,
 					},
 					"filetype",
+					{
+						function()
+							return "C-r Rename | C-d Del | C-S-c Copy | C-S-p Path"
+						end,
+					},
 				},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },

@@ -29,6 +29,21 @@ augroup("GeneralSettings", { clear = true })
 -- 	end,
 -- })
 
+autocmd({ "FocusLost", "BufLeave", "VimLeavePre" }, {
+	group = "GeneralSettings",
+	pattern = "*",
+	callback = function()
+		local buftype = vim.bo.buftype
+		if buftype ~= "" then
+			return
+		end
+		if vim.fn.expand("%") == "" then
+			return
+		end
+		vim.cmd("silent! wall")
+	end,
+})
+
 -- Swap file management
 augroup("SwapFileManagement", { clear = true })
 autocmd("BufWritePre", {

@@ -180,6 +180,7 @@ return {
 				require("snacks").picker.files()
 			end, "Error opening file picker"),
 			desc = "File Picker",
+			mode = { "n", "i", "v", "s", "t" },
 		},
 		{
 			"<C-r>",
