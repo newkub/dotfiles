@@ -16,24 +16,27 @@
 
 6. ก่อนจน task ต้องทำ 2 อย่างคือเสมอๆ
 - หา TODO.md ถ้าอยู่ใน workspace ไหนให้ทำที่นั้น และถ้าทำแล้วให้ลบเนื้อหาออกจาก TODO.md ด้วย (ห้ามลบไฟล์)
-- /run-lint 
 
 7. ถ้าต้องการ analyze ไฟล์จำนวนมากๆ สามารถสร้าง .ts ใน .windsurf/scripts/ เพื่อ analyze ได้ แต่ก่อนรันจริง ต้อง bunx tsc --noEmit <file> ก่อน
 
-8. เครื่องมือ
+8. ถ้า ส่ง file, path ให้ ให้ทำใน workspace นั้นๆ ถ้าแต่ไม่ส่งให้ให้ทำที่ root 
+
+9. เวลาทำอะไรคุณทำได้เลย เอาตามที่แนะนำ ไม่ต้องถามผมให้ตัดสินใจ ถ้าผมไม่ได้บอก
+
+10. เครื่องมือ
 
 - file operation => pwsh
 - package manager => bun, uv, scoop, cargo, mise, winget
 - list all files => eza --tree --git-ignore --ignore-glob='.gitignore' 
 
-9. ควรทำ
+11. ควรทำ
 
 - ถ้าไม่มั่นใจ อย่ามั่ว ให้ search ก่อนเสมอ
 - ทำตาม best practics ของ lib นั้นๆเสมอๆ
 - ทำให้ type safe เสมอ
 
 
-10. ห้ามทำ
+12. ห้ามทำ
 
 - ไม่ใช้ "*-ignore" ต่างๆ"
 

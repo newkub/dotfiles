@@ -227,23 +227,24 @@ function ff {
     }
 }
 
-function cff {
+function cc {
     param(
         [string]$query = ""
     )
 
-    # เลือก directory ด้วย fd + fzf
+    $root = "D:\"
+
     $selected = if ($query) {
-        fd -t d $query | fzf
+        fd -t d $query $root | fzf
     } else {
-        fd -t d | fzf
+        fd -t d . $root | fzf
     }
 
-    # ถ้าเลือก directory ได้ ให้ cd เข้าไป
     if ($selected) {
         Set-Location $selected
     }
 }
+
 
 function crm {
     param(

@@ -1,7 +1,5 @@
 ---
-description: What should be separated into packages?
 auto_execution_mode: 3
 ---
 
-ควรแยกอะไรออกเป็น packages บ้
-
+1. refactor packages อะไรไปใน packages/ ได้บ้าง และนำมาใช้ผ่าน workspace

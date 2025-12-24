@@ -3,14 +3,10 @@ auto_execution_mode: 3
 ---
 
 
-## 1. Init 
 
-1. ใช้ eza --tree --git-ignore --ignore-glob='.gitignore' ดูว่ามีอะไรบ้างหรือยัง 
-2. ถ้ามีแล้วให้ ข้ามไป
-3. ถ้ายังให้สร้างสร้างด้วย bun create nuxt --template minimal --packageManager bun --force
+## 1. Nuxt4 Folder Structure
 
-
-## 2. Folder Structure
+- ให้สร้าง folder ต่างรอไว้เลย
 
 ```
 my-nuxt-app/
@@ -47,8 +43,7 @@ my-nuxt-app/
 ├── tsconfig.json           # ไฟล์ตั้งค่า TypeScript
 └── README.md               # เอกสารเกี่ยวกับโปรเจกต์
 ```
-
-## 2. Config
+## 2. package.json
 
 ต้อง config ตามนี้เป็นอย่างน้อย
 
@@ -60,13 +55,13 @@ my-nuxt-app/
         "dev": "nuxt dev",
         "build": "nuxt build",
         "preview": "nuxt preview",
-        "lint": "vue-tsc --noEmit && biome lint --write",
-        "postinstall": "bunx taze -r -w -i && nuxt prepare"
+        "lint": "vue-tsc --noEmit", // @ai /follow-lint
+        "postinstall": "nuxt prepare"
     }
 }
 ```
 
-3.  `nuxt.config.ts`
+## 3. `nuxt.config.ts`
 
 ต้องกำหนดเหล่านี้ เป็นอย่างน้อย
 
@@ -109,7 +104,7 @@ export default defineNuxtConfig({
             },
             "routes": [
                 {
-                    "pattern": "*.wrikka.com", // กำหนด * ตามชื่อ folder
+                    "pattern": "*.wrikka.com", // @ai กำหนด * ตามชื่อ folder
                     "custom_domain": true
                 }
             ]
@@ -134,12 +129,19 @@ export default defineNuxtConfig({
 ```
 
 
-3. tsconfig.json
+## 4. tsconfig.json
+
 
 
 ```json [tsconfig.json]
 {
-    "extends": "./.nuxt/tsconfig.json",
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "~/shared/*": ["./shared/*"]
+    }
+  }
 }
+
 ```
 

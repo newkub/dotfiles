@@ -3,13 +3,11 @@ auto_execution_mode: 3
 ---
 
 
-1. ดู terminal session ที่เปิดอยู่ 
+1. ใช้ terminal watch / observe ปัญหา
+2. แก้ไขทั้งหมด
+3. รอ output update
+4. ห้ามรัน task ใหม่ เพื่อ watch / observe
 
-2. แก้ไข error, warning, recommend จาก terminal ให้ครบจนไม่มีเหลือ
 
-
-หมายเหตุ
-
-- ห้าม run command ใหม่ ให้ watch terminal ที่ส่งให้เท่านั้น และแก้ไขจนกว่าจะไม่มี error, warning
 
 

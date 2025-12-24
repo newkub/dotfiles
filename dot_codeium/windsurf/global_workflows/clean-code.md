@@ -1,11 +1,14 @@
 ---
-description: Apply clean code principles like removing duplicates and ensuring Single Responsibility
 auto_execution_mode: 3
 ---
 
-ทำตามหลักการนี้
 
-1. ลบสิ่งที่ duplicate
-2. ทำให้เป็น single of source
-3. แต่ละไฟล์มี Single Responsibility
-
+- Readable > Clever (อ่านรู้เรื่องมาก่อนฉลาด)
+- Single Responsibility (ทำอย่างเดียว)
+- Meaningful Naming (ชื่อบอก intent)
+- No Duplicate / Single Source of Truth
+- Pure Function First (ไม่มี side effect)
+- Explicit Dependency (ไม่พึ่ง global / magic)
+- Clear Boundary (layer ไม่ปน)
+- Small & Simple (โค้ดสั้น เรียบ)
+- Delete Dead Code (ลบคือ clean ที่สุด)

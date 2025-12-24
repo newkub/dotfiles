@@ -6,7 +6,7 @@ auto_execution_mode: 3
 1. package.json
 
 
-``` json
+``` json [package.json]
 {
   "scripts": {
     "prepare": "bunx lefthook install", 
@@ -18,14 +18,17 @@ auto_execution_mode: 3
 ``` yml
 pre-commit:
   jobs:
-    - name: format 
-      run: bun format {all_files}
+    # - name: format
+    #   glob: "*.{js,ts,jsx,tsx,json,md,yml}"
+    #   exclude: "bun.lockb"
+    #   run: bun format {staged_files}
 
-    - name: lint
-      run: bun lint {staged_files}
+    # - name: lint
+    #   glob: "*.{js,ts,jsx,tsx}"
+    #   run: bun lint {staged_files}
 
-    - name: check secret
-      run: gitleaks dir {staged_files}
+    #  - name: check secret
+    #   run: gitleaks dir {staged_files}
 
 pre-push:
   jobs:

@@ -1,6 +1,9 @@
-working-dir = 'D:\\learn-wrikka-com' 
+working-dir = 'D:' 
 
-env-vars = []
+
+
+env-vars = ["EDITOR=nvim"]
+
 
 confirm-before-quit = false
 
@@ -29,13 +32,15 @@ performance = "High"
 backend = "Automatic"
 disable-unfocused-render = false
 level = 1
+target-fps = 120
+
 
 
 
 
 [fonts]
 family = "MesloLGL Nerd Font"
-size = 20
+size = 22
 features = ["ss01", "ss02", "ss03", "ss04", "calt", "liga"]
 use-drawable-chars = true
 symbol-map = []
@@ -43,6 +48,9 @@ disable-warnings-not-found = false
 additional-dirs = []
 hinting = true
 
+[scroll]
+multiplier = 3.0
+divider = 1.0
 
 
 [window]
@@ -52,6 +60,8 @@ opacity = 0.5
 decorations = "enabled"
 width = 600
 height = 400
+windows-corner-preference = "Round"
+
 
 
 
@@ -63,17 +73,18 @@ clickable = true
 hide-if-single = true
 use-split = true
 use-current-path = false
-color-automation = []
-
+color-automation = [
+  { program = "nvim", color = "#FFFF00" }
+]
 
 [shell]
 program = "pwsh"
 
 [platform]
-windows.shell.program = "nu"
+windows.shell.program = "pwsh"
 windows.shell.args = []
 
-linux.shell.program = "nu"
+linux.shell.program = "pwsh"
 linux.shell.args = []
 
 

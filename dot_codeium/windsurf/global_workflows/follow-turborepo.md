@@ -5,25 +5,8 @@ auto_execution_mode: 3
 
 
 1. bunx turbo link --yes
-2. package.json (root)
+2. /follow-package-json
 
-``` json
-{
-  "name" : "",        // @ai name ให้มีแค่ชือ่ folder ไม่ต้องมี @
-  "packageManager" : "bun@", // @ai ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
-  "scripts": {
-    "start" : "turbo watch verify",
-    "postinstall" : "taze -r -w -i",
-    "prepare": "lefthook install",
-    "lint": "turbo lint",
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "test": "turbo test",
-    "verify": "turbo verify",
-    "format": "turbo format"
-  },
-}
-```
 
 3. turbo.jsonc
 
@@ -33,8 +16,9 @@ auto_execution_mode: 3
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies": // @ai ดูให้หนอ่ย ควรมีอะไรบ้าง,
-   "tasks": {
+  "globalDependencies" // @ai กำหนดให้หน่อย
+  "concurrency": "32", 
+  "tasks": {
     "start": {
       "cache": false,
       "persistent": true
@@ -52,12 +36,12 @@ auto_execution_mode: 3
     "lint": {
       "dependsOn": ["^format"]
     },
-    "build": {
-      "dependsOn": ["^lint"],
-      "outputs": [".output/**", "target/release/**"]
-    },
     "test": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^lint"]
+    },
+    "build": {
+      "dependsOn": ["^lint", "^test"],
+      "outputs": [".output/**", "target/release/**", "dist/**"]
     },
     "verify": {
       "dependsOn": ["^test"]

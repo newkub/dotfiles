@@ -15,7 +15,7 @@ auto_execution_mode: 3
 
 2. การเปลี่ยนแปลงแบบเลือกได้ (Split Commit)
 
-- git add -i
+- git add -p
 
 3. ตรวจสอบความเรียบร้อยของ staged files
 
