@@ -1,10 +1,11 @@
----
-auto_execution_mode: 3
----
 
+
+
+
+
+## node, bun
 
 1. package.json
-
 
 ``` json [package.json]
 {
@@ -13,51 +14,31 @@ auto_execution_mode: 3
   },
 ```
 
-3. lefthook.yml
+2. lefthook.yml
 
-``` yml
+``` yml [lefthook.yml]
 pre-commit:
   jobs:
-    # - name: format
-    #   glob: "*.{js,ts,jsx,tsx,json,md,yml}"
-    #   exclude: "bun.lockb"
-    #   run: bun format {staged_files}
-
-    # - name: lint
-    #   glob: "*.{js,ts,jsx,tsx}"
-    #   run: bun lint {staged_files}
-
-    #  - name: check secret
-    #   run: gitleaks dir {staged_files}
+    - name: format
+      run: bun format
 
 pre-push:
   jobs:
-    - name: test
-      run: bun test
-
-    - name: security
-      run: bun audit
-
-    - name: check-deps-security
-      run: bun audit
-
-    - name: check secret repo
-      run: gitleaks git {all_files}
-
+    - name: build
+      run: bun build
 
 pre-rebase:
   jobs:
     - name: fetch-origin
       run: git fetch origin
 
-
-pre-merge-commit:
+post-receive:
   jobs:
-    - name: run-build
-      run: bun run build
-    - name: verify-rebase
-      run: test $(git merge-base HEAD origin/main) = $(git rev-parse origin/main)
+    - name: open repo
+      run: gh repo view --web 
 
+post-checkout:
+  jobs:
+    - name: install
+      run: bun install
 ```
-
-

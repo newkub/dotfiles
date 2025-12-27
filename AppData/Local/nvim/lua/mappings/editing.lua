@@ -1,3 +1,4 @@
+
 -- Text editing key mappings for Neovim
 
 return {
@@ -27,16 +28,37 @@ return {
 
 		-- Cut/Paste
 		["<C-v>"] = { "<C-r>+", "Paste" },
+		["<C-c>"] = {
+			function()
+				local win = vim.api.nvim_get_current_win()
+				local cursor = vim.api.nvim_win_get_cursor(win)
+				vim.cmd("stopinsert")
+				vim.cmd('normal! ggVG"+y')
+				pcall(vim.api.nvim_win_set_cursor, win, cursor)
+				vim.cmd("startinsert")
+			end,
+			"Copy All",
+			{ noremap = true, silent = true },
+		},
 		["<C-x>"] = {
 			function()
-				vim.cmd("normal! dd")
+				vim.cmd("stopinsert")
+				vim.cmd('normal! ggVG"+d')
+				vim.cmd("startinsert")
 			end,
-			"Delete Line",
+			"Cut All",
 			{ noremap = true, silent = true },
 		},
 
 		-- Select All
-		["<C-a>"] = { "<C-o>ggVG", "Select All" },
+		["<C-a>"] = {
+			function()
+				vim.cmd("stopinsert")
+				vim.cmd("normal! ggVG")
+			end,
+			"Select All",
+			{ noremap = true, silent = true },
+		},
 	},
 
 	v = {

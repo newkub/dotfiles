@@ -1,15 +1,56 @@
----
-auto_execution_mode: 3
----
 
 
-1. ใช้ vue plugins tauri 
-- bun i -d vite-plugin-tauri @tauri-apps/cli
-- เพิ่มใน vite.config.json
 
-``` ts
+
+
+## for nuxt
+
+1. package.json
+
+ที่ต้องกำหนดแค่นี้ และที่เหลือตาม /follow-nuxt
+
+``` json [package.json]
+{
+  "name": "desktop",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.9.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.9.6"
+  }
+}
+``` 
+
+2. nuxt.config.json
+
+``` ts [nuxt.config.ts]
+import tauri from 'vite-plugin-tauri'
+
+export default defineNuxtConfig({
+  devServer: {
+    host: '0.0.0.0',
+  },
+  vite: {
+    plugins: [
+      tauri(),
+    ],
+  },
+
+```
+
+
+## for vite
+
+1. vite.config.json
+
+``` ts [vite.config.ts]
 import { defineConfig } from "vite";
-import tauri from "vite-plugin-tauri"; // 1. import the plugin
+import tauri from "vite-plugin-tauri"; 
 
 export default defineConfig({
   plugins: [
@@ -17,38 +58,4 @@ export default defineConfig({
   ],
 
 });
-```
-- สร้าง vite.config.tauri.ts
-``` ts
-import { defineConfig, mergeConfig } from "vite";
-import baseViteConfig from "./vite.config";
-import tauri from "vite-plugin-tauri";
-
-export default defineConfig(
-  mergeConfig(baseViteConfig, {
-    plugins: [tauri()],
-
-    // optional but recommended
-    clearScreen: false,
-    server: {
-      open: false,
-    },
-  }),
-);
-
-```
-- กำหนดใน package.json
-
-``` json
-{
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "dev:tauri": "vite --config vite.config.tauri.js",
-    "build:tauri": "vite build --config vite.config.tauri.ts",
-    "preview": "vite preview"
-  },
-  
-}
-
 ```

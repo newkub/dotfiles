@@ -55,7 +55,7 @@ my-nuxt-app/
         "dev": "nuxt dev",
         "build": "nuxt build",
         "preview": "nuxt preview",
-        "lint": "vue-tsc --noEmit", // @ai /follow-lint
+        "lint": "vue-tsc --noEmit && oxlint --type-aware --fix",  
         "postinstall": "nuxt prepare"
     }
 }
@@ -82,10 +82,12 @@ export default defineNuxtConfig({
         "@scalar/nuxt"
     ],
 
-
+    alias: {
+        '~/shared': './shared'
+    },
 
     scalar: {
-        theme: 'nuxt',
+        url: 'https://registry.scalar.com/@scalar/apis/galaxy?format=yaml',
     },
 
     icon: {
@@ -95,19 +97,16 @@ export default defineNuxtConfig({
     },
 
     nitro: {
-        preset: "cloudflare_module",
+        preset: "cloudflare_module", // @ai bun add wrangler ด้วย
         cloudflare: {
             deployConfig: true,
             nodeCompat: true,
-            experimental: {
-                openAPI: true,
-            },
-            "routes": [
+            wrangler : {
                 {
                     "pattern": "*.wrikka.com", // @ai กำหนด * ตามชื่อ folder
                     "custom_domain": true
                 }
-            ]
+            }
         },
     },
     vite: {
@@ -119,9 +118,10 @@ export default defineNuxtConfig({
                 typescript: true,
                 vueTsc: true,
                 oxlint: true,
+                /*
                 biome: {
                     command: 'check',
-                },
+                },*/
             }),
         ],
     }
@@ -135,13 +135,15 @@ export default defineNuxtConfig({
 
 ```json [tsconfig.json]
 {
-  "extends": "./.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "~/shared/*": ["./shared/*"]
-    }
-  }
+  "extends": "./.nuxt/tsconfig.json"
 }
 
 ```
 
+## 5. uno.config.ts
+
+- /follow-unocss
+
+## .oxlintrc.json
+
+- /follow-oxlint

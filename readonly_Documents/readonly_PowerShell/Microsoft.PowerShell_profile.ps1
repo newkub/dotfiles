@@ -58,6 +58,7 @@ Set-Alias -Name qoder-workflows -Value cdqoderworkflows
 Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
+Set-Alias -Name ai -Value codex
 
 
 
@@ -105,6 +106,27 @@ function cc {
     )
     Get-Content $file -Raw | Set-Clipboard
 }
+
+
+function cpo {
+    $last = Get-History -Count 1
+    if (-not $last) { 
+        Write-Warning "No history found"
+        return
+    }
+
+    $cmd = $last[0].CommandLine
+    # ใช้ Out-String เพื่อดึง output แบบ plain text
+    $output = Invoke-Expression $cmd | Out-String -Width 4096
+
+    # เอา ANSI/escape codes ออก
+    $plainOutput = $output -replace "`e\[[\d;]*m", ''
+
+    # copy ไป clipboard
+    $plainOutput.TrimEnd() | Set-Clipboard
+    Write-Host "Last command output copied as plain text."
+}
+
 
 
 
@@ -364,8 +386,38 @@ function repo {
     }
 }
 
-# --- Open Google ---
-function g {
-    open "https://www.google.com"
-}
 
+
+function g {
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$args
+    )
+
+    if (-not $args) {
+        Start-Process "https://www.google.com"
+        return
+    }
+
+    # mapping search engines
+    $engines = @{
+        google = "https://www.google.com/search?q={0}"
+        npm    = "https://www.npmjs.com/search?q={0}"
+        github = "https://github.com/search?q={0}"
+        youtube= "https://www.youtube.com/results?search_query={0}"
+        chatgpt  = "https://chat.openai.com/?q={0}"
+        crates  = "https://crates.io/search?q={0}"
+    }
+
+    # ตรวจสอบ engine ตัวแรก
+    $first = $args[0].ToLower()
+    if ($engines.ContainsKey($first)) {
+        $engine = $engines[$first]
+        $query = [uri]::EscapeDataString(($args[1..($args.Length-1)] -join ' '))
+    } else {
+        $engine = $engines.google
+        $query = [uri]::EscapeDataString(($args -join ' '))
+    }
+
+    Start-Process ($engine -f $query)
+}

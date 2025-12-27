@@ -5,10 +5,30 @@ auto_execution_mode: 3
 
 
 1. bunx turbo link --yes
-2. /follow-package-json
+2. package.json (root)
 
 
-3. turbo.jsonc
+``` json [package.json]
+{
+  "name" : "",        // @ai name ให้มีแค่ชือ่ folder ไม่ต้องมี @
+  "packageManager" : "bun@", // @ai ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
+  "globalConcurrency": 32,
+  "scripts": {
+    "start" : "turbo watch verify",
+    "postinstall" : "bunx taze -r -w -i",
+    "prepare": "bunx lefthook install",
+    "dev": "turbo dev --ui=tui",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "build": "turbo build",
+    "verify": "turbo verify",
+    "format": "turbo format"
+  },
+}
+```
+
+
+3. turbo.json
 
 กำหนด task ให้ครบตรงกับใน package.json (root)
 
@@ -55,10 +75,11 @@ auto_execution_mode: 3
 
 4. package.json (workspace)
 
-
+- /follow-package.json
 - กำหนด name ให้ตรงกับ folder
-- กำหนด task ให้ตรง scripts ที่มี turbo ใน package.json (root) 
-- ต้องมี examples/, test/, src/, package.json, README.md, tsconfig.json, biome.jsonc, .gitignore
+- แต่ละ package.json กำหนด task ให้ตรงกับ scripts ที่มี turbo ใน package.json (root) 
+- ทุก workspace ต้องมี package.json, README.md, .gitignore
+- packages/ ต้องมี examples/, test/
 
 5. .gitignore
 

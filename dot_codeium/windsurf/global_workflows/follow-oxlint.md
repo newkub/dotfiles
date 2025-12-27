@@ -11,7 +11,7 @@ auto_execution_mode: 3
 ``` json
 {
    "scripts": {
-      "lint" : "tsc --noEmit && oxlint --type-aware --fix",
+      "lint" : "oxlint --type-aware --fix",
    }
 }
 ```

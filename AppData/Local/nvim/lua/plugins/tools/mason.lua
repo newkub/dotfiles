@@ -36,6 +36,7 @@ return {
 					"eslint_d",
 					"shellcheck",
 					"stylua",
+					"oxlint",
 				},
 			})
 		end,

@@ -5,3 +5,11 @@ da924e5d94d40d5d824fa83c955eb38a8052df5d 82d3c88896e31fc96e339bd43a25b2838c85baa
 d4d28fbaddd0e58feb3273571c82933aeeda07a4 565f8660896bcbca26fbf79b7a7c0edab89de56b Veerapong <newkubise@gmail.com> 1765906366 +0700	commit: feat(plugins): add utility and tool plugins
 565f8660896bcbca26fbf79b7a7c0edab89de56b f8128ed5ef53eef3779bbf558b6447ee9e3a4f18 Veerapong <newkubise@gmail.com> 1765906379 +0700	commit: feat(plugins): add ui enhancement plugins
 f8128ed5ef53eef3779bbf558b6447ee9e3a4f18 421886752bfb2db99639bebb7da686c0c5bad8e9 Veerapong <newkubise@gmail.com> 1765906413 +0700	commit: refactor: update nvim configuration
+421886752bfb2db99639bebb7da686c0c5bad8e9 854395294672791cd84f28a3fe6c071d7e7344fb Veerapong <newkubise@gmail.com> 1766647717 +0700	commit: chore(git): add gitignore and empty todo
+854395294672791cd84f28a3fe6c071d7e7344fb da967e8a9e694e1b562e6a5d64ba5e7c454a2e64 Veerapong <newkubise@gmail.com> 1766647799 +0700	commit: refactor(core): update startup and keymaps
+da967e8a9e694e1b562e6a5d64ba5e7c454a2e64 1a11c271eff063697996f812b40887973d12bf35 Veerapong <newkubise@gmail.com> 1766647838 +0700	commit: refactor(plugins): reorganize ui and tooling
+1a11c271eff063697996f812b40887973d12bf35 8df68bb60af3613c126e4ea3be7a23825581b88b Veerapong <newkubise@gmail.com> 1766817834 +0700	commit: feat(lint): add lefthook and selene configuration
+8df68bb60af3613c126e4ea3be7a23825581b88b 48f6cebe46298b01114584b55baa8077176ba6c2 Veerapong <newkubise@gmail.com> 1766817860 +0700	commit: chore: remove log file from tracking
+48f6cebe46298b01114584b55baa8077176ba6c2 5738b69013c51b6f407b3d0cd25acadb08980d3d Veerapong <newkubise@gmail.com> 1766817872 +0700	commit: feat(config): add nvim.yml configuration file
+5738b69013c51b6f407b3d0cd25acadb08980d3d 9d790f921f3b43d20de0cb6a68c266375107770d Veerapong <newkubise@gmail.com> 1766817891 +0700	commit: feat(core): add codeium configuration
+9d790f921f3b43d20de0cb6a68c266375107770d 3e3b12dd18dafabb7f0514ae6f0314c3af3ee27d Veerapong <newkubise@gmail.com> 1766817911 +0700	commit: refactor(mappings): reorganize and update keymaps

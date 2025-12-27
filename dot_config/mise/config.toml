@@ -1,6 +1,6 @@
 [tasks.update]
 description = "update scoop, winget, bun(global), mise, rustup, gh extensions, chezmoi"
-run = "scoop update * && winget upgrade --all && bun update -g && mise up && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
+run = "scoop update * && winget upgrade --all && bun update -g && mise up && mise upgrade && mise self-update -y && rustup self update && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
@@ -42,7 +42,7 @@ description = "open windsurf global_workflows directory"
 dir = "c:/Users/Veerapong/.codeium/windsurf/global_workflows"
 run = "dir"
 
-[tasks.git-submodule-update]
+[tasks.git-submodule-update-remote]
 description = "git submodule update with init and recursive"
 run = "git submodule update --init --recursive"
 
@@ -82,6 +82,7 @@ XAI_API_KEY = "${env:XAI_API_KEY}"
 biome = "latest"
 oxlint = "latest"
 "cargo:selene" = "latest"
+"cargo:cargo-sweep" = "latest"
 
 
 [settings]

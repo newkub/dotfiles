@@ -45,7 +45,7 @@ export default defineNuxtConfig({
 3. uno.config.ts 
 
 
-``` ts
+``` ts [uno.config.ts]
 import { defineConfig, presetIcons, presetWind4, transformerVariantGroup, transformerDirectives, transformerCompileClass } from 'unocss'
 
 export default defineConfig({

@@ -32,4 +32,8 @@ auto_execution_mode: 3
 git log --oneline --graph --decorate
 
 
+หมายเหตุ 
+- aware .gitignore file ด้วย อะไรไม่ควร commit ให้ใส่ใน .gitignore
+
+
 

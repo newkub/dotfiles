@@ -17,7 +17,7 @@ auto_execution_mode: 3
 ```
 
 
-## vite.config.ts 
+## vite.config.ts
 
 ```ts
 import { defineConfig } from 'vite';
@@ -75,6 +75,7 @@ export default defineConfig({
 	]
 });
 ```
+
 
 ## tsconfig.json
 

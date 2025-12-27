@@ -57,12 +57,20 @@ return {
 							return #clients > 0 and "LSP:" .. #clients or ""
 						end,
 					},
-					"filetype",
 					{
 						function()
-							return "C-r Rename | C-d Del | C-S-c Copy | C-S-p Path"
+							local ok, snacks = pcall(require, "snacks")
+							if not ok or not snacks.profiler then
+								return ""
+							end
+							local status = snacks.profiler.status()
+							if type(status) == "function" then
+								return status()
+							end
+							return ""
 						end,
 					},
+					"filetype",
 				},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },

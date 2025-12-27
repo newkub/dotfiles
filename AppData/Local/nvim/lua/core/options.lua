@@ -42,5 +42,5 @@ vim.opt.guicursor = "a:ver25-blinkon0"
 vim.opt.cursorline = true
 vim.opt.virtualedit = "onemore"
 
--- Disable ShaDa file to prevent errors on exit and for faster closing
-vim.opt.shada = ""
+-- Enable ShaDa file to persist last cursor position marks
+vim.opt.shada = "!,'100,<50,s10,h"
