@@ -1,7 +1,6 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
 
-สร้างเหมือน &lt;prompt&gt; แต่ไม่ต้องใช้ &lt;prompt&gt;
-
+- สร้างให้เหมือน `<prompt>` แต่ไม่ต้องใช้ `<prompt>`

@@ -1,19 +1,18 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
 
+- `bun i -d @ast-grep/cli`
+- สร้าง `sgconfig.yml`
+- `git submodule add https://github.com/newkub/rules`
+- `gh download https://github.com/newkub/my-config/blob/main/sgconfig.yml`
+- กำหนดใน `package.json`
 
-1. bun i -d @ast-grep/cli 
-2. git submodule add https://github.com/newkub/rules
-3. gh download https://github.com/newkub/my-config/blob/main/sgconfig.yml
-4. กำหนดใน package.json 
-
-``` json
-{       
-    "scripts": {
-        "scan": "ast-grep scan -r",
-    },
+```json [package.json]
+{
+  "scripts": {
+    "scan": "ast-grep scan -r"
+  }
 }
+
 ```
-
-

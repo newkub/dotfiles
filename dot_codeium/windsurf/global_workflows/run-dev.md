@@ -1,8 +1,7 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-1. /run-lint
-2. run dev ใน package.json แล้วแก้ไข error, warning ทั้งหมดจนไม่มีเหลือ
-
-ให้รอจนกว่าจะ build เสร็จ แล้วจอดูหลังจากนั้นอีกที อย่าออก
+- ทำ `/run-lint`
+- รัน `dev` จาก `package.json` แล้วแก้ error / warning ให้หมด
+- รอจน build เสร็จ แล้วเฝ้าดู output ต่อ (อย่าเพิ่งออก)

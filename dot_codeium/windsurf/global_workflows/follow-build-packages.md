@@ -1,7 +1,6 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
-
 
 ## node
 
@@ -27,9 +26,5 @@ auto_execution_mode: 3
 11. /run-verify
 
 
-
-
-หมายเหตุ :
+หมายเหตุ:
 1. ถ้าสร้างใน utils/ แต่ละ utils ต้องมี file.test.ts และ file.usage.ts แต่ละ file
-
-

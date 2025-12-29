@@ -1,10 +1,7 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-
-1. run lint ใน package.json แล้วแก้ error, warning ทั้งหมด จนไม่มีเหลือ 
-
-- อยากสักแค่ว่าแก้ ให้แก้ตาม /follow-code-quanlity
-
-2. ถ้ายังแก้ไม่หมดห้ามจบ task
+- รัน `lint` จาก `package.json` แล้วแก้ error / warning ให้หมด
+- ถ้าต้องแก้โค้ด ให้แก้ตาม `/follow-code-quanlity`
+- ถ้ายังแก้ไม่หมด ห้ามจบ task

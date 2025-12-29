@@ -1,8 +1,7 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
 
-1. /analyze-project
-2. สรุปข้อดีข้อเสียในตาราง และเปรียบเทียบกับ package ที่คล้ายกัน
-
+- ทำ `/analyze-project`
+- สรุปข้อดี/ข้อเสียในตาราง และเปรียบเทียบกับ package ที่คล้ายกัน

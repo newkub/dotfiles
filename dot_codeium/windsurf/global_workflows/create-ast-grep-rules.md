@@ -1,6 +1,9 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
 
-- ใช้ ast-grep mcp server
+- สร้าง `ast-grep` rules ใน `rules/`
+- อ่านการใช้งาน
+  - https://ast-grep.github.io/guide/project/lint-rule.html
+  - https://ast-grep.github.io/llms-full.txt

@@ -1,10 +1,6 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-
-1. /analyze-project
-2. เปรียบเทียบกับสิ่งที่คล้ายกันในตาราง ในทุกมิติ
-
-
-
+- Run `/analyze-project`
+- Compare the analysis results with similar projects in a table format, covering all relevant dimensions.

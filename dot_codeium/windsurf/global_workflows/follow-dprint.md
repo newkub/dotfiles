@@ -1,17 +1,15 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
 
+- `bun add -d dprint`
+- `gh download https://github.com/newkub/my-config/blob/main/dprint.json`
+- กำหนด `format: "dprint fmt"` ใน `package.json`
 
-1. bun add -d dprint
-2. gh download https://github.com/newkub/my-config/blob/main/dprint.json
-4. กำหนด format : "dprint fmt" ใน package.json
-
-``` json
+```json [package.json]
 {
-   "scripts": {
-      "format" : "dprint fmt",
-   }
+  "scripts": {
+    "format": "dprint fmt"
+  }
 }
 ```
-

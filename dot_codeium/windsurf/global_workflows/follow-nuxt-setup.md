@@ -1,4 +1,5 @@
 ---
+trigger: always_on
 auto_execution_mode: 3
 ---
 
@@ -43,6 +44,7 @@ my-nuxt-app/
 ├── tsconfig.json           # ไฟล์ตั้งค่า TypeScript
 └── README.md               # เอกสารเกี่ยวกับโปรเจกต์
 ```
+
 ## 2. package.json
 
 ต้อง config ตามนี้เป็นอย่างน้อย
@@ -55,7 +57,7 @@ my-nuxt-app/
         "dev": "nuxt dev",
         "build": "nuxt build",
         "preview": "nuxt preview",
-        "lint": "vue-tsc --noEmit && oxlint --type-aware --fix",  
+        "lint": "vue-tsc --noEmit && oxlint --type-aware --fix",
         "postinstall": "nuxt prepare"
     }
 }
@@ -128,16 +130,18 @@ export default defineNuxtConfig({
 });
 ```
 
-
 ## 4. tsconfig.json
-
 
 
 ```json [tsconfig.json]
 {
-  "extends": "./.nuxt/tsconfig.json"
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+		"paths": {
+			"#shared/*": ["./shared/*"]
+		}
+	}
 }
-
 ```
 
 ## 5. uno.config.ts
@@ -147,3 +151,5 @@ export default defineNuxtConfig({
 ## .oxlintrc.json
 
 - /follow-oxlint
+
+

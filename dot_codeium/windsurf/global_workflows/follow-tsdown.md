@@ -1,52 +1,49 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
-
 
 ใช้ tsdown กับทุก packages/
 
-1. bun add -d tsdown
+1. `bun add -d tsdown`
 
-2. กำหนดใน package.json
+2. กำหนดใน `package.json`
 
-``` json [package.json]
+```json [package.json]
 {
-  "scripts" : {
-    "build" : "tsdown"
+  "scripts": {
+    "build": "tsdown"
   }
 }
-``` 
+```
 
-3. tsdown.config.ts
+3. `tsdown.config.ts`
 
-``` ts [tsdown.config.ts]
+```ts [tsdown.config.ts]
 import type { TsDownConfig } from "tsdown";
 
 export default defineConfig({
   dts: {
     sourcemap: true,
-    vue: true  // @ ai กำหนดถ้าใช้ vue
+    vue: true // @ai กำหนดถ้าใช้ vue
   },
   exports: true,
   entry: "./src/index.ts",
   format: "esm",
   clean: true,
   minify: true,
-  plugins : [],
-  hooks : {
-   
-  }
-})
+  plugins: [],
+  hooks: {}
+});
+```
 
-``` 
+4. กำหนดใน `tsconfig.json`
 
-3. กำหนดใน tsconfig.json
-
-``` json [tsconfig.json]
+```json [tsconfig.json]
 {
   "compilerOptions": {
-    "isolatedDeclarations": true, //  extremely fast generation
-    "declarationMap": true   // useful to monorepo
+    "isolatedDeclarations": true,
+    "declarationMap": true
   }
 }
-``` 
+
+```

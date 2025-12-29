@@ -1,8 +1,12 @@
-
-
-
-
-
+---
+trigger: always_on
+---
+ 
+ 
+ 
+ 
+ 
+ 
 ## for nuxt
 
 1. package.json
@@ -24,7 +28,7 @@
     "@tauri-apps/cli": "^2.9.6"
   }
 }
-``` 
+```
 
 2. nuxt.config.json
 
@@ -43,19 +47,17 @@ export default defineNuxtConfig({
 
 ```
 
-
 ## for vite
 
 1. vite.config.json
 
 ``` ts [vite.config.ts]
 import { defineConfig } from "vite";
-import tauri from "vite-plugin-tauri"; 
+import tauri from "vite-plugin-tauri";
 
 export default defineConfig({
   plugins: [
-    tauri(), 
+    tauri(),
   ],
 
 });
-```

@@ -1,8 +1,6 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
 
-run scan แล้วแก้ไขตามที่ควรจะเป็น
-
-
+- รัน `scan` แล้วแก้ไขตามที่ควรจะเป็น

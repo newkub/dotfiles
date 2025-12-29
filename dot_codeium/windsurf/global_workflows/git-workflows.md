@@ -1,20 +1,17 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-
 ## restructure
-- เข้า branch ชื่อ restructure
+
+- เข้า branch ชื่อ `restructure`
 
 ## dev
 
-
 ## fix bug
-- เข้า branch ชื่อ fix
 
+- เข้า branch ชื่อ `fix`
 
 ## review
-- เข้า branch ชื่อ review
 
-
-
+- เข้า branch ชื่อ `review`

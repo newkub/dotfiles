@@ -3,6 +3,30 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+local function is_normal_buffer()
+	if vim.bo.buftype ~= "" then
+		return false
+	end
+	if vim.fn.expand("%") == "" then
+		return false
+	end
+	return true
+end
+
+local function is_excluded_bufname(bufname)
+	if bufname == "" then
+		return true
+	end
+	if bufname:match("dashboard") or bufname:match("alpha") or bufname:match("NvimTree") then
+		return true
+	end
+	return false
+end
+
+local function is_excluded_filetype(ft)
+	return ft == "snacks_explorer" or ft == "snacks_terminal" or ft == "trouble" or ft == "terminal"
+end
+
 -- General settings
 augroup("GeneralSettings", { clear = true })
 -- autocmd("VimLeavePre", {
@@ -33,11 +57,7 @@ autocmd({ "FocusLost", "BufLeave", "VimLeavePre" }, {
 	group = "GeneralSettings",
 	pattern = "*",
 	callback = function()
-		local buftype = vim.bo.buftype
-		if buftype ~= "" then
-			return
-		end
-		if vim.fn.expand("%") == "" then
+		if not is_normal_buffer() then
 			return
 		end
 		vim.cmd("silent! wall")
@@ -68,12 +88,7 @@ autocmd("BufReadPost", {
 	pattern = "*",
 	callback = function()
 		local bufname = vim.fn.bufname()
-		if
-			bufname ~= ""
-			and not bufname:match("dashboard")
-			and not bufname:match("alpha")
-			and not bufname:match("NvimTree")
-		then
+		if not is_excluded_bufname(bufname) then
 			pcall(function()
 				local line = vim.fn.line("'\"")
 				local col = vim.fn.col("'\"")
@@ -132,10 +147,7 @@ autocmd("BufEnter", {
 			-- เข้า insert mode เมื่อเปิดไฟล์ปกติเท่านั้น
 			if
 				buftype == ""
-				and bufname ~= ""
-				and not bufname:match("dashboard")
-				and not bufname:match("alpha")
-				and not bufname:match("NvimTree")
+				and not is_excluded_bufname(bufname)
 				and not bufname:match("term://")
 			then
 				-- เช็คว่ายังอยู่ใน normal mode
@@ -232,7 +244,7 @@ autocmd("ModeChanged", {
 		if bufname == "" or bufname:match("dashboard") or bufname:match("alpha") then
 			return
 		end
-		if ft == "snacks_explorer" or ft == "snacks_terminal" or ft == "trouble" or ft == "terminal" then
+		if is_excluded_filetype(ft) then
 			return
 		end
 		vim.schedule(function()
@@ -249,7 +261,7 @@ autocmd("CmdlineLeave", {
 	callback = function()
 		vim.schedule(function()
 			local ft = vim.bo.filetype
-			if ft == "snacks_explorer" or ft == "snacks_terminal" or ft == "trouble" or ft == "terminal" then
+			if is_excluded_filetype(ft) then
 				return
 			end
 			if vim.fn.mode() == "n" then

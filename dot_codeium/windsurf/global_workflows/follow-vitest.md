@@ -1,11 +1,14 @@
 ---
+trigger: always_on
 auto_execution_mode: 3
 ---
 
 
-1.  bun add -d vitest @vitest/coverage-v8 @vitest/browser-preview @vitest/browser-playwright @nuxt/test-utils
+## setup
 
-2. กำหนดใน package.json
+
+1. package.json
+
 
 ``` json [package.json]
 {
@@ -15,24 +18,40 @@ auto_execution_mode: 3
     "test:ui": "vitest --ui",
   }
 }
-``` 
+```
 
-3. folder structure
+2. vitest.config.ts
 
-``` 
-test/
-├── e2e/
-│   └── ssr.test.ts
-├── nuxt/
-│   ├── components.test.ts
-│   └── composables.test.ts
-├── unit/
-│   └── utils.test.ts
-``` 
 
-3. กำหนดใน vitest.config.ts เป็นอย่างน้อย
+must have
 
-``` ts
+
+``` ts [vitest.config.ts]
+import { defineConfig } from 'vitest/config'
+import { playwright } from '@vitest/browser-playwright'
+import { defineVitestProject } from '@nuxt/test-utils/config'
+
+
+export default defineConfig({
+  plugins: [vue()],   // @ai ถ้ามีอย่างอื่นก็กำหนดให้เหมาะสม
+  test: {
+    environment: 'node', // @ai กำหนดให้เหมาะสมว่าจะใช้ node, edge-runtime, jsdom, happy-dom, nuxt
+    coverage: {
+      provider: 'v8',
+      reporter: ['verbose', 'html']
+    },
+    typecheck: {
+      checker: 'lint'
+    },
+  }
+})
+```
+
+
+optional
+
+
+``` ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 import { playwright } from '@vitest/browser-playwright'
 import { defineVitestProject } from '@nuxt/test-utils/config'
@@ -56,20 +75,12 @@ export default defineConfig({
           environment: 'nuxt',
         },
       }),
-    environment: 'node', // กำหนดให้เหมาะสมว่าจะใช้ node, edge-runtime, jsdom, happy-dom
-    coverage: {
-      provider: 'v8',
-      reporter: ['verbose']
-    },
-    typecheck: {
-      checker: 'lint'
-    },
     browser: {
       enabled: true,
       provider: playwright(),
       trace: 'on',
       headless: true,
-       instances: [
+      instances: [
         { browser: 'chromium' },
         { browser: 'firefox' },
         { browser: 'webkit' },
@@ -77,22 +88,3 @@ export default defineConfig({
     },
   }
 })
-```
-
-หมายเหตุ
-- ถ้าใน package.json ใช้ nuxt ให้ใช้ environment: 'nuxt' และให้ bun i -d @nuxt/test-utils
-
-``` ts
-import { defineConfig } from 'vitest/config'
-import { defineVitestConfig } from '@nuxt/test-utils/config'
-
-
-export default defineConfig({
-  test: {
-    environment: 'nuxt',
-  }
-})
-```
-
-
-

@@ -1,5 +1,5 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-run ไปเรื่อยๆจนกว่าจะผ่าน
+- รันซ้ำจนกว่าจะผ่าน

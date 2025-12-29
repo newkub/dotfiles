@@ -1,5 +1,5 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
 
 

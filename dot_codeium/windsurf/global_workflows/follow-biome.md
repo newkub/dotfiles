@@ -1,23 +1,19 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
-
 
 1. bun add -d @biomejs/biome
 2. กำหนดใน package.json
-
-``` json
+```json [package.json]
 {
-   "scripts": {
-      "lint" : "biome lint --write",
-      "format" : "biome format --write"
-   }
+    "scripts": {
+       "lint" : "biome lint --write",
+       "format" : "biome format --write"
+    }
 }
 ```
-
 3. biome.jsonc
-
-``` json
+```json [biome.jsonc]
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"vcs": {
@@ -46,13 +42,10 @@ auto_execution_mode: 3
 	}
 }
 ```
-
 4. ถ้าเป็น monorepo ใน workspace ต่างๆให้กำหนดอย่างนี้
-
-``` json
+```json [biome.jsonc]
 {
    "root": false,
    "extends": "//",
 }
 ```
-

@@ -1,21 +1,18 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
-
 
 ## add
 
-1. git submodules add <remote-url>
+- `git submodule add <remote-url>`
 
 ## remove
 
-1. ลบออกจาก .gitmodules 
-2. ลบ submodules นั้นๆ 
-3. cd .git/modules แล้ว Remove-Item <folder> -Recurse -Force
-4. git gc
- 
+- ลบออกจาก `.gitmodules`
+- ลบ submodules นั้นๆ
+- `cd .git/modules` แล้ว `Remove-Item <folder> -Recurse -Force`
+- `git gc`
 
-## submodules list 
+## submodules list
 
-- git submodule status
-
+- `git submodule status`

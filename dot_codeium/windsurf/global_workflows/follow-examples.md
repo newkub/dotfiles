@@ -1,7 +1,4 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
-
-
-1. /follow-setup-base-project
 

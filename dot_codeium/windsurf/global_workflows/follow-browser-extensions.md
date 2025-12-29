@@ -1,7 +1,6 @@
-
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
 
-1. /follow-wtx
-2. /follow-unocss
+- ทำ `/follow-wtx`
+- ทำ `/follow-unocss`

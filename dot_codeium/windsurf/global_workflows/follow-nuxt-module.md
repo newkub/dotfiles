@@ -1,14 +1,10 @@
 ---
+trigger: always_on
 auto_execution_mode: 3
 ---
 
-1. ถ้ามี ui
+1. ถ้า modules มี ui => /follow-nuxt
+2. ถ้าไม่มี ui มีแค่ .ts
 
-- /follow-nuxt-modules (ใช้ nuxt)
-
-2 . ถ้าไม่มี ui มีแค่ .ts
-
-- /follow-node 
+- /follow-node-bun
 - ใช้ @nuxt/kit
-- ที่ build ให้ /follow-tsdown
-

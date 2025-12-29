@@ -1,12 +1,8 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-
-
-ไมต้องใช้ ...
-
-1. /check-file-structure
-2. ไมต่้องใช้ ...
-3. /edit-releative
-
+- ไม่ต้องใช้ ...
+- ทำ `/check-file-structure`
+- ไม่ต้องใช้ ...
+- ทำ `/edit-releative`

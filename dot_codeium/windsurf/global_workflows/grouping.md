@@ -1,7 +1,5 @@
 ---
-description: Group files appropriately using the /use-scripts workflow
-auto_execution_mode: 3
+trigger: manual
 ---
 
-จัดกลุ่มให้ดีตามที่ควรจะเป็น ใช้ /use-scripts
-
+จัดกลุ่มให้อยู่ในตำแหน่งที่เหมาะสม

@@ -1,23 +1,39 @@
 ---
+trigger: manual
 auto_execution_mode: 3
 ---
 
 
 ## release to npm
 
-release ด้วย release it
 
-1. กำหนดใน package.json
+1. package.json
 
-- name ต้องชื่อว่า @newkub/<folder>-<workspace> เช่น @newkub/template-cli
-- เพิ่ม keyword ให้เหมาะสม ให้รองรับ SEO
-- กำหนด "private" : false
-- กำหนด prerelease, release โดย prerelease กำหนดว่า bun check โดยทำตาม /run-check
-- bun -v และกำหนด packageManager version ล่าสุด
+ให้มีตามนี้เป็นอย่างน้อย
 
 
-2. /update-readme
+``` json [package.json]
+{
+   "name": "",
+   "description": "",
+   "version": "",
+   "author": "",
+   "private": false,
+   "publishConfig": {
+      "access": "public"
+   },
+   "license": "",
+   "repository": {
+      "type": "git",
+      "url": ""
+   },
+   "homepage": "",
+   "keywords": [],
+   "scripts": {
+      "prerelease" : "bun run verfiy",
+      "release" : "" // @ai follow-release-it
+   }
+}
+```
 
-3. /run-release
-
-
+2. run release จนกว่าจะผ่าน

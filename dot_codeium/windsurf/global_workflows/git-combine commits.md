@@ -1,10 +1,8 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-
-ผมต้องการรวม commit 
-
-1. git log --oneline
-2. git reset --soft HEAD~<number of commits to combine>
-3. git commit -m "New commit message"
+- ผมต้องการรวม commit
+  - `git log --oneline`
+  - `git reset --soft HEAD~<number of commits to combine>`
+  - `git commit -m "New commit message"`

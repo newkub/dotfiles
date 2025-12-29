@@ -1,10 +1,5 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
-
-1. run build ใน package.json แล้วแก้ error, warning จนไม่มีเหลือ
-
-
-
-
+- รัน `build` จาก `package.json` แล้วแก้ error / warning ทั้งหมดจนไม่มีเหลือ

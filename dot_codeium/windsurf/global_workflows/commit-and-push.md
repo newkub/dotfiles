@@ -1,7 +1,6 @@
 ---
-description: Commit and push changes to the main branch.
-auto_execution_mode: 3
+trigger: manual
 ---
 
 1. /commit
-2. git push -u origin main
+2. git push จนกว่าจะผ่าน

@@ -1,4 +1,5 @@
 ---
+trigger: always_on
 auto_execution_mode: 3
 ---
 
@@ -16,8 +17,8 @@ auto_execution_mode: 3
 }
 ```
 
-
 ## vite.config.ts
+
 
 ```ts
 import { defineConfig } from 'vite';
@@ -76,15 +77,12 @@ export default defineConfig({
 });
 ```
 
-
 ## tsconfig.json
 
 กำหนดใน tsconfig.json
+
 
 ``` json
  "compilerOptions": {
     "types": [ "vite/client"]
   }
-```
-
-

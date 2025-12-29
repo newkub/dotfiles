@@ -4,6 +4,8 @@
 # https://starship.rs/
 Invoke-Expression (&starship init powershell)
 
+gh completion -s powershell | Out-String | Invoke-Expression
+
 # --- Zoxide Navigation ---
 # https://github.com/ajeetdsouza/zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
@@ -58,6 +60,7 @@ Set-Alias -Name qoder-workflows -Value cdqoderworkflows
 Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
+Set-Alias -Name n -Value nvim
 Set-Alias -Name ai -Value codex
 
 
@@ -73,6 +76,7 @@ $locationMap = @{
     "desktop" = "$HOME\Desktop"
     "docs" = "$HOME\Documents"
     "d" = "D:\"
+    "cnotes" = "C:\Users\Veerapong\Documents\notes"
     "images" = "$HOME\Pictures"
     "videos" = "$HOME\Videos"
     "projects" = "$HOME\Projects"
@@ -221,19 +225,19 @@ function f {
     fd -t f | fzf | ForEach-Object { windsurf $_ }
 }
 
-function n {
-    param(
-        [Parameter(ValueFromRemainingArguments=$true)]
-        [string[]]$files
-    )
 
-    if ($files) {
-        nvim @files
-    } else {
-        nvim
-    }
+
+function owindsurfrules {
+    $path = "C:\Users\Veerapong\.codeium\windsurf\memories\global_rules.md"
+
+    windsurf $path
 }
 
+function opowershellprofile {
+    $path = "C:\Users\Veerapong\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
+
+    windsurf $path
+}
 
 
 function ff {
@@ -246,6 +250,25 @@ function ff {
         fd -t d $query | fzf | ForEach-Object { windsurf $_ }
     } else {
         fd -t d | fzf | ForEach-Object { windsurf $_ }
+    }
+}
+
+function zo {
+    param(
+        [string]$query = ""
+    )
+
+    $selected = if ($query) {
+        zoxide query -ls $query | fzf
+    } else {
+        zoxide query -ls | fzf
+    }
+
+    if (-not $selected) { return }
+
+    $path = $selected -replace '^\s*\S+\s+', ''
+    if ($path) {
+        Set-Location $path
     }
 }
 
@@ -300,6 +323,81 @@ function op {
     if ($selected) { windsurf $selected }  
 }
 
+
+function omd {
+    param(
+        [string]$query = "",
+        [string]$path = "."  # default = current directory
+    )
+
+    # ตรวจสอบ path
+    if (-not (Test-Path $path)) {
+        Write-Host "Path not found: $path" -ForegroundColor Red
+        return
+    }
+
+    # ค้นหาไฟล์ .md
+    $searchQuery = if ($query) { $query } else { "." }
+    $files = fd -t f -e md $searchQuery $path
+
+    if (-not $files) {
+        Write-Host "No .md files found in $path" -ForegroundColor Yellow
+        return
+    }
+
+    # เลือกไฟล์ด้วย fzf (multi-select)
+    $selected = $files | fzf -m
+    if ($selected) {
+        foreach ($f in $selected) {
+            windsurf $f
+        }
+    }
+}
+
+function notes {
+    param(
+        [string]$action = ""
+    )
+
+    $notesDir = "C:\Users\Veerapong\Documents\notes"
+
+    # สร้างโฟลเดอร์ถ้าไม่มี
+    if (-not (Test-Path $notesDir)) {
+        New-Item -ItemType Directory -Path $notesDir | Out-Null
+    }
+
+    if ($action -eq "new") {
+        # สร้าง note ใหม่
+        $fileName = Read-Host "Enter note name (no extension)"
+        if (-not $fileName) {
+            Write-Host "Cancelled" -ForegroundColor Yellow
+            return
+        }
+
+        $fullPath = Join-Path $notesDir "$fileName.md"
+        if (Test-Path $fullPath) {
+            Write-Host "File exists: $fullPath" -ForegroundColor Red
+            return
+        }
+
+        # สร้างไฟล์เปล่า
+        New-Item -ItemType File -Path $fullPath | Out-Null
+        Write-Host "Note created: $fullPath" -ForegroundColor Green
+
+        # เปิดไฟล์ใน Windsurf ทันที
+        windsurf $fullPath
+    }
+    else {
+        # Search and open existing note
+        $query = if ($action) { $action } else { "." }
+        $selected = fd -t f $query $notesDir | fzf
+        if ($selected) {
+            windsurf $selected
+        }
+    }
+}
+
+
 function w {
     windsurf .
 }
@@ -307,20 +405,6 @@ function w {
 function e {
     explorer .
 }
-
-function nn {
-    param(
-        [string]$query = ""
-    )
-
-    # ถ้ามี query ให้ใส่ -i สำหรับ ignore case
-    if ($query) {
-        fd -t f $query | fzf | ForEach-Object { nvim $_ }
-    } else {
-        fd -t f | fzf | ForEach-Object { nvim $_ }
-    }
-}
-
 
 
 

@@ -1,10 +1,7 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
 
-
-1. /follow-lefthook
-2. /follow-tsdown
-3. /follow-release-it
-
-
+- ทำ `/follow-lefthook`
+- ทำ `/follow-tsdown`
+- ทำ `/follow-release-it`

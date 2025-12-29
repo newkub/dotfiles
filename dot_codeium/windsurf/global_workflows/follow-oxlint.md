@@ -1,19 +1,18 @@
 ---
-auto_execution_mode: 3
+trigger: always_on
 ---
 
 
-ใช้ oxlint เมื่อใช้ vite, nextjs เท่านั้น
+- ใช้ `oxlint` เมื่อใช้ vite, nextjs เท่านั้น
+- `bun add -d oxlint oxlint-tsgolint`
+- กำหนดใน `package.json`
 
-1. bun add -d oxlint oxlint-tsgolint
-2. กำหนดใน package.json 
-
-``` json
+```json [package.json]
 {
-   "scripts": {
-      "lint" : "oxlint --type-aware --fix",
-   }
+  "scripts": {
+    "lint": "oxlint --type-aware --fix"
+  }
 }
 ```
 
-3. gh download https://github.com/newkub/my-config/blob/main/.oxlintrc.json
+- `gh download https://github.com/newkub/my-config/blob/main/.oxlintrc.json`

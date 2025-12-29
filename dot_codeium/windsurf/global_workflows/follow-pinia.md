@@ -1,7 +1,7 @@
 ---
+trigger: always_on
 auto_execution_mode: 3
 ---
-
 
 ## Best Practices
 
@@ -15,12 +15,12 @@ auto_execution_mode: 3
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
-  
+
   async function fetchUser(id: string) {
     const data = await api.getUser(id)
     user.value = data
   }
-  
+
   return { user, isAuthenticated, fetchUser }
 })
 ```
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', () => {
 ```typescript
 export const useCartStore = defineStore('cart', () => {
   const userStore = useUserStore()
-  const total = computed(() => 
+  const total = computed(() =>
     userStore.isAuthenticated ? calculateTotal() : 0
   )
   return { total }
@@ -71,6 +71,3 @@ const { fetchUser } = userStore // actions ไม่ต้อง storeToRefs
 - business logic ทั้งหมดอยู่ใน actions
 - ไม่ mutate state นอก store
 - Test stores แยกจาก components
-
-
-

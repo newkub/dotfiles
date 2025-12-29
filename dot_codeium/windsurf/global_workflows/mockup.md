@@ -1,6 +1,6 @@
 ---
-auto_execution_mode: 3
+trigger: manual
 ---
 
 
-1. mockup uxui ส่วนต่างๆก่อน ทำให้สมบูรณ์ 
+- mockup UX/UI ส่วนต่างๆก่อน ให้สมบูรณ์
