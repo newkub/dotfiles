@@ -1,5 +1,6 @@
 return {
 	"Exafunction/windsurf.nvim",
+	enabled = false,
 	priority = 1001, -- สูงกว่า snacks (1000) เพื่อให้ load และ setup Tab key ก่อน
 	dependencies = {
 		"nvim-lua/plenary.nvim",

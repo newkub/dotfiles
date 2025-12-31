@@ -6,7 +6,8 @@ return {
 	opts = {
 		keymap = {
 			preset = "default",
-			["<Tab>"] = false,
+			["<C-space>"] = { "show", "fallback" },
+			["<Tab>"] = { "accept", "fallback" },
 			["<S-Tab>"] = false,
 		},
 		appearance = {
@@ -15,7 +16,11 @@ return {
 		cmdline = {
 			enabled = false,
 		},
-		completion = { documentation = { auto_show = false } },
+		completion = {
+			documentation = { auto_show = false },
+			menu = { auto_show = false },
+			ghost_text = { enabled = false },
+		},
 		sources = {
 			default = { "lsp", "path", "snippets" },
 		},

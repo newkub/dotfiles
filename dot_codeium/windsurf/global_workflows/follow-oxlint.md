@@ -10,7 +10,7 @@ trigger: always_on
 ```json [package.json]
 {
   "scripts": {
-    "lint": "oxlint --type-aware --fix"
+    "lint": "oxlint --fix --type-aware"
   }
 }
 ```

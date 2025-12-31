@@ -22,7 +22,6 @@
     "npkill": "^0.12.2",
     "nuxt": "^4.2.2",
     "opencommit": "^3.2.10",
-    "oxlint": "^1.35.0",
     "pake-cli": "^3.7.3",
     "rimraf": "^6.1.2",
     "snapai": "^0.5.0",

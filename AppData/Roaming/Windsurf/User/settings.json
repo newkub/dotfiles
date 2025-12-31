@@ -253,4 +253,5 @@
 	"git.openRepositoryInParentFolders": "never",
 	"vue.inlayHints.inlineHandlerLeading": true,
 	"nuxtr.defaultPackageManager": "Bun",
+	"diffEditor.ignoreTrimWhitespace": false,
 }

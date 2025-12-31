@@ -4,15 +4,7 @@ run = "scoop update * && winget upgrade --all && bun update -g && mise up && mis
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
-run = '''
-scoop cleanup * &&
-mise prune &&
-git gc &&
-pwsh -Command "Clear-RecycleBin -Force -ErrorAction SilentlyContinue" &&
-pwsh -Command "Get-ChildItem -Path $env:TEMP -Recurse -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue" &&
-pwsh -Command "Get-ChildItem -Path C:\Windows\Temp -Recurse -Force | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue" &&
-pwsh -Command "Remove-Item -Path C:\Users\Veerapong\scoop\cache\* -Recurse -Force -ErrorAction SilentlyContinue"
-'''
+run = "scoop cleanup && cargo cache --autoclean && mise prune && bun pm clean rm"
 
 
 [tasks.commit]
@@ -42,6 +34,13 @@ description = "open windsurf global_workflows directory"
 dir = "c:/Users/Veerapong/.codeium/windsurf/global_workflows"
 run = "dir"
 
+[tasks.cargo-clean-all]
+description = "Clean all Rust projects recursively"
+run_windows = """
+powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter Cargo.toml | ForEach-Object { `$dir = `$_.DirectoryName; Write-Host \\"Cleaning `$dir\\"; Push-Location `$dir; cargo clean; Pop-Location }"
+"""
+
+
 [tasks.git-submodule-update-remote]
 description = "git submodule update with init and recursive"
 run = "git submodule update --init --recursive"
@@ -57,6 +56,8 @@ run = "bun create nuxt --template minimal --packageManager bun --force --gitInit
 [tasks.update-node-deps]
 description = "bunx taze -r -w"
 run = "bunx taze -r -w"
+
+
 
 
 

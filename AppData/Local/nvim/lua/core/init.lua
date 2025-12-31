@@ -5,8 +5,9 @@ vim.g.mapleader = " "
 
 -- Load core modules
 require("core.options")
-require("core.autocmds")
+require("core.autocmds").setup()
 require("core.theme")
+require("core.commands").setup()
 
 -- Set up lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

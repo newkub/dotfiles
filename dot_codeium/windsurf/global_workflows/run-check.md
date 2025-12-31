@@ -2,4 +2,10 @@
 trigger: manual
 ---
 
-1. run check ทั้งหมดใน package.json แล้วปรับปรุงให้ดีที่สุด จนไม่มีอะไรปรับปรุงได้อีก
+1. ไม่ใช้ "*-ignore" ทั้งหลาย เช่น 
+- eslint-ignore
+- prettier-ignore
+- ts-ignore
+- biome-ignore
+
+

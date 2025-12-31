@@ -1,6 +1,5 @@
 ---
 trigger: manual
-auto_execution_mode: 3
 ---
 
 
@@ -36,4 +35,6 @@ auto_execution_mode: 3
 }
 ```
 
-2. run release จนกว่าจะผ่าน
+2. /follow-release-it
+
+3. run release จนกว่าจะผ่าน

@@ -42,8 +42,6 @@ config.colors = {
 
 -- ======================
 -- Startup Layout
--- Tab 1: 1 pane
--- Tab 2: 1 pane
 -- ======================
 wezterm.on('gui-startup', function(cmd)
   -- Tab 1
@@ -51,6 +49,11 @@ wezterm.on('gui-startup', function(cmd)
   window:gui_window():maximize()
 
   -- Tab 2
+  window:spawn_tab {
+    args = { 'pwsh.exe', '-NoLogo' },
+  }
+
+  -- Tab 3
   window:spawn_tab {
     args = { 'pwsh.exe', '-NoLogo' },
   }
@@ -73,7 +76,7 @@ config.keys = {
   { key = 'n', mods = 'CTRL|SHIFT', action = wezterm.action.SpawnWindow },
   { key = 'F11', action = wezterm.action.ToggleFullScreen },
 
-  -- Tab Navigation (แทน Ctrl+1..9)
+  -- Tab Navigation
   { key = 'Tab', mods = 'CTRL', action = wezterm.action.ActivateTabRelative(1) },
   { key = 'Tab', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
 
@@ -95,5 +98,16 @@ config.keys = {
   { key = 'LeftArrow',  mods = 'CTRL|SHIFT', action = wezterm.action.SplitPane { direction = 'Left' } },
   { key = 'RightArrow', mods = 'CTRL|SHIFT', action = wezterm.action.SplitPane { direction = 'Right' } },
 }
+
+-- ======================
+-- Ctrl + 1..9 เลือก Tab
+-- ======================
+for i = 1, 9 do
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'CTRL',
+    action = wezterm.action.ActivateTab(i - 1), -- index เริ่มจาก 0
+  })
+end
 
 return config

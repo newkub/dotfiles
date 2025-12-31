@@ -1,6 +1,6 @@
 ---
 trigger: always_on
-auto_execution_mode: 3
+
 ---
 
 
@@ -9,7 +9,8 @@ auto_execution_mode: 3
 
 
 
-## for next
+
+## unocss + next
 
 
 1. bun add -d unocss @unocss/postcss
@@ -34,7 +35,7 @@ export default {
 
 
 
-## for nuxt
+## unocss + nuxt
 
 
 1. bun add -d unocss @unocss/nuxt
@@ -75,11 +76,51 @@ export default defineConfig({
 ```
 
 
-## for html
+## unocss + vite
 
 
-- ใช้ unocss + style reset + vue ผ่าน cdn.jsdelivr
-- ที่ cdn url ไม่ต้องกำหนด version
+1. bun add -d unocss
+
+2. vite.config.ts
+
+
+``` ts [vite.config.ts]
+import unocss from '@unocss/vite';
+
+export default defineConfig({
+  plugins: [
+    unocss(),
+  ],
+})
+```
+
+
+
+3. uno.config.ts
+
+
+``` ts [uno.config.ts]
+import { defineConfig, presetIcons, presetWind4, transformerVariantGroup, transformerDirectives, transformerCompileClass } from 'unocss'
+
+export default defineConfig({
+	presets: [
+		presetWind4({
+			preflights: {
+				reset: true,
+			}
+		}),
+	],
+	transformers: [
+		transformerVariantGroup(),
+		transformerDirectives(),
+		transformerCompileClass()
+	],
+})
+```
+
+
+## unocss + html
+
 
 
 ```html

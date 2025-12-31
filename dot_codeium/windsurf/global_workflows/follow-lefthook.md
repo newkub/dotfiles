@@ -2,14 +2,16 @@
 trigger: always_on
 ---
 
-## node, bun
+## {node, bun} ecosystem
+
+ให้ตั้งค่าตามนี้เสมอ
 
 1. package.json
 
 ```json [package.json]
 {
   "scripts": {
-    "prepare": "bunx lefthook install",
+    "prepare": "lefthook install",
   },
 ```
 
@@ -19,7 +21,7 @@ trigger: always_on
 pre-commit:
   jobs:
     - name: format
-      run: bun bun format {staged_files}
+      run: bun run format 
 
 pre-push:
   jobs:

@@ -2,35 +2,19 @@
 trigger: always_on
 ---
  
- 
- 
- 
- 
- 
-## for nuxt
 
-1. package.json
+ 
+## tauri + nuxt
 
-ที่ต้องกำหนดแค่นี้ และที่เหลือตาม /follow-nuxt
+1. /follow-nuxt
 
-``` json [package.json]
-{
-  "name": "desktop",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "nuxt dev"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^2.9.1"
-  },
-  "devDependencies": {
-    "@tauri-apps/cli": "^2.9.6"
-  }
-}
-```
+2. package.json
 
-2. nuxt.config.json
+- bun add @tauri-apps/api
+- bun add @tauri-apps/cli
+
+
+3. nuxt.config.json
 
 ``` ts [nuxt.config.ts]
 import tauri from 'vite-plugin-tauri'
@@ -47,9 +31,11 @@ export default defineNuxtConfig({
 
 ```
 
-## for vite
+## tauri + vite
 
-1. vite.config.json
+1. /follow-vite
+
+2. vite.config.json
 
 ``` ts [vite.config.ts]
 import { defineConfig } from "vite";

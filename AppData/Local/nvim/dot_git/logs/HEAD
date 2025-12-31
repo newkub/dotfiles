@@ -15,3 +15,7 @@ da967e8a9e694e1b562e6a5d64ba5e7c454a2e64 1a11c271eff063697996f812b40887973d12bf3
 48f6cebe46298b01114584b55baa8077176ba6c2 5738b69013c51b6f407b3d0cd25acadb08980d3d Veerapong <newkubise@gmail.com> 1766817872 +0700	commit: feat(config): add nvim.yml configuration file
 5738b69013c51b6f407b3d0cd25acadb08980d3d 9d790f921f3b43d20de0cb6a68c266375107770d Veerapong <newkubise@gmail.com> 1766817891 +0700	commit: feat(core): add codeium configuration
 9d790f921f3b43d20de0cb6a68c266375107770d 3e3b12dd18dafabb7f0514ae6f0314c3af3ee27d Veerapong <newkubise@gmail.com> 1766817911 +0700	commit: refactor(mappings): reorganize and update keymaps
+3e3b12dd18dafabb7f0514ae6f0314c3af3ee27d ea265c41e6b7b2adcc3547ea441e5c188e8a4b60 Veerapong <newkubise@gmail.com> 1767044298 +0700	commit: fix(picker): map <C-o> to commands and reduce autocmd overhead
+ea265c41e6b7b2adcc3547ea441e5c188e8a4b60 0266b7c1a3235bb85c20afa02d4f4b733f50c601 Veerapong <newkubise@gmail.com> 1767045515 +0700	commit: feat(tools): add yazi and tooling configs
+0266b7c1a3235bb85c20afa02d4f4b733f50c601 8853686d38d3a0a07a6e86d021050a205ad149e7 Veerapong <newkubise@gmail.com> 1767047576 +0700	commit: refactor(core): improve perf and disable mason auto-install
+8853686d38d3a0a07a6e86d021050a205ad149e7 cd19514b9c298df2695f578bb4ec50401d2b322e Veerapong <newkubise@gmail.com> 1767125314 +0700	commit: feat(webconfig): add Nuxt-based config editor

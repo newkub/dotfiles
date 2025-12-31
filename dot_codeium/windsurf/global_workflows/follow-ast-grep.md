@@ -2,6 +2,7 @@
 trigger: always_on
 ---
 
+
 - `bun i -d @ast-grep/cli`
 - สร้าง `sgconfig.yml`
 - `git submodule add https://github.com/newkub/rules`

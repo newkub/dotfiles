@@ -1,6 +1,5 @@
 ---
 trigger: always_on
-auto_execution_mode: 3
 ---
 
 
@@ -88,3 +87,10 @@ export default defineConfig({
     },
   }
 })
+```
+
+## write test
+
+1. เขียน test ทุกไฟล์ใน utils/
+2. เขียน test ทุกไฟล์ใน api/
+3. เขียน test ทุกไฟล์ใน db/

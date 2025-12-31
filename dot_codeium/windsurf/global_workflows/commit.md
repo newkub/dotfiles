@@ -1,15 +1,16 @@
 ---
 trigger: manual
 ---
-
-1. ทำ `/follow-gitignore`
-2. ทำ `/follow-lefthook` (ถ้าควรใช้)
-3. commit 
+ 
+1. ทำ `/follow-windsurf-global-workflows`
+2. ทำ `/follow-gitignore`
+3. ทำ `/follow-lefthook` (ถ้าควรใช้)
+4. commit ตาม conventional commit เป็นภาษาอังกฤษ เช่น feat(auth): add login with Google OAuth
   - `git status --porcelain`
   - `git diff`
   - `git diff --staged`
   - `git add -u`
-  - commit ตาม conventional commit เป็นภาษาอังกฤษ เช่น feat(auth): add login with Google OAuth
+  - `git commit -m ""`
   - `git log --oneline --graph --decorate`
 
 หมายเหตุ

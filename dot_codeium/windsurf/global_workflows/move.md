@@ -1,7 +1,1 @@
----
-description: What should be moved?
-auto_execution_mode: 3
----
-
-ควรย้ายอะไรไปบ้
-
+ย้าย A ไปรวมใน B

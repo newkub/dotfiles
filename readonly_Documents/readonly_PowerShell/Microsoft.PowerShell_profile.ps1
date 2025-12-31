@@ -61,6 +61,7 @@ Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
 Set-Alias -Name n -Value nvim
+Set-Alias -Name v -Value bat
 Set-Alias -Name ai -Value codex
 
 
@@ -95,9 +96,18 @@ foreach ($key in $locationMap.Keys) {
     Set-Item -Path "Function:$key" -Value ([ScriptBlock]::Create("Set-Location '$($locationMap[$key])'"))
 }
 
-function od {
+function dd {
     explorer "C:\Users\Veerapong\downloads"
 }
+
+function ee {
+    explorer "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
+}
+
+function ep {
+    explorer "C:\Users\Veerapong"
+}
+
 
 function b {
     broot
@@ -199,18 +209,13 @@ function wrl {
 function rt {
     ni && bun run test
 }
-function wrt {
-    ni && turbo watch bun run test
+function wr {
+    ni && turbo watch 
 }
 function rr {
     ni && bun run review
 }
-function rs {
-    ni && bun run start
-}
-function wrs {
-    ni && turbo watch bun run test
-}
+
 function rf {
     ni && bun run format
 }

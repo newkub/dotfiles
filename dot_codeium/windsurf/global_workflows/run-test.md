@@ -2,8 +2,7 @@
 trigger: manual
 ---
 
-- ต้องมี test
-- รัน `test` แล้วแก้ error / warning ให้หมดตาม `/follow-code-quanlty`
-- อ้างอิงตามภาษา
-  - node: `/follow-node`
-  - rust: `/follow-rust`
+1. เขียน write
+
+
+1. รัน `test` ใน package.json แล้วแก้ error / warning ทั้งหมดจนไม่มีเหลือ

@@ -1,14 +1,16 @@
 ---
 trigger: always_on
-auto_execution_mode: 3
 ---
 
-## 1. playwright.config.ts
+## Setup
+
+### config
+
+#### `playwright.config.ts`
 
 - ต้องมีไฟล์ `playwright.config.ts` ใน root ของ project
-- ควรมี configuration ดังนี้:
 
-```typescript
+```ts
 import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
@@ -51,117 +53,14 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    command: 'bun run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
 })
 ```
 
-## 2. โครงสร้างไฟล์ test
-
-- สร้าง tests ใน `tests/` folder
-- แยก test ตาม feature/page
-- ใช้ Page Object Model pattern
-
-```
-tests/
-├── e2e/
-│   ├── auth.spec.ts
-│   ├── cart.spec.ts
-│   └── checkout.spec.ts
-├── pages/
-│   ├── login.page.ts
-│   ├── home.page.ts
-│   └── product.page.ts
-├── fixtures/
-│   ├── test-data.ts
-│   └── mock-api.ts
-└── utils/
-    └── test-helpers.ts
-```
-
-## 3. การเขียน test ที่ดี
-
-- ใช้ `test.describe` สำหรับจัดกลุ่ม tests
-- ใช้ `test` สำหรับแต่ละ test case
-- เขียน test name ให้ชัดเจน
-- ใช้ Page Object Model
-- ใช้ `test.beforeEach`, `test.afterEach` สำหรับ setup/teardown
-
-```typescript
-import { test, expect } from '@playwright/test'
-
-test.describe('Login Flow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/login')
-  })
-
-  test('should login successfully with valid credentials', async ({ page }) => {
-    // Arrange
-    await page.fill('[data-testid="email"]', 'user@example.com')
-    await page.fill('[data-testid="password"]', 'password123')
-
-    // Act
-    await page.click('[data-testid="login-button"]')
-
-    // Assert
-    await expect(page).toHaveURL('/dashboard')
-    await expect(page.locator('[data-testid="welcome-message"]')).toBeVisible()
-  })
-
-  test('should show error with invalid credentials', async ({ page }) => {
-    await page.fill('[data-testid="email"]', 'invalid@example.com')
-    await page.fill('[data-testid="password"]', 'wrongpassword')
-    await page.click('[data-testid="login-button"]')
-
-    await expect(page.locator('[data-testid="error-message"]')).toBeVisible()
-    await expect(page.locator('[data-testid="error-message"]')).toContainText('Invalid credentials')
-  })
-})
-```
-
-## 4. Page Object Model
-
-- สร้าง class สำหรับแต่ละ page
-- Encapsulate selectors และ actions
-- Re-use common interactions
-
-```typescript
-// pages/login.page.ts
-import type { Page } from '@playwright/test'
-
-export class LoginPage {
-  constructor(private page: Page) {}
-
-  async goto() {
-    await this.page.goto('/login')
-  }
-
-  async login(email: string, password: string) {
-    await this.page.fill('[data-testid="email"]', email)
-    await this.page.fill('[data-testid="password"]', password)
-    await this.page.click('[data-testid="login-button"]')
-  }
-
-  async getErrorMessage() {
-    return this.page.locator('[data-testid="error-message"]')
-  }
-}
-
-// ใช้งาน
-import { test, expect } from '@playwright/test'
-import { LoginPage } from './pages/login.page'
-
-test('login test', async ({ page }) => {
-  const loginPage = new LoginPage(page)
-  await loginPage.goto()
-  await loginPage.login('user@example.com', 'password123')
-  await expect(page).toHaveURL('/dashboard')
-})
-```
-
-## 5. Scripts ใน package.json
+#### `package.json`
 
 ```json
 {
@@ -178,17 +77,105 @@ test('login test', async ({ page }) => {
 }
 ```
 
-## Best Practices
+### Libraries
+
+- `@playwright/test`
+
+## Project Structure
+
+```plaintext
+tests/
+├── e2e/
+│   ├── auth.spec.ts
+│   ├── cart.spec.ts
+│   └── checkout.spec.ts
+├── pages/
+│   ├── login.page.ts
+│   ├── home.page.ts
+│   └── product.page.ts
+├── fixtures/
+│   ├── test-data.ts
+│   └── mock-api.ts
+└── utils/
+    └── test-helpers.ts
+```
+
+## Core Principles
+
+- ใช้ `test.describe` สำหรับจัดกลุ่ม tests
+- เขียน test name ให้ชัดเจน
+- ใช้ `test.beforeEach`, `test.afterEach` สำหรับ setup/teardown
+- ใช้ Page Object Model (POM) เพื่อแยก selector/actions ออกจาก test
+
+## Folder Rules
+
+### `tests/e2e/`
+
+- Do
+  - แยก test ตาม feature/page
+  - assert ด้วย `expect` ให้ชัดเจน
+
+### `tests/pages/`
+
+- Do
+  - Encapsulate selectors + actions
+  - Reuse common interactions
+
+```ts
+import type { Page } from '@playwright/test'
+
+export class LoginPage {
+  constructor(private page: Page) {}
+
+  async goto() {
+    await this.page.goto('/login')
+  }
+
+  async login(email: string, password: string) {
+    await this.page.fill('[data-testid="email"]', email)
+    await this.page.fill('[data-testid="password"]', password)
+    await this.page.click('[data-testid="login-button"]')
+  }
+
+  getErrorMessage() {
+    return this.page.locator('[data-testid="error-message"]')
+  }
+}
+```
+
+### Example test
+
+```ts
+import { test, expect } from '@playwright/test'
+
+test.describe('Login Flow', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/login')
+  })
+
+  test('should login successfully with valid credentials', async ({ page }) => {
+    await page.fill('[data-testid="email"]', 'user@example.com')
+    await page.fill('[data-testid="password"]', 'password123')
+    await page.click('[data-testid="login-button"]')
+
+    await expect(page).toHaveURL('/dashboard')
+    await expect(page.locator('[data-testid="welcome-message"]')).toBeVisible()
+  })
+})
+```
+
+### Best Practices
 
 - ใช้ `data-testid` attributes สำหรับ selectors
 - หลีกเลี่ยง CSS selectors ที่ brittle
-- ใช้ `waitForSelector` เมื่อจำเป็น
-- ใช้ `screenshot` และ `video` สำหรับ debugging
-- Run tests ใน parallel สำหรับ speed
-- ใช้ `test.fixme()` สำหรับ flaky tests
-- ใช้ `test.slow()` สำหรับ slow tests
-- Mock external APIs ด้วย `page.route()`
-- ใช้ fixtures สำหรับ reusable setup
-- Test ใน multiple browsers
-- ใช้ trace viewer สำหรับ debugging
-- เก็บ test data แยกจาก test logic
+- ใช้ `page.route()` mock external APIs เมื่อจำเป็น
+- เปิด `trace`, `screenshot`, `video` สำหรับ debugging
+- รันแบบ parallel เพื่อ speed และใช้ retries ใน CI
+
+## Import Rules
+
+```plaintext
+tests/e2e  <-- tests/pages, tests/fixtures, tests/utils
+tests/pages <-- tests/utils
+tests/fixtures <-- (no internal dependencies)
+```

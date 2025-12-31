@@ -8,7 +8,6 @@ function M.setup()
 		require("mappings.editing"),
 		require("mappings.files"),
 		require("mappings.system"),
-		require("mappings.ai"),
 	}
 
 	for _, category in ipairs(mappings) do

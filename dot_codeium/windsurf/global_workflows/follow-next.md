@@ -1,4 +1,141 @@
 ---
-trigger: always_on
+description: แนวทางการพัฒนาโปรเจกต์ด้วย Next.js 15 (App Router)
 ---
-\n\n\n# แนวทางการพัฒนาโปรเจกต์ด้วย Next.js 15 (App Router)\n\nเอกสารนี้เป็นแนวทางสำหรับการพัฒนาโปรเจกต์ด้วย Next.js โดยเน้นที่ App Router เพื่อสร้างแอปพลิเคชันที่มีประสิทธิภาพ, บำรุงรักษาง่าย, และทันสมัย\n\n## 1. แนวคิดหลัก (Core Concepts)\n\n- **Server Components by Default:** คอมโพเนนต์ทั้งหมดใน `app/` เป็น Server Components ซึ่งทำงานบนเซิร์ฟเวอร์เท่านั้น ทำให้สามารถดึงข้อมูลได้โดยตรงและปลอดภัย ลดขนาด JavaScript ที่ส่งให้ client\n- **Client Components Opt-in:** สำหรับคอมโพเนนต์ที่ต้องการ tương tác กับผู้ใช้ (เช่น state, event listeners) ต้องประกาศ `'use client'` ที่บรรทัดบนสุดของไฟล์อย่างชัดเจน\n- **Server Actions:** ฟังก์ชันที่ทำงานบนเซิร์ฟเวอร์อย่างปลอดภัย ใช้สำหรับการเปลี่ยนแปลงข้อมูล (data mutations) โดยไม่ต้องสร้าง API endpoints เพิ่มเติม และต้องประกาศ `'use server'`\n- **File-based Routing:** ระบบ Routing ถูกสร้างขึ้นอัตโนมัติตามโครงสร้างโฟลเดอร์ภายใน `app/` โดยใช้ชื่อไฟล์พิเศษเช่น `page.tsx`, `layout.tsx`\n- **Composition:** สร้าง UI ที่ซับซ้อนโดยการประกอบ Server และ Client Components เข้าด้วยกัน โดย Server Components สามารถ import Client Components ได้\n\n## 2. โครงสร้างโปรเจกต์ (Project Structure)\n\nโครงสร้างที่แนะนำถูกออกแบบมาเพื่อแยกส่วนของโค้ดตามหน้าที่อย่างชัดเจน:\n\n```plaintext\nmy-next-app/\n├── app/             # App Router: Routing, Layouts, Pages\n│   ├── (features)/  # Route Groups สำหรับจัดระเบียบ\n│   ├── api/         # API Route Handlers\n│   ├── layout.tsx   # Root Layout (Server Component)\n│   └── page.tsx     # Home Page (Server Component)\n├── components/      # Shared React Components\n│   ├── ui/          # Dumb UI Components (e.g., Button, Input)\n│   └── features/    # Feature-specific components\n├── lib/             # Utility functions, DB connection, etc.\n├── types/           # TypeScript types & Zod schemas\n├── actions/         # Server Actions\n├── middleware.ts    # Request Middleware\n├── public/          # Static assets\n├── next.config.mjs  # Next.js configuration\n└── package.json     # Project dependencies and scripts\n```\n\n## 3. กฎและตัวอย่าง (Folder Rules & Examples)\n\n### `app/`\n- **หน้าที่:** เป็นศูนย์กลางของแอปพลิเคชัน จัดการ routing, layouts, และการดึงข้อมูลหลัก\n- **Do:**\n    - ใช้ `async/await` ใน Server Components (`page.tsx`, `layout.tsx`) เพื่อดึงข้อมูลโดยตรง\n    - ใช้ Route Groups `(folder)` เพื่อจัดระเบียบโค้ดโดยไม่กระทบ URL\n    - กำหนด Metadata สำหรับ SEO ใน `layout.tsx` หรือ `page.tsx`\n- **Don't:**\n    - ใช้ Hooks (`useState`, `useEffect`) หรือ Browser APIs (`window`) ใน Server Components\n    - ดึงข้อมูลใน Client Component โดยตรง (ควรทำใน Server Component แล้วส่งเป็น props)\n\n```tsx\n// app/page.tsx (Server Component)\nasync function getPosts() {\n  const res = await fetch('https://api.example.com/posts');\n  return res.json();\n}\n\nexport default async function HomePage() {\n  const posts = await getPosts();\n  return <ul>{posts.map(post => <li key={post.id}>{post.title}</li>)}</ul>;\n}\n```\n\n### `components/`\n- **หน้าที่:** เก็บ React components ที่ใช้ซ้ำได้ โดยแยกตามความรับผิดชอบ\n- **Do:**\n    - วาง Dumb UI components ที่ไม่มี logic ใน `components/ui` และประกาศ `'use client'` หากจำเป็น\n    - วาง Feature-specific components ใน `components/features`\n    - ออกแบบให้รับ Props และส่ง Events (Props in, Events out)\n- **Don't:**\n    - ใส่ Business Logic ที่ซับซ้อน (ควรอยู่ใน `actions/` หรือ `lib/`)\n\n```tsx\n// components/ui/CounterButton.tsx (Client Component)\n'use client';\n\nimport { useState } from 'react';\n\nexport function CounterButton() {\n  const [count, setCount] = useState(0);\n  return <button onClick={() => setCount(count + 1)}>{count}</button>;\n}\n```\n\n### `lib/`\n- **หน้าที่:** เก็บฟังก์ชัน Utility, การตั้งค่า, หรือโค้ดที่ใช้ร่วมกันและไม่เกี่ยวกับ React UI\n- **Do:**\n    - สร้างฟังก์ชันให้เป็น Pure Functions ให้มากที่สุด\n    - แยกไฟล์ตามหน้าที่ เช่น `lib/db.ts`, `lib/utils.ts`\n- **Don't:**\n    - Import React components หรือ Hooks เข้ามาในโฟลเดอร์นี้\n\n```typescript\n// lib/utils.ts\nexport function formatDate(date: Date): string {\n  return new Intl.DateTimeFormat('en-US').format(date);\n}\n```\n\n### `types/`\n- **หน้าที่:** เป็นศูนย์รวมของ TypeScript types และ Zod schemas\n- **Do:**\n    - ใช้ `z.infer<>` จาก Zod schema เป็น Single Source of Truth สำหรับ Type\n    - แยกประเภทของ Type เช่น `types/api.ts`, `types/db.ts`\n- **Don't:**\n    - Import DB-specific types เข้าไปใน Client Components โดยตรง\n\n```typescript\n// types/user.ts\nimport { z } from 'zod';\n\nexport const UserSchema = z.object({\n  id: z.string().uuid(),\n  name: z.string().min(2),\n});\n\nexport type User = z.infer<typeof UserSchema>;\n```\n\n### `actions/`\n- **หน้าที่:** จัดการ Data Mutations ผ่าน Server Actions\n- **Do:**\n    - ขึ้นต้นไฟล์ด้วย `'use server'`\n    - ตรวจสอบ Input ด้วย Zod schema เป็นอันดับแรก\n    - จัดการข้อผิดพลาดด้วย `try-catch` และคืนค่าผลลัพธ์ที่ชัดเจน\n    - เรียก `revalidatePath` หรือ `revalidateTag` หลังจากการทำงานสำเร็จ\n- **Don't:**\n    - เปิดเผยข้อมูลที่ละเอียดอ่อนใน error message\n\n```typescript\n// actions/createUser.ts\n'use server';\n\nimport { revalidatePath } from 'next/cache';\nimport { UserSchema } from '@/types/user';\n\nexport async function createUser(formData: FormData) {\n  const validatedFields = UserSchema.safeParse({\n    name: formData.get('name'),\n  });\n\n  if (!validatedFields.success) {\n    return { error: 'Invalid name' };\n  }\n\n  // ... save to database\n  revalidatePath('/');\n  return { success: true };\n}\n```\n\n## 4. การตั้งค่าโปรเจกต์ (Project Setup)\n\n- **`package.json`**: กำหนด Scripts สำหรับการพัฒนา, build, และ linting\n```json\n{\n  "scripts": {\n    "dev": "next dev",\n    "build": "next build",\n    "start": "next start",\n    "lint": "biome check --write .",\n    "postinstall": "bunx taze -r -w -i"\n  }\n}\n```\n\n- **`next.config.mjs`**: เปิดใช้งานฟีเจอร์ที่สำคัญเช่น `serverActions` และตั้งค่าอื่นๆ\n```javascript\n/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  reactStrictMode: true,\n  experimental: {\n    serverActions: true,\n  },\n};\n\nexport default nextConfig;\n```\n\n## 5. แนวปฏิบัติที่ดีที่สุด (Best Practices)\n\n- **Push Client Components to the Leaves:** พยายามให้ Client Components มีขนาดเล็กและอยู่ที่ปลายสุดของ Component Tree เพื่อให้ส่วนใหญ่ของแอปยังคงเป็น Server Components\n- **Validate on the Server:** ตรวจสอบข้อมูลนำเข้าทั้งหมดบนเซิร์ฟเวอร์เสมอ (ใน Server Actions หรือ API Routes) อย่าเชื่อถือข้อมูลที่มาจาก Client\n- **Use Streaming with Suspense:** ใช้ `loading.tsx` และ React Suspense เพื่อสร้าง UI ที่ตอบสนองได้ดีขึ้น โดยการแสดงผลเนื้อหาแบบ streaming ขณะที่ข้อมูลกำลังถูกโหลด
+
+## Setup
+
+### config
+
+#### `package.json`
+
+```json
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check --write .",
+    "postinstall": "bunx taze -r -w -i"
+  }
+}
+```
+
+#### `next.config.mjs`
+
+```javascript
+/ @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {
+    serverActions: true,
+  },
+};
+
+export default nextConfig;
+```
+
+### Libraries
+
+- Next.js 15 (App Router)
+- Zod (schema) / types แยกเป็น single source of truth
+- /follow-unocss (ถ้าใช้ UnoCSS)
+- /follow-biome
+
+## Project Structure
+
+```plaintext
+my-next-app/
+├── app/                # Core of the application (App Router)
+│   ├── (features)/     # Route Groups for organization
+│   ├── api/            # API Route Handlers
+│   ├── layout.tsx      # Root Layout (Server Component)
+│   └── page.tsx        # Home Page (Server Component)
+├── components/         # Reusable React components
+│   ├── ui/             # Dumb UI Components (e.g., Button, Input)
+│   └── features/       # Feature-specific components
+├── lib/                # Utility functions, DB connection, etc.
+├── types/              # TypeScript types & Zod schemas
+├── actions/            # Server Actions for data mutations
+├── middleware.ts       # Request Middleware
+├── public/             # Static assets
+├── .env.local          # Environment variables
+├── next.config.mjs     # Next.js configuration
+├── package.json        # Project dependencies and scripts
+└── tsconfig.json       # TypeScript configuration
+```
+
+## Core Principles
+
+- Server Components by Default: คอมโพเนนต์ทั้งหมดใน `app/` เป็น Server Components ซึ่งทำงานบนเซิร์ฟเวอร์เท่านั้น ทำให้สามารถดึงข้อมูลได้โดยตรงและปลอดภัย ลดขนาด JavaScript ที่ส่งให้ client
+- Client Components Opt-in: สำหรับคอมโพเนนต์ที่ต้องการมีปฏิสัมพันธ์กับผู้ใช้ (state, events) ต้องประกาศ `'use client'` ที่บรรทัดบนสุดของไฟล์
+- Server Actions: ฟังก์ชัน `'use server'` ที่ทำงานบนเซิร์ฟเวอร์อย่างปลอดภัย ใช้สำหรับการเปลี่ยนแปลงข้อมูล (data mutations) โดยไม่ต้องสร้าง API endpoints เพิ่มเติม
+- Streaming with Suspense: ใช้ `loading.tsx` และ React Suspense เพื่อสร้าง UI ที่ตอบสนองได้ดีขึ้น โดยการแสดงผล UI ทันทีในส่วนที่พร้อม และแสดง loading state ในส่วนที่กำลังดึงข้อมูล
+- Push Client Components to the Leaves: พยายามให้ Client Components มีขนาดเล็กและอยู่ที่ปลายสุดของ Component Tree เพื่อให้ส่วนใหญ่ของแอปยังคงเป็น Server Components
+- Validate on the Server: ตรวจสอบข้อมูลนำเข้าทั้งหมดบนเซิร์ฟเวอร์เสมอ (ใน Server Actions หรือ API Routes) อย่าเชื่อถือข้อมูลที่มาจาก Client
+
+## Folder Rules
+
+### `app/`
+
+เป็นศูนย์กลางของแอปพลิเคชัน จัดการ routing, layouts, และการดึงข้อมูลหลัก
+
+- ควรทำ
+    - ใช้ `async/await` ใน Server Components (`page.tsx`, `layout.tsx`) เพื่อดึงข้อมูลโดยตรง
+    - ใช้ Route Groups `(folder)` เพื่อจัดระเบียบโค้ดโดยไม่กระทบ URL
+    - กำหนด Metadata สำหรับ SEO ใน `layout.tsx` หรือ `page.tsx`
+- ไม่ควรทำ
+    - ใช้ Hooks (`useState`, `useEffect`) หรือ Browser APIs (`window`) ใน Server Components
+    - ดึงข้อมูลใน Client Component โดยตรง (ควรทำใน Server Component แล้วส่งเป็น props)
+
+### `components/`
+
+เก็บ React components ที่ใช้ซ้ำได้ โดยแยกตามความรับผิดชอบ
+
+- ควรทำ
+    - วาง Dumb UI components ที่ไม่มี logic ใน `components/ui` และประกาศ `'use client'` หากจำเป็น
+    - วาง Feature-specific components ใน `components/features`
+    - ออกแบบให้รับ Props และส่ง Events (Props in, Events out)
+- ไม่ควรทำ
+    - ใส่ Business Logic ที่ซับซ้อน (ควรอยู่ใน `actions/` หรือ `lib/`)
+
+### `lib/`
+
+เก็บฟังก์ชัน Utility, การตั้งค่า, หรือโค้ดที่ใช้ร่วมกันและไม่เกี่ยวกับ React UI
+
+- ควรทำ
+    - สร้างฟังก์ชันให้เป็น Pure Functions ให้มากที่สุด
+    - แยกไฟล์ตามหน้าที่ เช่น `lib/db.ts`, `lib/utils.ts`
+- ไม่ควรทำ
+    - Import React components หรือ Hooks เข้ามาในโฟลเดอร์นี้
+
+### `types/`
+
+เป็นศูนย์รวมของ TypeScript types และ Zod schemas
+
+- ควรทำ
+    - ใช้ `z.infer<>` จาก Zod schema เป็น Single Source of Truth สำหรับ Type
+    - แยกประเภทของ Type เช่น `types/api.ts`, `types/db.ts`
+- ไม่ควรทำ
+    - Import DB-specific types เข้าไปใน Client Components โดยตรง
+
+### `actions/`
+
+จัดการ Data Mutations ผ่าน Server Actions
+
+- ควรทำ
+    - ขึ้นต้นไฟล์ด้วย `'use server'`
+    - ตรวจสอบ Input ด้วย Zod schema เป็นอันดับแรก
+    - จัดการข้อผิดพลาดด้วย `try-catch` และคืนค่าผลลัพธ์ที่ชัดเจน
+    - เรียก `revalidatePath` หรือ `revalidateTag` หลังจากการทำงานสำเร็จ
+- ไม่ควรทำ
+    - เปิดเผยข้อมูลที่ละเอียดอ่อนใน error message
+
+## Import Rules
+
+```plaintext
+app/ (route)    <-- components, actions, lib, types
+components      <-- lib, types
+actions         <-- lib, types
+lib             <-- types
+types           <-- (no internal dependencies)
+```

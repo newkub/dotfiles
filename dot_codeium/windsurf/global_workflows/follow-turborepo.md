@@ -6,25 +6,26 @@ trigger: always_on
 
 ``` json [package.json]
 {
-  "name" : "",        // @ai เช่น @project/workspace
+  "name" : "",    // @ai ให้มีแค่ folder ไมต้องมี @ เช่น folder      
   "packageManager" : "bun@", // @ai ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
   "globalConcurrency": 32,
   "scripts": {
-    "start" : "turbo watch verify",
-    "postinstall" : "taze -r -w -i",
+    "watch" : "turbo watch verify --ui=tui",
+    "postinstall" : "bunx taze -r -w -i",
     "prepare": "lefthook install",
     "dev": "turbo dev --ui=tui",
     "format": "turbo format",
-    "scan": "sg scan -r",
+    "scan": "sg scan -r", // @ai /follow-ast-grep
     "check:modules": "bunx node-modules-inspector",
     "lint": "turbo lint",
     "test": "turbo test",
     "build": "turbo build",
-    "verify": "turbo verify",
-    "clean" : "bunx rimraf */bun.lockb */node_modules"
+    "verify": "turbo verify"
   },
 }
 ```
+
+
 
 ## turbo.json
 
@@ -34,10 +35,10 @@ trigger: always_on
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
-  "globalDependencies" // @ai กำหนดให้หน่อย
+  "globalDependencies": [], // @ai กำหนดให้เหมาะสม
   "concurrency": "32",
   "tasks": {
-    "start": {
+    "watch": {
       "cache": false,
       "persistent": true
     },
@@ -77,11 +78,10 @@ trigger: always_on
 
 ## package.json (workspace)
 
-- /follow-package.json
-- กำหนด name ให้ตรงกับ folder
-- แต่ละ package.json กำหนด task ให้ตรงกับ scripts ที่มี turbo ใน package.json (root)
-- ทุก workspace ต้องมี package.json, README.md, .gitignore
-- packages/ ต้องมี examples/, test/
+1. /follow-package.json
+2. กำหนด name ให้ตรงกับ folder
+3. แต่ละ package.json กำหนด task ให้ตรงกับ scripts ที่มี turbo ใน package.json (root)
+4. ทุก workspace ต้องมี package.json, README.md, .gitignore และถ้าอยู่ไหน packages/ ต้องมี examples/, bench/
 
 ## .gitignore
 

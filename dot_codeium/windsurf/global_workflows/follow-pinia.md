@@ -1,73 +1,100 @@
 ---
 trigger: always_on
-auto_execution_mode: 3
 ---
 
-## Best Practices
+## Setup
 
-### 1. Setup Store Pattern
+### config
+
+### Libraries
+
+- `pinia`
+- `pinia-plugin-persistedstate` (optional)
+
+## Project Structure
+
+```plaintext
+src/
+├── stores/
+│   ├── user.store.ts
+│   ├── cart.store.ts
+│   └── index.ts
+└── app/
+```
+
+## Core Principles
 
 - ใช้ Composition API (setup stores) เท่านั้น ห้ามใช้ Options API
 - State: `ref` หรือ `reactive`, Getters: `computed`, Actions: functions
-- ตั้งชื่อ `useXxxStore` และแยกไฟล์ `xxx.store.ts`
+- แยก store ตาม domain/feature
+- business logic ทั้งหมดอยู่ใน actions
+- ไม่ mutate state นอก store
+- Test stores แยกจาก components
 
-```typescript
+## Folder Rules
+
+### `stores/`
+
+- Do
+  - ตั้งชื่อ `useXxxStore`
+  - แยกไฟล์ `xxx.store.ts`
+  - ใช้ `storeToRefs()` เมื่อ destructure state/getter
+- Don't
+  - ทำ circular dependency ระหว่าง store
+  - persist state ทั้งหมดแบบไม่เลือก
+
+```ts
+import { defineStore, storeToRefs } from 'pinia'
+import { computed, ref } from 'vue'
+
+type User = { id: string; email: string }
+
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
   const isAuthenticated = computed(() => user.value !== null)
 
   async function fetchUser(id: string) {
-    const data = await api.getUser(id)
+    const data = { id, email: 'user@company.com' }
     user.value = data
   }
 
   return { user, isAuthenticated, fetchUser }
 })
+
+export const useUserStoreRefs = () => {
+  const store = useUserStore()
+  return { ...storeToRefs(store), actions: store }
+}
 ```
 
-### 2. Store Composition
+### Store composition
 
-- เรียกใช้ store อื่นใน setup function ได้
-- ระวัง circular dependencies
+```ts
+import { defineStore } from 'pinia'
+import { computed } from 'vue'
+import { useUserStore } from './user.store'
 
-```typescript
 export const useCartStore = defineStore('cart', () => {
   const userStore = useUserStore()
-  const total = computed(() =>
-    userStore.isAuthenticated ? calculateTotal() : 0
-  )
+  const total = computed(() => (userStore.isAuthenticated ? 100 : 0))
   return { total }
 })
 ```
 
-### 3. Persistence
+### Persistence
 
-- ใช้ `pinia-plugin-persistedstate` สำหรับ localStorage
-- ระบุ `paths` เฉพาะ state ที่ต้องการ persist
-
-```typescript
-export const useUserStore = defineStore('user', () => {
-  // ...
-}, {
+```ts
+export const useSessionStore = defineStore('session', {
+  state: () => ({ token: null as string | null }),
   persist: {
-    paths: ['user'], // เฉพาะ user, ไม่ persist loading states
+    paths: ['token'],
   },
 })
 ```
 
-### 4. Component Usage
+## Import Rules
 
-- ใช้ `storeToRefs()` เมื่อ destructure เพื่อรักษา reactivity
-
-```typescript
-const userStore = useUserStore()
-const { user, isAuthenticated } = storeToRefs(userStore)
-const { fetchUser } = userStore // actions ไม่ต้อง storeToRefs
+```plaintext
+components/pages  <-- stores
+stores            <-- (avoid importing components)
 ```
-
-### 5. Key Points
-
-- แยก store ตาม domain/feature
-- business logic ทั้งหมดอยู่ใน actions
-- ไม่ mutate state นอก store
-- Test stores แยกจาก components
