@@ -210,7 +210,6 @@
 			".continue/**/*.yaml"
 		]
 	},
-	"workbench.experimental.share.enabled": true,
 	"npm.scriptRunner": "bun",
 	"window.customTitleBarVisibility": "windowed",
 	"chronicler.ffmpeg-binary": "C:\\Users\\Veerapong\\scoop\\shims\\ffmpeg.exe",
@@ -254,4 +253,5 @@
 	"vue.inlayHints.inlineHandlerLeading": true,
 	"nuxtr.defaultPackageManager": "Bun",
 	"diffEditor.ignoreTrimWhitespace": false,
+	"workbench.experimental.share.enabled": true,
 }

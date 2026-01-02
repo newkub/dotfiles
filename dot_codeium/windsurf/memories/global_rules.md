@@ -16,7 +16,7 @@ before-start (to know)
 - ถ้าใช้ turborepo และ run task ใน package.json ถ้าที่คุยกัน @files ให้ใช้ filter เช่น turbo run lint --filter=@workspace
 - ถ้าไม่มั่นใจ อย่ามั่ว ให้ search หรือใช้ @mcp : deepwiki ก่อน ถ้าไม่มีลองใช้ @mcp : context7
 - เวลาใช้ package manager ใช้ bun ไม่ใช้ node
-- ถ้าต้องการใอะไรจากผม เช่น url, env หรือข้อมูลต่างๆ ช่วยเปิดเว็บไซต์ให้ด้วย รัน open <url> 
+- ถ้าต้องการใอะไรจากผม เช่น url, env หรือข้อมูลต่างๆ ช่วยเปิดเว็บไซต์ให้ด้วย รัน open <url> ให้สร้าง env.example ให้ด้วย
 - ถ้าเจอไฟล์ที่ยาวๆมาก ให้ refactor ออกเป็นไฟล์ย่อยๆก่อน
 - ถ้าต้องการ rewrite, refactor ไฟล์จำนวนมากๆ สามารถใช้ /use-ast-grep ได้
 

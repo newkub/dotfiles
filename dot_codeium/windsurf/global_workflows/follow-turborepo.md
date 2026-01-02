@@ -36,7 +36,6 @@ trigger: always_on
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
   "globalDependencies": [], // @ai กำหนดให้เหมาะสม
-  "concurrency": "32",
   "tasks": {
     "watch": {
       "cache": false,
@@ -81,7 +80,7 @@ trigger: always_on
 1. /follow-package.json
 2. กำหนด name ให้ตรงกับ folder
 3. แต่ละ package.json กำหนด task ให้ตรงกับ scripts ที่มี turbo ใน package.json (root)
-4. ทุก workspace ต้องมี package.json, README.md, .gitignore และถ้าอยู่ไหน packages/ ต้องมี examples/, bench/
+4. ทุก workspace ต้องมี package.json, README.md, .gitignore และถ้าอยู่ไหน packages/ ต้องมี examples/
 
 ## .gitignore
 

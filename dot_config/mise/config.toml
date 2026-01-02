@@ -4,7 +4,7 @@ run = "scoop update * && winget upgrade --all && bun update -g && mise up && mis
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
-run = "scoop cleanup && cargo cache --autoclean && mise prune && bun pm clean rm"
+run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && mise prune && bun pm cache rm"
 
 
 [tasks.commit]
@@ -45,9 +45,6 @@ powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter Cargo.toml | ForE
 description = "git submodule update with init and recursive"
 run = "git submodule update --init --recursive"
 
-[tasks.add-ast-grep-rules]
-description = "add ast-grep rules as git submodule"
-run = "git submodule add https://github.com/newkub/rules"
 
 [tasks.create-nuxt]
 description = "nuxt minimal"
@@ -84,6 +81,7 @@ biome = "latest"
 oxlint = "latest"
 "cargo:selene" = "latest"
 "cargo:cargo-sweep" = "latest"
+"github:stakpak/agent" = "latest"
 
 
 [settings]

@@ -15,28 +15,43 @@ trigger: always_on
 
 #### package.json (สำหรับ workspace ที่ใช้ turborepo)
 
+
 ```json [package.json]
 {
-  "name": "tui",
-  "private": true,
+  "name": "",
   "scripts": {
-    "postinstall": "cargo update",
-    "dev" : "cargo watch -x run",
-    "lint": "cargo check && cargo clippy --all-targets --all-features -- -D warnings",
-    "test": "cargo test --all-features && cargo nextest run --all-features",
-    "build": "cargo build",
+     "dev": "cargo watch -x run",
+    "dev:build": "cargo build",
+
+    "check": "cargo check",
+    "format": "cargo fmt --all",
+    "lint": "cargo clippy --all-targets --all-features -- -D warnings",
+
+    "test": "cargo test --all-features",
+    "test:nextest": "cargo nextest run --all-features --verbose",
+
+    "build": "cargo build --release",
     "build:windows": "cargo build --release --target x86_64-pc-windows-msvc",
-    "build:wasm": "wasm-pack build --out-dir ./pkg",
-    "build:node": "napi build --platform --release",
-    "release": "cargo build --release",
-    "verify": "cargo fmt --all -- --check && cargo clippy --all-targets --all-features -- -D warnings && cargo nextest run && cargo audit && cargo build"
+    "build:linux": "cargo build --release --target x86_64-unknown-linux-gnu",
+    "build:mac": "cargo build --release --target x86_64-apple-darwin",
+
+    "build:wasm": "wasm-pack build --out-dir pkg --target bundler",
+    "build:node": "napi build --release",
+
+    "audit": "cargo audit",
+    "deny": "cargo deny check",
+
+    "verify": "bun run format -- --check && bun run lint && bun run test:nextest && cargo audit && cargo deny check",
+    "verify:ci": "bun run format -- --check && bun run lint && bun run test:nextest --ci && cargo audit && cargo deny check"
   }
+
 }
 ```
 
 ## 2. โครงสร้างโปรเจกต์ (Project Structure)
 
 ```plaintext
+.cargo/config.toml       # Build configurations and optimizations (e.g., sccache)
 .github/workflows/ci.yml # CI Pipeline
 src/
 ├── app/           # Application Layer: Orchestrates business flows

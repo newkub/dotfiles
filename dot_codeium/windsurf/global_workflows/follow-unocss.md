@@ -63,6 +63,7 @@ export default defineConfig({
 	presets: [
 		presetWind4({
 			preflights: {
+        darkMode : class,
 				reset: true,
 			}
 		}),
@@ -106,6 +107,7 @@ export default defineConfig({
 	presets: [
 		presetWind4({
 			preflights: {
+        darkMode : class,
 				reset: true,
 			}
 		}),

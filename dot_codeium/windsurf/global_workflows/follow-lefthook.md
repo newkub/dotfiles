@@ -21,7 +21,7 @@ trigger: always_on
 pre-commit:
   jobs:
     - name: format
-      run: bun run format 
+      run: bun run format {staged_files}
 
 pre-push:
   jobs:

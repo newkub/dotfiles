@@ -17,6 +17,7 @@ trigger: always_on
         "dev": "nuxt dev",
         "build": "nuxt build",
         "preview": "nuxt preview",
+        "format": "", // @ai /follow-dprint
         "lint": "vue-tsc --noEmit", // @ai และ /follow-oxlint
         "postinstall": "nuxt prepare"
     }
@@ -76,6 +77,11 @@ export default defineNuxtConfig({
             }
         },
     },
+
+    routeRules : {
+
+    },
+
     vite: {
         plugins: [
             checker({
@@ -146,8 +152,10 @@ my-nuxt-app/
 
 ## Core Principles
 
-- ใช้ `vueuse`, `vue-macros` เสมอถ้าเป็นไปได้
-- ใช้ `pinia` สำหรับการจัดการ State ที่ซับซ้อน
+- **Embrace Nuxt's Magic**: พึ่งพาฟีเจอร์ Auto-imports ของ Nuxt สำหรับ Components, Composables, และ Utils ให้มากที่สุด เพื่อลดจำนวน import statement ที่ไม่จำเป็น และทำให้โค้ดสะอาดตา
+- **Leverage the Ecosystem**: ใช้ประโยชน์จากไลบรารีใน Ecosystem ของ Nuxt เช่น `@vueuse/nuxt` สำหรับฟังก์ชัน Utility ทั่วไป และ `@vue-macros/nuxt` เพื่อเพิ่มความสามารถให้ Vue ซึ่งช่วยลดการเขียนโค้ดซ้ำซ้อน
+- **Centralized State Management**: สำหรับ State ที่ซับซ้อนหรือต้องใช้ร่วมกันหลายส่วน ให้ใช้ Pinia (`@pinia/nuxt`) เพื่อสร้าง Single Source of Truth และทำให้การเปลี่ยนแปลง State เป็นไปอย่างคาดเดาได้
+- **Structured Project Paths**: ใช้ Path Aliases ของ Nuxt (เช่น `~/composables`, `~/shared`) เพื่อให้เส้นทางการ import สอดคล้องและง่ายต่อการบำรุงรักษาทั่วทั้งโปรเจกต์
 
 ## Folder Rules
 
@@ -219,6 +227,11 @@ export const useUserService = () => {
 สร้าง UI ที่นำกลับมาใช้ใหม่ได้
 
 - Do
+    - `<script>` ต้องอยู่เหนือ `<template>`
+    - ใช้ `<script setup lang="ts">` เสมอ
+    - Interface/Type สำหรับ Props/Emits ให้กำหนดด้วย TypeScript
+    - ใช้ `<NuxtLink>` แทน `<a>` สำหรับ Internal Link
+    - ใช้ `<Icon>` component (จาก `nuxt/icon`) แทน `<svg>` โดยตรง
     - ออกแบบ Component ให้รับ Props และส่ง Events (Props in, Events out)
     - จัดกลุ่มตาม Feature (เช่น `components/products/Card.vue`)
     - ใช้ UnoCSS สำหรับ Styling เป็นหลัก

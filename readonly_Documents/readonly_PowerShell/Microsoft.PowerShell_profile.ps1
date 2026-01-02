@@ -61,8 +61,8 @@ Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
 Set-Alias -Name n -Value nvim
+Set-Alias -Name ai -Value stakpak
 Set-Alias -Name v -Value bat
-Set-Alias -Name ai -Value codex
 
 
 
