@@ -2,5 +2,11 @@
 trigger: manual
 ---
 
-- Run `/analyze-project`
-- Compare the analysis results with similar projects in a table format, covering all relevant dimensions.
+1. /analyze-project
+2. เปรียบเทียบกับสิ่งที่คล้ายกันในทุกมิติ 
+3. /idea-features
+
+หมายเหตุ
+
+- ตอบผมเป็นตารางเปรียบเทียบเสมอ (ตอบมาในแชท ไม่ต้องสร้างไฟล์ใหม่)
+- สรุปว่าดีกว่า services ที่คล้ายกันหรือยัง

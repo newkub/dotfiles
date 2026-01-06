@@ -19,6 +19,7 @@ before-start (to know)
 - ถ้าต้องการใอะไรจากผม เช่น url, env หรือข้อมูลต่างๆ ช่วยเปิดเว็บไซต์ให้ด้วย รัน open <url> ให้สร้าง env.example ให้ด้วย
 - ถ้าเจอไฟล์ที่ยาวๆมาก ให้ refactor ออกเป็นไฟล์ย่อยๆก่อน
 - ถ้าต้องการ rewrite, refactor ไฟล์จำนวนมากๆ สามารถใช้ /use-ast-grep ได้
+- ถ้าจะ mock image ให้ใช้ image จาก unsplash
 
 
 before-task (analyze & planning)
@@ -27,6 +28,7 @@ before-task (analyze & planning)
 - ให้ breakdown ความต้องการตาม /breakdown-into-bullet
 - planning เป็นข้อๆว่าต้องทำอะไร เรียงตามความสำคัญ
 - อย่าทำตามที่สั่งให้ทำทุกอย่าง อะไรที่ไม่ควรก็บอกว่าไม่ควรและหยุดคุยกันก่อน
+- ถ้าเขียน .rs ให้ /follow-rust เสมอ ถ้าเขียน .ts ให้ /follow-bun เสมอ
 
 
 on-task
@@ -41,13 +43,16 @@ on-task
 - ไม่ต้องถามให้ผมเลือก ให้ทำตามคำแนะนำของคุณเลย
 - ทำตาม /follow-code-quality เสมอ
 
-before-task-end
+before-task-end (ทำเสมอ)
+
+- หา TODO.md แล้วนำเสนอ ถ้าทำหมดแล้วให้ลบ TODO.md
+- /run-verify
+- /update-readme เสมอ
 - validate ว่าทั้งหมดที่ทำเป็นไปตาม plan
 - /refactor เสมอ
-- /follow-todo อีกครั้ง 
 - /run-lint เสมอ 
 - สรุปว่าว่า ทำอะไรไปบ้างพร้อมรายละเอียดที่กระชับ
-- ขอ /idea-features ใหม่ๆ
+- ขอ /idea-features ใหม่ๆ 15 อัน
 
 
 
@@ -60,7 +65,7 @@ before-task-end
 - /search
 - /replace
 - /check-cli-installed 
-- new file, delete file => pwsh
+- file operation => pwsh
 
 
 

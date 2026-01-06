@@ -54,16 +54,16 @@ trigger: always_on
 .cargo/config.toml       # Build configurations and optimizations (e.g., sccache)
 .github/workflows/ci.yml # CI Pipeline
 src/
-├── app/           # Application Layer: Orchestrates business flows
+├── app.rs         # Application Layer: Orchestrates business flows
 ├── components/    # Pure Layer: Domain logic ที่บริสุทธิ์
 ├── services/      # Effect Layer: จัดการ I/O (ผ่าน Traits)
 ├── adapters/      # Wrappers สำหรับไลบรารีภายนอก (e.g., database client)
 ├── config/        # โหลดและจัดการการตั้งค่า (Figment)
 ├── types/         # Data Structures (Structs, Enums, Traits)
-├── error/         # Custom Error types (thiserror)
+├── error.rs       # Custom Error types (thiserror)
 ├── utils/         # Helper functions ที่ไม่มี Dependencies ภายใน
 ├── constants/     # ค่าคงที่
-├── telemtry/      # ตั้งค่า Logging/Tracing
+├── telemetry.rs   # ตั้งค่า Logging/Tracing
 ├── lib.rs         # Library Entry Point: Public API
 └── main.rs        # Application Entry Point (Composition Root)
 tests/             # Integration tests
@@ -82,7 +82,7 @@ Config.toml        #ไฟล์ Configuration หลัก
 
 ## 4. กฎและตัวอย่างในแต่ละ Layer
 
-### `error/`
+### `error.rs`
 - **หน้าที่**: นิยาม Error ที่มีความหมายและมีโครงสร้างชัดเจน
 
 ```rust

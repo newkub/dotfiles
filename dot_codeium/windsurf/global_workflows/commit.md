@@ -2,16 +2,26 @@
 trigger: manual
 ---
  
-1. ทำ `/follow-windsurf-global-workflows`
-2. ทำ `/follow-gitignore`
-3. ทำ `/follow-lefthook` (ถ้าควรใช้)
-4. commit ตาม conventional commit เป็นภาษาอังกฤษ เช่น feat(auth): add login with Google OAuth
+1. ทำ /follow-gitignore
+2. ทำ/follow-lefthook (ถ้าควรใช้)
+3. split commit 
+
+แบ่ง commit ออกเป็นย่อยๆ ค่อย commit ทีละส่วน
+
+
   - `git status --porcelain`
   - `git diff`
   - `git diff --staged`
   - `git add -u`
   - `git commit -m ""`
+
+4. commit ให้หมดจนไม่มีเหลือ ทำข้อ 3 ใหม่  
+
+5. ตรวจสอบว่าไม่มีอะไรที่ commit ได้แล้ว
+
   - `git log --oneline --graph --decorate`
+
+
 
 หมายเหตุ
   - ระวัง `.gitignore` อะไรไม่ควร commit ให้ใส่ใน `.gitignore`

@@ -11,7 +11,7 @@ trigger: always_on
   "globalConcurrency": 32,
   "scripts": {
     "watch" : "turbo watch verify --ui=tui",
-    "postinstall" : "bunx taze -r -w -i",
+    "postinstall" : "taze -r -w -i",
     "prepare": "lefthook install",
     "dev": "turbo dev --ui=tui",
     "format": "turbo format",

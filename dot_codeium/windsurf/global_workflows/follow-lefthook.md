@@ -2,11 +2,12 @@
 trigger: always_on
 ---
 
+
 ## {node, bun} ecosystem
 
 ให้ตั้งค่าตามนี้เสมอ
 
-1. package.json
+1. package.json 
 
 ```json [package.json]
 {
@@ -15,13 +16,18 @@ trigger: always_on
   },
 ```
 
+
 2. lefthook.yml
+
+lefthook.yml ต้องมีไฟล์เดียว และใช้ที่ root เสมอ ไม่ใช้ที่ workspace
 
 ```yml [lefthook.yml]
 pre-commit:
   jobs:
+    - name: lint
+      run: bunx oxlint --fix {staged_files}
     - name: format
-      run: bun run format {staged_files}
+      run: bunx dprint fmt {staged_files}
 
 pre-push:
   jobs:
