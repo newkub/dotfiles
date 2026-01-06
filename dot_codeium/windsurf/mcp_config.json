@@ -1,0 +1,32 @@
+{
+  "mcpServers": {
+    "nuxt": {
+      "serverUrl": "http://localhost:3000/__mcp/sse"
+    },
+    "nuxt-docs": {
+      "serverUrl": "https://nuxt.com/mcp"
+    },
+    "workos": {
+      "command": "bunx",
+      "args": [
+        "-y",
+        "@workos/mcp-docs-server"
+      ]
+    },
+    "stripe": {
+      "url": "https://mcp.stripe.com"
+    },
+    "chrome-devtools": {
+      "command": "bunx",
+      "args": [
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    "context7": {
+      "serverUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "CONTEXT7_API_KEY"
+      }
+    }
+  }
+} 
