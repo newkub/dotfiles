@@ -1,14 +1,48 @@
-bun## Setup
+---
+trigger: always_on
+---
+
+
+## Setup
 
 ### config
 
 #### `package.json`
 
-เป็นไฟล์เริ่มต้นที่สำคัญที่สุดในการกำหนดค่าโปรเจกต์
+```json [package.json]
+{
+  "type": "module",
+  "engines": {
+    "bun": ""
+  },
+  "scripts": {
+    "watch": "bun --watch verify",
+    "dev": "bun run src/index.ts",
+    "format": "",
+    "lint": "tsc --noEmit", // @ai /follow-oxlint
+    "build": "bun build",
+    "test": "", // @ai /follow-vitest
+    "verify": "bun run format && bun audit && bun run lint && bun run test && bun run build && bun run dev"
+  }
+}
+```
 
-- /follow-package-json: ปฏิบัติตามแนวทางทั่วไปในการตั้งค่า `package.json`
-- กำหนด `engines`: ระบุเวอร์ชันของ Bun ที่ใช้ เพื่อความสอดคล้องกันในทุกสภาพแวดล้อม
-- ตั้งค่า `scripts` พื้นฐาน: กำหนด script ที่จำเป็นสำหรับการพัฒนา, lint, build, และ test
+#### `tsconfig.json`
+
+```json [tsconfig.json]
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "useUnknownInCatchVariables": true,
+    "skipLibCheck": false
+  }
+}
+```
 
 
 

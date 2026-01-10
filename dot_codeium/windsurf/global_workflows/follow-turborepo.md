@@ -2,36 +2,63 @@
 trigger: always_on
 ---
 
-## package.json (root)
+# Turborepo Best Practices
 
-``` json [package.json]
-{
-  "name" : "",    // @ai ให้มีแค่ folder ไมต้องมี @ เช่น folder      
-  "packageManager" : "bun@", // @ai ใช้ bun upgrade && bun -v เพื่อใช้ version ล่าสุดเสมอ
-  "globalConcurrency": 32,
-  "scripts": {
-    "watch" : "turbo watch verify --ui=tui",
-    "postinstall" : "taze -r -w -i",
-    "prepare": "lefthook install",
-    "dev": "turbo dev --ui=tui",
-    "format": "turbo format",
-    "scan": "sg scan -r", // @ai /follow-ast-grep
-    "check:modules": "bunx node-modules-inspector",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "build": "turbo build",
-    "verify": "turbo verify"
-  },
-}
+## 0. Folder Structure
+
+```
+my-turborepo/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── apps/
+│   ├── app1/
+│   └── app2/
+├── packages/
+│   ├── pkg1/
+│   └── pkg2/
+├── .gitignore
+├── .knip.json           // @ai /follow-knip
+├── vitest.config.ts     // @ai /follow-vitest
+├── lefthook.yml         // @ai /follow-lefthook
+├── package.json         // @ai /follow-package-json
+├── turbo.json
+└── bun.lock
 ```
 
 
 
-## turbo.json
+## 1. Root Configuration
+
+### package.json
+
+```json
+{
+  "name": "",                    // @ai ใช้ชื่อ folder เท่านั้น (ไม่มี @)
+  "packageManager": "bun@",      // @ai ใช้ bun upgrade && bun -v เพื่อ version ล่าสุด
+  "globalConcurrency": 32,
+  "scripts": {
+    "watch": "turbo watch verify --ui=tui",
+    "preinstall": "bun update --latest -r",
+    "prepare": "bunx lefthook install",
+    "dev": "turbo dev --ui=tui",
+    "format": "turbo format",
+    "scan": "bunx sg scan -r",   // @ai /follow-ast-grep
+    "check:modules": "bunx node-modules-inspector",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "build": "turbo build",
+    "verify": "turbo verify",
+    "devtools": "turbo devtools"
+  }
+}
+```
+
+### turbo.json
 
 กำหนด task ให้ครบตรงกับใน package.json (root)
 
-``` json [turbo.json]
+```json [turbo.json]
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
@@ -75,13 +102,22 @@ trigger: always_on
 }
 ```
 
-## package.json (workspace)
+## 2. Workspace Configuration
 
-1. /follow-package.json
-2. กำหนด name ให้ตรงกับ folder
-3. แต่ละ package.json กำหนด task ให้ตรงกับ scripts ที่มี turbo ใน package.json (root)
-4. ทุก workspace ต้องมี package.json, README.md, .gitignore และถ้าอยู่ไหน packages/ ต้องมี examples/
+### Requirements
 
-## .gitignore
+| Rule | Description |
+|------|-------------|
+| **Follow** | `/follow-package-json`, `/follow-config-file` |
+| **Naming** | `name` = folder name |
+| **Tasks** | ตรงกับ root scripts ที่มี `turbo` |
+| **Files** | `package.json`, `README.md`, `.gitignore` (ทุก workspace) |
+| **Examples** | `examples/` สำหรับ `packages/` |
 
-- เพิ่ม .turbo ใน .gitignore
+---
+
+## 3. Git Configuration
+
+### .gitignore
+
+เพิ่ม `.turbo`

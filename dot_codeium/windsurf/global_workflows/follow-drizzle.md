@@ -1,44 +1,46 @@
 ---
 trigger: always_on
-description: Follow Drizzle ORM (Postgres) best practices for this repo
 ---
 
 # follow-drizzle
 
-## 1) เป้าหมาย (10/10)
+> อ่านและใช้งานที่นี่: `/compact-content`
+
+## 1) เป้าหมาย
 
 - **Single source of truth**: schema ใน `server/db/schema/*` เป็นแหล่งความจริงเดียว
-- **Type-safe end-to-end**: query ต้อง import schema จากจุดเดียว
-- **Reproducible migrations**: generate/migrate ทำซ้ำได้ รันใน CI ได้
-- **Boundary ชัดเจน**: schema/query/transport แยกหน้าที่ ไม่ทำให้เกิด circular dependency
+- **Type-safe end-to-end**: query import schema จากจุดเดียว
+- **Reproducible migrations**: generate/migrate ทำซ้ำได้ รัน CI ได้
+- **Boundary ชัดเจน**: schema/query/transport แยกหน้าที่ ไม่ circular dependency
 
 ## 2) Dependencies & Scripts
 
-### 2.1 Dependencies (ต้องมี)
+### 2.1 Dependencies
 
 - **Runtime**: `drizzle-orm`, `pg`
 - **Dev**: `drizzle-kit`
 
-### 2.2 Scripts (ตัวอย่างมาตรฐาน)
+### 2.2 Scripts
 
-เพิ่ม scripts ใน `package.json` (root หรือ package ที่เป็น owner ของ db)
+เพิ่มใน `package.json` (root/owner ของ db)
 
 ```json
 {
   "scripts": {
-    "drizzle": "drizzle-kit",
-    "drizzle:generate": "drizzle-kit generate",
-    "drizzle:migrate": "drizzle-kit migrate",
-    "drizzle:studio": "drizzle-kit studio --host 0.0.0.0"
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:pull": "drizzle-kit pull",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio --host 0.0.0.0"
   }
 }
 ```
 
-- **หมายเหตุ**: หากเป็น monorepo ให้รันผ่าน turbo ด้วย `--filter=<workspace>`
+> Monorepo: รันผ่าน turbo `--filter=<workspace>`
 
 ## 3) Config: `drizzle.config.ts`
 
-- **ห้าม hardcode credentials**
+- ห้าม hardcode credentials
 - ใช้ `DB_URL` เป็น `postgres://...` หรือ `postgresql://...`
 
 ```ts
@@ -48,15 +50,13 @@ export default defineConfig({
   schema: "./server/db/schema/*",
   out: "./drizzle",
   dialect: "postgresql",
-  dbCredentials: {
-    url: process.env.DB_URL,
-  },
+  dbCredentials: { url: process.env.DB_URL },
 });
 ```
 
-## 4) โครงสร้างโฟลเดอร์ที่แนะนำ (Fit กับ repo)
+## 4) โครงสร้างโฟลเดอร์
 
-> ให้ยึดตามแต่ละ app เป็นหลัก เช่น `apps/website/server/db/*`
+> ยึดตาม app เป็นหลัก เช่น `apps/website/server/db/*`
 
 ```txt
 apps/website/
@@ -70,19 +70,13 @@ apps/website/
       client.ts
       index.ts
 drizzle/
-  ...generated...
 drizzle.config.ts
 ```
 
-## 5) Rules: Schema Layer (สำคัญมาก)
+## 5) Rules: Schema Layer
 
-- **Do**
-  - แยก schema ตาม feature/boundary (เช่น `user`, `booking`, `service`, `review`)
-  - export table/relations เป็น named export
-  - ตั้งชื่อ table/column ให้ stable (เปลี่ยนชื่อ = migration)
-- **Don’t**
-  - import schema ข้าม feature แบบสุ่มจนเกิดวงจร (circular dependency)
-  - ใส่ query หรือ business logic ในไฟล์ schema
+- **Do**: แยก schema ตาม feature, export named, ตั้งชื่อ stable
+- **Don't**: import ข้าม feature (circular), ใส่ query/business logic
 
 ### 5.1 ตัวอย่าง schema (Postgres)
 
@@ -96,9 +90,9 @@ export const users = pgTable("users", {
 });
 ```
 
-## 6) Rules: Index/Exports (ลดความปวดหัว import)
+## 6) Rules: Index/Exports
 
-สร้าง `server/db/index.ts` เป็นจุดเดียวที่รวม export schema ทั้งหมด
+สร้าง `server/db/index.ts` เป็นจุดเดียวรวม export schema
 
 ```ts
 export * from "./schema/user.schema";
@@ -107,21 +101,17 @@ export * from "./schema/service.schema";
 export * from "./schema/review.schema";
 ```
 
-### 6.1 Import rules (บังคับ)
+### 6.1 Import rules
 
-- `server/db/schema/*` **ห้าม** import จาก `server/*` อื่นๆ
-- `server/*` **ต้อง** import schema/db จาก `server/db/index.ts` หรือ `server/db/client.ts` เท่านั้น
+- `server/db/schema/*` **ห้าม** import จาก `server/*`
+- `server/*` **ต้อง** import จาก `server/db/index.ts` / `client.ts`
 - `drizzle.config.ts` **ห้าม** import internal code
 
 ## 7) Client: DB connection & Drizzle client
 
-แนวทางที่ดี:
-
-- สร้าง `client.ts` ให้รับผิดชอบแค่การสร้าง client
-- validate env `DB_URL` ตั้งแต่เริ่ม (fail fast)
+- สร้าง `client.ts` รับผิดชอบการสร้าง client
+- validate `DB_URL` ตั้งแต่เริ่ม (fail fast)
 - ใช้ connection pool (`pg.Pool`)
-
-Pseudo-structure:
 
 ```ts
 // server/db/client.ts
@@ -131,12 +121,10 @@ Pseudo-structure:
 // 4) export db
 ```
 
-## 8) Migration workflow (Reproducible)
+## 8) Migration workflow
 
-- **Generate**: จาก schema -> sql artifacts
-- **Migrate**: apply migrations ไปที่ database
-
-คำสั่ง:
+- **Generate**: schema -> sql artifacts
+- **Migrate**: apply migrations ไป database
 
 ```bash
 bun run drizzle:generate
@@ -145,8 +133,8 @@ bun run drizzle:migrate
 
 ### 8.1 CI recommendation
 
-- ใช้ DB ชั่วคราว (เช่น postgres service)
-- รัน `drizzle:generate` แล้วตรวจว่าไม่มี diff ที่ไม่ commit
+- ใช้ DB ชั่วคราว (postgres service)
+- รัน `drizzle:generate` ตรวจไม่มี diff ที่ไม่ commit
 - รัน `drizzle:migrate` แล้วรันทดสอบ
 
 ## 9) Query layer best practices
@@ -159,6 +147,6 @@ bun run drizzle:migrate
 
 - schema แยกตาม feature ไม่มี circular
 - import schema ผ่าน `server/db/index.ts`
-- migrations generate ได้ + migrate ได้
+- migrations generate + migrate ได้
 - ไม่มี hardcode secrets (`DB_URL` จาก env)
 - รัน lint/test ผ่าน

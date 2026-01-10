@@ -4,7 +4,7 @@ run = "scoop update * && winget upgrade --all && bun update -g && mise up && mis
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
-run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && mise prune && bun pm cache rm"
+run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && cargo-clean-all && mise prune"
 
 
 [tasks.commit]
@@ -46,6 +46,7 @@ description = "git submodule update with init and recursive"
 run = "git submodule update --init --recursive"
 
 
+
 [tasks.create-nuxt]
 description = "nuxt minimal"
 run = "bun create nuxt --template minimal --packageManager bun --force --gitInit"
@@ -82,6 +83,8 @@ oxlint = "latest"
 "cargo:selene" = "latest"
 "cargo:cargo-sweep" = "latest"
 "github:stakpak/agent" = "latest"
+"cargo:cargo-clean-all" = "latest"
+watchexec = "latest"
 
 
 [settings]

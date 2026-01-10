@@ -1,6 +1,3 @@
----
-auto_execution_mode: 3
----
-
-
-1. bunx rimraf node_modules dist .output .cache .turbo bun.lockb
+1. bunx nuxi cleanup
+2. Remove-Item **/node_modules -Recurse -Force -ErrorAction SilentlyContinue
+3. Remove-Item **/bun.lockb -Recurse -Force -ErrorAction SilentlyContinue

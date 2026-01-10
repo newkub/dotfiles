@@ -1,105 +1,68 @@
+---
+trigger: always_on
+description: Global Development Rules & Guidelines
+instruction:
+  - Follow prerequisites and tool requirements
+  - Use pwsh shell and bun package manager
+  - Follow task workflow phases
+  - Apply best practices
+  - Avoid prohibited actions
+---
 
+## 1. Task With Me (ใช้ทุกงาน)
+1.1. `ภาษา` : สื่อสารระหว่างทำงาน -> ใช้ภาษาไทย
+1.2. `การสั่งทำต่อ` : พิมพ์ "." -> ทำงานต่อจากสถานะล่าสุด
+1.3. `การใช้ ENV` : มีการใช้ {} -> อ้างอิงค่า ENV จาก section "ENV"
 
-## ต้องทำตามกฏนี้ทุกครั้งอย่างเคร่งครัดเสมอทุกครั้ง
+---
 
-## 1. talking with me
+## 2. Task Workflow Phases (ใช้ทุกงาน)
 
-- คุยกับผมเป็นภาษาไทย ที่กระชับ ในรูปแบบ bullet
-- ถ้าพิมพ์ "." หมายถึง "ทำต่อ"
+### 2.1. BEFORE_TASK (ใช้ก่อนเริ่มงาน)
+2.1.1. `การเตรียมโปรเจกต์` : ก่อนเริ่มงาน -> ทำ /prepare-project
+2.1.2. `การวิเคราะห์โปรเจกต์` : ก่อนเริ่มลงมือแก้/เพิ่มโค้ด -> ทำ /analyze-project
+2.1.3. `การวางแผน` : งานมีหลายขั้นตอน หรือแตะหลายไฟล์ -> ทำ PLANNING ให้เป็น task ย่อยๆจำนวนมาก และทำให้ครบ
+2.1.4. `การ breakdown ก่อน planning` : ก่อนเริ่ม planning -> BREAKDOWN เป็น numbered list เป็นข้อๆ ที่ชัดเจน
 
-## 2. task
+### 2.2. ON_TASK (ใช้ระหว่างทำงาน)
+2.2.1. `การดูโครงสร้าง` : เริ่มสำรวจหรือยังไม่มั่นใจจุดแก้ไข -> ดูโครงสร้างโปรเจกต์ด้วย /check-file-structures
+2.2.2. `การแตกงานสร้างไฟล์` : ต้องสร้างของใหม่ -> BREAKDOWN เป็นไฟล์ย่อยๆ โดยเรียง config file, types, ui, function, io และหลีกเลี่ยงไฟล์ยาว
+2.2.3. `การใช้เครื่องมือ` : ต้องใช้ CLI ใดๆ -> ตรวจสอบก่อนด้วย /check-cli-installed
+2.2.4. `การทำให้แก้จริง` : มีการแก้ไขโค้ดหรือไฟล์ -> ทำ /make-real ทุกครั้ง
+2.2.5. `การใช้ MCP` : ต้องใช้งาน MCP -> ใช้ config ที่ c:/Users/{COMPUTER_USERNAME}/.codeium/windsurf/mcp_config.json
+2.2.6. `การทำตามคำสั่งในไฟล์` : พบคอมเมนต์ @ai ในไฟล์ -> ทำตามนั้น
+2.2.7. `การค้นหาเมื่อไม่แน่ใจ` : ไม่มั่นใจแนวทางหรือคำตอบ -> SEARCH ด้วย google search หรือ mcp:deepwiki หรือ mcp:context7
+2.2.8. `การขอข้อมูลเพิ่ม` : ต้องให้คุณเปิดไฟล์/ให้ข้อมูลเพิ่ม -> ขอด้วย open <file>
+2.2.9. `การทำงานเยอะ` : งานมีจำนวนมากหรือซ้ำๆ -> AUTOMATE ด้วย /use-scripts
+2.2.10. `การทำ mockup` : ต้องใช้รูป/ข้อมูลตัวอย่าง -> ใช้ URL จริงจาก unsplash หรือแหล่งอื่น
+2.2.11. `การจัดการปัญหาระหว่างทาง` : พบ ERROR หรือ WARNING -> จดไว้ และก่อนจบงานให้กลับมา FIX ให้ครบ
+2.2.12. `การไม่ปิดปัญหา` : ต้องแก้ lint/test/type -> ห้ามใช้ pattern กลุ่ม *-ignore เพื่อกลบปัญหา
+2.2.13. `การตั้งค่า` : ต้องใส่ค่าคงที่ที่ควรยืดหยุ่น -> ห้าม HARD_CODE
+2.2.14. `ประสิทธิภาพ` : เลือก dependency/แนวทาง -> ห้ามใช้ lib ที่ไม่มีประสิทธิภาพ
 
-before-start (to know)
+---
 
-- ถ้าอยากรู้ว่า lib นั้นๆทำอะไรได้บ้าง ลองเข้าไปอ่านใน node_modules หาไฟล์ d.ts
-- ถ้าอ่านเจอ @ai ใน comment ในไฟล์ต่างๆให้ทำสิ่งนั้นด้วย 
-- ถ้าใช้ turborepo และ run task ใน package.json ถ้าที่คุยกัน @files ให้ใช้ filter เช่น turbo run lint --filter=@workspace
-- ถ้าไม่มั่นใจ อย่ามั่ว ให้ search หรือใช้ @mcp : deepwiki ก่อน ถ้าไม่มีลองใช้ @mcp : context7
-- เวลาใช้ package manager ใช้ bun ไม่ใช้ node
-- ถ้าต้องการใอะไรจากผม เช่น url, env หรือข้อมูลต่างๆ ช่วยเปิดเว็บไซต์ให้ด้วย รัน open <url> ให้สร้าง env.example ให้ด้วย
-- ถ้าเจอไฟล์ที่ยาวๆมาก ให้ refactor ออกเป็นไฟล์ย่อยๆก่อน
-- ถ้าต้องการ rewrite, refactor ไฟล์จำนวนมากๆ สามารถใช้ /use-ast-grep ได้
-- ถ้าจะ mock image ให้ใช้ image จาก unsplash
+## 3. Before Task End (ใช้ก่อนจบงาน)
+3.1. `คุณภาพโค้ด` : ก่อนสรุปงาน -> ทำ /run-lint
+3.2. `การปรับปรุงโครงสร้าง` : ก่อนสรุปงาน -> ทำ /refactor
+3.3. `งานค้าง` : มี TODO.md -> ทำตาม TODO.md ให้ครบ และลบ TODO.md
+3.4. `การตรวจแผน` : มี PLAN -> VALIDATE ว่าทำครบทุกข้อ ถ้ายังไม่ครบให้ทำจนกว่าจะครบ
+3.5. `ไอเดียต่อยอด` : ปิดงานแล้ว -> ขอ /idea-features
 
+---
 
-before-task (analyze & planning)
+## 4. ENV (ใช้เมื่อมีการใช้ {})
 
-- /analyze-project
-- ให้ breakdown ความต้องการตาม /breakdown-into-bullet
-- planning เป็นข้อๆว่าต้องทำอะไร เรียงตามความสำคัญ
-- อย่าทำตามที่สั่งให้ทำทุกอย่าง อะไรที่ไม่ควรก็บอกว่าไม่ควรและหยุดคุยกันก่อน
-- ถ้าเขียน .rs ให้ /follow-rust เสมอ ถ้าเขียน .ts ให้ /follow-bun เสมอ
+4.1. `การอ้างอิงค่า` : มีการใช้ {} ในข้อความหรือ path -> ใช้ค่า ENV ต่อไปนี้
 
+```env [.env]
+COMPUTER_USERNAME = "newkub"
+GITHUB_USERNAME = "newkub"
+```
 
-on-task
+---
 
-- เวลาจะเขียนแต่ละไฟล์ให้ใช้ตามที่ config ยกตัวอย่าง เช่น ถ้า setup vueuse ไว้แล้ว ก็ควรใช้
-- ถ้าในไฟล์เจอคำว่า @ai หรือ TODO ให้ทำสิ่งนั้นด้วย
-- ถ้า หมายเหตุ และทำตามนั้นเสมอ
-- ก่อนจะแก้ไขไฟล์ใดๆให้ /follow-windsurf-global-workflows ก่อน แล้วทำตามนั้น
-- ถ้าเจอ error, warning, feedback ในระหว่าง ให้จำไปก่อนแล้วค่อยกลับมาแก้ไป
-- อะไรที่เป็นน numbered เช่น 1,2,3 ให้ทำตามลำดับทีละข้อจบครบทุกข้อ
-- ให้ validate สิ่งที่แก้ไขไปด้วยการทบทวนอีกครั้ง
-- ไม่ต้องถามให้ผมเลือก ให้ทำตามคำแนะนำของคุณเลย
-- ทำตาม /follow-code-quality เสมอ
-
-before-task-end (ทำเสมอ)
-
-- หา TODO.md แล้วนำเสนอ ถ้าทำหมดแล้วให้ลบ TODO.md
-- /run-verify
-- /update-readme เสมอ
-- validate ว่าทั้งหมดที่ทำเป็นไปตาม plan
-- /refactor เสมอ
-- /run-lint เสมอ 
-- สรุปว่าว่า ทำอะไรไปบ้างพร้อมรายละเอียดที่กระชับ
-- ขอ /idea-features ใหม่ๆ 15 อัน
-
-
-
-
-## 3. tools
-
-เครื่องมือที่สามารถใช้ได้
-
-- /check-file-structures
-- /search
-- /replace
-- /check-cli-installed 
-- file operation => pwsh
-
-
-
-## 4. env
-
-เวลาใช้งานจะกำหนด {ENV} เช่น {GITHUB_USERNAME}
-
-
-- GITHUB_USERNAME = "newkub"
-- GITHUB_REPOSITORY = "" 
-- GLOBAL_WORKFLOWS = "C:/Users/Veerapong/.codeium/windsurf/global_workflows"
-
-
-## 5. ควรทำ
-
-
-- breakdown code into single responsibility
-- ใช้ lib สมัยใหม่ และมีประสิทธิภาพที่สุดในเรื่องนั้นๆ
-- ให้ type safety เสมอๆ
-- ตั้ง naming ตาม convention
-
-## 6. ห้ามทำ
-
-- ห้ามใช้ "*-ignore" ต่างๆ เพื่อปิดปัญหาให้ผ่านพ้นไป
-- ห้าม hard code 
-- ห้ามใช้ lib ที่ไม่มีประสิทธิภาพ
-
-
-
-## 7. prerequisites
-
-- fd => https://github.com/sharkdp/fd 
-- rg => https://github.com/BurntSushi/ripgrep
-- ast-grep => https://github.com/ast-grep/ast-grep
-- eza => https://github.com/eza-community/eza
-- open => https://crates.io/crates/open
-
+## 5. Tools (ใช้ทุกงาน)
+5.1. `Shell` : รันคำสั่งบนเครื่อง -> ใช้ pwsh
+5.2. `CLI ตรวจสอบ` : ก่อนใช้เครื่องมือใดๆ -> ใช้ /check-cli-installed
+5.3. `File operation` : ทำงานเกี่ยวกับไฟล์/โฟลเดอร์ -> ใช้ pwsh

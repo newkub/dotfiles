@@ -2,9 +2,9 @@
 trigger: manual
 ---
 
-- /follow-package-json
-- รัน `lint` จาก `package.json` แล้วแก้ error / warning ให้หมด
-- ถ้าต้องแก้โค้ด ให้แก้ตาม `/follow-code-quanlity`
-- ถ้ายังแก้ไม่หมด ห้ามจบ task
+1. /follow-package-json
+2. /refactor
+3. run lint ใน package.json  แล้วแก้ error / warning ให้หมดจนไม่มีเหลือ
+4. run lint ไปเรื่อยๆจนกว่าจะไม่มี error, warning แล้ว
 
 

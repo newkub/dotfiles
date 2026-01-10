@@ -1,5 +1,5 @@
 ---
-description: แนวทางการพัฒนาโปรเจกต์ด้วย Next.js 15 (App Router)
+trigger: always_on
 ---
 
 ## Setup
@@ -14,8 +14,7 @@ description: แนวทางการพัฒนาโปรเจกต์�
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome check --write .",
-    "postinstall": "bunx taze -r -w -i"
+    "lint": "biome check --write ."
   }
 }
 ```
@@ -23,7 +22,7 @@ description: แนวทางการพัฒนาโปรเจกต์�
 #### `next.config.mjs`
 
 ```javascript
-/ @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   experimental: {

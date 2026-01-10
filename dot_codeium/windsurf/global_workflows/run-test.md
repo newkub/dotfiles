@@ -2,10 +2,11 @@
 trigger: manual
 ---
 
-1. เขียน write
+1. /follow-config-file
 
-2. รัน `test` ใน package.json แล้วแก้ error / warning ทั้งหมดจนไม่มีเหลือ
+2. รัน `test`  แล้วแก้ error / warning ทั้งหมดจนไม่มีเหลือ (แก้ให้การทำงานถูกต้อง ไม่ใช่พยายามแก้ไข test ให้ผ่านพ้นไป)
 
+3. /run-test-coverage
 
 หมายเหตุ
 

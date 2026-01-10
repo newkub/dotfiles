@@ -6,10 +6,8 @@ trigger: always_on
 
 ```plaintext
 .
-├── dist/
 ├── docs/
 ├── examples/
-├── playground/
 ├── scripts/          # Release or other scripts
 ├── src/
 │   ├── module.ts

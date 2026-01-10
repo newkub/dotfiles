@@ -1,11 +1,19 @@
 ---
 trigger: always_on
+description: แนวทางการพัฒนาระบบด้วย Rust
+instruction:
+  - ปฏิบัติตามแนวทางการตั้งค่าโปรเจค โครงสร้าง หลักการเขียนโค้ด และการทดสอบสำหรับ Rust
+  - ใช้ Libraries และเครื่องมือที่แนะนำเพื่อคุณภาพและความสอดคล้องของโค้ด
 ---
  
  
  
 
-## 1. Setup และเครื่องมือที่แนะนำ (Recommended Tooling)
+---
+
+## 1. 🛠️ Setup
+
+### Libraries
 
 - **Error Handling**: `thiserror` (สำหรับ Library), `anyhow` (สำหรับ Application)
 - **Testing**: `cargo-nextest` (ตัวรันเทสประสิทธิภาพสูง), `mockall` (สำหรับ Mocking)
@@ -13,22 +21,25 @@ trigger: always_on
 - **Configuration**: `figment` (จัดการ Config จากหลายแหล่ง)
 - **Observability**: `tracing` (สำหรับ Logging และ Tracing), `tracing-subscriber` (ตัวรับและจัดการ Log)
 
-#### package.json (สำหรับ workspace ที่ใช้ turborepo)
+### config
+
+#### `package.json` (สำหรับ workspace ที่ใช้ turborepo)
 
 
 ```json [package.json]
 {
   "name": "",
   "scripts": {
-     "dev": "cargo watch -x run",
+    "postinstall" : "cargo update",
+
+    "dev": "cargo watch -x run",
     "dev:build": "cargo build",
 
     "check": "cargo check",
     "format": "cargo fmt --all",
     "lint": "cargo clippy --all-targets --all-features -- -D warnings",
 
-    "test": "cargo test --all-features",
-    "test:nextest": "cargo nextest run --all-features --verbose",
+    "test": "cargo test --all-features && cargo nextest run --all-features --verbose", // @ai /follow-nextest
 
     "build": "cargo build --release",
     "build:windows": "cargo build --release --target x86_64-pc-windows-msvc",
@@ -41,14 +52,15 @@ trigger: always_on
     "audit": "cargo audit",
     "deny": "cargo deny check",
 
-    "verify": "bun run format -- --check && bun run lint && bun run test:nextest && cargo audit && cargo deny check",
-    "verify:ci": "bun run format -- --check && bun run lint && bun run test:nextest --ci && cargo audit && cargo deny check"
+    "verify": "bun run format && bun run lint && bun run test && cargo audit && cargo deny check"
   }
 
 }
 ```
 
-## 2. โครงสร้างโปรเจกต์ (Project Structure)
+---
+
+## 2. 🏗️ Project Structure
 
 ```plaintext
 .cargo/config.toml       # Build configurations and optimizations (e.g., sccache)
@@ -73,14 +85,18 @@ Config.toml        #ไฟล์ Configuration หลัก
 - **`main.rs` (Composition Root)**: ประกอบร่าง Dependencies, โหลด `config`, ตั้งค่า `telemetry` (logging), แล้วเริ่ม `app`
 - **`lib.rs` (Library Entry Point)**: Expose เฉพาะ Public API ที่จำเป็น
 
-## 3. หลักการสำคัญ (Core Principles)
+---
+
+## 3. 🧠 Core Principles
 
 - **Immutability by Default**: ข้อมูลไม่ควรเปลี่ยนแปลงได้เป็นค่าเริ่มต้น
 - **Purity**: ฟังก์ชันควรไม่มี Side Effects
 - **Explicit Side Effects**: Side Effects ทั้งหมดต้องถูกแยกไปอยู่ `services` Layer
 - **Dependency Injection**: ส่ง Dependencies ผ่าน Constructor หรือ Function arguments
 
-## 4. กฎและตัวอย่างในแต่ละ Layer
+---
+
+## 4. 📁 Folder Rules
 
 ### `error.rs`
 - **หน้าที่**: นิยาม Error ที่มีความหมายและมีโครงสร้างชัดเจน
@@ -107,18 +123,24 @@ pub enum AppError {
 
 (ตัวอย่าง `types`, `components`, `services`, `app` เหมือนเดิม แต่ใช้ `AppError` ที่ปรับปรุงแล้ว)
 
-## 5. Testing Strategy
+---
+
+## 5. 🧪 Testing
 
 - **Unit Tests**: ทดสอบ `components`, `utils` (Pure functions)
 - **Integration Tests**: ทดสอบ `app` Layer โดย Mock `services` (I/O)
 
-## 6. กฎการ Import ระหว่าง Layers
+---
+
+## 6. 📜 Import Rules
 
 (เหมือนเดิม)
 
 ---
 
-## 7. การจัดการ Configuration (`figment`)
+---
+
+## 7. ⚙️ Configuration (`figment`)
 
 - **เป้าหมาย**: แยกการตั้งค่าออกจากโค้ด, โหลดจากหลายแหล่ง (ไฟล์, env) ได้
 
@@ -164,7 +186,9 @@ pub enum AppError {
     ```
     *หมายเหตุ: `Env` ทำให้เรา override ค่าในไฟล์ด้วย Environment Variable ได้ เช่น `APP_DATABASE__URL=...`*
 
-## 8. การทำ Observability (`tracing`)
+---
+
+## 8. 📡 Observability (`tracing`)
 
 - **เป้าหมาย**: มี Log ที่มีโครงสร้างชัดเจน, สามารถติดตามการทำงานของฟังก์ชันได้
 
@@ -196,7 +220,9 @@ pub enum AppError {
     ```
 4.  **การใช้งาน**: ใช้ `#[tracing::instrument]` ที่ฟังก์ชันเพื่อดู input/output หรือใช้ `tracing::info!`, `tracing::error!`
 
-## 9. มาตรฐานเอกสาร (Documentation Standard)
+---
+
+## 9. 📚 Documentation Standard
 
 - `///`: สำหรับอธิบาย Public items (functions, structs, modules) จะถูกนำไปสร้างเป็นเอกสารด้วย `cargo doc`
 - `//!`: สำหรับอธิบาย Module ที่ตัวเองอยู่ (เขียนไว้บนสุดของไฟล์)
@@ -222,7 +248,9 @@ pub struct User { /* ... */ }
 pub fn find_user_by_id(id: &str) -> Result<Option<User>, AppError> { /* ... */ }
 ```
 
-## 10. ตัวอย่าง CI Workflow (GitHub Actions)
+---
+
+## 10. 🚀 CI (GitHub Actions)
 
 - **เป้าหมาย**: ตรวจสอบคุณภาพโค้ดทุกครั้งที่มีการ Push หรือสร้าง Pull Request
 

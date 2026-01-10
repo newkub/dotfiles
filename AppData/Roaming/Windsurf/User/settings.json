@@ -1,6 +1,6 @@
 {
 	"[css]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[dockercompose]": {
 		"editor.autoIndent": "advanced",
@@ -12,16 +12,16 @@
 		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
 	"[html]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[javascript]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[json,jsonc]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[jsx, tsx]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[markdown]": {
 		"editor.defaultFormatter": "vscode.markdown-language-features"
@@ -33,7 +33,7 @@
 		"editor.defaultFormatter": "bradlc.vscode-tailwindcss"
 	},
 	"[typescript]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[vue]": {
 		"editor.defaultFormatter": "vscode.typescript-language-features"
@@ -68,7 +68,7 @@
 		"source.fixAll.biome": "always",
 		"source.organizeImports.biome": "always"
 	},
-	"editor.defaultFormatter": "biomejs.biome",
+	"editor.defaultFormatter": "dprint.dprint",
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,
 	"editor.formatOnType": true,
@@ -120,7 +120,7 @@
 	],
 	"mdnDocs.openInBrowser": true,
 	"mise.binPath": "C:\\Users\\Veerapong\\scoop\\shims\\mise.exe",
-	"notebook.defaultFormatter": "biomejs.biome",
+	"notebook.defaultFormatter": "dprint.dprint",
 	"notebook.lineNumbers": "on",
 	"notebook.stickyScroll.enabled": true,
 	"npm-intellisense.packageSubfoldersIntellisense": true,
@@ -147,7 +147,7 @@
 		}
 	},
 	"terminal.integrated.rightClickBehavior": "default",
-	"terminal.integrated.shellIntegration.enabled": true,
+	"terminal.integrated.shellIntegration.enabled": false,
 	"todo-tree.general.tags": [
 		"TODO",
 		"ISSUE",
@@ -245,7 +245,7 @@
 	},
 	"redhat.telemetry.enabled": false,
 	"[json]": {
-		"editor.defaultFormatter": "biomejs.biome"
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"nuxt-intellisense.showWelcomeMessage": false,
 	"typescript.experimental.useTsgo": true,
@@ -254,4 +254,21 @@
 	"nuxtr.defaultPackageManager": "Bun",
 	"diffEditor.ignoreTrimWhitespace": false,
 	"workbench.experimental.share.enabled": true,
+	"dbcode.connections": [
+		{
+			"connectionId": "XNtzp4kdZ0EAPdCKYhoYG",
+			"name": "learn-wrikka-com",
+			"driver": "sqlite",
+			"connectionType": "socket",
+			"socket": "d:\\learn-wrikka-com2\\server\\db\\sqlite.db",
+			"readOnly": false,
+			"postConnectionSqlType": "inline",
+			"driverOptions": {
+				"extensions": []
+			},
+			"idleTimeout": 0
+		}
+	],
+	"dbcode.resultLocation": "panel",
+	"editor.experimentalGpuAcceleration": "on"
 }

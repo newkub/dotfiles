@@ -24,6 +24,7 @@ $env:INTELLI_HOME = "C:\Users\Veerapong\AppData\Roaming\IntelliShell\Intelli-She
 intelli-shell.exe init powershell | Out-String | Invoke-Expression
 
 
+
 # ==============================================================================
 # >> ENVIRONMENT VARIABLES
 # Custom environment variable settings.
@@ -100,9 +101,7 @@ function dd {
     explorer "C:\Users\Veerapong\downloads"
 }
 
-function ee {
-    explorer "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
-}
+
 
 function ep {
     explorer "C:\Users\Veerapong"
@@ -116,10 +115,26 @@ function b {
 
 function cc {
     param(
-        [string]$file
+        [string]$query = ""
     )
-    Get-Content $file -Raw | Set-Clipboard
+
+    $root = "D:\"
+
+    # หา directories ด้วย fd จาก root
+    $dirs = if ($query) {
+        fd -t d $query $root
+    } else {
+        fd -t d . $root
+    }
+
+    # เลือก path ด้วย fzf สวย ๆ
+    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+
+    if ($selected) {
+        Set-Location $selected
+    }
 }
+
 
 
 function cpo {
@@ -145,28 +160,40 @@ function cpo {
 
 
 
-# remove all like rimraf, rima
 function rmr {
     param(
         [Parameter(Mandatory=$true)]
         [string]$Path,
-        [int]$RetryCount = 3,
-        [int]$DelaySec = 1
+        [int]$RetryCount = 5,
+        [int]$DelaySec = 2
     )
 
-    if (-Not (Test-Path $Path)) { return }
+    if (-not (Test-Path $Path)) { return }
+
+    # สร้าง temp folder ว่าง
+    $temp = New-Item -ItemType Directory -Path ([IO.Path]::Combine($env:TEMP, [Guid]::NewGuid().ToString()))
+
+    # พยายาม rename folder เป้าหมายก่อน
+    $backup = "$Path.locked.$([Guid]::NewGuid().ToString())"
+    try { Rename-Item $Path $backup -ErrorAction Stop } catch {}
 
     for ($i=0; $i -lt $RetryCount; $i++) {
         try {
-            # ลบโฟลเดอร์และไฟล์ทั้งหมด
-            Get-ChildItem $Path -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-            # ลบโฟลเดอร์หลัก
-            Remove-Item $Path -Recurse -Force -ErrorAction SilentlyContinue
+            if (Test-Path $backup) {
+                # robocopy overlay (mirror empty folder)
+                robocopy $temp $backup /MIR | Out-Null
+                # ลบโฟลเดอร์ backup
+                Remove-Item $backup -Recurse -Force -ErrorAction SilentlyContinue
+            }
+
+            # ลบ temp folder
+            Remove-Item $temp -Recurse -Force -ErrorAction SilentlyContinue
             return
         } catch {
             Start-Sleep -Seconds $DelaySec
         }
     }
+
     Write-Warning "Failed to remove: $Path"
 }
 
@@ -224,11 +251,22 @@ function rc {
 }
 
 
-
-
 function f {
-    fd -t f | fzf | ForEach-Object { windsurf $_ }
+    param(
+        [string]$query = ""
+    )
+
+    # หา files ด้วย fd
+    $files = if ($query) { fd -t f $query } else { fd -t f }
+
+    # เลือก file ด้วย fzf สวย ๆ
+    $selected = $files | fzf --height 40% --reverse --border --ansi --prompt "File> "
+
+    if ($selected) {
+        windsurf $selected
+    }
 }
+
 
 
 
@@ -245,18 +283,25 @@ function opowershellprofile {
 }
 
 
+
+
+
 function ff {
     param(
         [string]$query = ""
     )
 
-    # ถ้ามี query ให้ใส่ -i สำหรับ ignore case
-    if ($query) {
-        fd -t d $query | fzf | ForEach-Object { windsurf $_ }
-    } else {
-        fd -t d | fzf | ForEach-Object { windsurf $_ }
+    # หา directories ด้วย fd
+    $dirs = if ($query) { fd -t d $query } else { fd -t d }
+
+    # เลือก path ด้วย fzf สวย ๆ
+    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+
+    if ($selected) {
+        windsurf $selected
     }
 }
+
 
 function zo {
     param(
@@ -277,23 +322,28 @@ function zo {
     }
 }
 
-function cc {
+function cd {
     param(
         [string]$query = ""
     )
 
     $root = "D:\"
 
-    $selected = if ($query) {
-        fd -t d $query $root | fzf
+    # หา directories ด้วย fd จาก root
+    $dirs = if ($query) {
+        fd -t d $query $root
     } else {
-        fd -t d . $root | fzf
+        fd -t d . $root
     }
+
+    # เลือก path ด้วย fzf สวย ๆ
+    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
 
     if ($selected) {
         Set-Location $selected
     }
 }
+
 
 
 function crm {
@@ -414,7 +464,19 @@ function e {
 
 
 function f {
-    fd -t f | fzf | ForEach-Object { windsurf $_ }
+    param(
+        [string]$query = ""
+    )
+
+    # หา files ด้วย fd
+    $files = if ($query) { fd -t f $query } else { fd -t f }
+
+    # เลือก file ด้วย fzf สวย ๆ
+    $selected = $files | fzf --height 40% --reverse --border --ansi --prompt "File> "
+
+    if ($selected) {
+        windsurf $selected
+    }
 }
 
 
@@ -423,7 +485,25 @@ function owindsurf_global_workflows {
 }
 
 function op {
-    cd D:\ && fd -t d | fzf | ForEach-Object { windsurf $_ }
+    param(
+        [string]$query = ""
+    )
+
+    $root = "D:\"
+
+    # หา directories ด้วย fd จาก root
+    $dirs = if ($query) {
+        fd -t d $query $root
+    } else {
+        fd -t d . $root
+    }
+
+    # เลือก path ด้วย fzf สวย ๆ
+    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+
+    if ($selected) {
+        windsurf $selected
+    }
 }
 
 

@@ -1,34 +1,9 @@
 {
   "mcpServers": {
-    "chrome-devtools": {
-      "args": [
-        "chrome-devtools-mcp@latest"
-      ],
-      "command": "bunx"
-    },
-    "context7": {
-      "headers": {
-        "CONTEXT7_API_KEY": "CONTEXT7_API_KEY"
-      },
-      "serverUrl": "https://mcp.context7.com/mcp"
-    },
     "deepwiki": {
-      "serverUrl": "https://mcp.deepwiki.com/sse"
-    },
-    "midscene-web": {
-      "args": [
-        "-y",
-        "@midscene/web-bridge-mcp"
-      ],
-      "command": "npx",
-      "disabled": true,
-      "env": {
-        "MCP_SERVER_REQUEST_TIMEOUT": "600000",
-        "MIDSCENE_MODEL_API_KEY": "replace with your API Key",
-        "MIDSCENE_MODEL_BASE_URL": "replace with your model service URL",
-        "MIDSCENE_MODEL_FAMILY": "replace with your model family",
-        "MIDSCENE_MODEL_NAME": "replace with your model name"
-      }
+      "disabled": false,
+      "headers": {},
+      "serverUrl": "https://mcp.deepwiki.com/mcp"
     },
     "nuxt": {
       "serverUrl": "http://localhost:3000/__mcp/sse"
@@ -36,12 +11,14 @@
     "nuxt-docs": {
       "serverUrl": "https://nuxt.com/mcp"
     },
-    "workos": {
+    "puppeteer": {
       "args": [
         "-y",
-        "@workos/mcp-docs-server"
+        "@modelcontextprotocol/server-puppeteer"
       ],
-      "command": "bunx"
+      "command": "npx",
+      "disabled": false,
+      "env": {}
     }
   }
 }

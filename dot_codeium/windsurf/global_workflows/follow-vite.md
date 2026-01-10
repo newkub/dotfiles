@@ -19,6 +19,7 @@ trigger: always_on
 ## vite.config.ts
 
 
+
 ```ts
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
@@ -35,10 +36,13 @@ import AST from 'unplugin-ast/vite';
 import Macros from 'unplugin-macros/vite';
 import UnpluginIsolatedDecl from 'unplugin-isolated-decl/vite';
 import Icons from 'unplugin-icons/vite';
+import { nitro } from "nitro/vite";
+
 
 export default defineConfig({
 	plugins: [
-		Unocss(),
+		nitro(),
+		Unocss(), // @ai /follow-unocss
 		AutoImport({
 			imports: ['vue'],
 			dts: true
@@ -85,3 +89,4 @@ export default defineConfig({
  "compilerOptions": {
     "types": [ "vite/client"]
   }
+```

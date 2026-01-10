@@ -2,5 +2,4 @@
 trigger: always_on
 ---
 
-- ทำ `/follow-wtx`
-- ทำ `/follow-unocss`
+1. /follow-reactive-vscode
