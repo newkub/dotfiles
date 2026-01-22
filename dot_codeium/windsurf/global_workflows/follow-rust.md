@@ -79,7 +79,9 @@ src/
 ├── lib.rs         # Library Entry Point: Public API
 └── main.rs        # Application Entry Point (Composition Root)
 tests/             # Integration tests
-Config.toml        #ไฟล์ Configuration หลัก
+Config.toml        # Configuration หลัก (root directory)
+tracing.toml       # Tracing configuration (root directory)
+deny.toml          # License checking config (root directory)
 ```
 
 - **`main.rs` (Composition Root)**: ประกอบร่าง Dependencies, โหลด `config`, ตั้งค่า `telemetry` (logging), แล้วเริ่ม `app`

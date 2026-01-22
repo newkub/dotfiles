@@ -15,3 +15,4 @@ d8fcaf11d605fc28e8765cda58a648c64aadd7d7 415d5380c7913af26f2151b4818a83765699b2c
 1b0c81a0beef8e04fde8fdcf7489d94b42bc37eb 6a4c6db66244e63188774681a632c6bd33811df2 Veerapong <newkubise@gmail.com> 1766092982 +0700	commit: docs(workflow): update various workflows
 6a4c6db66244e63188774681a632c6bd33811df2 689ef8c13945e16a251e9efc94a2832a9d576f90 Veerapong <newkubise@gmail.com> 1766988899 +0700	commit: chore(workflows): restructure and refresh global workflow guides
 689ef8c13945e16a251e9efc94a2832a9d576f90 4c5341885bafcbc6b10c6d8d08e6f0edb8e602dc Veerapong <newkubise@gmail.com> 1767145982 +0700	commit: chore(workflows): update global workflow docs
+4c5341885bafcbc6b10c6d8d08e6f0edb8e602dc 7b22c1a18a00f7232c27a3a48d0d6b44f7f9a85e Veerapong <newkubise@gmail.com> 1768112697 +0700	commit: refactor: rename knowledge-principles to work-principles

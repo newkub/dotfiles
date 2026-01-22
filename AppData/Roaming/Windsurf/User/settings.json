@@ -270,5 +270,6 @@
 		}
 	],
 	"dbcode.resultLocation": "panel",
-	"editor.experimentalGpuAcceleration": "on"
+	"fileNestingUpdater.autoUpdate": false,
+	"workbench.activityBar.location": "top"
 }

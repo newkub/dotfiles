@@ -29,12 +29,6 @@ pre-commit:
     - name: format
       run: bun run format {staged_files}
 
-pre-push:
-  jobs:
-    - name: test
-      run: bun run test
-    - name: build
-      run: bun run build
 
 pre-rebase:
   jobs:

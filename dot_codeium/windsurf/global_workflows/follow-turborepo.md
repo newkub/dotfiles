@@ -39,15 +39,15 @@ my-turborepo/
   "globalConcurrency": 32,
   "scripts": {
     "watch": "turbo watch verify --ui=tui",
-    "preinstall": "bun update --latest -r",
+    "preinstall": "bunx taze -r -w -i",
     "prepare": "bunx lefthook install",
     "dev": "turbo dev --ui=tui",
     "format": "turbo format",
     "scan": "bunx sg scan -r",   // @ai /follow-ast-grep
     "check:modules": "bunx node-modules-inspector",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "build": "turbo build",
+    "lint": "turbo watch lint",
+    "test": "turbo watch test",
+    "build": "turbo watch build",
     "verify": "turbo verify",
     "devtools": "turbo devtools"
   }

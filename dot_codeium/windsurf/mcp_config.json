@@ -1,24 +1,17 @@
 {
   "mcpServers": {
-    "deepwiki": {
+    "context7": {
       "disabled": false,
-      "headers": {},
-      "serverUrl": "https://mcp.deepwiki.com/mcp"
+      "headers": {
+        "CONTEXT7_API_KEY": "ctx7sk-f9bbf39f-e40c-4116-b2b6-8f299bda9c2a"
+      },
+      "serverUrl": "https://mcp.context7.com/mcp"
     },
     "nuxt": {
       "serverUrl": "http://localhost:3000/__mcp/sse"
     },
     "nuxt-docs": {
       "serverUrl": "https://nuxt.com/mcp"
-    },
-    "puppeteer": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-puppeteer"
-      ],
-      "command": "npx",
-      "disabled": false,
-      "env": {}
     }
   }
 }

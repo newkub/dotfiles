@@ -454,7 +454,16 @@ function notes {
 
 
 function w {
-    windsurf .
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$Arguments
+    )
+
+    if ($Arguments) {
+        windsurf --reuse-window $Arguments
+    } else {
+        windsurf .
+    }
 }
 
 function e {

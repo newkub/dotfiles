@@ -1,15 +1,80 @@
 ---
 trigger: always_on
+description: ตั้งค่าและพัฒนาโปรเจกต์ Bun ด้วย TypeScript และ Effect-TS
+instruction:
+  - ตั้งค่า package.json ด้วย scripts พื้นฐานสำหรับ Bun
+  - ทำตาม workflows ย่อยตามลำดับที่กำหนด
+  - ใช้ Bun เป็น package manager
+  - ใช้ Effect-TS สำหรับจัดการ side effects
+condition:
+  - ใช้เมื่อสร้างโปรเจกต์ Bun ใหม่
+  - ใช้เมื่อพัฒนาโปรเจกต์ Bun
+goal:
+  - สร้างโปรเจกต์ Bun ที่มีโครงสร้างที่เหมาะสม
+  - ใช้ TypeScript 5.x, Effect-TS และ strict mode
+input:
+  - โปรเจกต์ Bun ที่ต้องการตั้งค่าหรือพัฒนา
+output:
+  - โปรเจกต์ Bun ที่มี configuration ครบถ้วน
+  - โครงสร้างโปรเจกต์ที่ถูกต้องตาม best practices
+outcome:
+  - โปรเจกต์ Bun พร้อมใช้งานด้วย TypeScript 5.x และ Effect-TS
+  - โค้ดที่มีคุณภาพและเป็นไปตาม best practices
 ---
 
+# การตั้งค่าและพัฒนาโปรเจกต์ Bun
 
-## Setup
+## 0. การทำตาม Workflows ย่อย (ใช้เสมอ)
 
-### config
+### 0.1. หลักการทำตาม Workflows ย่อย
 
-#### `package.json`
+- อ่านและทำตาม workflow ย่อยทั้งหมดให้ครบถ้วน
+- ทำตามลำดับที่ระบุ รวมถึง dependencies ระหว่าง workflows
+- ตรวจสอบความครบถ้วนของไฟล์และ configuration ที่ระบุ
+- แจ้งเมื่อพบ workflow ย่อยที่ไม่มีอยู่
 
-```json [package.json]
+---
+
+## 1. Installation (ใช้เสมอ)
+
+### 1.1. ติดตั้ง Dependencies
+
+**1.1.1. ติดตั้ง TypeScript 5.x**
+- รัน: `bun add -D typescript @types/node`
+
+**1.1.2. ติดตั้ง Effect-TS**
+- รัน: `bun add effect @effect/schema`
+
+**1.1.3. ติดตั้ง Development Tools**
+- รัน: `bun add -D vitest @vitest/ui`
+
+**1.1.4. ติดตั้ง Linting Tools**
+- รัน: `bun add -D oxlint oxlint-tsgolint`
+
+---
+
+## 2. Package.json Setup (ใช้เสมอ)
+
+### 2.1. สร้าง package.json
+
+**2.1.1. สร้างไฟล package.json**
+- สร้างไฟล์ `package.json` ใน root ของโปรเจกต์
+- ตั้งค่า scripts พื้นฐานสำหรับ Bun
+
+**2.1.2. Scripts ที่ต้องมี**
+- `watch`: สำหรับ watch mode
+- `prepare`: สำหรับ setup หลัง install
+- `preinstall`: สำหรับ update dependencies
+- `dev`: สำหรับ development
+- `build`: สำหรับ production build
+- `lint`: สำหรับ linting
+- `test`: สำหรับ running tests
+- `typecheck`: สำหรับ type checking
+- `verify`: สำหรับ verify ก่อน deploy
+
+**2.1.3. ตัวอย่าง package.json**
+
+```json
 {
   "type": "module",
   "engines": {
@@ -17,19 +82,52 @@ trigger: always_on
   },
   "scripts": {
     "watch": "bun --watch verify",
+    "prepare": "lefthook install",
+    "preinstall": "bun update --latest",
     "dev": "bun run src/index.ts",
-    "format": "",
-    "lint": "tsc --noEmit", // @ai /follow-oxlint
-    "build": "bun build",
-    "test": "", // @ai /follow-vitest
-    "verify": "bun run format && bun audit && bun run lint && bun run test && bun run build && bun run dev"
+    "build": "bun build src/index.ts --outdir ./dist --target bun",
+    "lint": "oxlint --fix --type-aware",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "verify": "bun run lint && bun run typecheck && bun run test && bun run build"
   }
 }
 ```
 
-#### `tsconfig.json`
+---
 
-```json [tsconfig.json]
+## 3. Script Rules (ใช้เสมอ)
+
+### 3.1. Scripts ที่ต้องมี
+
+| Script | คำสั่ง | คำอธิบาย |
+|--------|----------|-------------|
+| `watch` | `bun --watch verify` | Watch mode |
+| `prepare` | `lefthook install` | Setup หลัง install |
+| `preinstall` | `bun update --latest` | Update dependencies |
+| `dev` | `bun run src/index.ts` | Development |
+| `build` | `bun build src/index.ts --outdir ./dist --target bun` | Production build |
+| `lint` | `oxlint --fix --type-aware` | Linting |
+| `test` | `vitest` | Running tests |
+| `typecheck` | `tsc --noEmit` | Type checking |
+| `verify` | `bun run lint && bun run typecheck && bun run test && bun run build` | Verify ก่อน deploy |
+
+---
+
+## 4. Configuration Files (ใช้เสมอ)
+
+### 4.1. การตั้งค่า Configuration Files
+
+**4.1.1. ลำดับการตั้งค่า**
+- ทำตาม `/follow-config-file` เพื่อตั้งค่า `tsconfig.json`
+
+**4.1.2. ความสำคัญของแต่ละ Configuration**
+- `tsconfig.json`: TypeScript configuration
+- `.oxlintrc.json`: Linting configuration (ทำตาม `/follow-oxlint`)
+
+**4.1.3. ตัวอย่าง tsconfig.json**
+
+```json
 {
   "compilerOptions": {
     "target": "ES2022",
@@ -44,144 +142,89 @@ trigger: always_on
 }
 ```
 
+---
 
+## 5. Project Structure (ใช้เสมอ)
 
-### Libraries
+### 5.1. วางโครงสร้างโปรเจกต์
+- ทำตาม `/follow-project-structure`
 
-- Core: `effect` - สำหรับจัดการ Side Effects, Asynchronous Operations, และ Dependencies
-- Schema & Validation: `@effect/schema` หรือ `zod` - สำหรับการสร้างและตรวจสอบความถูกต้องของข้อมูล
+### 5.2. Layers ที่ต้องสร้าง
+- **Utils**: `/follow-typescript-utils` - Helper functions ใน `src/utils/`
+- **Types**: `/follow-typescript-types` - Types และ Schema ใน `src/types/`
+- **App**: `/follow-typescript-app` - Controllers และ UI ใน `src/app/`
+- **Services**: `/follow-typescript-services` - Business logic ใน `src/services/`
+- **Adapter**: `/follow-typescript-adapter` - External adapters ใน `src/adapter/`
+- **Integrations**: `/follow-typescript-integrations` - Framework integrations ใน `src/integrations/`
+- **Lib**: `/follow-typescript-lib` - Shared libraries ใน `src/lib/`
+- **Error**: `/follow-typescript-error` - Error handling ใน `src/error/`
 
-## Project Structure
+---
 
-โปรเจกต์นี้ใช้แนวทาง functional programming โดยมีการแบ่งแยกหน้าที่ (separation of concerns) อย่างชัดเจน โครงสร้างถูกออกแบบมาให้เป็น modular, scalable และง่ายต่อการบำรุงรักษา
+## 6. Core Principles (ใช้เสมอ)
 
-```markdown
-src/
-├── components/    # Pure Functions สำหรับการแสดงผล
-│   ├── Button.ts
-│   ├── Panel.ts
-│   └── index.ts
-├── services/      # Effect Handlers สำหรับ side effects
-│   ├── file-system.service.ts
-│   ├── logger.service.ts
-│   ├── api.service.ts
-│   ├── index.ts
-├── config/        # การจัดการการตั้งค่า
-│   ├── theme.config.ts
-│   ├── display.config.ts
-│   └── index.ts
-├── types/         # การกำหนด Type และ Schema
-│   ├── display.ts
-│   ├── input.ts
-│   └── index.ts
-├── utils/         # Pure Functions สำหรับฟังก์ชันช่วยเหลือ
-│   ├── string-helper.ts
-│   ├── array-utils.ts
-│   └── index.ts
-├── lib/           # Wrappers สำหรับไลบรารีภายนอก
-│   ├── picocolors.lib.ts
-│   ├── clack.lib.ts
-│   └── index.ts
-├── constant/      # ค่าคงที่ตอน compile-time
-│   ├── color.const.ts
-│   ├── border.const.ts
-│   └── index.ts
-├── app.ts         # Entry point หลักของแอปพลิเคชัน
-├── error.ts       # Custom error types
-└── index.ts       # Entry point สำหรับ Public API
-package.json       # Dependencies และ scripts
-tsconfig.json      # การตั้งค่า TypeScript
+### 6.1. Functional Programming
+- **Pure Functions**: `utils/` และ `lib/` ไม่มี side effects
+- **Immutability**: ข้อมูลเป็น immutable โดยค่าเริ่มต้น ใช้ `readonly`
+- **Composition**: ฟังก์ชันถูกนำมาประกอบกัน
+- **Effect Management**: Side effects จัดการโดย `Effect-TS` ใน `services/` หรือ `adapter/`
+
+### 6.2. Type Safety
+- หลีกเลี่ยง `any` ใช้ `unknown` แทนเมื่อจำเป็น
+- ใช้ type hints อย่างชัดเจน
+- ใช้ Schema จาก `@effect/schema` สำหรับ validation
+
+### 6.3. Performance
+- ใช้ `const` แทน `let` เมื่อเป็นไปได้
+- ใช้ `readonly` สำหรับ arrays และ objects
+- แยก hot paths
+
+### 6.4. Workflow
+- รัน `tsc --noEmit` สำหรับ type checking
+- รัน `vitest` สำหรับ testing
+
+### 6.5. Rust Integration
+- ใช้ **napi-rs** สำหรับ Bun integration
+- ใช้ **wasm-bindgen** สำหรับ WebAssembly
+
+---
+
+## 7. Import Rules (ใช้เสมอ)
+
+### 7.1. ลำดับการ Import
+```
+types -> utils -> lib -> integrations -> services -> adapter -> app -> entry
 ```
 
-## Core Principles
+### 7.2. กฎการ Import
+- ทำตาม `/follow-project-structure`
+- `app`: services, lib, utils, types
+- `services`: adapter, integrations, lib, utils, types
+- `adapter`: lib, utils, types
+- `integrations`: lib, utils, types
+- `lib`: utils, types
+- `utils`: types
+- `types`: ไม่มี internal dependencies
 
-- Pure Functions: ฟังก์ชันทั้งหมดใน `utils/` ไม่มี side effects
-- Immutability: ข้อมูลเป็น immutable โดยค่าเริ่มต้น
-- Composition: ฟังก์ชันต่างๆ ถูกนำมาประกอบกันเพื่อสร้างฟังก์ชันที่ซับซ้อนขึ้น
-- Effect Management: Side effects ถูกจัดการโดยใช้ `Effect-TS`
+---
 
-## Folder Rules
+## 8. Libraries (ใช้เสมอ)
 
-#### `components/`
+### 8.1. Libraries หลัก
+- **TypeScript**: 5.x
+- **effect-ts**: State management, error handling, side effects
+- **@effect/schema**: Schema และ validation
+- **vitest**: Testing framework
+- **bun**: Package manager และ runtime
+- **fetch**: HTTP client (built-in)
 
-สร้างส่วนประกอบ UI ที่สามารถแสดงผลได้ (Pure Functions)
-
-- ควรทำ
-    - สร้างฟังก์ชันที่รับ `props` และคืนค่าเป็น `string` หรือ `void`
-    - ทำให้เป็น Pure Functions ที่มีการ composition
-    - Import จาก `config/` เท่านั้น
-- ไม่ควรทำ
-    - มี Side Effects ภายใน component
-
-```typescript
-// src/components/Button.ts
-interface ButtonProps {
-  label: string;
-  onClick: () => void; // Side effect จัดการโดย caller
-}
-
-export const Button = (props: ButtonProps): string => {
-  return `<button>${props.label}</button>`;
-};
-```
-
-#### `services/`
-
-จัดการ Side Effects ทั้งหมดของแอปพลิเคชัน
-
-- ควรทำ
-    - ใช้ `Effect-TS` ในการสร้างและจัดการ Effects ทั้งหมด
-- ไม่ควรทำ
-    - ใส่ Business Logic ที่ไม่เกี่ยวกับ Side Effects
-
-```typescript
-// src/services/api.service.ts
-import { Effect } from 'effect';
-
-interface User {
-  id: number;
-  name: string;
-}
-
-export const getUser = (id: number): Effect.Effect<User, Error> =>
-  Effect.tryPromise({
-    try: () => fetch(`https://api.example.com/users/${id}`).then(res => res.json()),
-    catch: (unknown) => new Error(`Failed to fetch user: ${unknown}`),
-  });
-```
-
-#### `utils/`
-
-รวมฟังก์ชันช่วยเหลือที่เป็น Pure Functions
-
-- ควรทำ
-    - สร้างฟังก์ชันที่ไม่มี side effects, immutable, composition, และ curry
-- ไม่ควรทำ
-    - มี Side Effects ใดๆ เด็ดขาด
-
-```typescript
-// src/utils/string-helper.ts
-export const capitalize = (s: string): string => {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
-```
-
-#### `config/`
-
-จัดการการตั้งค่าและกำหนดรูปแบบข้อมูล
-
-- ควรทำ
-    - Import จาก `types/` และ `constant/`
-    - ใช้ `as const` และ `Object.freeze` เพื่อให้ข้อมูลเป็น immutable
-- ไม่ควรทำ
-    - ใส่ Logic การทำงานใดๆ
-
-```typescript
-// src/config/theme.config.ts
-import { THEME } from '../constant/theme.const';
-
-export const AppTheme = Object.freeze({
-  primaryColor: THEME.BLUE,
-  backgroundColor: THEME.WHITE,
-});
-```
+### 8.2. Libraries ตาม Layer
+| Layer | Dependencies |
+|-------|--------------|
+| utils | ไม่มี external dependencies |
+| types | ไม่มี external dependencies |
+| lib | ไม่มี external dependencies |
+| services | effect-ts, @effect/schema |
+| adapter | fetch |
+| integrations | effect-ts |
+| app | effect-ts |

@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 -- Basic Settings
 -- ======================
 config.default_cwd = 'D:\\'
-config.default_prog = { 'pwsh.exe', '-NoLogo' }
+config.default_prog = { 'pwsh.exe' }
 config.default_cursor_style = 'SteadyBar'
 config.font_size = 15
 config.window_close_confirmation = 'NeverPrompt'
@@ -44,22 +44,20 @@ config.colors = {
 -- Startup Layout
 -- ======================
 wezterm.on('gui-startup', function(cmd)
-  -- Tab 1
-  local tab1, pane1, window = wezterm.mux.spawn_window(cmd or {})
+  local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+
+  -- Tab 1: 1 panel (ด้านซ้าย)
+  -- pane หลักอยู่ทางซ้ายแล้ว
+
+  -- Tab 2: 2 panels (ด้านขวา - split vertical)
+  local tab2 = window:spawn_tab({})
+  local pane2 = tab2:active_pane()
+  local right_pane = pane2:split({ direction = 'Right', size = 0.5 })
+
+  -- ให้ cursor focus ที่ panel ด้านซ้าย (pane หลัก) ของ tab 1
+  pane:activate()
+
   window:gui_window():maximize()
-
-  -- Tab 2
-  window:spawn_tab {
-    args = { 'pwsh.exe', '-NoLogo' },
-  }
-
-  -- Tab 3
-  window:spawn_tab {
-    args = { 'pwsh.exe', '-NoLogo' },
-  }
-
-  -- focus กลับ tab แรก
-  tab1:activate()
 end)
 
 -- ======================
@@ -79,6 +77,9 @@ config.keys = {
   -- Tab Navigation
   { key = 'Tab', mods = 'CTRL', action = wezterm.action.ActivateTabRelative(1) },
   { key = 'Tab', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
+  
+  -- Pane Navigation
+  { key = 'Tab', mods = 'SHIFT', action = wezterm.action.ActivatePaneDirection 'Next' },
 
   -- Search
   { key = 'f', mods = 'CTRL', action = wezterm.action.Search 'CurrentSelectionOrEmptyString' },
