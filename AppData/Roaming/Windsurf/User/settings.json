@@ -33,7 +33,7 @@
 		"editor.defaultFormatter": "bradlc.vscode-tailwindcss"
 	},
 	"[typescript]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
 	"[vue]": {
 		"editor.defaultFormatter": "vscode.typescript-language-features"
@@ -61,14 +61,7 @@
 	"deepsource.installationUrl": "https://app.deepsource.com",
 	"deepsource.showCodelens": true,
 	"docker.extension.enableComposeLanguageServer": false,
-	"editor.codeActionsOnSave": {
-		"source.action.useSortedAttributes.biome": "explicit",
-		"source.action.useSortedKeys.biome": "always",
-		"source.action.useSortedProperties.biome": "always",
-		"source.fixAll.biome": "always",
-		"source.organizeImports.biome": "always"
-	},
-	"editor.defaultFormatter": "dprint.dprint",
+	"editor.defaultFormatter": "biomejs.biome",
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,
 	"editor.formatOnType": true,
@@ -194,7 +187,6 @@
 		"vue"
 	],
 	"vue.trace.server": "off",
-	"window.newWindowDimensions": "maximized",
 	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
 	"windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
 	"workbench.colorCustomizations": {
@@ -248,7 +240,6 @@
 		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"nuxt-intellisense.showWelcomeMessage": false,
-	"typescript.experimental.useTsgo": true,
 	"git.openRepositoryInParentFolders": "never",
 	"vue.inlayHints.inlineHandlerLeading": true,
 	"nuxtr.defaultPackageManager": "Bun",
@@ -271,5 +262,15 @@
 	],
 	"dbcode.resultLocation": "panel",
 	"fileNestingUpdater.autoUpdate": false,
-	"workbench.activityBar.location": "top"
+	"terminal.integrated.showCommandHint": false,
+	"kilo-code.debug": false,
+	"kilo-code.allowedCommands": [
+		"git log",
+		"git diff",
+		"git show"
+	],
+	"kilo-code.deniedCommands": [],
+	"terminal.integrated.enableMultiLinePasteWarning": "never",
+	"oxc.typeAware": true,
+	"window.newWindowDimensions": "maximized"
 }

@@ -1,28 +1,29 @@
 ---
 trigger: manual
+description: แทนที่เนื้อหาในไฟล์หรือโค้ด
+condition: ใช้เมื่อต้องแก้ไขเนื้อหาในไฟล์หรือโค้ด
 ---
 
-สามารถใช้ ast-grep ในการ replace && rewrite ได้
+# Replace Content
 
-1. write rules 
+## 1. Identify Content to Replace (ใช้เสมอ)
 
-- เขียน ast-grep rules ใน rules/this-project/
-- เกี่ยวกับ ast-grep ทั้งหมด https://ast-grep.github.io/llms-full.txt
+ระบุเนื้อหาที่ต้องการแทนที่
 
-2. match
+`IDENTIFY target` : ต้องแทนที่ -> SEARCH และ MARK เนื้อหาที่ต้องการแทนที่
 
-- ใช้ `ast-grep --patttern <file>` 
-- ลองอ่าน
-    - https://ast-grep.github.io/guide/rule-config.html
-    - https://ast-grep.github.io/guide/rule-config/atomic-rule.html
-    - https://ast-grep.github.io/guide/rule-config/composite-rule.html
-    - https://ast-grep.github.io/guide/rule-config/utility-rule.html
+1. SEARCH เนื้อหา x ที่ต้องการแทนที่
+2. MARK ตำแหน่งที่ต้องการแทนที่
+3. PREPARE เนื้อหา y ที่จะนำมาแทนที่
 
-3. rewrite 
+---
 
-- ใช้ `ast-grep --rewrite <file>` 
-- ลองอ่าน
-    - https://ast-grep.github.io/guide/rewrite/transform.html
-    - https://ast-grep.github.io/guide/rewrite/rewriter.html
+## 2. Execute Replacement (ใช้เสมอ)
 
-4. ให้ run test 
+ทำการแทนที่เนื้อหา
+
+`REPLACE content` : มีเนื้อหา x และ y -> EXECUTE การแทนที่
+
+1. REPLACE x ด้วย y ในไฟล์หรือโค้ดที่ระบุ
+2. VERIFY ว่าการแทนที่ถูกต้อง
+3. CHECK ว่าไม่มีผลข้างเคียงจากการแทนที่ 

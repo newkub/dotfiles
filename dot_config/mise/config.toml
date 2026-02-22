@@ -3,8 +3,8 @@ description = "update scoop, winget, bun(global), mise, rustup, gh extensions, c
 run = "scoop update * && winget upgrade --all && bun update -g && mise up && mise upgrade && mise self-update -y && rustup self update && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
 
 [tasks.cleanup]
-description = "cleanup scoop, mise, podman, git gc"
-run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && cargo-clean-all && mise prune"
+description = "cleanup scoop, mise, podman, git gc, temp files"
+run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && cargo-clean-all && mise prune && powershell -NoProfile -Command \"Remove-Item -Path 'C:\\Users\\Veerapong\\AppData\\Local\\Temp\\*' -Recurse -Force -ErrorAction SilentlyContinue\""
 
 
 [tasks.commit]
@@ -29,10 +29,15 @@ description = "stop podman machine"
 run = "podman machine stop"
 
 
-[tasks.open-windsurf-global]
-description = "open windsurf global_workflows directory"
+[tasks.open-windsurf-workflows]
+description = "open windsurf global_workflows"
 dir = "c:/Users/Veerapong/.codeium/windsurf/global_workflows"
-run = "dir"
+run = "windsurf ."
+
+[tasks.open-windsurf-skills]
+description = "open windsurf skills"
+dir = "c:/Users/Veerapong/.codeium/windsurf/skills"
+run = "windsurf ."
 
 [tasks.cargo-clean-all]
 description = "Clean all Rust projects recursively"

@@ -1,17 +1,102 @@
 {
   "mcpServers": {
+    "agent-browser": {
+      "args": [
+        "-y",
+        "@vercel/agent-browser"
+      ],
+      "command": "bunx"
+    },
+    "cloudflare-docs": {
+      "args": [
+        "mcp-remote",
+        "https://docs.mcp.cloudflare.com/mcp"
+      ],
+      "command": "bunx"
+    },
     "context7": {
       "disabled": false,
       "headers": {
-        "CONTEXT7_API_KEY": "ctx7sk-f9bbf39f-e40c-4116-b2b6-8f299bda9c2a"
+        "CONTEXT7_API_KEY": "{CONTEXT7_API_KEY}"
       },
       "serverUrl": "https://mcp.context7.com/mcp"
+    },
+    "deepwiki": {
+      "headers": {},
+      "serverUrl": "https://mcp.deepwiki.com/mcp"
+    },
+    "drizzle": {
+      "args": [
+        "github:defrex/drizzle-mcp",
+        "./drizzle.config.ts"
+      ],
+      "command": "bunx",
+      "disabled": true
+    },
+    "mcp-playwright": {
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ],
+      "command": "npx",
+      "disabled": true,
+      "env": {}
+    },
+    "memory": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "command": "bunx"
     },
     "nuxt": {
       "serverUrl": "http://localhost:3000/__mcp/sse"
     },
     "nuxt-docs": {
       "serverUrl": "https://nuxt.com/mcp"
+    },
+    "sequential-thinking": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "bunx",
+      "disabled": true,
+      "env": {}
+    },
+    "terminator-mcp-agent": {
+      "args": [
+        "-y",
+        "terminator-mcp-agent@latest"
+      ],
+      "command": "bunx",
+      "disabled": true,
+      "env": {
+        "LOG_LEVEL": "info",
+        "RUST_BACKTRACE": "1"
+      }
+    },
+    "ui-tars": {
+      "args": [
+        "-y",
+        "agent-tars"
+      ],
+      "command": "bunx",
+      "disabled": true,
+      "disabledTools": []
+    },
+    "vercel": {
+      "serverUrl": "https://mcp.vercel.com"
+    },
+    "windows-mcp": {
+      "args": [
+        "windows-mcp"
+      ],
+      "command": "uvx",
+      "disabled": true,
+      "env": {
+        "ANONYMIZED_TELEMETRY": "false"
+      }
     }
   }
 }

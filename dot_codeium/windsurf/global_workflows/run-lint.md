@@ -1,50 +1,82 @@
 ---
-description: รัน lint และแก้ไข error ตาม config file และ framework
-trigger: manual
-instruction:
-  - ทำตาม /follow-config-file
-  - ทำตาม /follow-framework
-  - ทำ /sumarize หลังจากเสร็จงาน
+description: รัน lint และแก้ไขทุกอย่างให้ผ่านหมด (error, warning, message)
 ---
 
-# การรัน Lint และแก้ไข Error
+## 1. การรัน Lint
 
-## Phase 1: เตรียมการ (Preparation)
+### 1.1 ตรวจสอบ lint script ใน package.json
+- ยืนยันว่ามี lint script อยู่ใน package.json
+- ตรวจสอบคำสั่ง lint ที่กำหนด (biome lint --write && oxlint --fix --type-aware)
 
-### 1. ตรวจสอบ Config File
-- อ่าน config file ที่เกี่ยวข้อง (เช่น .oxlintrc.json, dprint.json)
-- ตรวจสอบว่ามี lint tool ที่กำหนดไว้หรือไม่
-- ตรวจสอบว่ามี script สำหรับรัน lint ใน package.json หรือไม่
+### 1.2 รันคำสั่ง lint แบบแก้ไขทุกอย่าง
+```bash
+bun run lint
+```
+- รัน lint ตามที่ระบุใน package.json
+- ตรวจสอบผลลัพธ์ที่ได้
 
-### 2. ตรวจสอบ Dependencies
-- ตรวจสอบว่า lint tool ที่ต้องใช้ถูกติดตั้งแล้ว
-- หากยังไม่ติดตั้ง ให้ติดตั้งก่อนรัน lint
+### 1.3 รันคำสั่ง format เพิ่มเติม
+```bash
+bun run format
+```
+- รัน format ด้วย biome format --write และ dprint
+- ตรวจสอบว่าไม่มีปัญหาการจัดรูปแบบ
 
----
+## 2. การแก้ไขข้อผิดพลาดทั้งหมด
 
-## Phase 2: รัน Lint (Execution)
+### 2.1 ระบุข้อผิดพลาดทั้งหมด
+- ตรวจสอบ error ที่เกิดขึ้น
+- ตรวจสอบ warning ที่เหลืออยู่
+- ตรวจสอบ message หรือ suggestion ที่แนะนำให้ทำ
+- จัดลำดับความสำคัญของปัญหา (error > warning > message)
 
-### 3. รัน Lint Command
-- รันคำสั่ง lint ตามที่กำหนดใน config file
-- รอดูผลลัพธ์จาก lint tool
-- บันทึก error และ warning ที่พบ
+### 2.2 แก้ไขปัญหาตามลำดับความสำคัญ
+- แก้ไข error ร้ายแรงก่อนเป็นอันดับแรก
+- แก้ไข warning ที่เหลืออยู่ให้หมด
+- แก้ไข message หรือ suggestion ต่างๆ ให้ครบถ้วน
+- ถ้าต้องการ refactor ให้ทำตาม [refactor](/refactor)
 
-### 4. วิเคราะห์ผลลัพธ์
-- จัดกลุ่ม error ตามประเภท (syntax, type, style, etc.)
-- จัดลำดับความสำคัญของ error (critical > major > minor)
-- ระบุไฟล์ที่มีปัญหา
+### 2.3 รันซ้ำจนกว่าจะไม่มีอะไรเหลือ
+```bash
+bun run lint
+bun run format
+```
+- รันซ้ำจนกว่าจะไม่มี error, warning, message เหลืออยู่เลย
+- ทำวนไปจนกว่าผลลัพธ์จะ clean 100%
 
----
+## 3. Validation
 
-## Phase 3: แก้ไข Error (Fix)
+### 3.1 การตรวจสอบการรัน lint
+- ยืนยันว่า lint script มีอยู่ใน package.json
+- ยืนยันว่าคำสั่ง lint รันสำเร็จ
+- ยืนยันว่าไม่มี error เหลืออยู่
 
-### 5. ตรวจสอบ Framework
-- ทำตาม /follow-framework เพื่อระบุ framework ที่ใช้
-- ตรวจสอบว่ามี framework ใดๆ ที่เกี่ยวข้องกับไฟล์ที่มี error
-- ทำตาม workflow ของ framework ที่พบ
+### 3.2 การตรวจสอบการแก้ไขข้อผิดพลาด
+- ยืนยันว่า error, warning, message ถูกระบุถูกต้อง
+- ยืนยันว่าการแก้ไขเรียงลำดับตามความสำคัญ
+- ยืนยันว่าไม่มีข้อผิดพลาดใหม่เกิดขึ้นหลังแก้ไข
 
-### 6. แก้ไข Error
-- แก้ไข error ตามลำดับความสำคัญ (critical > major > minor)
-- หลีกเลี่ยงการใช้ pattern กลุ่ม *-ignore เพื่อกลบปัญหา
+### 3.3 การตรวจสอบขั้นสุดท้าย
+- ยืนยันว่าไม่มีข้อผิดพลาดและคำเตือนเหลืออยู่
+- ยืนยันว่าไม่มี message หรือ suggestion เหลืออยู่
+- รัน lint อีกครั้งเพื่อยืนยันว่า clean 100%
+- ตรวจสอบว่าผลลัพธ์แสดงผ่านทั้งหมด
 
----
+## 4. Verification
+
+### 4.1 การตรวจสอบการรัน lint
+- ยืนยันว่า lint command ทำงานได้
+- ตรวจสอบว่าไม่มี error ในการรัน
+- ตรวจสอบว่าไม่มี warning เหลืออยู่
+
+### 4.2 การตรวจสอบการแก้ไข
+- ยืนยันว่าข้อผิดพลาดทั้งหมดถูกแก้ไข
+- ยืนยันว่า warning ทั้งหมดถูกแก้ไข
+- ยืนยันว่า message/suggestion ทั้งหมดถูกจัดการ
+- ตรวจสอบว่าโค้ดยังคงทำงานได้
+
+### 4.3 การตรวจสอบขั้นสุดท้าย
+- ยืนยันว่า lint pass ทั้งหมด
+- ตรวจสอบว่าไม่มี warnings เหลืออยู่
+- ตรวจสอบว่าไม่มี messages เหลืออยู่
+- ยืนยันว่าโปรเจกต์พร้อมสำหรับ commit

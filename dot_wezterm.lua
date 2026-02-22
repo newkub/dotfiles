@@ -49,16 +49,15 @@ wezterm.on('gui-startup', function(cmd)
   -- Tab 1: 1 panel (ด้านซ้าย)
   -- pane หลักอยู่ทางซ้ายแล้ว
 
-  -- Tab 2: 2 panels (ด้านขวา - split vertical)
+  -- Tab 2: 1 panel (เหมือน Tab 1)
   local tab2 = window:spawn_tab({})
-  local pane2 = tab2:active_pane()
-  local right_pane = pane2:split({ direction = 'Right', size = 0.5 })
 
   -- ให้ cursor focus ที่ panel ด้านซ้าย (pane หลัก) ของ tab 1
   pane:activate()
 
   window:gui_window():maximize()
 end)
+
 
 -- ======================
 -- Leader

@@ -67,3 +67,5 @@ undo = "reset --soft HEAD~1"
 sync = "!f() { git pull && git push && git submodule sync --recursive && git submodule update --init --recursive --remote; }; f"
 [credential]
 	helper = manager
+[credential "helperselector"]
+	selected = manager

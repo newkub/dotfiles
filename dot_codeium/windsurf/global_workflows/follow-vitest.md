@@ -1,9 +1,13 @@
 ---
 trigger: always_on
-description: "แนวทางการตั้งค่าและใช้งาน Vitest รวมถึง Vitest Projects สำหรับ monorepo"
+description: แนวทางการตั้งค่าและใช้งาน Vitest รวมถึง Vitest Projects สำหรับ monorepo
 instruction:
   - ทำตาม workflows ย่อยตามลำดับที่กำหนด
   - ตรวจสอบความเข้ากันได้ของ dependencies
+condition:
+  - ใช้เมื่อต้องการตั้งค่า Vitest สำหรับโปรเจกต์
+  - ใช้เมื่อต้องการเขียน tests สำหรับ source code
+  - ใช้เมื่อมีหลาย packages หรือ monorepo
 ---
 
 ## 1. Installation and Configuration (ใช้เสมอ)
