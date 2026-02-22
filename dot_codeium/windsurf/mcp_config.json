@@ -5,7 +5,8 @@
         "-y",
         "@vercel/agent-browser"
       ],
-      "command": "bunx"
+      "command": "bunx",
+      "disabled": false
     },
     "cloudflare-docs": {
       "args": [
