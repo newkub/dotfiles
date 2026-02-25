@@ -38,11 +38,10 @@
         "command": "workbench.action.files.openFolder",
         "when": "!terminalFocus"
     },
-    // Split terminal (when in terminal)
+    // Open new terminal tab
     {
         "key": "ctrl+t",
-        "command": "workbench.action.terminal.split",
-        "when": "terminalFocus"
+        "command": "workbench.action.terminal.new"
     },
     // Rename file
     {
@@ -86,8 +85,16 @@
         "command": "workbench.action.terminal.focus"
     },
     {
-        "key": "ctrl+t",
-        "command": "explorer.newFile",
-        "when": "explorerViewletFocus"
+        "key": "ctrl+l",
+        "command": "windsurf.cascadeViewContainerId"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "windsurf.prioritized.chat.open"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "-windsurf.prioritized.chat.open",
+        "when": "!terminalFocus && !windsurf.deepwikiPanel.focused"
     }
 ]
