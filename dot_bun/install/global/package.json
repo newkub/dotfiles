@@ -15,7 +15,7 @@
     "@vscode/vsce": "^3.7.1",
     "@workos/mcp-docs-server": "^0.1.0",
     "actions-up": "^1.8.0",
-    "agent-browser": "^0.8.4",
+    "agent-browser": "^0.13.0",
     "aicommits": "^1.11.0",
     "amp": "^0.3.1",
     "better-commits": "^1.18.1",
@@ -43,6 +43,7 @@
     "vercel": "^50.1.6",
     "vibekit": "^0.0.4",
     "vite": "^7.3.1",
+    "vitepress": "^1.6.4",
     "vitest": "^4.0.16",
     "wrangler": "^4.58.0"
   }

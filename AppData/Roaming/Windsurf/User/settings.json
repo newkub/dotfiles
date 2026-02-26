@@ -262,7 +262,6 @@
 	],
 	"dbcode.resultLocation": "panel",
 	"fileNestingUpdater.autoUpdate": false,
-	"terminal.integrated.showCommandHint": false,
 	"kilo-code.debug": false,
 	"kilo-code.allowedCommands": [
 		"git log",
@@ -272,5 +271,6 @@
 	"kilo-code.deniedCommands": [],
 	"terminal.integrated.enableMultiLinePasteWarning": "never",
 	"oxc.typeAware": true,
-	"window.newWindowDimensions": "maximized"
+	"window.newWindowDimensions": "maximized",
+	"terminal.integrated.showCommandHint": false
 }

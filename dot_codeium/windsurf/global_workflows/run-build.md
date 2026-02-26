@@ -1,3 +1,24 @@
-1. /follow-framework เพื่อดูว่าต้องกำหนด build อะไรใน task บ้าง
-2. run build ใน package manifest file แล้ว /fix-errr ให้หมดจนไม่มีเหลือ
-3. run build อีกครั้งเพื่อแน่ใจว่า /fix-error หมดแล้ว
+---
+description: สร้างโปรเจกต์และแก้ไขปัญหา
+title: run-build
+auto_execution_mode: 3
+---
+
+## 1. Refactor
+
+1. /refactor
+
+## 2. Build
+
+1. กำหนด build
+
+ถ้าเป็น
+
+- nuxt: "nuxt build"
+- next: "next build"
+- vite: "vite build"
+- tsc: "tsc --build"
+
+2. run build แล้วแก้ให้หมดจนไม่มีเหลือ
+
+3. run build อีกครั้งเพื่อแน่ใจ

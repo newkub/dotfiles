@@ -1,11 +1,7 @@
 ---
-trigger: always_on
-description: "ตั้งค่าและพัฒนา Vite project ด้วย best practices"
-instruction:
-  - ตรวจสอบ framework ที่ใช้กับ Vite
-  - ตั้งค่า base configuration ที่ซ้ำกัน
-  - ทำตาม workflow ที่เหมาะสมกับ framework นั้น
-  - refactor โค้ดให้ถูกต้อง
+description: ตั้งค่า Vite
+title: follow-vite
+auto_execution_mode: 3
 ---
 
 ## 1. Framework Detection (ใช้เสมอ)
@@ -57,9 +53,9 @@ import { nitro } from "nitro/vite";
 export default defineConfig({
   plugins: [
     nitro(),
-    Unocss(), // @ai /follow-unocss
+    Unocss(), // /follow-unocss
     AutoImport({
-      imports: ['FRAMEWORK'], // @ai แทนที่ด้วย framework ที่ใช้
+      imports: ['FRAMEWORK'], // แทนที่ด้วย framework ที่ใช้
       dts: true
     }),
     AST(),
@@ -78,7 +74,7 @@ export default defineConfig({
       exclude: [/node_modules/],
       level: 'warning',
       ignore: {
-        peerDependencies: ['FRAMEWORK'], // @ai แทนที่ด้วย framework ที่ใช้
+        peerDependencies: ['FRAMEWORK'], // แทนที่ด้วย framework ที่ใช้
       },
       depKinds: ['dependencies', 'peerDependencies'],
     }),
@@ -88,7 +84,6 @@ export default defineConfig({
         initialIsOpen: false,
       },
       typescript: true,
-      eslint: true,
       oxlint: true,
     })
   ]
@@ -100,7 +95,7 @@ export default defineConfig({
 ```json [tsconfig.json]
 {
   "compilerOptions": {
-    "types": ["vite/client", "FRAMEWORK"] // @ai แทนที่ด้วย framework ที่ใช้
+    "types": ["vite/client", "FRAMEWORK"] // แทนที่ด้วย framework ที่ใช้
   }
 }
 ```
@@ -144,7 +139,7 @@ export default defineConfig({
       oxlint: true,
       typescript: true,
       eslint: true,
-      vueTsc: true, // @ai ถ้าใช้ Vue
+      vueTsc: true, // ถ้าใช้ Vue
     }),
   ],
 });
@@ -177,11 +172,9 @@ export default defineNuxtConfig({
 5.1. ทำ /refactor
    - refactor โค้ดให้ถูกต้องตาม framework
 
----
-
 ## หมายเหตุ
 
 - ถ้าไม่พบ framework ใดๆ ให้ใช้ /follow-best-practices
 - ตรวจสอบว่า Vite config เข้ากันได้กับ framework ที่ใช้
 - ใช้ plugins ที่เหมาะสมกับ framework นั้นๆ
-- FRAMEMARKER คือ placeholder ที่ต้องแทนที่ด้วย framework ที่ใช้จริง
+- FRAMEWORK คือ placeholder ที่ต้องแทนที่ด้วย framework ที่ใช้จริง

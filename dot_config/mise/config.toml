@@ -60,9 +60,14 @@ run = "bun create nuxt --template minimal --packageManager bun --force --gitInit
 description = "bunx taze -r -w"
 run = "bunx taze -r -w"
 
+[tasks.remove-node-modules]
+description = "remove node_modules recursive"
+run = "powershell -NoProfile -Command \"Get-ChildItem -Path . -Directory -Recurse -Filter node_modules | Remove-Item -Recurse -Force\""
 
 
-
+[tasks.remove-target]
+description = "remove target recursive"
+run = "powershell -NoProfile -Command \"Get-ChildItem -Path . -Directory -Recurse -Filter target | Remove-Item -Recurse -Force\""
 
 
 [env]
