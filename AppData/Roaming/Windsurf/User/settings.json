@@ -272,5 +272,8 @@
 	"terminal.integrated.enableMultiLinePasteWarning": "never",
 	"oxc.typeAware": true,
 	"window.newWindowDimensions": "maximized",
-	"terminal.integrated.showCommandHint": false
+	"terminal.integrated.showCommandHint": false,
+	"vs-browser.favourites.list": {
+		"http://localhost:3000/": "http://localhost:3000/"
+	}
 }

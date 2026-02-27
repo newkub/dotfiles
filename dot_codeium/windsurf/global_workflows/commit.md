@@ -1,16 +1,17 @@
 ---
 description: commit จน conventional commit ให้หมด
+title: commit-conventional
 ---
 
-## 0. เช็ค .gitignore
+## 1. เช็ค .gitignore
 
-1. ตรวจสอบว่าไฟล์ .gitignore มีอยู่และกำหนดเหมาะสม
-   - ใช้คำสั่ง `eza --tree --git-ignore` เพื่อดูไฟล์ที่ควรถูก ignore
+1. ตรวจสอบไฟล์ .gitignore มีอยู่และกำหนดเหมาะสม
+   - รัน `eza --tree --git-ignore` ดูไฟล์ที่ควรถูก ignore
    - ปรับปรุง .gitignore ถ้าจำเป็น
 
-## 1. ตรวจสอบสถานะ
+## 2. ตรวจสอบสถานะ
 
-1. รันคำสั่งตรวจสอบ git status
+1. รัน git status ตรวจสอบ changes
 
    ```bash
    git status --porcelain
@@ -19,7 +20,7 @@ description: commit จน conventional commit ให้หมด
    - ดู file changes ที่มีอยู่
    - ถ้าไม่มี changes ให้หยุด
 
-## 2. แยก commit
+## 3. แยก commit
 
 1. ถ้ามี file change มาก
    - แยกเป็นกลุ่มตามหมวดหมู่
@@ -27,8 +28,15 @@ description: commit จน conventional commit ให้หมด
 
 2. commit แต่ละกลุ่ม
    - เลือก files ในกลุ่ม
-   - git add [files]
-   - git commit -m "feat: add new feature"
+
+   ```bash
+   git add [files]
+   ```
+
+   ```bash
+   git commit -m "feat: add new feature"
+   ```
+
    - ตัวอย่าง conventional commit types:
      - `feat:` new feature
      - `fix:` bug fix
@@ -38,8 +46,8 @@ description: commit จน conventional commit ให้หมด
      - `test:` testing
      - `chore:` maintenance
 
-## 3. ทำจนหมด
+## 4. ทำจนหมด
 
-1. ทำซ้ำขั้นตอน 1-2 จนไม่มี file change เหลือ
+1. ทำซ้ำขั้นตอน 1-3 จนไม่มี file change เหลือ
    - ตรวจสอบ git status อีกครั้ง
    - ถ้ายังมี changes ให้ทำต่อ

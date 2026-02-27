@@ -1,1 +1,5 @@
-feat(webconfig): add Nuxt-based config editor
+fix: update import paths from ~/ to # for Nuxt 4 compatibility
+
+- Change import paths in Vue components and server API files
+- Fix TypeScript errors with proper type annotations
+- Resolve module resolution issues with Nuxt 4

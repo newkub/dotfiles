@@ -8,7 +8,11 @@ auto_execution_mode: 3
 
 1. /refactor
 
-## 2. Build
+## 2. Improve Bundling Optimization
+
+1. /improve-bundling-optimzation
+
+## 3. Build
 
 1. กำหนด build
 

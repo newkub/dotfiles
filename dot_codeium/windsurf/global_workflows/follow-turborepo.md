@@ -122,4 +122,3 @@ bun add -d turbo lefthook taze node-modules-inspector @ast-grep/cli vitest
 ### Vitest Configuration
 
 รัน `/follow-vitest`
-

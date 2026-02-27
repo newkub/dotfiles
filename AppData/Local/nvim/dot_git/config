@@ -12,3 +12,6 @@
 	remote = origin
 	merge = refs/heads/main
 	vscode-merge-base = origin/main
+[submodule "docs-wrikka-com"]
+	url = https://github.com/wrikka/docs-wrikka-com
+	active = true

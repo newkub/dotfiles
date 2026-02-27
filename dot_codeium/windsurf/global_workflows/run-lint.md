@@ -18,6 +18,8 @@ auto_execution_mode: 3
 
 1. รัน lint ใน package manifest
 
-2. แก้ไข errors และ warnings จนหมด
+2. ถ้าเจอ error ให้เช็คไฟล์ที่ error ว่ายาวไหม ถ้ายาวให้ @[/refactor-long-files] ก่อน
+
+3. แก้ไข errors และ warnings จนหมด
 
    - แก้ไขได้ทันทีเมื่อเห็น error หรือ warning
