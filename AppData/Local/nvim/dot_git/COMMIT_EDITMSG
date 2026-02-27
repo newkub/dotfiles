@@ -1,5 +1,6 @@
-fix: update import paths from ~/ to # for Nuxt 4 compatibility
+feat: remove GitHub Copilot plugin and mappings
 
-- Change import paths in Vue components and server API files
-- Fix TypeScript errors with proper type annotations
-- Resolve module resolution issues with Nuxt 4
+- Remove copilot.lua plugin file
+- Remove Copilot key mappings from ai.lua
+- Keep only Windsurf (Codeium) and Avante AI plugins
+- Clean up AI configuration

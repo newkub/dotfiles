@@ -51,6 +51,7 @@ if ($profileContent -notcontains $profileEntry) {
 Remove-Item Alias:ni -Force -ErrorAction Ignore
 
 Remove-Item Alias:rd
+Remove-Item Alias:h
 
 
 # --- General Aliases ---
@@ -160,43 +161,6 @@ function cpo {
 
 
 
-function rmr {
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$Path,
-        [int]$RetryCount = 5,
-        [int]$DelaySec = 2
-    )
-
-    if (-not (Test-Path $Path)) { return }
-
-    # สร้าง temp folder ว่าง
-    $temp = New-Item -ItemType Directory -Path ([IO.Path]::Combine($env:TEMP, [Guid]::NewGuid().ToString()))
-
-    # พยายาม rename folder เป้าหมายก่อน
-    $backup = "$Path.locked.$([Guid]::NewGuid().ToString())"
-    try { Rename-Item $Path $backup -ErrorAction Stop } catch {}
-
-    for ($i=0; $i -lt $RetryCount; $i++) {
-        try {
-            if (Test-Path $backup) {
-                # robocopy overlay (mirror empty folder)
-                robocopy $temp $backup /MIR | Out-Null
-                # ลบโฟลเดอร์ backup
-                Remove-Item $backup -Recurse -Force -ErrorAction SilentlyContinue
-            }
-
-            # ลบ temp folder
-            Remove-Item $temp -Recurse -Force -ErrorAction SilentlyContinue
-            return
-        } catch {
-            Start-Sleep -Seconds $DelaySec
-        }
-    }
-
-    Write-Warning "Failed to remove: $Path"
-}
-
 
 
 # ==============================================================================
@@ -250,6 +214,18 @@ function rc {
     ni && bun run check
 }
 
+function h { 
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$Files
+    )
+    
+    if ($Files) {
+        & hx.exe $Files
+    } else {
+        & hx.exe .
+    }
+}
 
 function f {
     param(
@@ -301,6 +277,9 @@ function ff {
         windsurf $selected
     }
 }
+
+
+
 
 
 function zo {
@@ -598,4 +577,105 @@ function g {
     }
 
     Start-Process ($engine -f $query)
+}
+
+function rmr {
+    param(
+        [string]$folder = "",
+        [switch]$help,
+        [switch]$scan
+    )
+    
+    if ($help) {
+        Write-Host @"
+RMR - Remove Folders Recursively Tool
+
+USAGE:
+    rmr [options] [folder_name]
+
+OPTIONS:
+    --help       Show this help message
+    --scan       Scan for duplicate folders and list them
+
+EXAMPLES:
+    rmr node_modules    # Remove all node_modules folders recursively
+    rmr .git            # Remove all .git folders recursively
+    rmr dist            # Remove all dist folders recursively
+    rmr temp            # Remove all temp folders recursively
+    rmr --scan          # Scan for duplicate folders and show statistics
+    rmr --help          # Show this help message
+"@ -ForegroundColor Green
+        return
+    }
+    
+    if ($scan) {
+        Write-Host "Scanning for duplicate folders..." -ForegroundColor Yellow
+        Write-Host ""
+        
+        # สแกนหาโฟลเดอร์ทั่วไปที่มักจะซ้ำกัน
+        $commonFolders = @("node_modules", ".git", "dist", "build", "temp", "tmp", ".vscode", ".idea", "coverage", ".nyc_output", ".next", ".nuxt", ".output")
+        
+        $folderStats = @{}
+        
+        foreach ($folderName in $commonFolders) {
+            try {
+                $folders = Get-ChildItem -Directory -Recurse -Filter $folderName -ErrorAction SilentlyContinue
+                if ($folders) {
+                    $folderStats[$folderName] = $folders.Count
+                    Write-Host "$folderName`: $($folders.Count) folders found" -ForegroundColor Cyan
+                    
+                    # แสดง path ของโฟลเดอร์เหล่านั้น (จำกัด 10 อันแรก)
+                    $folders | Select-Object -First 10 | ForEach-Object {
+                        Write-Host "  └─ $($_.FullName)" -ForegroundColor Gray
+                    }
+                    if ($folders.Count -gt 10) {
+                        Write-Host "  └─ ... and $($folders.Count - 10) more" -ForegroundColor Gray
+                    }
+                    Write-Host ""
+                }
+            }
+            catch {
+                Write-Host "Warning: Could not scan some '$folderName' folders due to permissions" -ForegroundColor Yellow
+            }
+        }
+        
+        # สรุป
+        $totalDuplicates = ($folderStats.Values | Measure-Object -Sum).Sum
+        Write-Host "Summary: Found $totalDuplicates duplicate folders across $($folderStats.Count) types" -ForegroundColor Green
+        
+        if ($totalDuplicates -gt 0) {
+            Write-Host ""
+            Write-Host "To remove any of these folders, use:" -ForegroundColor Yellow
+            $folderStats.Keys | ForEach-Object {
+                Write-Host "  rmr $_" -ForegroundColor White
+            }
+        }
+        
+        return
+    }
+    
+    if (-not $folder) {
+        Write-Host "Use 'rmr --help' for usage information" -ForegroundColor Yellow
+        return
+    }
+    
+    $folders = Get-ChildItem -Directory -Recurse -Filter $folder -ErrorAction SilentlyContinue
+    
+    if (-not $folders) {
+        Write-Host "No '$folder' folders found" -ForegroundColor Yellow
+        return
+    }
+    
+    Write-Host "Found $($folders.Count) '$folder' folders:" -ForegroundColor Cyan
+    $folders | ForEach-Object {
+        Write-Host "  $($_.FullName)" -ForegroundColor Gray
+    }
+    
+    $confirm = Read-Host "`nDelete all $($folders.Count) '$folder' folders? (y/n)"
+    if ($confirm -eq 'y') {
+        $folders | Remove-Item -Recurse -Force
+        Write-Host "Successfully removed $($folders.Count) '$folder' folders" -ForegroundColor Green
+    } else {
+        Write-Host "Cancelled" -ForegroundColor Yellow
+    }
 }

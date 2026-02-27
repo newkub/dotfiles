@@ -12,14 +12,22 @@ config.window_close_confirmation = 'NeverPrompt'
 config.tab_max_width = 30
 
 -- ======================
--- Font (รองรับภาษาไทย + Nerd Font)
+-- Font (Stable for Markdown + Thai)
 -- ======================
 config.font = wezterm.font_with_fallback({
-  'MesloLGL Nerd Font',
-  'JetBrains Mono NL',
-  'Noto Sans Mono',
+  'JetBrains Mono',   -- main monospace
+  'Noto Sans Thai',   -- thai fallback only
 })
-config.harfbuzz_features = { 'calt=1', 'clig=1', 'liga=1' }
+
+-- ปิด ligatures ป้องกัน markdown/table เพี้ยน
+config.harfbuzz_features = { 'liga=0', 'clig=0', 'calt=0' }
+
+-- ป้องกัน glyph overflow
+config.allow_square_glyphs_to_overflow_width = "Never"
+config.warn_about_missing_glyphs = false
+
+-- renderer เสถียร
+config.front_end = "OpenGL"
 
 -- ======================
 -- Colors / Tab Bar
@@ -45,19 +53,10 @@ config.colors = {
 -- ======================
 wezterm.on('gui-startup', function(cmd)
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-
-  -- Tab 1: 1 panel (ด้านซ้าย)
-  -- pane หลักอยู่ทางซ้ายแล้ว
-
-  -- Tab 2: 1 panel (เหมือน Tab 1)
-  local tab2 = window:spawn_tab({})
-
-  -- ให้ cursor focus ที่ panel ด้านซ้าย (pane หลัก) ของ tab 1
+  window:spawn_tab({})
   pane:activate()
-
   window:gui_window():maximize()
 end)
-
 
 -- ======================
 -- Leader
@@ -76,7 +75,7 @@ config.keys = {
   -- Tab Navigation
   { key = 'Tab', mods = 'CTRL', action = wezterm.action.ActivateTabRelative(1) },
   { key = 'Tab', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
-  
+
   -- Pane Navigation
   { key = 'Tab', mods = 'SHIFT', action = wezterm.action.ActivatePaneDirection 'Next' },
 
@@ -92,7 +91,7 @@ config.keys = {
   -- Always pass Ctrl+C to apps
   { key = 'c', mods = 'CTRL', action = wezterm.action.SendKey { key = 'c', mods = 'CTRL' } },
 
-  -- Pane Split (manual)
+  -- Pane Split
   { key = 'UpArrow',    mods = 'CTRL|SHIFT', action = wezterm.action.SplitPane { direction = 'Up' } },
   { key = 'DownArrow',  mods = 'CTRL|SHIFT', action = wezterm.action.SplitPane { direction = 'Down' } },
   { key = 'LeftArrow',  mods = 'CTRL|SHIFT', action = wezterm.action.SplitPane { direction = 'Left' } },
@@ -106,7 +105,7 @@ for i = 1, 9 do
   table.insert(config.keys, {
     key = tostring(i),
     mods = 'CTRL',
-    action = wezterm.action.ActivateTab(i - 1), -- index เริ่มจาก 0
+    action = wezterm.action.ActivateTab(i - 1),
   })
 end
 

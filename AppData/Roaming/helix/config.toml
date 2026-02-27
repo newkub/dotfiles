@@ -1,1 +1,13 @@
 theme = "github_dark_dimmed"
+
+[keys.normal]
+C-c = ":wq"
+C-p = "file_picker"
+C-b = "buffer_picker"
+C-t = ":sh"
+C-e = ":sh explorer ."
+C-h = ":sh helix"
+
+[keys.insert]
+C-c = ":wq"
+
