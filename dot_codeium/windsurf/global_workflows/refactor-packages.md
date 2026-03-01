@@ -1,182 +1,60 @@
 ---
-trigger: manual
-description: ตัดสินใจ refactor ไปเป็น package ใหม่ หรือใช้ package ที่มีอยู่
-instruction:
-  - ANALYZE code ที่ต้องการ refactor
-  - CHECK packages ที่มีอยู่แล้ว
-  - DECIDE ว่าควรสร้างใหม่หรือใช้ที่มี
-  - EXECUTE ตามขั้นตอนที่เหมาะสม
-condition:
-  - ใช้เมื่อมี code ที่ต้องการ refactor ไปเป็น package
+description: refactor โค้ดเข้า packages ที่มีอยู่ให้มากที่สุด เพื่อลดความซ้ำซ้อน
+title: refactor-packages
 ---
 
-## 1. Analysis Phase (ใช้เสมอ)
+## 1. Analyze Existing Packages
 
-### 1.1. ตรวจสอบลักษณะของ code
+1. สำรวจ packages ที่มีอยู่ทั้งหมด
+   - ดูโครงสร้างใน `packages/` ทั้งหมด
+   - วิเคราะห์ single responsibility ของแต่ละ package
+   - จดความสามารถและฟีเจอร์ของแต่ละ package
 
-1.1.1. CHECK เกณฑ์ที่ควร refactor เป็น package ใหม่
-    - มีการใช้งานซ้ำในหลาย apps หรือหลายส่วน
-    - เป็น generic logic ที่ไม่ขึ้นกับ business logic ของ app ใด app หนึ่ง
-    - มี dependencies ที่ชัดเจนและไม่เฉพาะเจาะจง
-    - มีความซับซ้อน > 100 บรรทัด
+2. ตรวจสอบโค้ดที่จะ refactor
+   - หาส่วนที่สามารถใช้ packages ที่มีอยู่แทนได้
+   - ตรวจสอบ dependencies ระหว่าง packages ปัจจุบัน
+   - หาความซ้ำซ้อนในโค้ดที่สามารถรวมเข้า package เดียว
 
-1.1.2. CHECK เกณฑ์ที่ไม่ควร refactor เป็น package ใหม่
-    - เป็น business logic เฉพาะของ app
-    - ใช้เพียงครั้งเดียวใน app เดียว
-    - มี dependencies ที่เฉพาะเจาะจงกับ app หลัก
-    - มีความซับซ้อนน้อย (< 50 บรรทัด)
+## 2. Prioritize Using Existing Packages
 
-### 1.2. ตรวจสอบ package ที่มีอยู่
+1. ใช้ packages ที่มีอยู่ให้มากที่สุดก่อนสร้างใหม่
+   - ตรวจสอบว่ามี package ไหนทำหน้าที่นี้อยู่แล้วหรือไม่
+   - พยายาม refactor ให้เข้ากับ package ที่มีอยู่
+   - หลีกเลี่ยงการสร้าง package ใหม่ถ้ามี package เก่าทำได้
 
-1.2.1. CHECK packages ที่มีอยู่
-    - LIST โครงสร้าง packages/ ทั้งหมด
-    - READ README และ Cargo.toml ของ packages ที่น่าสนใจ
-    - CHECK ว่ามี package ที่มีหน้าที่คล้ายกันหรือไม่
+2. รวมฟังก์ชันที่คล้ายกัน
+   - ย้ายโค้ดเข้า packages ที่มีอยู่แทนสร้างใหม่
+   - ใช้ prefix-core packages เพื่อรวมฟังก์ชันทั่วไป
+   - จัดการ dependencies ให้ชี้ไปที่ packages ที่มีอยู่
 
----
+## 3. Create New Packages Only When Necessary
 
-## 2. Decision Phase (ใช้เสมอ)
+1. สร้าง package ใหม่เฉพาะกรณีจำเป็น
+   - เมื่อไม่มี package ที่มีอยู่ทำหน้าที่นี้
+   - เมื่อฟังก์ชันมีความจำเพาะและแยกจาก packages อื่นชัดเจน
+   - ต้องมีการวิเคราะห์และอนุมัติก่อนสร้าง
 
-### 2.1. ใช้ package ที่มีอยู่แล้ว
+## 4. Refactor and Consolidate
 
-2.1.1. CHECK เงื่อนไขการใช้ package ที่มีอยู่
-    - package มี functionality ที่ตรงกับความต้องการ
-    - package มี dependencies ที่เข้ากันได้กับ project
-    - package มี version และ maintenance ที่ดี
+1. ย้ายโค้ดเข้า packages ที่เหมาะสม
+   - แยกตาม domain และ responsibility ที่ชัดเจน
+   - รวมฟังก์ชันที่ซ้ำซ้อนเข้าด้วยกัน
+   - ใช้ re-export pattern ผ่าน prefix-core packages
 
-2.1.2. EXECUTE ขั้นตอน
-    - ADD dependency ใน Cargo.toml
-    - REFACTOR code ให้ใช้ package ที่มีอยู่
-    - DELETE code เดิมที่ไม่ใช้แล้ว
+2. จัดการ dependencies
+   - อัพเดท imports ให้ชี้ไปที่ packages ที่มีอยู่
+   - ตั้งค่า workspace dependencies ให้ถูกต้อง
+   - ลบ dependencies ที่ไม่จำเป็น
 
-### 2.2. สร้าง package ใหม่
+## 5. Verify and Optimize
 
-2.2.1. CHECK เงื่อนไขการสร้าง package ใหม่
-    - ไม่มี package ที่ตรงกับความต้องการ
-    - package ที่มีอยู่มี dependencies ที่ไม่เข้ากัน
-    - ต้องการ functionality ที่เฉพาะเจาะจงมาก
+1. ตรวจสอบโครงสร้าง packages
+   - แต่ละ package มี single responsibility ชัดเจน
+   - ไม่มีความซ้ำซ้อนระหว่าง packages
+   - ใช้ packages ที่มีอยู่อย่างมีประสิทธิภาพ
 
-2.2.2. EXECUTE ขั้นตอน
-    - CREATE โครงสร้าง package ใหม่ใน packages/
-    - WRITE Cargo.toml ตาม @[/follow-rust]
-    - MOVE code ไปยัง package ใหม่
-    - ADD dependency ใน apps ที่จะใช้
-    - UPDATE workspace members
+2. ทดสอบการทำงาน
+   - รัน build ตรวจสอบทุก workspace
+   - ตรวจสอบ imports ทั้งหมดว่าถูกต้อง
+   - ยืนยันว่าไม่มีฟังก์ชันที่ซ้ำซ้อน
 
----
-
-## 3. Package Structure (ใช้เมื่อสร้างใหม่)
-
-### 3.1. โครงสร้างพื้นฐาน
-
-````text
-packages/<package-name>/
-├── Cargo.toml
-├── README.md
-├── src/
-│   ├── lib.rs
-│   ├── error.rs
-│   ├── mod.rs (ถ้ามีหลาย modules)
-│   └── <modules>/
-└── tests/
-    └── integration_tests.rs
-````
-
-### 3.2. Cargo.toml
-
-````toml
-[package]
-name = "<package-name>"
-version = "0.1.0"
-edition = "2021"
-description = "<คำอธิบายสั้นๆ>"
-
-[dependencies]
-# Error Handling
-thiserror = "2.0"
-anyhow = "1.0"
-
-# Async
-tokio = { version = "1.48", features = ["full"] }
-
-# Config
-figment = { version = "0.10", features = ["toml", "env"] }
-
-# Logging
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
-
-# Internal dependencies
-other-package = { path = "../other-package" }
-
-[dev-dependencies]
-mockall = "0.14"
-pretty_assertions = "1.4"
-````
-
-### 3.3. lib.rs
-
-````rust
-//! # <Package Name>
-//!
-//! คำอธิบายสั้นๆ เกี่ยวกับ package
-
-pub mod error;
-pub mod <modules>;
-
-// Re-export public APIs
-pub use error::*;
-````
-
-### 3.4. error.rs
-
-````rust
-use thiserror::Error;
-
-#[derive(Error, Debug)]
-pub enum PackageError {
-    #[error("Configuration error: {0}")]
-    Config(#[from] figment::Error),
-
-    #[error("IO error: {0}")]
-    Io(#[from] std::io::Error),
-
-    #[error("{0}")]
-    Custom(String),
-}
-````
-
----
-
-## 4. Testing (ใช้เสมอ)
-
-### 4.1. Unit Tests
-
-- WRITE tests ในไฟล์เดียวกับ code
-- USE `#[cfg(test)]` module
-- TEST ทุก public function
-
-### 4.2. Integration Tests
-
-- WRITE ใน `tests/` directory
-- TEST การทำงานร่วมกันของหลาย modules
-- USE mockall สำหรับ mocking
-
----
-
-## 5. Checklist (ใช้เสมอ)
-
-### 5.1. ก่อน refactor
-
-- ANALYZE code ว่าควร refactor หรือไม่
-- CHECK packages ที่มีอยู่แล้ว
-- DECIDE ว่าควรสร้างใหม่หรือใช้ที่มี
-
-### 5.2. เมื่อสร้าง package ใหม่
-
-- CREATE โครงสร้าง package
-- WRITE Cargo.toml ตาม @[/follow-rust]
-- WRITE error.rs ด้วย thiserror
-- WRITE tests ให้ครอบคลุม
-- UPDATE workspace members
-- UPDATE apps ที่ใช้

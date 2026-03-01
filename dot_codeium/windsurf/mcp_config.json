@@ -23,7 +23,6 @@
       "serverUrl": "https://mcp.context7.com/mcp"
     },
     "deepwiki": {
-      "headers": {},
       "serverUrl": "https://mcp.deepwiki.com/mcp"
     },
     "drizzle": {
@@ -40,8 +39,7 @@
         "@playwright/mcp@latest"
       ],
       "command": "npx",
-      "disabled": true,
-      "env": {}
+      "disabled": true
     },
     "memory": {
       "args": [
@@ -62,8 +60,7 @@
         "@modelcontextprotocol/server-sequential-thinking"
       ],
       "command": "bunx",
-      "disabled": true,
-      "env": {}
+      "disabled": true
     },
     "terminator-mcp-agent": {
       "args": [
@@ -83,11 +80,18 @@
         "agent-tars"
       ],
       "command": "bunx",
-      "disabled": true,
-      "disabledTools": []
+      "disabled": true
     },
     "vercel": {
       "serverUrl": "https://mcp.vercel.com"
+    },
+    "wezterm-mcp": {
+      "args": [
+        "-y",
+        "wezterm-mcp"
+      ],
+      "command": "bunx",
+      "disabled": true
     },
     "windows-mcp": {
       "args": [

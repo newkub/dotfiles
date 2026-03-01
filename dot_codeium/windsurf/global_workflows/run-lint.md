@@ -1,7 +1,5 @@
 ---
-description: รัน lint และแก้ไขโค้ด
-title: run-lint
-auto_execution_mode: 3
+description: รัน lint และแก้ไข errors ตาม best practices
 ---
 
 ## 1. กำหนด Lint
@@ -23,3 +21,5 @@ auto_execution_mode: 3
 3. แก้ไข errors และ warnings จนหมด
 
    - แก้ไขได้ทันทีเมื่อเห็น error หรือ warning
+   - ถ้าเจอ error ที่ซับซ้อนหรือต้องการ refactor ให้ทำตาม @[/refactor]
+   - ถ้ายังแก้ไม่ได้หรือต้องการการปรับปรุงโครงสร้าง ให้รัน @[/refactor] ก่อน
