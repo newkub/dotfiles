@@ -2,11 +2,11 @@
   "mcpServers": {
     "agent-browser": {
       "args": [
-        "-y",
-        "@vercel/agent-browser"
+        "agent-browser",
+        "-y"
       ],
       "command": "bunx",
-      "disabled": false
+      "disabled": true
     },
     "cloudflare-docs": {
       "args": [
@@ -38,8 +38,8 @@
         "-y",
         "@playwright/mcp@latest"
       ],
-      "command": "npx",
-      "disabled": true
+      "command": "bunx",
+      "disabled": false
     },
     "memory": {
       "args": [
@@ -53,6 +53,14 @@
     },
     "nuxt-docs": {
       "serverUrl": "https://nuxt.com/mcp"
+    },
+    "playwriter": {
+      "args": [
+        "-y",
+        "playwriter@latest"
+      ],
+      "command": "bunx",
+      "disabled": true
     },
     "sequential-thinking": {
       "args": [

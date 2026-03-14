@@ -40,7 +40,7 @@ my-turborepo/
   "name": "",
   "packageManager": "bun@",
   "scripts": {
-    "watch": "turbo watch verify",
+    "watch": "turbo watch",
     "prepare": "bunx lefthook install && bunx taze -r -w -i",
     "dev": "turbo dev --ui=tui",
     "format": "turbo format",
@@ -49,7 +49,7 @@ my-turborepo/
     "lint": "turbo lint",
     "test": "turbo test",
     "build": "turbo build",
-    "verify": "turbo lint && turbo test && turbo build",
+    "verify": "turbo format && turbo lint && turbo test",
     "devtools": "turbo devtools"
   }
 }

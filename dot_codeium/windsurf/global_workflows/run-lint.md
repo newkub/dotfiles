@@ -1,25 +1,66 @@
 ---
-description: รัน lint และแก้ไข errors ตาม best practices
+title: รัน Lint
+description: รัน linting เพื่อตรวจสอบคุณภาพโค้ดในโปรเจกต์
 ---
 
-## 1. กำหนด Lint
+## Precondition
 
-1. เลือกคำสั่ง lint ตาม framework
+- มี bun ติดตั้งในระบบ
+- มีไฟล์ package.json ในโปรเจกต์
+- มี linter ที่กำหนดค่าไว้ (biome, eslint, หรือ oxlint)
 
-   - Nuxt: `nuxt typecheck && oxlint --fix --type-aware && biome lint --write`
-   - TypeScript: `tsc --noEmit && oxlint --fix --type-aware && biome lint --write`
-   - Vue: `biome lint --write && vue-tsc --noEmit`
-   - React: `biome lint --write && tsc --noEmit`
-   - Next: `biome lint --write && next lint`
+## Input
 
-## 2. รัน Lint
+| ตัวแปร | ประเภท | คำอธิบาย |
+|--------|--------|----------|
+| projectPath | string | absolute path ของโปรเจกต์ |
+| fix | boolean | แก้ไขปัญหาอัตโนมัติ (default: false) |
+| linter | string | เลือก linter: biome, eslint, oxlint (default: biome) |
 
-1. รัน lint ใน package manifest
+## 1. Prepare
 
-2. ถ้าเจอ error ให้เช็คไฟล์ที่ error ว่ายาวไหม ถ้ายาวให้ @[/refactor-long-files] ก่อน
+- ตรวจสอบว่า package.json มีอยู่ใน projectPath
+- ยืนยันว่า linter ที่เลือกมีอยู่ใน dependencies
 
-3. แก้ไข errors และ warnings จนหมด
+## 2. Execute
 
-   - แก้ไขได้ทันทีเมื่อเห็น error หรือ warning
-   - ถ้าเจอ error ที่ซับซ้อนหรือต้องการ refactor ให้ทำตาม @[/refactor]
-   - ถ้ายังแก้ไม่ได้หรือต้องการการปรับปรุงโครงสร้าง ให้รัน @[/refactor] ก่อน
+1. เปลี่ยน directory ไปยัง project
+   ```bash
+   cd [projectPath]
+   ```
+
+2. รัน linter ตามที่กำหนด
+
+   **กรณีใช้ Biome:**
+   ```bash
+   bun run lint
+   ```
+   หรือแก้ไขอัตโนมัติ:
+   ```bash
+   bun run lint:fix
+   ```
+
+   **กรณีใช้ ESLint:**
+   ```bash
+   bunx eslint .
+   ```
+   หรือแก้ไขอัตโนมัติ:
+   ```bash
+   bunx eslint . --fix
+   ```
+
+   **กรณีใช้ Oxlint:**
+   ```bash
+   bunx oxlint .
+   ```
+
+3. ตรวจสอบผลลัพธ์
+   ```bash
+   echo $?
+   ```
+
+## 3. Validate
+
+- [ ] Linter รันสำเร็จโดยไม่มี error
+- [ ] ไม่มีไฟล์ที่มีปัญหาหลังจาก fix (ถ้า fix = true)
+- [ ] สามารถรัน `bun run build` ได้สำเร็จต่อไป

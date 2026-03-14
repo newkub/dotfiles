@@ -22,11 +22,6 @@
         "command": "workbench.action.terminal.focusNext",
         "when": "terminalFocus"
     },
-    // Open new terminal
-    {
-        "key": "ctrl+shift+r",
-        "command": "workbench.action.terminal.new"
-    },
     // Open run task
     {
         "key": "ctrl+shift+t",
@@ -93,8 +88,12 @@
         "command": "windsurf.prioritized.chat.open"
     },
     {
-        "key": "ctrl+l",
-        "command": "-windsurf.prioritized.chat.open",
-        "when": "!terminalFocus && !windsurf.deepwikiPanel.focused"
-    }
+        "key": "ctrl+shift+s",
+        "command": "windsurf.cascade.toggleModelSelector",
+        "when": "windsurf.cascadePanel.focused"
+    },
+    {
+        "key": "ctrl+shift+r",
+        "command": "npm.focus"
+    },
 ]

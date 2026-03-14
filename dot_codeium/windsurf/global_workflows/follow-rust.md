@@ -1,512 +1,1312 @@
 ---
-description: ตั้งค่าและพัฒนา Rust packages ตาม strict best practices ด้วย monorepo structure
-title: agents-md
-auto_execution_mode: 3
+description: แนวทางการพัฒนา Rust projects ตาม Best Practices ครบถ้วนสำหรับ Production Grade
 ---
 
-## 1. Pre-Execution
+# Rust Project Development Workflow
 
-1. **Prepare**
-   - ตรวจสอบว่า Rust toolchain ติดตั้งและอัพเดทเป็นเวอร์ชันล่าสุด
-   - ยืนยันว่ามี cargo, rustfmt, clippy, nextest พร้อมใช้งาน
-   - เตรียม workspace configuration สำหรับ monorepo และ turborepo
-   - ตรวจสอบสิทธิ์การสร้างไฟล์ใน packages/ และ apps/ directories
+## 1. Project Structure Analysis
 
-2. **Analyze**
-   - ศึกษาสถานะปัจจุบันของ workspace และ packages ที่มีอยู่
-   - ระบุปัญหาหลักที่ต้องแก้ไขคือการจัดโครงสร้างโค้ดให้เป็นไปตาม best practices
-   - เข้าใจ constraints ของการแบ่งไฟล์ไม่เกิน 200 บรรทัดและ security requirements
-   - วิเคราะห์ dependencies ที่ใช้ร่วมกันระหว่าง packages
+```sh
+eza --tree --git-ignore
+eza --tree --git-ignore
+```
 
-3. **Planning**
-   - เรียงลำดับความสำคัญของการพัฒนา packages ตาม dependencies graph
-   - แบ่งงานออกเป็น 4 หมวดหลัก: Rules, Structure, Workflow, Quality Assurance
-   - ประเมินเวลาที่ต้องใช้สำหรับการ refactor และ setup monorepo structure
-   - วางแผนการทดสอบและ validation สำหรับแต่ละขั้นตอน
-
-
-
-## 2. Main Operations
-
-1. **Define Code Quality Standards**
-   - กำหนด Breakdown Strategy ให้แบ่งโค้ดเป็นไฟล์เล็กๆ ที่สุด (ไม่เกิน 200 บรรทัด)
-   - ตั้งค่า Type Safety requirements ให้ใช้ strong typing และ generics
-   - สร้าง Side Effect Reduction guidelines สำหรับ pure functions และ immutable state
-   - กำหนด Performance Optimization standards สำหรับ memory efficiency และ async patterns
-   - ตั้งค่า Developer Experience requirements สำหรับ documentation และ testing
-
-2. **Setup Security & Production Rules**
-   - ห้าม hardcode sensitive data หรือ configuration values ใน source code
-   - กำหนดว่าห้ามสร้าง mockup data สำหรับ production environments
-   - ตั้งค่า production ready requirements สำหรับ code quality และ error handling
-   - สร้าง security audit checklist สำหรับ dependencies และ vulnerabilities
-
-3. **Configure Monorepo Structure**
-   - สร้าง workspace configuration สำหรับ Rust monorepo และ turborepo
-   - ตั้งค่า `packages/monorepo/` structure พร้อม apps/ และ packages/ directories
-   - กำหนด directory layout สำหรับ tests/, benches/, scripts/, tools/, config/, crates/, examples/, docs/
-   - สร้าง summary table สำหรับแต่ละ folder พร้อมวัตถุประสงค์และ tools
-
-4. **Implement Development Workflow**
-   - กำหนด phases สำหรับ Development, Formatting, Testing, Benchmarks, Release
-   - สร้าง table แสดง commands, output และ duration สำหรับแต่ละ phase
-   - ตั้งค่า Quality Assurance schedule สำหรับ Unit Tests, Integration Tests, E2E Tests, Benchmarks
-   - กำหนด tools และ coverage requirements สำหรับแต่ละประเภทการทดสอบ
+## 2. Rust Monorepo with Turborepo Structure
 
 ```
-monorepo/
-├── .github/
-│   └── workflows/
-│       ├── ci.yml
-│       └── release.yml
-├── .cargo/
-│   └── config.toml
-├── apps/
-│   ├── cli/
+rust-monorepo/
+├── apps/                           # Applications
+│   ├── cli/                        # CLI application
+│   │   ├── Cargo.toml
 │   │   ├── src/
 │   │   │   ├── main.rs
-│   │   │   ├── lib/
+│   │   │   └── ...
+│   │   └── package.json            # Turborepo config
+│   └── tui/                        # TUI application
+│       ├── Cargo.toml
+│       ├── src/
+│       │   ├── main.rs
+│       │   └── ...
+│       └── package.json
+├── packages/                       # Shared libraries
+│   ├── core/                       # Core business logic
+│   │   ├── Cargo.toml
+│   │   ├── src/
+│   │   │   ├── lib.rs
+│   │   │   ├── domain/
+│   │   │   │   ├── mod.rs
+│   │   │   │   ├── entities/
+│   │   │   │   │   ├── mod.rs
+│   │   │   │   │   ├── user.rs
+│   │   │   │   │   └── agent.rs
+│   │   │   │   ├── value_objects/
+│   │   │   │   │   ├── mod.rs
+│   │   │   │   │   ├── email.rs
+│   │   │   │   │   └── id.rs
+│   │   │   │   ├── repositories/
+│   │   │   │   │   ├── mod.rs
+│   │   │   │   │   └── user_repository.rs
+│   │   │   │   └── errors/
+│   │   │   │       ├── mod.rs
+│   │   │   │       └── domain_error.rs
+│   │   │   ├── application/
 │   │   │   │   ├── mod.rs
 │   │   │   │   ├── commands/
-│   │   │   │   │   ├── mod.rs
-│   │   │   │   │   ├── build.rs
-│   │   │   │   │   ├── test.rs
-│   │   │   │   │   └── deploy.rs
+│   │   │   │   ├── queries/
 │   │   │   │   ├── services/
-│   │   │   │   │   ├── mod.rs
-│   │   │   │   │   ├── config.rs
-│   │   │   │   │   ├── logger.rs
-│   │   │   │   │   └── workspace.rs
-│   │   │   │   └── utils/
-│   │   │   │       ├── mod.rs
-│   │   │   │       ├── output.rs
-│   │   │   │       └── validation.rs
-│   │   │   └── tests/
-│   │   │       ├── integration/
-│   │   │       └── unit/
+│   │   │   │   └── dto/
+│   │   │   └── shared/
+│   │   │       ├── functional/
+│   │   │       │   ├── mod.rs
+│   │   │       │   ├── core.rs
+│   │   │       │   ├── effects.rs
+│   │   │       │   ├── state.rs
+│   │   │       │   ├── validation.rs
+│   │   │       │   ├── pipeline.rs
+│   │   │       │   ├── either.rs
+│   │   │       │   └── io.rs
+│   │   │       ├── utils/
+│   │   │       └── types/
+│   │   └── package.json
+│   ├── infrastructure/             # Infrastructure layer
+│   │   ├── database/               # Database implementations
+│   │   │   ├── Cargo.toml
+│   │   │   ├── src/
+│   │   │   │   ├── lib.rs
+│   │   │   │   ├── postgres.rs
+│   │   │   │   ├── sqlite.rs
+│   │   │   │   └── migrations/
+│   │   │   └── package.json
+│   │   ├── http/                   # HTTP clients
+│   │   │   ├── Cargo.toml
+│   │   │   ├── src/
+│   │   │   │   ├── lib.rs
+│   │   │   │   ├── client.rs
+│   │   │   │   └── middleware.rs
+│   │   │   └── package.json
+│   │   ├── config/                 # Configuration
+│   │   │   ├── Cargo.toml
+│   │   │   ├── src/
+│   │   │   │   ├── lib.rs
+│   │   │   │   └── app_config.rs
+│   │   │   └── package.json
+│   │   └── external_services/      # External API integrations
+│   │       ├── Cargo.toml
+│   │       ├── src/
+│   │       │   ├── lib.rs
+│   │       │   └── payment_service.rs
+│   │       └── package.json
+│   ├── presentation/              # Presentation layer
+│   │   ├── tui/                    # TUI components
+│   │   │   ├── Cargo.toml
+│   │   │   ├── src/
+│   │   │   │   ├── lib.rs
+│   │   │   │   ├── components/
+│   │   │   │   │   ├── functional_list.rs
+│   │   │   │   │   └── ...
+│   │   │   │   └── events.rs
+│   │   │   └── package.json
+│   │   └── cli/                    # CLI components
+│   │       ├── Cargo.toml
+│   │       ├── src/
+│   │       │   ├── lib.rs
+│   │       │   └── commands.rs
+│   │       └── package.json
+│   └── shared/                    # Shared utilities
+│       ├── logging/                # Logging utilities
+│       │   ├── Cargo.toml
+│       │   ├── src/
+│       │   │   ├── lib.rs
+│       │   │   └── logger.rs
+│       │   └── package.json
+│       ├── metrics/                # Metrics collection
+│       │   ├── Cargo.toml
+│       │   ├── src/
+│       │   │   ├── lib.rs
+│       │   │   └── collector.rs
+│       │   └── package.json
+│       └── testing/                # Testing utilities
+│           ├── Cargo.toml
+│           ├── src/
+│           │   ├── lib.rs
+│           │   └── mocks.rs
+│           └── package.json
+├── tools/                          # Development tools
+│   ├── codegen/                    # Code generation
 │   │   ├── Cargo.toml
-│   │   └── README.md
-│   └── web/
-│       ├── app/                    # Nuxt 4 app directory
-│       │   ├── components/         # Vue components
-│       │   │   ├── ui/
-│       │   │   │   ├── Button.vue
-│       │   │   │   ├── Modal.vue
-│       │   │   │   └── Form.vue
-│       │   │   ├── layout/
-│       │   │   │   ├── AppHeader.vue
-│       │   │   │   ├── AppFooter.vue
-│       │   │   │   └── Sidebar.vue
-│       │   │   └── features/
-│       │   │       ├── auth/
-│       │   │       └── dashboard/
-│       │   ├── composables/        # Vue composables
-│       │   │   ├── useAuth.ts
-│       │   │   ├── useApi.ts
-│       │   │   └── index.ts
-│       │   ├── layouts/            # Layout templates
-│       │   │   ├── default.vue
-│       │   │   ├── auth.vue
-│       │   │   └── dashboard.vue
-│       │   ├── middleware/         # Route middleware
-│       │   │   ├── auth.ts
-│       │   │   └── admin.ts
-│       │   ├── pages/              # File-based routing
-│       │   │   ├── index.vue
-│       │   │   ├── login.vue
-│       │   │   ├── dashboard.vue
-│       │   │   └── users/
-│       │   │       ├── index.vue
-│       │   │       └── [id].vue
-│       │   ├── plugins/            # Vue plugins
-│       │   │   ├── api.client.ts
-│       │   │   └── database.server.ts
-│       │   ├── utils/              # Utility functions
-│       │   │   ├── api.ts
-│       │   │   ├── validation.ts
-│       │   │   └── formatting.ts
-│       │   ├── assets/             # Build assets
-│       │   │   ├── css/
-│       │   │   │   └── main.css
-│       │   │   └── images/
-│       │   ├── app.vue             # Main app component
-│       │   └── error.vue           # Error page
-│       ├── server/                 # Nitro server
-│       │   ├── api/
-│       │   │   ├── auth/
-│       │   │   │   ├── login.post.ts
-│       │   │   │   └── logout.post.ts
-│       │   │   ├── users/
-│       │   │   │   ├── index.get.ts
-│       │   │   │   └── [id].get.ts
-│       │   │   └── health.get.ts
-│       │   ├── routes/
-│       │   └── plugins/
-│       │       └── database.ts
-│       ├── shared/                 # Shared code (Nuxt 4)
-│       │   ├── types/
-│       │   │   ├── api.ts
-│       │   │   ├── auth.ts
-│       │   │   └── user.ts
-│       │   └── utils/
-│       │       └── index.ts
-│       ├── content/                # Content module
-│       ├── public/                 # Static assets
-│       │   ├── favicon.ico
-│       │   └── images/
-│       ├── nuxt.config.ts          # Nuxt config
-│       ├── package.json
-│       ├── tsconfig.json
-│       ├── .env.example
-│       ├── .nuxtignore
-│       ├── README.md
-│       └── .gitignore
-├── packages/
-│   ├── core/
-│   │   ├── .github/
-│   │   │   └── workflows/
-│   │   │       ├── ci.yml
-│   │   │       └── release.yml
 │   │   ├── src/
-│   │   │   ├── lib.rs                    # re-export only if needed
-│   │   │   ├── mod.rs                    # module declarations
-│   │   │   ├── prelude.rs                # common imports
-│   │   │   ├── types.rs                  # shared type aliases
-│   │   │   ├── macros/
-│   │   │   │   ├── mod.rs                # re-export macros
-│   │   │   │   └── derive.rs             # derive macro implementations
-│   │   │   ├── services/
-│   │   │   │   ├── mod.rs                # re-export public services
-│   │   │   │   ├── registry.rs           # service registration
-│   │   │   │   └── discovery.rs          # service discovery logic
-│   │   │   ├── utils/
-│   │   │   │   ├── mod.rs                # re-export public utilities
-│   │   │   │   ├── helpers.rs            # general helper functions
-│   │   │   │   └── validation.rs         # input validation utilities
-│   │   │   ├── error/
-│   │   │   │   ├── mod.rs                # re-export error types
-│   │   │   │   ├── core.rs               # CoreError, ErrorKind
-│   │   │   │   ├── result.rs             # Result<T, E> type aliases
-│   │   │   │   └── context.rs            # ErrorContext for rich errors
-│   │   │   ├── config/
-│   │   │   │   ├── mod.rs                # re-export config types
-│   │   │   │   └── settings.rs           # Config struct, Default impl
-│   │   │   ├── constant/
-│   │   │   │   ├── mod.rs                # re-export constants
-│   │   │   │   ├── defaults.rs           # default const values
-│   │   │   │   └── limits.rs             # MAX_SIZE, TIMEOUT_MS, etc.
-│   │   │   ├── data/
-│   │   │   │   ├── mod.rs                # re-export data types
-│   │   │   │   ├── model.rs              # domain models, Serialize/Deserialize
-│   │   │   │   └── repository.rs         # data access patterns
-│   │   │   ├── adapter/
-│   │   │   │   ├── mod.rs                # re-export adapters
-│   │   │   │   ├── external.rs           # external service clients
-│   │   │   │   └── internal.rs           # internal service clients
-│   │   │   └── traits/
-│   │   │       ├── mod.rs                # re-export traits
-│   │   │       ├── base.rs               # core trait definitions
-│   │   │       └── extension.rs          # trait implementations
-│   └── utils/
-│       └── ... (โครงสร้างเดียวกับ core/)
-├── tests/
-│   ├── unit/
-│   │   ├── processor_test.rs
-│   │   └── handlers_test.rs
-│   ├── integration/
-│   │   ├── full_workflow_test.rs
-│   │   └── api_test.rs
-│   ├── e2e/
-│   │   ├── full_system_test.rs
-│   │   └── user_scenario_test.rs
-│   ├── property/
-│   │   ├── property_test.rs
-│   │   └── invariant_test.rs
-│   ├── stress/
-│   │   ├── load_test.rs
-│   │   └── memory_stress_test.rs
-│   ├── fixtures/
-│   │   ├── test_data.rs
-│   │   └── mock_data.rs
-│   └── common/
-│       ├── mod.rs
-│       ├── test_utils.rs
-│       └── helpers.rs
-├── benches/
-│   ├── performance/
-│   │   ├── processor_bench.rs
-│   │   └── load_test.rs
-│   ├── memory/
-│   │   ├── memory_usage_bench.rs
-│   │   └── allocation_bench.rs
-│   ├── io/
-│   │   ├── file_io_bench.rs
-│   │   └── network_io_bench.rs
-│   ├── regression/
-│   │   ├── performance_regression.rs
-│   │   └── memory_regression.rs
-│   └── comparison/
-│       └── algorithm_comparison.rs
-├── scripts/
-│   ├── build.sh
-│   ├── test.sh
-│   ├── format.sh
-│   ├── lint.sh
-│   └── release.sh
-├── tools/
-│   ├── codegen/
-│   │   └── generate_types.rs
-│   ├── migration/
-│   │   └── migrate.rs
-│   └── benchmark/
-│       └── custom_bench.rs
-├── crates/
-│   ├── internal/
-│   │   ├── utils/
-│   │   └── macros/
-│   └── external/
-│       ├── integrations/
-│       └── adapters/
-├── examples/
-│   ├── basic/
-│   │   ├── simple_usage.rs
-│   │   └── getting_started.rs
-│   ├── advanced/
-│   │   ├── complex_usage.rs
-│   │   └── custom_config.rs
+│   │   │   └── main.rs
+│   │   └── package.json
+│   ├── migration/                  # Database migration tool
+│   │   ├── Cargo.toml
+│   │   ├── src/
+│   │   │   └── main.rs
+│   │   └── package.json
+│   └── bench/                      # Benchmarking tool
+│       ├── Cargo.toml
+│       ├── src/
+│       │   └── main.rs
+│       └── package.json
+├── docs/                           # Documentation
+│   ├── architecture/
+│   ├── api/
+│   ├── examples/
 │   └── README.md
-└── docs/
-    ├── architecture/
-    │   ├── design.md
-    │   └── decisions.md
-    ├── api/
-    │   ├── reference.md
-    │   └── examples.md
-    └── guides/
-        ├── quick_start.md
-        └── advanced_usage.md
-├── Cargo.toml
-├── package.json
+├── tests/                          # Integration tests
+│   ├── integration/
+│   ├── e2e/
+│   └── fixtures/
+├── benches/                        # Benchmark suite
+│   ├── Cargo.toml
+│   └── benches/
+├── .github/                        # GitHub workflows
+│   └── workflows/
+│       ├── ci.yml
+│       ├── release.yml
+│       └── security.yml
+├── Cargo.toml                      # Workspace configuration
+├── Cargo.lock                      # Lock file
+├── package.json                    # Turborepo configuration
+├── turbo.json                      # Turborepo configuration
+├── rust-toolchain.toml             # Rust version specification
+├── justfile                        # Task runner
+├── .gitignore
 ├── README.md
 ├── CHANGELOG.md
-├── LICENSE
-└── .gitignore
+└── LICENSE
 ```
 
-### Request Flow Example (Nuxt 4)
+## 3. Layer Architecture Explained
 
+### Domain Layer (Pure Rust)
+- **entities/** - Core business objects with behavior
+- **value_objects/** - Immutable value objects (Email, Id, Money)
+- **repositories/** - Abstract repository traits
+- **services/** - Domain business logic
+- **errors/** - Domain-specific error types
+
+### Application Layer
+- **commands/** - Command pattern for write operations
+- **queries/** - Query pattern for read operations (CQRS)
+- **services/** - Application orchestration
+- **dto/** - Data transfer objects for external communication
+
+### Infrastructure Layer
+- **database/** - Database connections and migrations
+- **repositories/** - Concrete repository implementations
+- **http/** - HTTP clients and external API calls
+- **config/** - Configuration management
+- **external_services/** - Third-party service integrations
+
+### Presentation Layer
+- **cli/** - Command-line interface
+- **tui/** - Terminal user interface (ratatui)
+- **grpc/** - gRPC service implementations
+
+## 4. Rust Development Principles
+
+### 4.1 Core Principles
+1. **Ownership & Borrowing** - Leverage Rust's ownership system
+2. **Zero-cost Abstractions** - Use generics and traits efficiently
+3. **Memory Safety** - No garbage collector, compile-time guarantees
+4. **Concurrency** - Fearless concurrency with async/await
+5. **Error Handling** - Explicit error handling with Result<T, E>
+
+### 4.2 Functional Programming
+```rust
+// Pure functions
+fn calculate_total(items: &[Item]) -> Money {
+    items.iter()
+        .map(|item| item.price())
+        .fold(Money::zero(), |acc, price| acc + price)
+}
+
+// Immutable data structures
+#[derive(Debug, Clone)]
+struct User {
+    id: UserId,
+    email: Email,
+    created_at: DateTime<Utc>,
+}
+
+// Composition over inheritance
+trait Repository<T> {
+    async fn find_by_id(&self, id: &T::Id) -> Result<Option<T>, RepoError>;
+    async fn save(&self, entity: &T) -> Result<(), RepoError>;
+}
 ```
-GET /api/users/123
-    ↓
-[Server Route] server/api/users/[id].get.ts → Extract user_id from params
-    ↓
-[Composable] useApi() → Make API call to backend
-    ↓
-[Middleware] auth.ts → Check authentication with useAuth()
-    ↓
-[Store] userStore → Update user state in Pinia store
-    ↓
-[Component] pages/users/[id].vue → Display user data
-    ↓
-Response Flow:
-API Route → Composable → Store → Component → Vue Template → HTML Response
+
+### 4.3 Type Safety
+```rust
+// Strongly typed IDs
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct UserId(Uuid);
+
+impl UserId {
+    pub fn new() -> Self {
+        Self(Uuid::new_v4())
+    }
+}
+
+// Value objects with validation
+#[derive(Debug, Clone, PartialEq)]
+pub struct Email(String);
+
+impl Email {
+    pub fn new(email: &str) -> Result<Self, EmailError> {
+        if !email.contains('@') {
+            return Err(EmailError::InvalidFormat);
+        }
+        Ok(Self(email.to_string()))
+    }
+}
+
+// Domain-specific errors
+#[derive(Debug, thiserror::Error)]
+pub enum DomainError {
+    #[error("User not found: {0}")]
+    UserNotFound(UserId),
+    #[error("Invalid email format")]
+    InvalidEmail,
+    #[error("Permission denied")]
+    PermissionDenied,
+}
 ```
 
-### Nuxt 4 Auto-imports
+## 5. Rust Monorepo Configuration
 
-- **Components**: `components/` directory auto-imports all Vue components
-- **Composables**: `composables/` directory auto-imports all composables
-- **Utils**: `utils/` directory auto-imports all utility functions
-- **Stores**: `stores/` directory auto-imports all Pinia stores
-- **Types**: `types/` directory provides type definitions
+### 5.1 Workspace Cargo.toml (Root)
 
-### File-based Routing
+```toml
+[workspace]
+members = [
+    # Applications
+    "apps/cli",
+    "apps/tui",
+    
+    # Core packages
+    "packages/core",
+    "packages/infrastructure/*",
+    "packages/presentation/*",
+    "packages/shared/*",
+    
+    # Tools
+    "tools/*",
+    
+    # Development
+    "benches",
+    "tests/*",
+]
 
-- `pages/index.vue` → `/` (Home page)
-- `pages/login.vue` → `/login` (Login page)
-- `pages/users/index.vue` → `/users` (Users list)
-- `pages/users/[id].vue` → `/users/:id` (Dynamic user page)
+resolver = "2"
 
-### Server-side API Routes
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Wrikka <dev@wrikka.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/wrikka/rust-monorepo"
+homepage = "https://github.com/wrikka/rust-monorepo"
+rust-version = "1.75.0"
 
-- `server/api/users/[id].get.ts` → GET /api/users/:id
-- `server/api/auth/login.post.ts` → POST /api/auth/login
-- `server/health.get.ts` → GET /health
+[workspace.dependencies]
+# Core dependencies
+tokio = { version = "1.50", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+uuid = { version = "1.22", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
 
-## Core Applications
+# Functional programming
+fp-core = "0.1.9"
+itertools = "0.14"
+tool = "0.1"
+rayon = "1.11"
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `apps/` | Applications | CLI และ Web apps พร้อมโครงสร้างที่เป็นระเบียบ | Cargo, npm | package-core | cli, web, full | ✅ E2E + Integration | OOP, Functional | ✅ GitHub Actions |
-| `apps/cli/` | CLI Application | Command-line interface พร้อม modules แยกตามฟังก์ชัน | Cargo | package-core | cli, full | ✅ E2E + Integration | Functional | ✅ GitHub Actions |
-| `apps/cli/src/lib/` | CLI Library | Core functionality แบ่งเป็น commands, services, utils | Rust | package-core | lib, full | ✅ Unit + Integration | Functional | ✅ GitHub Actions |
-| `apps/cli/src/lib/commands/` | CLI Commands | Command implementations (build, test, deploy) | Rust | package-core | commands | ✅ Unit tests | Functional | ✅ GitHub Actions |
-| `apps/cli/src/lib/services/` | CLI Services | Service layer (config, logger, workspace) | Rust | package-core | services | ✅ Unit tests | Functional | ✅ GitHub Actions |
-| `apps/cli/src/lib/utils/` | CLI Utils | Utility functions (output, validation) | Rust | package-core | utils | ✅ Unit tests | Functional | ✅ GitHub Actions |
-| `apps/web/` | Web Application | Nuxt 4 full-stack application พร้อม Vue 3 และ TypeScript | Node.js, npm, pnpm | Nuxt 4, Vue 3, TypeScript | web, full | ✅ E2E + Integration | Vue 3, Composition API | ✅ GitHub Actions |
-| `apps/web/components/` | Vue Components | Auto-imported Vue components แบ่งตามฟังก์ชัน (ui, layout, features) | Vue 3, TypeScript | Nuxt 4 | components | ✅ Unit + Component tests | Vue 3, Composition API | ✅ GitHub Actions |
-| `apps/web/composables/` | Vue Composables | Auto-imported composables สำหรับ shared logic (auth, api, database) | Vue 3, TypeScript | Nuxt 4 | composables | ✅ Unit tests | Vue 3, Composition API | ✅ GitHub Actions |
-| `apps/web/pages/` | File-based Routing | Pages ที่สร้าง routes อัตโนมัติ (index, login, dashboard, users) | Vue 3, TypeScript | Nuxt 4 | pages | ✅ E2E + Integration | Vue 3, File-based routing | ✅ GitHub Actions |
-| `apps/web/layouts/` | Layout Templates | Layout templates สำหรับ page structure (default, auth, dashboard) | Vue 3, TypeScript | Nuxt 4 | layouts | ✅ Unit tests | Vue 3, Layout system | ✅ GitHub Actions |
-| `apps/web/middleware/` | Route Middleware | Route middleware สำหรับ auth, admin checks | Vue 3, TypeScript | Nuxt 4 | middleware | ✅ Unit tests | Vue 3, Middleware pattern | ✅ GitHub Actions |
-| `apps/web/server/` | Server-side Code | Nitro server code สำหรับ API routes และ server plugins | Node.js, TypeScript | Nuxt 4, Nitro | server | ✅ Unit + Integration tests | Server-side, API routes | ✅ GitHub Actions |
-| `apps/web/stores/` | State Management | Pinia stores สำหรับ global state management | Vue 3, TypeScript | Nuxt 4, Pinia | stores | ✅ Unit tests | Vue 3, Pinia pattern | ✅ GitHub Actions |
-| `apps/web/types/` | TypeScript Types | Type definitions สำหรับ API, auth, user data | TypeScript | Nuxt 4 | types | ✅ Type checking | TypeScript, Type safety | ✅ GitHub Actions |
-| `apps/web/utils/` | Utility Functions | Auto-imported utilities สำหรับ API, validation, formatting | TypeScript | Nuxt 4 | utils | ✅ Unit tests | TypeScript, Pure functions | ✅ GitHub Actions |
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono"] }
 
-## Core Libraries
+# HTTP
+reqwest = { version = "0.13", features = ["json", "rustls-tls"] }
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `packages/` | Core Libraries | core, package-utils พร้อมโครงสร้างที่เป็นระเบียบ | Cargo | tokio, serde | std, async, full | ✅ Unit + Integration | Functional, OOP | ✅ Automated testing |
-| `packages/core/` | Core Package | Core functionality และ abstractions พร้อม modules แยกตามฟังก์ชัน | Cargo | None | std, full | ✅ Unit + Integration | Functional | ✅ Automated testing |
-| `packages/core/src/services/` | Core Services | Service layer (registry, discovery) | Rust | None | services | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/core/src/utils/` | Core Utils | Utility functions (helpers, validation) | Rust | None | utils | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/utils/` | Utils Package | Utility functions และ helpers พร้อม modules แยกตามประเภท | Cargo | core | utils, full | ✅ Unit + Integration | Functional | ✅ Automated testing |
-| `packages/utils/src/lib/` | Utils Library | Core utilities แบ่งตามประเภท (crypto, io, collections, time) | Rust | core | lib, full | ✅ Unit + Integration | Functional | ✅ Automated testing |
-| `packages/utils/src/lib/crypto/` | Crypto Utils | Cryptographic utilities (hash, encryption) | Rust | core | crypto | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/utils/src/lib/io/` | IO Utils | I/O utilities (file, stream) | Rust | core | io | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/utils/src/lib/collections/` | Collection Utils | Collection utilities (map, vector) | Rust | core | collections | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/utils/src/lib/time/` | Time Utils | Time utilities (duration, timestamp) | Rust | core | time | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/utils/src/services/` | Utils Services | Service utilities (cache, pool, queue) | Rust | core | services | ✅ Unit tests | Functional | ✅ Automated testing |
-| `packages/utils/src/macros/` | Utils Macros | Procedural macros (derive, helpers) | Rust | core | macros | ✅ Unit tests | Functional | ✅ Automated testing |
+# TUI
+ratatui = "0.31"
+crossterm = "0.30"
 
-## Testing Infrastructure
+# CLI
+clap = { version = "4.6", features = ["derive", "env"] }
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `tests/` | Testing | Unit, Integration, E2E, Property, Stress | Cargo test, proptest | All packages | test-all, stress | ✅ All test types | Functional | ✅ Test reporting |
-| `tests/unit/` | Unit Tests | Unit testing สำหรับ individual components | Cargo test | All packages | unit | ✅ Unit tests | Functional | ✅ Test reporting |
-| `tests/integration/` | Integration Tests | Integration testing สำหรับ component interactions | Cargo test | All packages | integration | ✅ Integration tests | Functional | ✅ Test reporting |
-| `tests/e2e/` | E2E Tests | End-to-end testing สำหรับ full workflows | Cargo test | All packages | e2e | ✅ E2E tests | Functional | ✅ Test reporting |
-| `tests/property/` | Property Tests | Property-based testing สำหรับ invariants | Cargo test, proptest | All packages | property | ✅ Property tests | Functional | ✅ Test reporting |
-| `tests/stress/` | Stress Tests | Stress testing สำหรับ performance limits | Cargo test | All packages | stress | ✅ Stress tests | Functional | ✅ Test reporting |
-| `tests/fixtures/` | Test Fixtures | Test data และ mock objects | Cargo | All packages | fixtures | ✅ Fixture validation | Functional | ✅ Test reporting |
-| `tests/common/` | Common Test Utils | Shared testing utilities | Cargo | All packages | test-utils | ✅ Utility tests | Functional | ✅ Test reporting |
+# Testing
+mockall = "0.14"
+proptest = "1.6"
+criterion = { version = "0.8", features = ["html_reports"] }
 
-## Performance & Benchmarking
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+opt-level = "z"
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `benches/` | Benchmarking | Performance, Memory, I/O, Regression | Criterion | All packages | bench-all, perf | ✅ Benchmark suites | Functional | ✅ Regression detection |
-| `benches/performance/` | Performance | Core performance benchmarks | Criterion | All packages | performance | ✅ Performance tests | Functional | ✅ Regression detection |
-| `benches/memory/` | Memory | Memory usage และ allocation benchmarks | Criterion | All packages | memory | ✅ Memory tests | Functional | ✅ Regression detection |
-| `benches/io/` | I/O | File I/O และ network I/O benchmarks | Criterion | All packages | io | ✅ I/O tests | Functional | ✅ Regression detection |
-| `benches/regression/` | Regression | Performance regression detection | Criterion | All packages | regression | ✅ Regression tests | Functional | ✅ Regression detection |
-| `benches/comparison/` | Comparison | Algorithm comparison benchmarks | Criterion | All packages | comparison | ✅ Comparison tests | Functional | ✅ Regression detection |
+[profile.dev]
+debug = true
+overflow-checks = true
 
-## Documentation & Examples
+[profile.bench]
+debug = true
+```
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `examples/` | Examples | Basic และ Advanced usage | Cargo run | All packages | examples, demo | ✅ Example tests | Mixed | ✅ Doc testing |
-| `examples/basic/` | Basic Examples | Simple usage examples | Cargo run | All packages | basic | ✅ Basic tests | Mixed | ✅ Doc testing |
-| `examples/advanced/` | Advanced Examples | Complex usage examples | Cargo run | All packages | advanced | ✅ Advanced tests | Mixed | ✅ Doc testing |
-| `docs/` | Documentation | Architecture, API, Guides | Markdown, mdBook | None | docs, guides | ✅ Doc testing | N/A | ✅ Docs deployment |
-| `docs/architecture/` | Architecture | System architecture documentation | Markdown | None | architecture | ✅ Doc validation | N/A | ✅ Docs deployment |
-| `docs/api/` | API Documentation | API reference และ examples | Markdown | None | api | ✅ Doc validation | N/A | ✅ Docs deployment |
-| `docs/guides/` | Guides | User guides และ tutorials | Markdown | None | guides | ✅ Doc validation | N/A | ✅ Docs deployment |
+### 5.2 Turborepo Configuration
 
-## Development & Automation
+```json
+// package.json (Root)
+{
+  "name": "rust-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "dev": "turbo run dev",
+    "clean": "turbo run clean && cargo clean",
+    "bench": "turbo run bench",
+    "check": "turbo run check",
+    "docs": "turbo run docs",
+    "migration": "cargo run --bin migration",
+    "codegen": "cargo run --bin codegen"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@8.0.0"
+}
+```
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `scripts/` | Automation | Build, Test, Format, Lint, Release | Bash, PowerShell | System tools | automation | ✅ Script tests | Procedural | ✅ Pipeline integration |
-| `tools/` | Development Tools | Codegen, Migration, Custom Bench | Rust, Python | All packages | tools, dev | ✅ Tool tests | Mixed | ✅ Tool CI |
-| `tools/codegen/` | Code Generation | Source code generation tools | Rust | All packages | codegen | ✅ Codegen tests | Mixed | ✅ Tool CI |
-| `tools/migration/` | Migration | Data migration tools | Rust | All packages | migration | ✅ Migration tests | Mixed | ✅ Tool CI |
-| `tools/benchmark/` | Benchmark Tools | Custom benchmarking tools | Rust | All packages | benchmark | ✅ Benchmark tests | Mixed | ✅ Tool CI |
+```json
+// turbo.json
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["target/**", "dist/**"]
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "test:unit": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "test:integration": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "format": {
+      "outputs": []
+    },
+    "format:check": {
+      "outputs": []
+    },
+    "clippy": {
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "doc": {
+      "dependsOn": ["build"],
+      "outputs": ["target/doc/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "bench": {
+      "dependsOn": ["build"],
+      "outputs": ["target/criterion/**"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "check": {
+      "dependsOn": ["^check"],
+      "outputs": []
+    },
+    "docs": {
+      "outputs": ["docs/**"]
+    },
+    "migration": {
+      "cache": false,
+      "outputs": []
+    },
+    "codegen": {
+      "cache": false,
+      "outputs": []
+    }
+  },
+  "globalEnv": [
+    "RUST_LOG",
+    "DATABASE_URL",
+    "NODE_ENV"
+  ]
+}
+```
 
-## Configuration & Internal
+### 5.3 Application Package.json Examples
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `config/` | Configuration | CI/CD, Docker, Development | YAML, TOML, Docker | System | config, env | ✅ Config validation | Declarative | ✅ Environment setup |
-| `config/ci/` | CI Configuration | Continuous integration configuration | YAML | System | ci | ✅ CI validation | Declarative | ✅ Environment setup |
-| `config/docker/` | Docker Configuration | Docker container configuration | Docker, YAML | System | docker | ✅ Docker validation | Declarative | ✅ Environment setup |
-| `config/development/` | Development Config | Development environment configuration | TOML | System | development | ✅ Dev config validation | Declarative | ✅ Environment setup |
-| `crates/` | Internal Crates | Utils, Macros, Integrations | Cargo | Core packages | internal, macros | ✅ Crate tests | Functional, OOP | ✅ Crate publishing |
-| `crates/internal/` | Internal Crates | Internal utilities และ macros | Cargo | Core packages | internal | ✅ Internal tests | Functional, OOP | ✅ Crate publishing |
-| `crates/external/` | External Crates | External integrations และ adapters | Cargo | Core packages | external | ✅ External tests | Functional, OOP | ✅ Crate publishing |
+```json
+// apps/cli/package.json
+{
+  "name": "@wrikka/cli",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "cargo build --release",
+    "dev": "cargo run",
+    "test": "cargo test",
+    "test:unit": "cargo test --lib",
+    "test:integration": "cargo test --test integration",
+    "lint": "cargo clippy -- -D warnings",
+    "format": "cargo fmt",
+    "format:check": "cargo fmt -- --check",
+    "clippy": "cargo clippy -- -D warnings",
+    "doc": "cargo doc --no-deps",
+    "clean": "cargo clean",
+    "check": "cargo check"
+  },
+  "dependencies": {
+    "@wrikka/core": "workspace:*",
+    "@wrikka/infrastructure-config": "workspace:*",
+    "@wrikka/presentation-cli": "workspace:*",
+    "@wrikka/shared-logging": "workspace:*"
+  }
+}
+```
 
-## 3. Validation
-| `benches/` | Benchmarking | Performance, Memory, I/O, Regression | Criterion | All packages | bench-all, perf | ✅ Benchmark suites | Functional | ✅ Regression detection |
+```json
+// apps/web/package.json
+{
+  "name": "@wrikka/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "cargo build --release",
+    "dev": "cargo run",
+    "test": "cargo test",
+    "test:unit": "cargo test --lib",
+    "test:integration": "cargo test --test integration",
+    "lint": "cargo clippy -- -D warnings",
+    "format": "cargo fmt",
+    "format:check": "cargo fmt -- --check",
+    "clippy": "cargo clippy -- -D warnings",
+    "doc": "cargo doc --no-deps",
+    "clean": "cargo clean",
+    "check": "cargo check"
+  },
+  "dependencies": {
+    "@wrikka/core": "workspace:*",
+    "@wrikka/infrastructure-database": "workspace:*",
+    "@wrikka/infrastructure-http": "workspace:*",
+    "@wrikka/presentation-web": "workspace:*",
+    "@wrikka/shared-logging": "workspace:*",
+    "@wrikka/shared-metrics": "workspace:*"
+  }
+}
+```
 
-## Documentation & Examples
+```json
+// apps/tui/package.json
+{
+  "name": "@wrikka/tui",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "cargo build --release",
+    "dev": "cargo run",
+    "test": "cargo test",
+    "test:unit": "cargo test --lib",
+    "test:integration": "cargo test --test integration",
+    "lint": "cargo clippy -- -D warnings",
+    "format": "cargo fmt",
+    "format:check": "cargo fmt -- --check",
+    "clippy": "cargo clippy -- -D warnings",
+    "doc": "cargo doc --no-deps",
+    "clean": "cargo clean",
+    "check": "cargo check"
+  },
+  "dependencies": {
+    "@wrikka/core": "workspace:*",
+    "@wrikka/infrastructure-config": "workspace:*",
+    "@wrikka/presentation-tui": "workspace:*",
+    "@wrikka/shared-logging": "workspace:*"
+  }
+}
+```
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `examples/` | Examples | Basic และ Advanced usage | Cargo run | All packages | examples, demo | ✅ Example tests | Mixed | ✅ Doc testing |
-| `docs/` | Documentation | Architecture, API, Guides | Markdown, mdBook | None | docs, guides | ✅ Doc testing | N/A | ✅ Docs deployment |
+### 5.4 Package Configuration Examples
 
-## Development & Automation
+```json
+// packages/core/package.json
+{
+  "name": "@wrikka/core",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "cargo build --release",
+    "test": "cargo test",
+    "test:unit": "cargo test --lib",
+    "lint": "cargo clippy -- -D warnings",
+    "format": "cargo fmt",
+    "format:check": "cargo fmt -- --check",
+    "clippy": "cargo clippy -- -D warnings",
+    "doc": "cargo doc --no-deps",
+    "clean": "cargo clean",
+    "check": "cargo check",
+    "publish": "cargo publish --dry-run"
+  },
+  "dependencies": {
+    "fp-core": "0.1.9",
+    "itertools": "0.14",
+    "tool": "0.1",
+    "rayon": "1.10"
+  }
+}
+```
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `scripts/` | Automation | Build, Test, Format, Lint, Release | Bash, PowerShell | System tools | automation | ✅ Script tests | Procedural | ✅ Pipeline integration |
-| `tools/` | Development Tools | Codegen, Migration, Custom Bench | Rust, Python | All packages | tools, dev | ✅ Tool tests | Mixed | ✅ Tool CI |
+### 5.5 Individual Package Cargo.toml Examples
 
-## Configuration & Internal
+```toml
+# packages/core/Cargo.toml
+[package]
+name = "wrikka-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+rust-version.workspace = true
 
-| Folder | วัตถุประสงค์ | คำอธิบาย | Tools | Dependencies | Feature Flags | Testing | Programming Styles | CI/CD |
-|--------|-------------|------------|-------|-------------|--------------|---------|-------------------|-------|
-| `config/` | Configuration | CI/CD, Docker, Development | YAML, TOML, Docker | System | config, env | ✅ Config validation | Declarative | ✅ Environment setup |
-| `crates/` | Internal Crates | Utils, Macros, Integrations | Cargo | Core packages | internal, macros | ✅ Crate tests | Functional, OOP | ✅ Crate publishing |
+[dependencies]
+# Workspace dependencies
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
 
+# Functional programming
+fp-core = { workspace = true }
+itertools = { workspace = true }
+tool = { workspace = true }
+rayon = { workspace = true }
 
+[dev-dependencies]
+mockall = { workspace = true }
+proptest = { workspace = true }
+tokio-test = { workspace = true }
 
-## 3. Validation
+[lib]
+name = "wrikka_core"
+path = "src/lib.rs"
 
-1. **Validate Code Quality Standards**
-   - ตรวจสอบว่าทุกไฟล์ไม่เกิน 200 บรรทัดตาม Breakdown Strategy
-   - ยืนยันว่าโค้ดใช้ strong typing และ generics ตาม Type Safety requirements
-   - ตรวจสอบว่าใช้ pure functions และ immutable state ตาม Side Effect Reduction
-   - ตรวจสอบว่ามี memory efficiency และ async patterns ตาม Performance Optimization
-   - ยืนยันว่ามี documentation และ testing ตาม Developer Experience requirements
+[[bench]]
+name = "core_benchmarks"
+harness = false
+```
 
-2. **Validate Security & Production Compliance**
-   - รัน security audit เพื่อตรวจหา hardcoded sensitive data หรือ configuration values
-   - ตรวจสอบว่าไม่มี mockup data สำหรับ production environments
-   - ยืนยันว่าโค้ดเป็น production ready พร้อม error handling ที่เหมาะสม
-   - ตรวจสอบว่าไม่มี security vulnerabilities ใน dependencies
+```toml
+# apps/cli/Cargo.toml
+[package]
+name = "wrikka-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+rust-version.workspace = true
 
-3. **Validate Monorepo Structure**
-   - ตรวจสอบว่า workspace configuration ถูกต้องสำหรับ Rust monorepo และ turborepo
-   - ยืนยันว่า directory layout ตรงตามที่กำหนดใน `packages/monorepo/` structure
-   - ตรวจสอบว่าทุก folder มี README.md, Cargo.toml และ src/ directory ที่ถูกต้อง
-   - ยืนยันว่า summary table อธิบายวัตถุประสงค์และ tools ของแต่ละ folder ได้ครบถ้วน
+[[bin]]
+name = "wrikka"
+path = "src/main.rs"
 
-4. **Validate Development Workflow**
-   - รันทดสอบแต่ละ phase (Development, Formatting, Testing, Benchmarks, Release)
-   - ตรวจสอบว่า commands ใน table ทำงานได้ตามที่กำหนด
-   - ยืนยันว่า Quality Assurance schedule ถูกตั้งค่าอย่างถูกต้อง
-   - ตรวจสอบว่า tools และ coverage requirements ตรงตามที่ระบุไว้
+[dependencies]
+# Core
+wrikka-core = { path = "../../packages/core" }
+wrikka-infrastructure-config = { path = "../../packages/infrastructure/config" }
+wrikka-presentation-cli = { path = "../../packages/presentation/cli" }
+wrikka-shared-logging = { path = "../../packages/shared/logging" }
 
-## 4. Verification
+# Workspace dependencies
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+clap = { workspace = true }
+anyhow = { workspace = true }
 
-1. **Verify Code Quality Implementation**
-   - รัน `cargo fmt --all` เพื่อตรวจสอบ formatting ทั่ว workspace
-   - รัน `cargo clippy --all-targets --all-features` เพื่อตรวจสอบ code quality
-   - ตรวจสอบขนาดไฟล์ทั้งหมดว่าไม่เกิน 200 บรรทัดด้วย script ตรวจสอบ
-   - ยืนยันว่าทุก package มี unit tests ครอบคลุมอย่างน้อย 80%
+[dev-dependencies]
+mockall = { workspace = true }
+tempfile = { workspace = true }
+```
 
-2. **Verify Security & Production Readiness**
-   - รัน `cargo audit` เพื่อตรวจสอบ security vulnerabilities ใน dependencies
-   - สแกน source code หา hardcoded secrets ด้วย tools เช่น `git-secrets`
-   - ตรวจสอบว่า production builds ไม่มี debug symbols หรือ test code
-   - ยืนยันว่า error handling ครอบคลุมทุก code paths
+### 5.6 Enhanced Justfile for Monorepo
 
-3. **Verify Monorepo Functionality**
-   - รัน `cargo build --workspace` เพื่อตรวจสอบว่าทุก package build ได้
-   - ทดสอบ turborepo commands ว่าทำงานได้ตามที่กำหนด
-   - ตรวจสอบว่า workspace dependencies ถูกต้องและไม่ซ้ำซ้อน
-   - ยืนยันว่าทุก directory มีโครงสร้างตาม monorepo pattern
+```makefile
+# justfile for Rust Monorepo with Turborepo
+default: help
 
-4. **Verify Development Workflow Execution**
-   - รันทดสอบทุก phase ใน Development Workflow table
-   - ตรวจสอบว่า duration ใน table ใกล้เคียงกับความเป็นจริง
-   - ยืนยันว่า Quality Assurance schedule ทำงานได้จริง
-   - ตรวจสอบว่า tools และ coverage ตรงตาม requirements ที่ระบุไว้
+# Help
+help:
+    @echo "Available commands:"
+    @echo "  setup         - Setup development environment"
+    @echo "  dev           - Start development mode"
+    @echo "  build         - Build all packages"
+    @echo "  test          - Run all tests"
+    @echo "  lint          - Run linting"
+    @echo "  format        - Format code"
+    @echo "  clean         - Clean build artifacts"
+    @echo "  bench         - Run benchmarks"
+    @echo "  docs          - Generate documentation"
+    @echo "  migration     - Run database migrations"
+    @echo "  codegen       - Generate code"
+    @echo ""
+    @echo "Package-specific commands:"
+    @echo "  build <pkg>   - Build specific package"
+    @echo "  test <pkg>    - Test specific package"
+    @echo "  run <pkg>     - Run specific package"
 
-## Architecture Flow Pattern
+# Setup development environment
+setup:
+    @echo "Setting up Rust monorepo..."
+    rustup update stable
+    rustup component add clippy rustfmt rust-src
+    cargo install cargo-nextest cargo-watch cargo-audit cargo-deny cargo-machete
+    npm install -g pnpm
+    pnpm install
 
+# Development (uses Turborepo)
+dev:
+    pnpm turbo run dev
+
+# Build all packages
+build:
+    pnpm turbo run build
+
+# Build specific package
+build pkg:
+    pnpm turbo run build --filter={{pkg}}
+
+# Test all packages
+test:
+    pnpm turbo run test
+
+# Test specific package
+test pkg:
+    pnpm turbo run test --filter={{pkg}}
+
+# Unit tests
+test:unit:
+    pnpm turbo run test:unit
+
+# Integration tests
+test:integration:
+    pnpm turbo run test:integration
+
+# Lint all packages
+lint:
+    pnpm turbo run lint
+
+# Format all code
+format:
+    pnpm turbo run format
+
+# Check formatting
+format:check:
+    pnpm turbo run format:check
+
+# Run clippy
+clippy:
+    pnpm turbo run clippy
+
+# Clean all artifacts
+clean:
+    pnpm turbo run clean
+    cargo clean
+
+# Run benchmarks
+bench:
+    pnpm turbo run bench
+
+# Generate documentation
+docs:
+    pnpm turbo run doc
+
+# Check all packages
+check:
+    pnpm turbo run check
+
+# Security audit
+audit:
+    cargo audit
+    pnpm audit
+
+# Check for unused dependencies
+check-unused:
+    cargo machete
+
+# Database migrations
+migration:
+    pnpm turbo run migration
+
+# Code generation
+codegen:
+    pnpm turbo run codegen
+
+# Run specific application
+run app:
+    cd apps/{{app}} && cargo run
+
+# Watch specific package
+watch pkg:
+    cd packages/{{pkg}} && cargo watch -x test
+
+# Install tools
+install-tools:
+    cargo install cargo-watch cargo-nextest cargo-audit cargo-deny cargo-machete cargo-expand
+    cargo install cargo-criterion cargo-flamegraph
+
+# Update dependencies
+update-deps:
+    cargo update
+    pnpm update
+
+# Release preparation
+release-prep:
+    pnpm turbo run build
+    pnpm turbo run test
+    pnpm turbo run lint
+    pnpm turbo run doc
+
+# Workspace information
+workspace-info:
+    @echo "Workspace members:"
+    @cargo metadata --no-deps --format-version 1 | jq -r '.workspace_members[]'
+    @echo ""
+    @echo "Package graph:"
+    @cargo tree --duplicates --workspace
+
+# Dependency graph
+deps:
+    @cargo tree --workspace
+
+# Check for circular dependencies
+check-circular:
+    @cargo machete
+
+# Generate feature matrix
+feature-matrix:
+    @echo "Feature matrix:"
+    @cargo tree --features --workspace
+
+# Run in docker
+docker-build:
+    docker build -t rust-monorepo .
+
+docker-run:
+    docker run -it rust-monorepo
+
+# Performance profiling
+profile:
+    cd packages/core && cargo flamegraph --bin core_benchmarks
+
+# Memory profiling
+memory-profile:
+    cd packages/core && valgrind --tool=massif cargo test
+
+# Coverage report
+coverage:
+    cargo install cargo-tarpaulin
+    cargo tarpaulin --workspace --out Html --output-dir target/coverage
+
+# Documentation server
+docs-serve:
+    cd packages/core && cargo doc --no-deps --open
+```
+
+## 6. Monorepo Development Patterns
+
+### 6.1 Cross-Package Dependencies
+
+```rust
+// apps/cli/src/main.rs
+use wrikka_core::domain::entities::Agent;
+use wrikka_infrastructure_config::AppConfig;
+use wrikka_presentation_cli::CliApp;
+use wrikka_shared_logging::init_logger;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    init_logger();
+    
+    let config = AppConfig::load()?;
+    let app = CliApp::new(config);
+    app.run().await
+}
+```
+
+### 6.2 Shared Configuration
+
+```rust
+// packages/infrastructure/config/src/lib.rs
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DatabaseConfig {
+    pub url: String,
+    pub max_connections: u32,
+    pub timeout_seconds: u64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AppConfig {
+    pub database: DatabaseConfig,
+    pub log_level: String,
+    pub server_port: u16,
+}
+
+impl AppConfig {
+    pub fn load() -> Result<Self, config::ConfigError> {
+        let settings = config::Config::builder()
+            .add_source(config::File::with_name("config/default"))
+            .add_source(config::File::with_name("config/local").required(false))
+            .add_source(config::Environment::with_prefix("APP"))
+            .build()?;
+        
+        settings.try_deserialize()
+    }
+}
+```
+
+### 6.3 Workspace Testing Utilities
+
+```rust
+// packages/shared/testing/src/lib.rs
+use mockall::predicate::*;
+use mockall::*;
+use wrikka_core::domain::entities::agent::*;
+
+// Mock implementations for testing
+automock! {
+    pub AgentRepository {
+        async fn find_by_id(&self, id: AgentId) -> Result<Option<Agent<Idle>>, RepositoryError>;
+        async fn save(&self, agent: &Agent<Idle>) -> Result<(), RepositoryError>;
+    }
+}
+
+pub struct TestAgentFactory;
+
+impl TestAgentFactory {
+    pub fn create_test_agent(name: &str) -> Agent<Idle> {
+        let config = AgentConfig::new(name.to_string())
+            .with_description("Test agent".to_string());
+        AgentFactory::create_agent(config)
+    }
+    
+    pub fn create_test_agent_with_metrics(name: &str) -> Agent<Idle> {
+        let mut agent = Self::create_test_agent(name);
+        // Add test metrics
+        agent
+    }
+}
+
+#[cfg(test)]
+pub mod test_utils {
+    use super::*;
+    use tempfile::TempDir;
+    
+    pub fn setup_test_database() -> (TempDir, String) {
+        let temp_dir = TempDir::new().unwrap();
+        let db_path = temp_dir.path().join("test.db");
+        let db_url = format!("sqlite:{}", db_path.display());
+        (temp_dir, db_url)
+    }
+    
+    pub async fn setup_test_app() -> (TestApp, AppConfig) {
+        let config = AppConfig {
+            database: DatabaseConfig {
+                url: "sqlite::memory:".to_string(),
+                max_connections: 1,
+                timeout_seconds: 30,
+            },
+            log_level: "debug".to_string(),
+            server_port: 0,
+        };
+        
+        let app = TestApp::new(config.clone()).await;
+        (app, config)
+    }
+}
+```
+
+### 6.4 CI/CD for Monorepo
+
+```yaml
+# .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        rust: [stable, beta, nightly]
+        
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          components: rustfmt, clippy
+          
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install
+        
+      - name: Check formatting
+        run: pnpm turbo run format:check
+        
+      - name: Run clippy
+        run: pnpm turbo run clippy
+        
+      - name: Run tests
+        run: pnpm turbo run test
+        
+      - name: Run integration tests
+        run: pnpm turbo run test:integration
+        
+      - name: Build
+        run: pnpm turbo run build
+        
+      - name: Run benchmarks
+        run: pnpm turbo run bench
+        
+      - name: Security audit
+        run: |
+          cargo audit
+          pnpm audit
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+          
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+        
+      - name: Generate coverage report
+        run: cargo tarpaulin --workspace --out Xml --output-dir target/coverage
+        
+      - name: Upload to codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: target/coverage/cobertura.xml
+```
+
+## 7. Comprehensive Cargo.toml Template
+
+```toml
+[package]
+name = "@wrikka/project-name"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "Project description with value proposition"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/wrikka/project-name"
+homepage = "https://github.com/wrikka/project-name"
+documentation = "https://docs.rs/project-name"
+keywords = ["cli", "terminal", "productivity"]
+categories = ["command-line-utilities", "development-tools"]
+readme = "README.md"
+rust-version = "1.75.0"
+
+[dependencies]
+# Core async runtime
+tokio = { version = "1.50", features = ["full"] }
+tokio-util = "0.7"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.9"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "2.0"
+
+# CLI framework
+clap = { version = "4.6", features = ["derive", "env"] }
+
+# Configuration management
+config = "0.15"
+dotenvy = "0.15"
+
+# Logging and telemetry
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
+tracing-appender = "0.2"
+
+# HTTP client/server (choose based on needs)
+reqwest = { version = "0.13", features = ["json", "rustls-tls"] }
+# axum = { version = "0.8", features = ["tokio", "macros"], optional = true }
+
+# Database (choose based on needs)
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono"], optional = true }
+# diesel = { version = "2.2", features = ["postgres", "uuid", "chrono"], optional = true }
+
+# UUID and time
+uuid = { version = "1.22", features = ["v4", "serde", "fast-rng"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Utilities
+regex = "1.12"
+walkdir = "2.5"
+dirs = "6.0"
+arboard = "3.6"
+tempfile = "3.27"
+
+# Async traits
+async-trait = "0.1"
+
+# Futures utilities
+futures = "0.3"
+futures-util = "0.3"
+
+# TUI (if needed)
+ratatui = { version = "0.30", optional = true }
+crossterm = { version = "0.29", optional = true }
+
+# Metrics and monitoring
+metrics = "0.25"
+metrics-exporter-prometheus = { version = "0.16", optional = true }
+
+# Security
+ring = "0.18"
+argon2 = "0.6"
+
+[dev-dependencies]
+tokio-test = "0.4"
+criterion = { version = "0.8", features = ["html_reports"] }
+tempfile = "3.27"
+mockall = "0.14"
+pretty_assertions = "1.4"
+proptest = "1.6"
+
+[features]
+default = []
+web = ["axum"]
+database = ["sqlx"]
+tui = ["ratatui", "crossterm"]
+metrics = ["metrics-exporter-prometheus"]
+all = ["web", "database", "tui", "metrics"]
+
+[[bin]]
+name = "project-name"
+path = "src/main.rs"
+
+[lib]
+name = "project_name"
+path = "src/lib.rs"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+opt-level = "z"
+
+[profile.dev]
+debug = true
+overflow-checks = true
+
+[profile.bench]
+debug = true
+
+[[bench]]
+name = "performance"
+harness = false
+```
+
+## 6. Development Tools Configuration
+
+### 6.1 justfile Template
+```makefile
+# Development tasks
+default: help
+
+help:
+    @just --list
+
+# Setup development environment
+setup:
+    @echo "Setting up development environment..."
+    rustup update stable
+    rustup component add clippy rustfmt
+    cargo install cargo-watch cargo-nextest cargo-audit cargo-deny
+
+# Run development server
+dev:
+    cargo run --features all
+
+# Build for production
+build:
+    cargo build --release --features all
+
+# Run tests
+test:
+    cargo nextest run --all-features
+
+test-watch:
+    cargo watch -x "nextest run --all-features"
+
+# Run integration tests
+test-integration:
+    cargo test --test integration --features all
+
+# Run benchmarks
+bench:
+    cargo bench --features all
+
+# Code quality checks
+lint:
+    cargo clippy --all-features -- -D warnings -W clippy::all
+    cargo fmt --check
+
+format:
+    cargo fmt
+
+# Security audit
+audit:
+    cargo audit
+    cargo deny check
+
+# Documentation
+docs:
+    cargo doc --no-deps --document-private-items --open
+
+# Clean build artifacts
+clean:
+    cargo clean
+    rm -rf target/
+
+# Generate coverage report
+coverage:
+    cargo tarpaulin --out Html --features all
+
+# Release workflow
+release: test lint audit build
+    @echo "Ready for release!"
+```
+
+### 6.2 rust-toolchain.toml
+```toml
+[toolchain]
+channel = "1.75.0"
+components = ["clippy", "rustfmt", "rust-src"]
+profile = "minimal"
+```
+
+### 6.3 .gitignore Template
+```gitignore
+# Rust
+/target/
+Cargo.lock
+**/*.rs.bk
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# Coverage
+tarpaulin-report.html
+cobertura.xml
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+tmp/
+temp/
+
+# Documentation build
+/docs/book/
+/target/doc/

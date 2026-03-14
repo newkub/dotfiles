@@ -1,63 +1,83 @@
 ---
-trigger: always_on
+description: สร้าง Nuxt Module ใหม่
 ---
- 
-## 1. Project Structure
 
-```plaintext
-.
-├── docs/
-├── examples/
-├── scripts/          # Release or other scripts
+# สร้าง Nuxt Module ใหม่
+
+## File Structure
+
+```
+nuxt-modules/modules/w<module-name>/
 ├── src/
 │   ├── module.ts
 │   └── runtime/
-│       ├── assets/     # Static assets
 │       ├── components/
 │       ├── composables/
-│       ├── plugins/
-│       ├── templates/
 │       └── utils/
-├── .gitignore
+├── app/
+│   └── app.vue
+├── test/
 ├── package.json
-├── tsconfig.json
-└── tsdown.config.ts  # Build configuration
+├── README.md
+├── CHANGELOG.md
+└── LICENSE
 ```
 
-## 2. Development
+## package.json
 
--   ใช้ `@nuxt/kit`: เป็นเครื่องมือหลักสำหรับสร้างโมดูล มี utilities ที่จำเป็นครบถ้วน
--   แยก Runtime Code: โค้ดที่ต้องใช้ในฝั่ง client หรือ server ของ Nuxt app ควรอยู่ใน `src/runtime/` เพื่อให้ tree-shaking ทำงานได้ดี
--   Module Options: ออกแบบ options ให้ยืดหยุ่นและมี type-safety โดยกำหนด schema ใน `meta.configKey` และ interface ใน `module.ts`
--   Auto-imports: ใช้ `addImportsDir` และ `addComponentsDir` เพื่อให้ composables และ components ถูก import อัตโนมัติ
--   Templates: ใช้ `addTemplate` สำหรับการสร้างไฟล์แบบ dynamic (เช่น plugins ที่ต้องใช้ options จากผู้ใช้)
-
-
-## `src/module.ts`
-
-```typescript
-import { defineNuxtModule, createResolver, addPlugin } from '@nuxt/kit'
-
-export default defineNuxtModule({
-  meta: {
-    name: 'my-module',
-    configKey: 'myModule'
+```json
+{
+  "name": "@wrikka/w<module-name>",
+  "version": "0.0.1",
+  "description": "W<Module-Name> module for Nuxt",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/module.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    },
+    "./runtime": {
+      "import": "./src/runtime/index.ts",
+      "types": "./src/runtime/index.ts"
+    },
+    "./runtime/*": {
+      "import": "./src/runtime/*",
+      "types": "./src/runtime/*"
+    }
   },
-  defaults: {
-    // Default options
+  "main": "./dist/module.cjs",
+  "types": "./dist/module.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt-build-module",
+    "format": "dprint fmt",
+    "lint": "nuxt typecheck && oxlint --type-aware --fix",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "typecheck": "vue-tsc --noEmit",
+    "prepare": "nuxt prepare",
+    "prepublishOnly": "npm run build",
+    "release": "release-it"
   },
-  setup (options, nuxt) {
-    const resolver = createResolver(import.meta.url)
-
-    // Add runtime plugin
-    addPlugin(resolver.resolve('./runtime/plugin'))
-
-    // ... add other logic here
+  "dependencies": {
+    "@nuxt/kit": "^4.3.1",
+    "defu": "^6.1.4",
+    "vue": "^3.5.29"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/test-utils": "^4.0.0",
+    "vitest": "^4.0.18"
+  },
+  "peerDependencies": {
+    "nuxt": "^4.3.1"
+  },
+  "overrides": {
+    "vite": "npm:rolldown-vite@latest"
   }
-})
-```
-
-
-## 3. Publishing
-
-- /follow-release-it
+}

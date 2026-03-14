@@ -1,129 +1,90 @@
-
-
 ---
-description: กำหนดกฎการทำงานทั่วไป
-title: global-rules
+title: Global Rules
+description: กฎหลักที่ต้องปฏิบัติตามในทุกการทำงาน สำหรับ AI assistant
 auto_execution_mode: 3
+file-patterns:
+  - "**/*.md"
 ---
 
-## 1. Communication
+## Prerequisites
 
-1. ใช้ภาษาไทยในการพูดคุย
-2. พิมพ์ "." หมายถึง ให้ทำต่อ
-   - พูดตรงๆ ไม่ยืดยาว
-   - ถามถ้าสงสัยอะไร
+- AI assistant ต้องโหลด memory นี้ก่อนเริ่มทำงาน
+- ใช้งานในทุก workspace ของผู้ใช้
 
-## 2. Before Creating Anything
+## 3.1 Precondition
 
-1. อ่าน `/refactor` ก่อนสร้างอะไรทุกครั้ง
-   - ทำตามขั้นตอนใน workflow
-   - พิจารณาโครงสร้างที่มีอยู่ก่อน
-   - ค้นหาส่วนที่ซ้ำซ้อนหรือไม่จำเป็น
+- ต้องอ่าน skill ที่เกี่ยวข้องกับงานที่จะทำก่อนเสมอ
+- AI assistant ต้องโหลด memory นี้ก่อนเริ่มทำงาน
+- ใช้งานในทุก workspace ของผู้ใช้
 
-## 3. Prohibited Practices
+## 3.2 Prepare
 
-### 3.1 General Development
+- ตรวจสอบว่าเข้าใจกฎทั้งหมดก่อนเริ่มงาน
+- ยืนยันว่ากำลังใช้ภาษาไทยในการตอบกลับ
+- อ่าน skill ที่เกี่ยวข้องกับงานนั้นๆ
 
-- ห้ามรัน dev ถ้าไม่ได้สั่ง
-- ห้ามใช้ debug ในโค้ด production (ใช้ logger แทน)
-- ห้ามเขียน config/URL/secrets ในโค้ด
-- ห้ามเชื่อ input ผู้ใช้โดยไม่ตรวจสอบ
-- ห้ามใช้ any โดยไม่จำเป็น
-- ห้ามเพิ่ม dependencies โดยไม่จำเป็น
-- ห้าม duplicate code (refactor เป็น functions/modules)
-- ห้ามใช้ magic numbers (กำหนด constants)
-- ห้ามสร้างโค้ดแบบ OOP (ใช้ FP เท่านั้น)
-   - ใช้ pure functions
-   - หลีกเลี่ยง classes และ inheritance
-   - ใช้ composition แทน inheritance
-   - ใช้ immutability
-   - ใช้ best practices เสมอ
-   - ทดสอบก่อน deploy
+## 3.3 Execute
 
-### 3.2 TypeScript
+1. **คุยกับผู้ใช้เป็นภาษาไทย**
+   - ตอบทุกคำถามและคำสั่งเป็นภาษาไทย
+   - ใช้ภาษาที่เป็นทางการแต่เข้าใจง่าย
 
-- ห้าม comment เพื่อปิดปัญหา (// @ts-ignore, etc.)
-- ห้ามใช้ CommonJS (ใช้ ESM)
-- ห้ามใช้ eslint/prettier/npm
-- ห้ามใช้ eslint-disable หรือ biome-ignore
-   - ใช้ type safety เสมอ
-   - หลีกเลี่ยง any
+2. **อ่าน skills ก่อนทำงานทุกครั้ง**
+   - ก่อนเริ่มงานใดๆ ให้อ่าน skill ที่เกี่ยวข้องกับงานนั้นก่อนเสมอ
+   - ใช้ `@skill-name` เพื่อโหลด skill ที่ต้องการ
+   - ทำความเข้าใจหลักการและกฎใน skill นั้นๆ
 
-### 3.3 Database
+3. **ใช้ bun เท่านั้น ไม่ใช้ npm**
+   - คำสั่งถูกต้อง: `bun install`, `bun run dev`, `bun create`
+   - ห้ามใช้: `npm install`, `npm run`, `npx`
 
-- ห้ามใช้ query N+1 หรือไม่มี index
-   - ใช้ index ให้เหมาะสม
-   - หลีกเลี่ยง query ช้า
-
-### 3.4 Performance
-
-- ห้ามโหลด resource หนักโดยไม่มี lazy loading
-   - ใช้เทคนิค optimization
-   - ตรวจสอบ performance
-
-### 3.5 Task Management
-
-- ห้ามใช้ TODO comments ที่ไม่ติดตาม
-   - ใช้ tools สำหรับจัดการงาน
-   - จดงานให้ชัดเจน
-
-## 4. Package Management
-
-1. ใช้ bun เท่านั้น
-   - ติดตั้งและตั้งค่าแพ็คเกจต่างๆ
-   - ค้นหาให้แน่ใจก่อน
-   - อ่านเอกสารก่อนใช้
-   - ตรวจสอบเวอร์ชันล่าสุด
-
-2. ทุก package name ต้องมี @wrikka/ นำหน้าเสมอ
-   - ตัวอย่าง: @wrikka/ai-core, @wrikka/data-reactive
-   - ใช้สำหรับทุก packages ใน monorepo
-
-## 5. Structure Verification
-
-1. ตรวจสอบโครงสร้างโฟลเดอร์
-   ```bash
-   eza --tree --git-ignore
+4. **Vue component format**
+   - ใช้ `script setup lang="ts"`
+   - script ต้องอยู่ด้านบน template
+   ```vue
+   <script setup lang="ts">
+   // scripts อยู่ด้านบน
+   </script>
+   
+   <template>
+     <!-- template อยู่ด้านล่าง -->
+   </template>
    ```
-   - ใช้คำสั่งนี้ก่อนทำงาน
-   - ตรวจสอบไฟล์ที่เปลี่ยนแปลง
 
-## 6. File Management
+5. **ทำความเข้าใจคำสั่งลัด**
+   - ถ้าผู้ใช้พิมพ์ `.` หมายถึง "ทำต่อ" หรือ "continue"
 
-1. ใช้ pwsh สำหรับจัดการไฟล์
-2. ใช้ safe move สำหรับย้ายหรือเปลี่ยนชื่อไฟล์
-3. อัปเดตการอ้างอิงเมื่อแก้ไขไฟล์
-   - ใช้ path เต็มเสมอ
-   - ตรวจสอบไฟล์ก่อนแก้ไข
-4. Automate แก้ไขไฟล์ด้วย `/use-bun-scripts` ถ้าเป็นไปตาม
-5. สร้าง scripts สำหรับทดสอบใน `.windsurf/scripts`
+6. **แก้ไขไฟล์ใน global_workflows**
+   - ทุกครั้งที่แก้ไขไฟล์ใน `C:/Users/Veerapong/.codeium/windsurf/global_workflows`
+   - ต้องทำตาม `@write-workflows`
 
-## 7. Configuration
+7. **ติดตั้ง dependencies**
+   - ทุกครั้งที่ติดตั้ง dependencies ให้ `@write-agents`
 
-1. ไม่ตั้งค่า ถ้าเป็นค่าเริ่มต้น
-   - ตรวจสอบเอกสารหรือค่าเริ่มต้นก่อน
-   - ใช้ค่าเริ่มต้นให้มากที่สุด
-   - เปลี่ยนเฉพาะที่จำเป็น
+8. **ดูไฟล์ใกล้เคียงก่อนสร้างใหม่**
+   - ตรวจสอบไฟล์ที่มีอยู่ในโฟลเดอร์เป้าหมาย
+   - สร้างให้มีรูปแบบคล้ายกับไฟล์ที่มีอยู่
 
-## 8. Task Management
+9. **ตรวจสอบ @file-patterns**
+   - ก่อนสร้างหรือแก้ไขไฟล์ ให้ตรวจสอบ `@file-patterns`
 
-1. จด TODO สำหรับงานที่ยังไม่เสร็จ
-2. จด error ไว้ แก้ทีหลัง
-3. รัน `/refactor` ก่อนจบ task เสมอ
-4. รัน `/update-readme` หลังงานเสร็จ
-   - ใช้ todo list เพื่อติดตาม
-   - แบ่งงานเป็นขั้นตอนเล็กๆ
+10. **อัพเดท relative reference paths**
+    - ทุกครั้งที่แก้ไขไฟล์ ให้ตรวจสอบและแก้ไข relative reference path ด้วย
 
-## 9. Web Browser Management
+11. **ใช้ bun scripts สำหรับ bulk operations**
+    - พยายามใช้ `/use-bun-scripts` สำหรับการทำงานที่ซ้ำๆ หรือจำนวนมาก
 
-1. ถ้า run อะไรแล้วเปิด web ให้ใช้ cli => `open <url>` ให้ด้วยเลย
-   - ใช้คำสั่ง `open` เพื่อเปิด browser โดยอัตโนมัติ
-   - รองรับ URLs ทุกประเภท (http, https, localhost)
+## 3.4 Validate
 
-## 10. Vue Development
+- [ ] ตอบเป็นภาษาไทยทุกครั้ง
+- [ ] อ่าน skill ที่เกี่ยวข้องก่อนเริ่มงาน
+- [ ] ใช้ bun ไม่ใช้ npm
+- [ ] Vue component มี script อยู่ด้านบน template
+- [ ] แก้ไข relative paths เมื่อมีการย้าย/แก้ไขไฟล์
+- [ ] ตรวจสอบว่าทำตาม file patterns ที่กำหนด
 
-1. ใช้ `<script setup lang="ts">` ทุกไฟล์ .vue
-   - scripts อยู่ด้านบน template
-   - ใช้ vueuse และ vue macros เสมอ
-   - ใช้ composition API
-   - เรียนรู้ Vue 3 features
+## 3.5 Verify
+
+- [ ] ยืนยันว่าทุกกฎถูกปฏิบัติตาม
+- [ ] ตรวจสอบว่าไม่มี error จากการไม่ได้อ่าน skill
+- [ ] ตรวจสอบความสอดคล้องของผลลัพธ์

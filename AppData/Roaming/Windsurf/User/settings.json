@@ -23,14 +23,14 @@
 	"[jsx, tsx]": {
 		"editor.defaultFormatter": "dprint.dprint"
 	},
-	"[markdown]": {
-		"editor.defaultFormatter": "vscode.markdown-language-features"
+	"[md]": {
+		"editor.defaultFormatter": "dprint.dprint"
 	},
 	"[mdx]": {
 		"editor.defaultFormatter": "vscode.markdown-language-features"
 	},
 	"[tailwindcss]": {
-		"editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+		"editor.defaultFormatter": "antfu.unocss"
 	},
 	"[typescript]": {
 		"editor.defaultFormatter": "vscode.typescript-language-features"
@@ -128,7 +128,6 @@
 	"terminal.integrated.defaultProfile.windows": "PowerShell",
 	"terminal.integrated.env.windows": {},
 	"terminal.integrated.focusAfterRun": "terminal",
-	"terminal.integrated.fontFamily": "MesloLGM Nerd Font",
 	"terminal.integrated.gpuAcceleration": "on",
 	"terminal.integrated.persistentSessionReviveProcess": "never",
 	"terminal.integrated.profiles.windows": {
@@ -275,5 +274,14 @@
 	"terminal.integrated.showCommandHint": false,
 	"vs-browser.favourites.list": {
 		"http://localhost:3000/": "http://localhost:3000/"
-	}
+	},
+	"windsurf.completionMode": "off",
+	"[markdown]": {
+		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+	},
+	"workspaceSidebar.rootFolders": [
+		{
+			"path": "c:\\Users\\Veerapong\\Desktop"
+		}
+	]
 }

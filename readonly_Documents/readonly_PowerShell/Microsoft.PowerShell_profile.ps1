@@ -52,6 +52,7 @@ Remove-Item Alias:ni -Force -ErrorAction Ignore
 
 Remove-Item Alias:rd
 Remove-Item Alias:h
+Remove-Item Alias:cd
 
 
 # --- General Aliases ---
@@ -282,80 +283,73 @@ function ff {
 
 
 
-function zo {
-    param(
-        [string]$query = ""
-    )
-
-    $selected = if ($query) {
-        zoxide query -ls $query | fzf
-    } else {
-        zoxide query -ls | fzf
-    }
-
-    if (-not $selected) { return }
-
-    $path = $selected -replace '^\s*\S+\s+', ''
-    if ($path) {
-        Set-Location $path
-    }
-}
-
 function cd {
     param(
         [string]$query = ""
     )
 
-    $root = "D:\"
-
-    # หา directories ด้วย fd จาก root
-    $dirs = if ($query) {
-        fd -t d $query $root
+    if ($query) {
+        Set-Location $query
     } else {
-        fd -t d . $root
-    }
+        # หา directories ด้วย fd
+        $dirs = fd -t d
 
-    # เลือก path ด้วย fzf สวย ๆ
-    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+        # เลือก path ด้วย fzf สวย ๆ
+        $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
 
-    if ($selected) {
-        Set-Location $selected
-    }
-}
-
-
-
-function crm {
-    param(
-        [string]$query = ""
-    )
-
-    # เลือก directory ด้วย fd + fzf
-    $selected = if ($query) {
-        fd -t d $query | fzf
-    } else {
-        fd -t d | fzf
-    }
-
-    if ($selected) {
-        # ยืนยันก่อนลบ
-        $confirm = Read-Host "Delete '$selected'? (y/n)"
-        if ($confirm -eq 'y') {
-            Remove-Item -Recurse -Force $selected
-            Write-Host "Deleted: $selected"
-        } else {
-            Write-Host "Canceled"
+        if ($selected) {
+            Set-Location $selected
         }
     }
 }
 
 
 
-function op {
-    param([string]$query = "")
-    $selected = if ($query) { fd -t d $query D:\ | fzf } else { fd -t d D:\ | fzf }
-    if ($selected) { windsurf $selected }  
+
+
+function rmi {
+    param(
+        [string]$query = ""
+    )
+
+    # เลือก directory ด้วย fd + fzf (รวม dot folders ทั้งหมด)
+    $dirs = if ($query) { fd -t d --hidden $query } else { fd -t d --hidden }
+    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+
+    if ($selected) {
+        # เลือกประเภทการลบ
+        Write-Host "Select delete type:" -ForegroundColor Yellow
+        Write-Host "1. Normal delete" -ForegroundColor Cyan
+        Write-Host "2. Recursive delete" -ForegroundColor Cyan
+        $choice = Read-Host "Enter choice (1 or 2)"
+        if ($choice -eq '1') {
+            # ยืนยันก่อนลบแบบปกติ
+            Write-Host "Delete normally '$selected'? (y/n)" -ForegroundColor Red
+            $confirm = Read-Host
+            if ($confirm -eq 'y') {
+                Remove-Item $selected
+                Write-Host "Deleted: $selected" -ForegroundColor Green
+            } else {
+                Write-Host "Canceled" -ForegroundColor Gray
+            }
+        } elseif ($choice -eq '2') {
+            # ยืนยันก่อนลบแบบ recursive
+            Write-Host "Delete recursively '$selected'? (y/n)" -ForegroundColor Red
+            $confirm = Read-Host
+            if ($confirm -eq 'y') {
+                Remove-Item -Recurse -Force $selected
+                Write-Host "Deleted recursively: $selected" -ForegroundColor Green
+            } else {
+                Write-Host "Canceled" -ForegroundColor Gray
+            }
+        } else {
+            Write-Host "Invalid choice. Canceled" -ForegroundColor Gray
+        }
+    }
 }
+
+
+
 
 
 function omd {
@@ -472,28 +466,6 @@ function owindsurf_global_workflows {
     cd "C:\Users\Veerapong\.codeium\windsurf\global_workflows" | fd -t f | fzf | ForEach-Object { windsurf $_ }
 }
 
-function op {
-    param(
-        [string]$query = ""
-    )
-
-    $root = "D:\"
-
-    # หา directories ด้วย fd จาก root
-    $dirs = if ($query) {
-        fd -t d $query $root
-    } else {
-        fd -t d . $root
-    }
-
-    # เลือก path ด้วย fzf สวย ๆ
-    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
-
-    if ($selected) {
-        windsurf $selected
-    }
-}
-
 
 
 function cpath {
@@ -502,9 +474,6 @@ function cpath {
 
 
 
-function openqoder {
-     qoder .
-}
 
 
 
@@ -579,103 +548,7 @@ function g {
     Start-Process ($engine -f $query)
 }
 
-function rmr {
-    param(
-        [string]$folder = "",
-        [switch]$help,
-        [switch]$scan
-    )
-    
-    if ($help) {
-        Write-Host @"
-RMR - Remove Folders Recursively Tool
-
-USAGE:
-    rmr [options] [folder_name]
-
-OPTIONS:
-    --help       Show this help message
-    --scan       Scan for duplicate folders and list them
-
-EXAMPLES:
-    rmr node_modules    # Remove all node_modules folders recursively
-    rmr .git            # Remove all .git folders recursively
-    rmr dist            # Remove all dist folders recursively
-    rmr temp            # Remove all temp folders recursively
-    rmr --scan          # Scan for duplicate folders and show statistics
-    rmr --help          # Show this help message
-"@ -ForegroundColor Green
-        return
-    }
-    
-    if ($scan) {
-        Write-Host "Scanning for duplicate folders..." -ForegroundColor Yellow
-        Write-Host ""
-        
-        # สแกนหาโฟลเดอร์ทั่วไปที่มักจะซ้ำกัน
-        $commonFolders = @("node_modules", ".git", "dist", "build", "temp", "tmp", ".vscode", ".idea", "coverage", ".nyc_output", ".next", ".nuxt", ".output")
-        
-        $folderStats = @{}
-        
-        foreach ($folderName in $commonFolders) {
-            try {
-                $folders = Get-ChildItem -Directory -Recurse -Filter $folderName -ErrorAction SilentlyContinue
-                if ($folders) {
-                    $folderStats[$folderName] = $folders.Count
-                    Write-Host "$folderName`: $($folders.Count) folders found" -ForegroundColor Cyan
-                    
-                    # แสดง path ของโฟลเดอร์เหล่านั้น (จำกัด 10 อันแรก)
-                    $folders | Select-Object -First 10 | ForEach-Object {
-                        Write-Host "  └─ $($_.FullName)" -ForegroundColor Gray
-                    }
-                    if ($folders.Count -gt 10) {
-                        Write-Host "  └─ ... and $($folders.Count - 10) more" -ForegroundColor Gray
-                    }
-                    Write-Host ""
-                }
-            }
-            catch {
-                Write-Host "Warning: Could not scan some '$folderName' folders due to permissions" -ForegroundColor Yellow
-            }
-        }
-        
-        # สรุป
-        $totalDuplicates = ($folderStats.Values | Measure-Object -Sum).Sum
-        Write-Host "Summary: Found $totalDuplicates duplicate folders across $($folderStats.Count) types" -ForegroundColor Green
-        
-        if ($totalDuplicates -gt 0) {
-            Write-Host ""
-            Write-Host "To remove any of these folders, use:" -ForegroundColor Yellow
-            $folderStats.Keys | ForEach-Object {
-                Write-Host "  rmr $_" -ForegroundColor White
-            }
-        }
-        
-        return
-    }
-    
-    if (-not $folder) {
-        Write-Host "Use 'rmr --help' for usage information" -ForegroundColor Yellow
-        return
-    }
-    
-    $folders = Get-ChildItem -Directory -Recurse -Filter $folder -ErrorAction SilentlyContinue
-    
-    if (-not $folders) {
-        Write-Host "No '$folder' folders found" -ForegroundColor Yellow
-        return
-    }
-    
-    Write-Host "Found $($folders.Count) '$folder' folders:" -ForegroundColor Cyan
-    $folders | ForEach-Object {
-        Write-Host "  $($_.FullName)" -ForegroundColor Gray
-    }
-    
-    $confirm = Read-Host "`nDelete all $($folders.Count) '$folder' folders? (y/n)"
-    if ($confirm -eq 'y') {
-        $folders | Remove-Item -Recurse -Force
-        Write-Host "Successfully removed $($folders.Count) '$folder' folders" -ForegroundColor Green
-    } else {
-        Write-Host "Cancelled" -ForegroundColor Yellow
-    }
+function op {
+    param([int]$port)
+    Start-Process "http://localhost:$port"
 }

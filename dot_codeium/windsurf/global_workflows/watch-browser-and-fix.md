@@ -1,31 +1,75 @@
 ---
-description: ติดตามเบราว์เซอร์และแก้ไขด้วย terminator-mcp-agent
+description: รัน watch browser และแก้ไข error แบบ continuous loop
 title: watch-browser-and-fix
 ---
 
-## 1. อ่านเอกสาร
+## Objective
 
-1. อ่านเอกสารที่ https://github.com/vercel-labs/agent-browser
+รัน development server พร้อม monitor browser และแก้ไข error อัตโนมัติแบบต่อเนื่อง
 
-## 2. ติดตามและแก้ไข
+## Scope
 
-1. ติดตามเบราว์เซอร์ด้วย @terminator-mcp-agent
+- รัน dev server และเปิด browser
+- Monitor terminal และ browser แบบ continuous
+- ตรวจจับ error และ fix ทันที
+- รีโหลดและ verify หลังแก้ไข
+- ทำงานวน loop ไม่สิ้นสุด
 
-   - ตรวจสอบทำงานของเว็บ
-   - แก้ไขปัญหาที่พบ
+## Preconditions
 
-## 3. อ่านและแก้ไขอย่างต่อเนื่องจนกว่าจะแก้ไขได้
+- มี Bun และ dependencies ติดตั้งแล้ว
+- มี agent-browser ติดตั้งแล้ว
+- รู้ว่าเป็น project ประเภทไหน
+- เข้าใจ error patterns ที่พบบ่อย
 
-1. เริ่มติดตามเบราว์เซอร์ด้วย @terminator-mcp-agent
+## Execution
 
-2. ตรวจสอบปัญหาที่เกิดขึ้นในเบราว์เซอร์
+### 1. Start Infrastructure
 
-3. อ่านโค้ดที่เกี่ยวข้องกับปัญหา
+1. รัน `/run-dev` และรอ dev server พร้อม
+2. เปิด browser ด้วย `agent-browser open <url>`
+3. รอ page โหลดสมบูรณ์ (`agent-browser wait --load networkidle`)
+4. ทดสอบด้วย `agent-browser snapshot`
 
-4. แก้ไขโค้ดตามที่จำเป็น
+### 2. Continuous Fix Loop
 
-5. รีโหลดหรือรีเฟรชหน้าเว็บเพื่อตรวจสอบการแก้ไข
+5. เริ่ม continuous monitor
+   - ดู terminal output
+   - ดู browser state (`agent-browser snapshot`)
+   - ดู browser rendering (screenshot ถ้าจำเป็น)
 
-6. หากยังมีปัญหา กลับไปขั้นตอนที่ 2 และทำซ้ำ
+### 3. Error Detection
 
-7. หยุดเมื่อแก้ไขปัญหาได้สำเร็จ
+6. ตรวจจับ error
+   - Terminal: build, type, runtime errors
+   - Browser: ดูจาก snapshot หรือ page state
+   - UX: broken layout, interaction fail
+
+### 4. Fix Process
+
+7. ถ้าพบ error
+   - บันทึก error details (screenshot: `agent-browser screenshot`)
+   - Analyze root cause
+   - Fix error ตาม `/fix-error`
+   - รอ terminal stable
+   - รีโหลด browser (`agent-browser reload`)
+   - Verify error หาย (`agent-browser snapshot`)
+
+### 5. Loop Continue
+
+8. กลับไป step 5 ทำต่อเนื่อง
+   - loop ไม่มี break
+   - ไม่ exit จนกว่าจะ stop
+
+## Validation
+
+- Error ถูก fix จนหมด
+- Dev server รันต่อเนื่อง
+- Browser ตอบสนองดี
+- Loop ทำงานไม่หยุด
+
+## Exclusions
+
+- ไม่รวมการ improve UX/UI (ใช้ `/watch-browser-and-improve-uxui`)
+- ไม่รวมการ test (ใช้ `/watch-browser-and-test`)
+- ไม่รวมการ stop dev server
