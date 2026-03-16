@@ -13,7 +13,7 @@ eza --tree --git-ignore
 
 ## 2. Rust Monorepo with Turborepo Structure
 
-```
+```text
 rust-monorepo/
 ├── apps/                           # Applications
 │   ├── cli/                        # CLI application
@@ -179,6 +179,7 @@ rust-monorepo/
 ## 3. Layer Architecture Explained
 
 ### Domain Layer (Pure Rust)
+
 - **entities/** - Core business objects with behavior
 - **value_objects/** - Immutable value objects (Email, Id, Money)
 - **repositories/** - Abstract repository traits
@@ -186,12 +187,14 @@ rust-monorepo/
 - **errors/** - Domain-specific error types
 
 ### Application Layer
+
 - **commands/** - Command pattern for write operations
 - **queries/** - Query pattern for read operations (CQRS)
 - **services/** - Application orchestration
 - **dto/** - Data transfer objects for external communication
 
 ### Infrastructure Layer
+
 - **database/** - Database connections and migrations
 - **repositories/** - Concrete repository implementations
 - **http/** - HTTP clients and external API calls
@@ -199,6 +202,7 @@ rust-monorepo/
 - **external_services/** - Third-party service integrations
 
 ### Presentation Layer
+
 - **cli/** - Command-line interface
 - **tui/** - Terminal user interface (ratatui)
 - **grpc/** - gRPC service implementations
@@ -206,6 +210,7 @@ rust-monorepo/
 ## 4. Rust Development Principles
 
 ### 4.1 Core Principles
+
 1. **Ownership & Borrowing** - Leverage Rust's ownership system
 2. **Zero-cost Abstractions** - Use generics and traits efficiently
 3. **Memory Safety** - No garbage collector, compile-time guarantees
@@ -213,6 +218,7 @@ rust-monorepo/
 5. **Error Handling** - Explicit error handling with Result<T, E>
 
 ### 4.2 Functional Programming
+
 ```rust
 // Pure functions
 fn calculate_total(items: &[Item]) -> Money {
@@ -237,6 +243,7 @@ trait Repository<T> {
 ```
 
 ### 4.3 Type Safety
+
 ```rust
 // Strongly typed IDs
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -283,16 +290,16 @@ members = [
     # Applications
     "apps/cli",
     "apps/tui",
-    
+
     # Core packages
     "packages/core",
     "packages/infrastructure/*",
     "packages/presentation/*",
     "packages/shared/*",
-    
+
     # Tools
     "tools/*",
-    
+
     # Development
     "benches",
     "tests/*",
@@ -864,7 +871,7 @@ use wrikka_shared_logging::init_logger;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     init_logger();
-    
+
     let config = AppConfig::load()?;
     let app = CliApp::new(config);
     app.run().await
@@ -899,7 +906,7 @@ impl AppConfig {
             .add_source(config::File::with_name("config/local").required(false))
             .add_source(config::Environment::with_prefix("APP"))
             .build()?;
-        
+
         settings.try_deserialize()
     }
 }
@@ -929,7 +936,7 @@ impl TestAgentFactory {
             .with_description("Test agent".to_string());
         AgentFactory::create_agent(config)
     }
-    
+
     pub fn create_test_agent_with_metrics(name: &str) -> Agent<Idle> {
         let mut agent = Self::create_test_agent(name);
         // Add test metrics
@@ -941,14 +948,14 @@ impl TestAgentFactory {
 pub mod test_utils {
     use super::*;
     use tempfile::TempDir;
-    
+
     pub fn setup_test_database() -> (TempDir, String) {
         let temp_dir = TempDir::new().unwrap();
         let db_path = temp_dir.path().join("test.db");
         let db_url = format!("sqlite:{}", db_path.display());
         (temp_dir, db_url)
     }
-    
+
     pub async fn setup_test_app() -> (TestApp, AppConfig) {
         let config = AppConfig {
             database: DatabaseConfig {
@@ -959,7 +966,7 @@ pub mod test_utils {
             log_level: "debug".to_string(),
             server_port: 0,
         };
-        
+
         let app = TestApp::new(config.clone()).await;
         (app, config)
     }
@@ -982,20 +989,20 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         rust: [stable, beta, nightly]
-        
+
     steps:
       - uses: actions/checkout@v4
-        
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.rust }}
           components: rustfmt, clippy
-          
+
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
@@ -1004,38 +1011,38 @@ jobs:
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          
+
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-          
+
       - name: Install dependencies
         run: pnpm install
-        
+
       - name: Check formatting
         run: pnpm turbo run format:check
-        
+
       - name: Run clippy
         run: pnpm turbo run clippy
-        
+
       - name: Run tests
         run: pnpm turbo run test
-        
+
       - name: Run integration tests
         run: pnpm turbo run test:integration
-        
+
       - name: Build
         run: pnpm turbo run build
-        
+
       - name: Run benchmarks
         run: pnpm turbo run bench
-        
+
       - name: Security audit
         run: |
           cargo audit
@@ -1044,21 +1051,21 @@ jobs:
   coverage:
     name: Coverage
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-        
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           components: llvm-tools-preview
-          
+
       - name: Install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
-        
+
       - name: Generate coverage report
         run: cargo tarpaulin --workspace --out Xml --output-dir target/coverage
-        
+
       - name: Upload to codecov
         uses: codecov/codecov-action@v3
         with:
@@ -1193,6 +1200,7 @@ harness = false
 ## 6. Development Tools Configuration
 
 ### 6.1 justfile Template
+
 ```makefile
 # Development tasks
 default: help
@@ -1262,6 +1270,7 @@ release: test lint audit build
 ```
 
 ### 6.2 rust-toolchain.toml
+
 ```toml
 [toolchain]
 channel = "1.75.0"
@@ -1270,6 +1279,7 @@ profile = "minimal"
 ```
 
 ### 6.3 .gitignore Template
+
 ```gitignore
 # Rust
 /target/
@@ -1310,3 +1320,4 @@ temp/
 # Documentation build
 /docs/book/
 /target/doc/
+```

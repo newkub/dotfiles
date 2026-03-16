@@ -24,6 +24,7 @@ title: follow-unocss
 ### 1. Choose Framework
 
 เลือก framework ที่ต้องการติดตั้ง UnoCSS:
+
 - Next.js → ทำตามขั้นตอนที่ 2
 - Nuxt → ทำตามขั้นตอนที่ 3  
 - Vite → ทำตามขั้นตอนที่ 4
@@ -415,6 +416,7 @@ export default defineConfig({
 #### Import Theme CSS
 
 นำเข้า `theme.css` ในโปรเจกต์:
+
 - Next.js: `app/layout.tsx`
 - Nuxt: `app.vue` หรือ `nuxt.config.ts`
 - Vite: `main.ts`
@@ -424,6 +426,7 @@ export default defineConfig({
 ตรวจสอบการตั้งค่า:
 
 ### Basic Usage
+
 ทดสอบใช้ UnoCSS utilities:
 
 ```html
@@ -433,6 +436,7 @@ export default defineConfig({
 ```
 
 ### Theme Colors
+
 ทดสอบใช้ theme colors:
 
 ```html
@@ -454,6 +458,7 @@ export default defineConfig({
 ```
 
 ### Combined Usage
+
 ทดสอบการใช้ร่วมกับ utilities อื่น:
 
 ```html

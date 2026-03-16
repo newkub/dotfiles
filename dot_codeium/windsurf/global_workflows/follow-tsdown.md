@@ -194,7 +194,7 @@ export default defineConfig({
 
 ### 10.1 Project Structure
 
-```
+```text
 my-library/
 ├── src/
 │   ├── index.ts

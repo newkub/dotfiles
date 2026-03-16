@@ -200,3 +200,4 @@ test.describe('Login Flow', () => {
 tests/e2e  <-- tests/pages, tests/fixtures, tests/utils
 tests/pages <-- tests/utils
 tests/fixtures <-- (no internal dependencies)
+```

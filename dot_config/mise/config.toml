@@ -34,6 +34,7 @@ description = "open windsurf global_workflows"
 dir = "c:/Users/Veerapong/.codeium/windsurf/global_workflows"
 run = "windsurf ."
 
+
 [tasks.open-windsurf-skills]
 description = "open windsurf skills"
 dir = "c:/Users/Veerapong/.codeium/windsurf/skills"
@@ -101,6 +102,7 @@ watchexec = "latest"
 
 
 [settings]
+env_shell_expand = false
 windows_shim_mode = "hardlink"
 
 [settings.npm]

@@ -18,7 +18,7 @@ auto_execution_mode: 3
 
 ### โครงสร้างโฟลเดอร์
 
-```
+```text
 my-turborepo/
 ├── .github/workflows/
 ├── apps/
@@ -28,8 +28,6 @@ my-turborepo/
 ├── turbo.json
 └── bun.lock
 ```
-
-
 
 ### Root package.json
 
@@ -112,7 +110,6 @@ bun add -d turbo lefthook taze node-modules-inspector @ast-grep/cli vitest
 | `node-modules-inspector` | ตรวจสอบ node modules | - |
 | `@ast-grep/cli` | Code search and linting | `/follow-ast-grep` |
 | `vitest` | Testing framework | `/follow-vitest` |
-
 
 ### Git Configuration
 

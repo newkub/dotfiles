@@ -31,6 +31,7 @@ bun create tauri-app
 ```
 
 หรือใช้ command อื่น:
+
 - npm: `npm create tauri-app@latest`
 - yarn: `yarn create tauri-app`
 - pnpm: `pnpm create tauri-app`
@@ -227,16 +228,19 @@ Output จะอยู่ใน `src-tauri/target/release/bundle/`
 ตรวจสอบการตั้งค่า:
 
 ### Development Test
+
 - รัน `bun run tauri:dev` และตรวจสอบว่า app เปิดขึ้นมา
 - ทดสอบการใช้ Tauri APIs ใน frontend
 - ตรวจสอบว่า hot reload ทำงาน
 
 ### Production Build
+
 - รัน `bun run tauri:build` และตรวจสอบว่าสร้าง executable ได้
 - ทดสอบรัน executable ที่สร้างขึ้น
 - ตรวจสอบขนาดไฟล์และ performance
 
 ### Debug Tools
+
 - เปิด Developer Tools ด้วย `Ctrl+Shift+I` (Windows/Linux) หรือ `Cmd+Option+I` (macOS)
 - ตรวจสอบ console สำหรับ errors
 - ใช้ Rust debugger สำหรับ backend logic

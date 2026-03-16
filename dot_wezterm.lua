@@ -18,7 +18,7 @@ config.allow_square_glyphs_to_overflow_width = "Never"
 config.warn_about_missing_glyphs = false
 config.front_end = "OpenGL"
 
-config.use_fancy_tab_bar = false
+config.use_fancy_tab_bar = true
 
 config.tab_max_width = 15
 config.hide_tab_bar_if_only_one_tab = true
@@ -33,6 +33,7 @@ config.colors = {
 }
 
 config.keys = {
+  { key = 'f', mods = 'CTRL', action = wezterm.action.Search { CaseInSensitiveString = '' } },
   { key = 'c', mods = 'CTRL|SHIFT', action = wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
   { key = 'v', mods = 'CTRL|SHIFT', action = wezterm.action.PasteFrom 'Clipboard' },
   { key = 't', mods = 'CTRL', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
@@ -59,8 +60,27 @@ for i = 1, 9 do
   })
 end
 
+-- Custom key table for search mode: Backspace closes search when pattern is empty
+config.key_tables = {
+  search_mode = {
+    { key = 'Enter', mods = 'NONE', action = wezterm.action.CopyMode 'PriorMatch' },
+    { key = 'Escape', mods = 'NONE', action = wezterm.action.CopyMode 'Close' },
+    { key = 'Backspace', mods = 'NONE', action = wezterm.action.CopyMode 'Close' },
+    { key = 'n', mods = 'CTRL', action = wezterm.action.CopyMode 'NextMatch' },
+    { key = 'p', mods = 'CTRL', action = wezterm.action.CopyMode 'PriorMatch' },
+    { key = 'r', mods = 'CTRL', action = wezterm.action.CopyMode 'CycleMatchType' },
+    { key = 'u', mods = 'CTRL', action = wezterm.action.CopyMode 'ClearPattern' },
+    { key = 'PageUp', mods = 'NONE', action = wezterm.action.CopyMode 'PriorMatchPage' },
+    { key = 'PageDown', mods = 'NONE', action = wezterm.action.CopyMode 'NextMatchPage' },
+    { key = 'UpArrow', mods = 'NONE', action = wezterm.action.CopyMode 'PriorMatch' },
+    { key = 'DownArrow', mods = 'NONE', action = wezterm.action.CopyMode 'NextMatch' },
+  },
+}
+
 wezterm.on('gui-startup', function(cmd)
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+  local tab2 = window:spawn_tab { cwd = 'D:\\' }
+  tab:activate()
   window:gui_window():maximize()
 end)
 

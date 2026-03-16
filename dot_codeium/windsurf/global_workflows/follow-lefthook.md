@@ -2,12 +2,11 @@
 trigger: always_on
 ---
 
-
 ## {node, bun} ecosystem
 
 ให้ตั้งค่าตามนี้เสมอ
 
-1. package.json 
+1. package.json
 
 ```json [package.json]
 {
@@ -15,7 +14,6 @@ trigger: always_on
     "prepare": "lefthook install",
   },
 ```
-
 
 2. lefthook.yml
 

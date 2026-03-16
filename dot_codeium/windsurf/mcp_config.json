@@ -1,13 +1,5 @@
 {
   "mcpServers": {
-    "agent-browser": {
-      "args": [
-        "agent-browser",
-        "-y"
-      ],
-      "command": "bunx",
-      "disabled": true
-    },
     "cloudflare-docs": {
       "args": [
         "mcp-remote",
@@ -89,9 +81,6 @@
       ],
       "command": "bunx",
       "disabled": true
-    },
-    "vercel": {
-      "serverUrl": "https://mcp.vercel.com"
     },
     "wezterm-mcp": {
       "args": [

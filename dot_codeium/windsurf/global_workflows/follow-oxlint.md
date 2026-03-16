@@ -2,7 +2,6 @@
 trigger: always_on
 ---
 
-
 1. `bun add -d oxlint oxlint-tsgolint`
 2. package.json`
 
@@ -15,6 +14,7 @@ trigger: always_on
 ```
 
 3. .oxlintrc.json
+
 - `gh download https://github.com/newkub/my-config/blob/main/.oxlintrc.json`
 
 ```json [.oxlintrc.json]

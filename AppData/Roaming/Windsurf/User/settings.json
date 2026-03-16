@@ -275,7 +275,7 @@
 	"vs-browser.favourites.list": {
 		"http://localhost:3000/": "http://localhost:3000/"
 	},
-	"windsurf.completionMode": "off",
+	"windsurf.completionMode": "supercomplete",
 	"[markdown]": {
 		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
 	},
@@ -283,5 +283,9 @@
 		{
 			"path": "c:\\Users\\Veerapong\\Desktop"
 		}
+	],
+	"vp.port": 5173,
+	"rumdl.rules.disable": [
+		"MD013"
 	]
 }

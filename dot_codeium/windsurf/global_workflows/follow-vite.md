@@ -7,14 +7,16 @@ auto_execution_mode: 3
 ## 1. Framework Detection (ใช้เสมอ)
 
 1.1. ตรวจสอบ framework ที่ใช้กับ Vite
-   - ตรวจสอบ dependencies ใน package.json
-   - ตรวจสอบไฟล์ components (.vue, .tsx, .svelte)
+
+- ตรวจสอบ dependencies ใน package.json
+- ตรวจสอบไฟล์ components (.vue, .tsx, .svelte)
 
 1.2. ระบุ framework ที่ใช้
-   - Vue: มี vue ใน dependencies หรือมีไฟล์ .vue
-   - React: มี react ใน dependencies หรือมีไฟล์ .tsx
-   - Svelte: มี svelte ใน dependencies หรือมีไฟล์ .svelte
-   - Solid: มี solid-js ใน dependencies
+
+- Vue: มี vue ใน dependencies หรือมีไฟล์ .vue
+- React: มี react ใน dependencies หรือมีไฟล์ .tsx
+- Svelte: มี svelte ใน dependencies หรือมีไฟล์ .svelte
+- Solid: มี solid-js ใน dependencies
 
 ## 2. Base Configuration (ใช้เสมอ)
 
@@ -103,25 +105,29 @@ export default defineConfig({
 ## 3. Framework-specific Configuration (ใช้เมื่อพบ framework)
 
 3.1. Vue
-   - เพิ่ม framework plugin: ไม่ต้องเพิ่ม (Vue ใช้ built-in)
-   - แทนที่ FRAMEWORK ด้วย 'vue'
-   - แทนที่ checker.vueTsc ด้วย true
-   - ทำ /follow-vite-vue
+
+- เพิ่ม framework plugin: ไม่ต้องเพิ่ม (Vue ใช้ built-in)
+- แทนที่ FRAMEWORK ด้วย 'vue'
+- แทนที่ checker.vueTsc ด้วย true
+- ทำ /follow-vite-vue
 
 3.2. React
-   - เพิ่ม framework plugin: ไม่ต้องเพิ่ม (React ใช้ built-in)
-   - แทนที่ FRAMEWORK ด้วย ['react', 'react-dom']
-   - ทำ /follow-vite-react
+
+- เพิ่ม framework plugin: ไม่ต้องเพิ่ม (React ใช้ built-in)
+- แทนที่ FRAMEWORK ด้วย ['react', 'react-dom']
+- ทำ /follow-vite-react
 
 3.3. Svelte
-   - เพิ่ม framework plugin: svelte() จาก @sveltejs/vite-plugin-svelte
-   - แทนที่ FRAMEWORK ด้วย 'svelte'
-   - ทำ /follow-vite-svelte
+
+- เพิ่ม framework plugin: svelte() จาก @sveltejs/vite-plugin-svelte
+- แทนที่ FRAMEWORK ด้วย 'svelte'
+- ทำ /follow-vite-svelte
 
 3.4. Solid
-   - เพิ่ม framework plugin: solid() จาก vite-plugin-solid
-   - แทนที่ FRAMEWORK ด้วย 'solid-js'
-   - ทำ /follow-vite-solid
+
+- เพิ่ม framework plugin: solid() จาก vite-plugin-solid
+- แทนที่ FRAMEWORK ด้วย 'solid-js'
+- ทำ /follow-vite-solid
 
 ## 4. Vite Plugin Checker Configuration (ใช้เสมอ)
 
@@ -170,7 +176,8 @@ export default defineNuxtConfig({
 ## 5. Code Refactoring (ใช้เสมอ)
 
 5.1. ทำ /refactor
-   - refactor โค้ดให้ถูกต้องตาม framework
+
+- refactor โค้ดให้ถูกต้องตาม framework
 
 ## หมายเหตุ
 

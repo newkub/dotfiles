@@ -34,18 +34,6 @@ title: follow-biome
 		"clientKind": "git",
 		"useIgnoreFile": true
 	},
-	"assist": {
-		"enabled": true
-	},
-	"formatter": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true
-		}
-	}
 }
 ```
 

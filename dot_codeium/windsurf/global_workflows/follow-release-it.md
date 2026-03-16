@@ -2,8 +2,6 @@
 trigger: always_on
 ---
 
-
-
 1. package.json
 
 ``` json [package..json]
@@ -68,4 +66,4 @@ jobs:
 
 ```
 
-4. open https://github.com/{GIHUB_USERNAME}/{GITHUB_REPOSITORY}/settings/secrets/actions
+4. open <https://github.com/{GIHUB_USERNAME}/{GITHUB_REPOSITORY}/settings/secrets/actions>

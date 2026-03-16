@@ -6,7 +6,7 @@ description: สร้าง Nuxt Module ใหม่
 
 ## File Structure
 
-```
+```text
 nuxt-modules/modules/w<module-name>/
 ├── src/
 │   ├── module.ts
@@ -81,3 +81,4 @@ nuxt-modules/modules/w<module-name>/
     "vite": "npm:rolldown-vite@latest"
   }
 }
+```

@@ -1,1 +1,1 @@
-ทุก folder 
+ทุก folder

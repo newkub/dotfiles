@@ -1,9 +1,8 @@
 [
-    // New terminal (when terminal focused)
+    // Toggle terminal
     {
         "key": "ctrl+m",
-        "command": "workbench.action.terminal.focus",
-        "when": "!terminalFocus"
+        "command": "workbench.action.terminal.toggleTerminal"
     },
     // Open Problems panel
     {
@@ -54,8 +53,8 @@
         "command": "workbench.action.closeAllEditors"
     },
     {
-        "key": "ctrl+shift+w",
-        "command": "workbench.action.closeAllGroups"
+        "key": "ctrl+w",
+        "command": "workbench.action.closeAllEditors"
     },
     {
         "key": "ctrl+shift+t",
@@ -76,10 +75,6 @@
         "command": "workbench.action.focusActiveEditorGroup"
     },
     {
-        "key": "ctrl+m",
-        "command": "workbench.action.terminal.focus"
-    },
-    {
         "key": "ctrl+l",
         "command": "windsurf.cascadeViewContainerId"
     },
@@ -95,5 +90,40 @@
     {
         "key": "ctrl+shift+r",
         "command": "npm.focus"
+    },
+    {
+        "key": "ctrl+t",
+        "command": "vscode-browser-tab.open",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "-workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "copyFilePath",
+        "when": "filesExplorerFocus || editorFocus"
+    },
+    {
+        "key": "shift+alt+c",
+        "command": "-copyFilePath",
+        "when": "editorFocus"
+    },
+    {
+        "key": "f11",
+        "command": "workbench.action.toggleZenMode",
+        "when": "!isAuxiliaryWindowFocusedContext"
+    },
+    {
+        "key": "ctrl+k z",
+        "command": "-workbench.action.toggleZenMode",
+        "when": "!isAuxiliaryWindowFocusedContext"
     },
 ]

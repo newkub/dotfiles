@@ -2,5 +2,5 @@
 
 หมายเหตุ
 
-- ทุก utils/, lib/ และอื่นที่ควรมี ต้องมี unit test 
+- ทุก utils/, lib/ และอื่นที่ควรมี ต้องมี unit test
 - ทุก adapter/ ต้องมี integration test
