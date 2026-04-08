@@ -1,74 +1,131 @@
 theme = "github_dark_dimmed"
 
 [keys.normal]
-# VS Code-like keybindings
-C-z = "undo"
-C-Z = "redo"
-C-s = ":w"
-C-S-s = ":wa"
-C-q = ":q"
-C-Q = ":qa"
-C-f = "search"
-# Note: Helix doesn't have built-in replace command like VS Code
-# Use search (/) then c (change) or :search + editing
-C-p = "file_picker"
-C-b = "buffer_picker"
-C-o = ":open"
-C-n = ":new"
-C-w = ":buffer-close"
-C-W = ":buffer-close-others"
-C-a = "select_all"
-"C-/" = "toggle_line_comments"
-"C-]" = "indent"
-"C-[" = "unindent"
-C-d = "delete_selection"
-# Note: duplicate_line not available in Helix, use yy then p instead
-C-up = "move_line_up"
-C-down = "move_line_down"
-tab = "move_next_word_end"
-C-l = "goto_line"
-C-g = "goto_line"
-C-S-p = "command_palette"
-C-S-f = "global_search"
-C-S-l = "extend_line"
-C-S-k = "extend_to_line_bounds"
-C-S-a = "select_all"
-C-k = "keep_primary_selection"
-C-ret = "open_below"
-C-S-ret = "open_above"
-C-x = ":buffer-close"
-C-t = ":sh"
-C-e = ":sh explorer ."
+# VS Code-like keybindings - Full Set
+# File Operations
+C-s = ":w"                           # Save
+C-S-s = ":wa"                        # Save All
+C-q = ":q"                           # Quit
+C-Q = ":qa"                          # Quit All
+C-n = ":new"                         # New File
+C-o = ":open"                        # Open File
+C-w = ":buffer-close"                # Close Tab
+C-W = ":buffer-close-others"         # Close Other Tabs
+
+# Edit Operations (VS Code Standard)
+C-z = "undo"                         # Undo
+C-Z = "redo"                         # Redo
+C-c = ":q"                           # Quit immediately (VS Code Ctrl+C close tab)
+C-y = "yank"                         # Copy (yank) - moved from C-c
+C-v = "paste_clipboard_after"        # Paste
+C-V = "paste_clipboard_before"       # Paste Before
+C-x = "delete_selection"             # Cut (delete and yank)
+C-a = "select_all"                   # Select All
+C-d = "delete_selection"             # Delete Selection
+
+# Find & Replace
+C-f = "search"                       # Find
+# Note: Helix replace - use / to search, then c to change, or :s for substitute
+C-S-f = "global_search"              # Find in Files
+
+# Navigation
+C-p = "file_picker"                  # Quick Open (Go to File)
+C-b = "buffer_picker"                # Switch Tab
+C-g = "goto_line"                    # Go to Line
+C-l = "goto_line"                    # Go to Line (alt)
+C-home = "goto_file_start"           # Go to Start
+C-end = "goto_file_end"             # Go to End
+
+# Line Operations
+C-ret = "open_below"                 # Insert Line Below
+C-S-ret = "open_above"               # Insert Line Above
+C-up = "move_line_up"                # Move Line Up
+C-down = "move_line_down"            # Move Line Down
+# Note: duplicate_line not in Helix - use yy then p instead
+
+# Code Actions
+"C-/" = "toggle_line_comments"       # Toggle Comment
+"C-]" = "indent"                     # Indent
+"C-[" = "unindent"                   # Outdent
+C-S-p = "command_palette"            # Command Palette
+
+# Selection
+C-S-a = "select_all"                 # Select All (alt)
+C-S-l = "extend_line"                # Expand Selection
+C-S-k = "extend_to_line_bounds"      # Expand to Line Bounds
+C-k = "keep_primary_selection"       # Keep Primary Selection
+
+# Word Navigation
+tab = "move_next_word_end"           # Next Word
+
+# Tab Switching - Alt+Arrow keys (easier than Shift+Tab)
+A-left = ":buffer-previous"           # Alt+Left = Previous Tab
+A-right = ":buffer-next"              # Alt+Right = Next Tab
+# Also available: Ctrl+Tab / Ctrl+Shift+Tab
+"C-tab" = ":buffer-next"              # Ctrl+Tab = Next Tab
+"C-S-tab" = ":buffer-previous"        # Ctrl+Shift+Tab = Previous Tab
+
+# Other
+C-t = ":sh"                          # Run Shell
+C-e = ":sh explorer ."               # Open Explorer
+# Note: replace command - use / to search then c to change
 
 [keys.insert]
 # VS Code-like keybindings for insert mode
-C-z = "undo"
-C-Z = "redo"
-C-s = ":w"
-C-c = "normal_mode"
-C-v = "paste_clipboard_before"
-C-f = "search"
-# Note: Helix doesn't have built-in replace command like VS Code
-C-a = "goto_line_start"
-C-e = "goto_line_end"
-C-left = "move_prev_word_start"
-C-right = "move_next_word_end"
-C-home = "goto_file_start"
-C-end = "goto_file_end"
-"C-/" = "toggle_line_comments"
-C-space = "completion"
+# File Operations
+C-s = ":w"                           # Save
+C-S-s = ":wa"                        # Save All
+
+# Edit Operations
+C-z = "undo"                         # Undo
+C-Z = "redo"                         # Redo
+C-c = ":wq"                          # Save and quit (VS Code Ctrl+C behavior)
+C-v = "paste_clipboard_before"       # Paste
+C-V = "paste_clipboard_after"        # Paste after
+C-x = ["yank_main_selection_to_clipboard", "delete_selection"]
+                                     # Cut (yank then delete)
+C-a = "goto_line_start"              # Go to line start
+C-e = "goto_line_end"                # Go to line end
+
+# Navigation - Ctrl+Arrow moves by word (no selection)
+C-left = "move_prev_word_start"      # Move to prev word (no select)
+C-right = "move_next_word_end"       # Move to next word end (no select)
+C-home = "goto_file_start"           # Go to start
+C-end = "goto_file_end"             # Go to end
+
+# Delete word with Ctrl+Backspace (VS Code style)
+C-backspace = "delete_word_backward"   # Delete previous word
+C-del = "delete_word_forward"          # Delete next word (Ctrl+Delete)
+
+# Shift+Arrow for selection (VS Code style)
+# Note: Helix selection requires normal mode - these will enter select mode
+"S-left" = ["normal_mode", "select_mode", "extend_char_left", "exit_select_mode"]
+"S-right" = ["normal_mode", "select_mode", "extend_char_right", "exit_select_mode"]
+
+# Actions
+"C-/" = "toggle_line_comments"       # Toggle comment
+C-space = "completion"               # Trigger completion
+
+# Find
+C-f = "search"                       # Find
+
+# Tab Switching - Alt+Arrow (easier than Shift+Tab)
+A-left = ":buffer-previous"          # Alt+Left = Previous Tab
+A-right = ":buffer-next"             # Alt+Right = Next Tab
+
+# Note: Ctrl+C in insert mode = Save and Quit (like closing VS Code tab)
+# ⚠️ LIMITATION: Helix always starts in NORMAL mode (no default-mode setting)
+# Press 'i' to enter Insert mode immediately after opening file
 
 [editor.statusline]
-left = ["mode", "spacer", "spinner", "file-name", "file-modification-indicator", "read-only-indicator"]
-center = ["version-control"]
-right = ["diagnostics", "selections", "position", "total-line-numbers", "file-encoding", "file-line-ending", "file-type"]
-separator = "▸"
+# Rich statusline with multiple elements
+left = ["mode", "spinner", "spacer", "file-name", "file-modification-indicator", "read-only-indicator", "spacer", "version-control"]
+center = ["workspace-diagnostics", "spacer", "diagnostics"]
+right = ["selections", "primary-selection-length", "spacer", "position", "position-percentage", "total-line-numbers", "spacer", "file-encoding", "file-line-ending", "file-type", "spacer"]
+separator = "│"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
-
-[editor.bufferline]
-bufferline = "multiple"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -86,9 +143,12 @@ git-global = true
 git-exclude = true
 
 [editor]
+# ⚠️ IMPORTANT: Helix doesn't support default-mode setting
+# Always starts in NORMAL mode - press 'i' immediately to edit
 true-color = true
-color-modes = true
-rulers = [80, 120]
+color-modes = true  # Colorful mode indicators in statusline
+# rulers disabled - removed vertical lines on the right
+# rulers = [80, 120]
 indent-guides.render = true
 indent-guides.character = "│"
 indent-guides.skip-levels = 1
@@ -97,6 +157,11 @@ auto-save = true
 auto-format = true
 popup-border = "popup"
 auto-pairs = true
+bufferline = "multiple"
+line-number = "relative"  # "relative" = relative numbers, "absolute" = normal, "relative" = both
+
+[editor.gutters]
+layout = ["diagnostics", "line-numbers", "spacer", "diff"]
 
 [editor.soft-wrap]
 enable = true
