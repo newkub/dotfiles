@@ -1,152 +1,201 @@
 ---
-trigger: always_on
+title: Follow Drizzle
+description: ตั้งค่าและใช้งาน Drizzle ORM สำหรับ TypeScript-first database operations ด้วย SQL-like syntax
+auto_execution_mode: 3
+file-patterns:
+  - "drizzle.config.ts"
+  - "src/db/**/*.ts"
+  - "package.json"
+follow:
+  skills:
+    - "@write-markdown"
+  workflows:
+    - "/validate"
+    - "/connect-workflows"
 ---
 
-# follow-drizzle
+## Purpose
 
-> อ่านและใช้งานที่นี่: `/compact-content`
+ตั้งค่า Drizzle ORM สำหรับ type-safe database operations ด้วย SQL-like syntax, zero dependencies และ excellent TypeScript support
 
-## 1) เป้าหมาย
+## Scope
 
-- **Single source of truth**: schema ใน `server/db/schema/*` เป็นแหล่งความจริงเดียว
-- **Type-safe end-to-end**: query import schema จากจุดเดียว
-- **Reproducible migrations**: generate/migrate ทำซ้ำได้ รัน CI ได้
-- **Boundary ชัดเจน**: schema/query/transport แยกหน้าที่ ไม่ circular dependency
+- ติดตั้ง Drizzle ORM และ Kit
+- กำหนดค่า `drizzle.config.ts`
+- สร้าง database schema และ migrations
+- ใช้งาน query builder แบบ type-safe
 
-## 2) Dependencies & Scripts
+## Inputs
 
-### 2.1 Dependencies
+| Input | Details |
+|-------|-----------|
+| Package Manager | Bun |
+| Database | PostgreSQL, MySQL, SQLite |
+| Runtime | Node.js, Bun, Edge |
 
-- **Runtime**: `drizzle-orm`, `pg`
-- **Dev**: `drizzle-kit`
+## Rules
 
-### 2.2 Scripts
+| Category | Requirements |
+|------|---------|
+| **Installation** | `bun add drizzle-orm` + driver |
+| **Dev Tools** | `bun add -D drizzle-kit` |
+| **Config** | สร้าง `drizzle.config.ts` |
+| **Schema** | กำหนด schema ในไฟล์แยก |
+| **Migrations** | ใช้ drizzle-kit สำหรับ migrations |
 
-เพิ่มใน `package.json` (root/owner ของ db)
+## Structure
 
-```json
-{
-  "scripts": {
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:pull": "drizzle-kit pull",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio --host 0.0.0.0"
-  }
-}
+### Directory Structure
+
+```text
+project/
+├── drizzle.config.ts     # Drizzle config
+├── src/
+│   └── db/
+│       ├── schema.ts     # Table definitions
+│       ├── migrations/   # Migration files
+│       └── index.ts      # Database client
+└── package.json
 ```
 
-> Monorepo: รันผ่าน turbo `--filter=<workspace>`
+### Phase Definitions
 
-## 3) Config: `drizzle.config.ts`
+| Phase | Description | Main Activities |
+|-------|-------------|---------------|
+| Setup | ติดตั้ง | Add packages |
+| Configure | กำหนดค่า | Config file |
+| Schema | ออกแบบ | Define tables |
+| Migrations | สร้าง | Generate & run |
+| Query | ใช้งาน | CRUD operations |
 
-- ห้าม hardcode credentials
-- ใช้ `DB_URL` เป็น `postgres://...` หรือ `postgresql://...`
+## Steps
 
-```ts
-import { defineConfig } from "drizzle-kit";
+### Phase 0: Precondition
+
+- 0.1 **ตรวจสอบ Environment**
+  - มี Bun ติดตั้งแล้ว
+  - มี database server (PostgreSQL/MySQL/SQLite)
+  - มี `package.json` อยู่แล้ว
+
+### Phase 1: Setup
+
+- 1.1 **ติดตั้ง Drizzle**
+  - รัน `bun add drizzle-orm`
+  - ติดตั้ง driver ตาม database:
+    - PostgreSQL: `bun add postgres`
+    - MySQL: `bun add mysql2`
+    - SQLite: `bun add better-sqlite3`
+  - รัน `bun add -D drizzle-kit`
+
+### Phase 2: Configure
+
+- 2.1 **สร้าง drizzle.config.ts**
+  - สร้างไฟล์ `drizzle.config.ts`:
+
+```ts [drizzle.config.ts]
+import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
-  schema: "./server/db/schema/*",
-  out: "./drizzle",
-  dialect: "postgresql",
-  dbCredentials: { url: process.env.DB_URL },
-});
+  schema: './src/db/schema.ts',
+  out: './src/db/migrations',
+  dialect: 'postgresql', // หรือ 'mysql', 'sqlite'
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+  },
+})
 ```
 
-## 4) โครงสร้างโฟลเดอร์
+### Phase 3: Schema
 
-> ยึดตาม app เป็นหลัก เช่น `apps/website/server/db/*`
+- 3.1 **กำหนด Schema**
+  - สร้าง `src/db/schema.ts`:
 
-```txt
-apps/website/
-  server/
-    db/
-      schema/
-        user.schema.ts
-        booking.schema.ts
-        service.schema.ts
-        review.schema.ts
-      client.ts
-      index.ts
-drizzle/
-drizzle.config.ts
+```ts [src/db/schema.ts]
+import { pgTable, serial, varchar, timestamp } from 'drizzle-orm/pg-core'
+
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  name: varchar('name', { length: 255 }),
+  createdAt: timestamp('created_at').defaultNow(),
+})
+
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
 ```
 
-## 5) Rules: Schema Layer
+- 3.2 **สร้าง Database Client**
+  - สร้าง `src/db/index.ts`:
 
-- **Do**: แยก schema ตาม feature, export named, ตั้งชื่อ stable
-- **Don't**: import ข้าม feature (circular), ใส่ query/business logic
+```ts [src/db/index.ts]
+import { drizzle } from 'drizzle-orm/node-postgres'
+import { Client } from 'pg'
+import * as schema from './schema'
 
-### 5.1 ตัวอย่าง schema (Postgres)
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+})
+
+await client.connect()
+export const db = drizzle(client, { schema })
+```
+
+### Phase 4: Migrations
+
+- 4.1 **Generate Migrations**
+  - รัน `bunx drizzle-kit generate`
+  - ตรวจสอบไฟล์ migrations ใน `src/db/migrations/`
+
+- 4.2 **Run Migrations**
+  - รัน `bunx drizzle-kit migrate`
+  - หรือใช้ `bunx drizzle-kit push` สำหรับ development
+
+### Phase 5: Query
+
+- 5.1 **ใช้งาน Database**
+  - Example CRUD operations:
 
 ```ts
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { db } from './db'
+import { users } from './db/schema'
+import { eq } from 'drizzle-orm'
 
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  email: text("email").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
-});
+// Create
+const newUser = await db.insert(users).values({
+  email: 'user@example.com',
+  name: 'John Doe',
+}).returning()
+
+// Read
+const allUsers = await db.select().from(users)
+const user = await db.select().from(users).where(eq(users.id, 1))
+
+// Update
+await db.update(users)
+  .set({ name: 'Jane Doe' })
+  .where(eq(users.id, 1))
+
+// Delete
+await db.delete(users).where(eq(users.id, 1))
 ```
 
-## 6) Rules: Index/Exports
+## Outputs
 
-สร้าง `server/db/index.ts` เป็นจุดเดียวรวม export schema
+| Output | Details |
+|--------|-----------|
+| drizzle.config.ts | ORM configuration |
+| src/db/schema.ts | Table definitions |
+| src/db/index.ts | Database client |
+| migrations/ | Migration files |
 
-```ts
-export * from "./schema/user.schema";
-export * from "./schema/booking.schema";
-export * from "./schema/service.schema";
-export * from "./schema/review.schema";
-```
+## Expected Outcome
 
-### 6.1 Import rules
+- Drizzle ORM ติดตั้งและทำงานได้
+- Schema กำหนดค่าถูกต้อง
+- Migrations สร้างและรันได้
+- Type-safe queries ทำงานได้
 
-- `server/db/schema/*` **ห้าม** import จาก `server/*`
-- `server/*` **ต้อง** import จาก `server/db/index.ts` / `client.ts`
-- `drizzle.config.ts` **ห้าม** import internal code
+## Reference
 
-## 7) Client: DB connection & Drizzle client
-
-- สร้าง `client.ts` รับผิดชอบการสร้าง client
-- validate `DB_URL` ตั้งแต่เริ่ม (fail fast)
-- ใช้ connection pool (`pg.Pool`)
-
-```ts
-// server/db/client.ts
-// 1) read env (DB_URL)
-// 2) create pg Pool
-// 3) create drizzle client
-// 4) export db
-```
-
-## 8) Migration workflow
-
-- **Generate**: schema -> sql artifacts
-- **Migrate**: apply migrations ไป database
-
-```bash
-bun run drizzle:generate
-bun run drizzle:migrate
-```
-
-### 8.1 CI recommendation
-
-- ใช้ DB ชั่วคราว (postgres service)
-- รัน `drizzle:generate` ตรวจไม่มี diff ที่ไม่ commit
-- รัน `drizzle:migrate` แล้วรันทดสอบ
-
-## 9) Query layer best practices
-
-- สร้างไฟล์ query ตาม feature เช่น `server/db/queries/user.queries.ts`
-- รับพารามิเตอร์เป็น type-safe (เช่น `UserId`)
-- หลีกเลี่ยง `any` / stringly-typed SQL
-
-## 10) Checklist ก่อน merge
-
-- schema แยกตาม feature ไม่มี circular
-- import schema ผ่าน `server/db/index.ts`
-- migrations generate + migrate ได้
-- ไม่มี hardcode secrets (`DB_URL` จาก env)
-- รัน lint/test ผ่าน
+- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
+- `/connect-workflows` - เชื่อมโยง workflows

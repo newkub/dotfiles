@@ -1,298 +1,178 @@
 ---
 title: Follow Nuxt
-description: แนวทางการพัฒนาโปรเจกต์ Nuxt ตาม Best Practices
+description: สร้างหรือปรับปรุง Nuxt 3/4 project ด้วย Universal Rendering, Nitro server, Layers และ Modules
 auto_execution_mode: 3
-
-file-patterns:
-  - "**/*.vue"
-  - "**/*.ts"
-  - "**/nuxt.config.ts"
-
-follow:
-  skills:
-    - "@refactor"
-    - "@refactor-vue"
-    - "@refactor-ts"
-
-  workflows:
-    - "/refactor"
-    - "/refactor-vue"
-    - "/refactor-ts"
-    - "/follow-biome"
-    - "/follow-nuxt-composables"
 ---
 
-## Purpose
+1. Project Requirements
 
-กำหนดแนวทางการพัฒนาโปรเจกต์ Nuxt ให้เป็นมาตรฐาน ใช้ best practices และ NuxtHub สำหรับ full-stack deployment
+วิเคราะห์โครงสร้างและความต้องการก่อนเริ่มพัฒนา
 
-## Steps
+- ระบุ Project Location ใน monorepo เช่น `apps/web/`
+- เลือก Nuxt Version ระหว่าง 3.x หรือ 4.x (default: 4.x)
+- กำหนด Rendering Mode: SSR, SSG, CSR, หรือ Hybrid
+- ตัดสินใจใช้ Database หรือไม่ (Drizzle ORM)
+- เลือก UI Framework: UnoCSS, Tailwind, หรืออื่นๆ
+- กำหนด Architecture: ใช้ Layers และ Modules หรือไม่
 
-### Phase 1: Setup
+2. Setup and Development
 
-1. **ตรวจสอบ Library และ Config**
+ดำเนินการตั้งค่าและพัฒนาโปรเจกต์ตามมาตรฐาน
 
-   | Library | ใช้สำหรับ |
-   |---------|-----------|
-   | `@vueuse/nuxt` | Vue composition utilities |
-   | `@unocss/nuxt` | Atomic CSS engine |
-   | `@nuxt/icon` | Icon system |
-   | `@nuxthub/core` | Cloudflare integration, Database, KV, Blob |
+- สร้าง directory structure (`app/`, `layers/`, `server/`, `shared/`)
+- ตั้งค่า `nuxt.config.ts` (extends, modules, nitro, typescript)
+- สร้าง Layers สำหรับแต่ละ feature (ถ้าใช้ Layer architecture)
+- ติดตั้ง dependencies ด้วย `bun add`
+- สร้าง base components, layouts, composables
+- สร้าง server layer (API routes, services, repositories)
+- ตั้งค่า TypeScript, Biome, oxlint
 
-   - ใช้ `bun` เป็น package manager
-   - ใช้ `~/` สำหรับ import alias
-   - ไม่ต้อง import composables/components ที่อยู่ใน `composables/` และ `components/`
+3. Quality Verification
 
-2. **ตั้งค่า NuxtHub**
+ตรวจสอบและยืนยันคุณภาพโค้ดและ build
 
-   ```typescript
-   // nuxt.config.ts
-   export default defineNuxtConfig({
-     modules: ['@nuxthub/core'],
-     hub: {
-       database: true,    // PostgreSQL/SQLite/MySQL
-       kv: true,          // Key-Value storage
-       blob: true,        // File storage
-       cache: true,       // Caching
-     },
-     nitro: {
-       experimental: {
-         wasm: true       // WebAssembly support
-       }
-     }
-   })
-   ```
+- รัน `nuxt typecheck` ตรวจสอบ TypeScript errors
+- รัน Biome และ oxlint ตรวจสอบ code quality
+- รัน `nuxt build` และ `nuxt generate` ยืนยัน build ผ่าน
+- ทดสอบ dev server รันได้โดยไม่มี errors
+- ตรวจสอบ HMR และ auto-imports ทำงานถูกต้อง
 
-### Phase 2: Analyze
+4. Directory Structure
 
-3. **วิเคราะห์โครงสร้างโปรเจกต์**
+ใช้ app/ directory และ layers/ ตามมาตรฐาน Nuxt 4
 
-   ```text
-   ├── app/
-   │   ├── app.vue              # Root component
-   │   ├── app.config.ts        # Runtime app config
-   │   ├── error.vue            # Error page
-   │   ├── assets/              # CSS, fonts, images
-   │   ├── components/          # Vue components (auto-imported)
-   │   │   ├── ui/              # UI primitives
-   │   │   └── [feature]/       # Feature-specific
-   │   ├── composables/         # ดู /follow-nuxt-composables
-   │   ├── layouts/             # Page layouts
-   │   ├── middleware/          # Route middleware
-   │   ├── pages/               # File-based routes
-   │   ├── plugins/             # Vue plugins
-   │   └── utils/               # Helper functions
-   ├── modules/                 # Local modules
-   │   └── [module-name]/
-   │       ├── index.ts
-   │       └── runtime/
-   ├── server/
-   │   ├── api/                 # API routes (/api/*)
-   │   ├── routes/              # Server routes (/*)
-   │   ├── middleware/          # Server middleware
-   │   ├── plugins/             # Nitro plugins
-   │   └── utils/               # Server utilities
-   ├── .data/                   # NuxtHub local data
-   ├── nuxt.config.ts
-   └── wrangler.jsonc           # Cloudflare config
-   ```
+- ใช้ `app/` directory (Nuxt 4 structure)
+- สร้าง `layers/` สำหรับ feature-based architecture
+- จัดกลุ่ม components, composables ตาม feature ในแต่ละ Layer
+- ใช้ auto-imports สำหรับ components และ composables
+- แยก business logic เป็น services และ repositories ใน `server/`
 
-4. **ตรวจสอบ Config Files**
+5. Code Standards
 
-   | ไฟล์ | สิ่งสำคัญ |
-   |------|----------|
-   | `package.json` | `bun`, `"type": "module"`, `@nuxthub/core` |
-   | `nuxt.config.ts` | TypeScript, modules, hub config |
-   | `wrangler.jsonc` | Cloudflare deployment config |
-   | `tsconfig.json` | Nuxt-generated types |
-   | `biome.jsonc` | VCS enabled |
+กำหนดมาตรฐานการเขียนโค้ดสำหรับทุกส่วนของโปรเจกต์
 
-### Phase 3: Execute
+- Vue components: ใช้ `script setup lang="ts"`, script อยู่บน template
+- Composables: ชื่อขึ้นต้นด้วย `use`, อยู่ใน `composables/` หรือ `layers/[feature]/composables/`
+- Server API: ใช้ `defineEventHandler` หรือ `defineNitroPlugin`
+- Types: ไม่ใช้ `any`, กำหนด types ชัดเจนใน `shared/types/`
+- Import: Auto-import สำหรับ Nuxt built-ins, barrel export สำหรับ shared
 
-5. **สร้าง app.vue และ app.config.ts**
+6. Config Requirements
 
-   ```vue
-   <!-- app.vue -->
-   <template>
-     <NuxtLayout>
-       <NuxtPage />
-     </NuxtLayout>
-   </template>
-   ```
+ตั้งค่าไฟล์ config ตามมาตรฐานที่กำหนด
 
-   ```typescript
-   // app.config.ts
-   export default defineAppConfig({
-     theme: {
-       primaryColor: '#3b82f6',
-     },
-   })
-   ```
+- `nuxt.config.ts`: compatibilityDate, extends (layers), modules, nitro preset
+- `package.json`: scripts (build, dev, generate, lint, format, test), type: module
+- `tsconfig.json`: references Nuxt generated configs, strict mode
+- Layer barrel: ทุก folder ต้องมี index.ts สำหรับ exports
+- Data flow: Pages → Components → Composables → Stores → API → Services → Repositories → DB
 
-6. **จัดโครงสร้าง Components**
+7. Performance Optimization
 
-   - `ui/` - UI primitives (Button, Input, Card)
-   - `[feature]/` - Feature-specific components
-   - `shared/` - Shared across features
-   - ใช้ `script setup lang="ts"`
-   - Script อยู่ด้านบน template
+ปรับปรุงประสิทธิภาพของ Nuxt application
 
-7. **จัดโครงสร้าง Composables**
+- ใช้ Vue DevTools performance tab วิเคราะห์ component render times
+- ใช้ computed properties อย่างมีประสิทธิภาพ
+- หลีกเลี่ยง deep reactivity ถ้าไม่จำเป็น
+- ใช้ `v-once` สำหรับ static content
+- implement virtual scrolling สำหรับ long lists
+- ใช้ `keep-alive` สำหรับ expensive components
+- ใช้ tree-shaking อย่างเต็มที่
+- ใช้ dynamic imports สำหรับ routes
+- ใช้ Pinia stores อย่างมีประสิทธิภาพ
 
-   ดูรายละเอียดที่ `/follow-nuxt-composables`:
+8. Related Workflows
 
-   | ชั้น | โฟลเดอร์ | ตัวอย่าง |
-   |------|----------|----------|
-   | 1 | `primitives/` | `useLocalStorage()`, `useDebounce()` |
-   | 2 | `state/` | `useAuthStore()`, `useThemeStore()` |
-   | 3 | `ui/` | `useModal()`, `useDropdown()` |
-   | 4 | `features/` | `useUserProfile()`, `useCheckout()` |
-   | 5 | `domain/` | `useOrderManagement()` |
+- `/follow-nuxt-architecture` - โครงสร้างโปรเจกต์ Nuxt มาตรฐาน
+- `/validate` - ตรวจสอบความถูกต้องของ project structure
+- `/analyze-project` - วิเคราะห์โครงสร้าง project
+- `/optimize-workflows` - ปรับปรุง workflow files
+- `/follow-nuxt-modules` - ตั้งค่า Nuxt modules
+- `/follow-vue` - แนวทางการพัฒนา Vue components
 
-8. **สร้าง Server Structure**
+## Execute
 
-   ```typescript
-   // server/api/users/index.get.ts
-   export default defineEventHandler(async (event) => {
-     const query = await getValidatedQuery(event, z.object({
-       page: z.number().default(1)
-     }).parse)
-     const db = hubDatabase()
-     return { users }
-   })
+1. Setup Phase
 
-   // server/plugins/database.ts
-   export default defineNitroPlugin(async (nitroApp) => {
-     // Initialize database connection
-   })
+เตรียมความพร้อมก่อนเริ่มพัฒนา
 
-   // server/utils/db.ts
-   export function useDB() {
-     return hubDatabase()
-   }
-   ```
+- ตรวจสอบสภาพแวดล้อมและเครื่องมือที่จำเป็น
+- สร้าง backup หรือ commit ก่อนเริ่ม
+- รัน tests เดิมให้ผ่านทั้งหมดก่อนเริ่ม (ถ้ามี)
 
-   - `api/` - API routes สำหรับ `/api/*`
-   - `routes/` - Server routes สำหรับ `/*`
-   - `middleware/` - Server middleware (logging, auth)
-   - `plugins/` - Nitro plugins
-   - `utils/` - Server utilities
+2. Analysis Phase
 
-9. **สร้าง Local Modules**
+วิเคราะห์ความต้องการของโปรเจกต์
 
-   ```typescript
-   // modules/auth/index.ts
-   import { createResolver, defineNuxtModule } from 'nuxt/kit'
+- ระบุ Project Location และ Nuxt Version
+- กำหนด Rendering Mode และ UI Framework
+- วางแผนโครงสร้าง Layers และ Modules
+- ประเมิน dependencies ที่จำเป็น
 
-   export default defineNuxtModule({
-     meta: { name: 'auth' },
-     setup() {
-       const resolver = createResolver(import.meta.url)
-       // Add components, composables, server handlers
-     },
-   })
-   ```
+3. Development Phase
 
-10. **ตั้งค่า Environment**
+ดำเนินการตั้งค่าและพัฒนา
 
-    ```typescript
-    // nuxt.config.ts
-    runtimeConfig: {
-      apiSecret: process.env.NUXT_API_SECRET,
-      public: {
-        apiBase: process.env.NUXT_PUBLIC_API_BASE
-      }
-    }
-    ```
+- สร้าง directory structure ตามที่วางแปลง
+- ตั้งค่า `nuxt.config.ts` และ config อื่นๆ
+- ติดตั้ง dependencies ด้วย `bun add`
+- สร้าง base components, layouts, composables
+- สร้าง server layer (API, services, repositories)
+- สร้าง Layers สำหรับแต่ละ feature (ถ้าใช้)
 
-    - ใช้ `NUXT_PUBLIC_` prefix สำหรับค่าที่ expose ไป client
-    - ใช้ `NUXT_HUB_PROJECT_SECRET_KEY` สำหรับ NuxtHub
-    - สร้าง `.env.example`
+4. Verification Phase
 
-11. **ตรวจสอบ Error & SEO**
+ตรวจสอบความถูกต้องและคุณภาพ
 
-    ```vue
-    <!-- error.vue -->
-    <template>
-      <div>
-        <h1>{{ error.statusCode }}</h1>
-        <p>{{ error.message }}</p>
-        <button @click="handleError">Go Home</button>
-      </div>
-    </template>
-    ```
+- รัน `nuxt typecheck` ตรวจสอบ TypeScript errors
+- รัน Biome และ oxlint ตรวจสอบ code quality
+- รัน `nuxt build` และ `nuxt generate` ยืนยัน build ผ่าน
+- ทดสอบ dev server รันได้โดยไม่มี errors
+- ตรวจสอบ HMR และ auto-imports ทำงานถูกต้อง
 
-    - สร้าง `error.vue` สำหรับ global error handling
-    - ใช้ `useHead` และ `useSeoMeta`
-    - ตั้งค่า `titleTemplate`
+## Rules
 
-12. **ตรวจสอบ Middleware & Layouts**
+1. Architecture Standards
 
-    ```typescript
-    // middleware/auth.ts
-    export default defineNuxtRouteMiddleware((to, from) => {
-      if (!useUser().isLoggedIn) return navigateTo('/login')
-    })
-    ```
+กำหนดมาตรฐานโครงสร้างโปรเจกต์
 
-    - Middleware ใช้ `defineNuxtRouteMiddleware`
-    - Layouts ใช้ `<slot />`
+- ใช้ `app/` directory สำหรับ Nuxt 4
+- สร้าง `layers/` สำหรับ feature-based architecture
+- แยก business logic ออกจาก presentation
+- ใช้ Clean Architecture principles
 
-13. **ใช้ NuxtHub Features**
+2. Code Style Standards
 
-    ```typescript
-    // Database
-    const db = hubDatabase()
-    const result = await db.exec('SELECT * FROM users')
+กำหนดมาตรฐานการเขียนโค้ด
 
-    // KV Storage
-    const kv = hubKV()
-    await kv.set('key', 'value')
-    const value = await kv.get('key')
+- Vue components ใช้ `script setup lang="ts"` เท่านั้น
+- Composables ต้องมี prefix `use`
+- ไม่ใช้ `any` โดยเด็ดขาด
+- ใช้ barrel exports สำหรับทุก folder
 
-    // Blob Storage
-    const blob = hubBlob()
-    await blob.put('file.txt', file)
-    ```
+3. Import and Dependencies
 
-14. **ตรวจสอบ Deployment**
+กำหนดมาตรฐานการ import และ dependencies
 
-    ```typescript
-    // nuxt.config.ts
-    nitro: {
-      preset: 'cloudflare_module',
-      cloudflare: { deployConfig: true, nodeCompat: true }
-    }
-    ```
+- ใช้ auto-imports สำหรับ Nuxt built-ins
+- ใช้ barrel export สำหรับ shared modules
+- ไม่ใช้ relative path ใน cross-layer imports
+- ใช้ import alias หรือ package name
 
-    - ใช้ `cloudflare_module` preset
-    - ตั้งค่า `wrangler.jsonc` สำหรับ Cloudflare
+4. Testing and Quality
 
-### Phase 4: Verify
+กำหนดมาตรฐานการทดสอบและคุณภาพ
 
-15. **รัน Refactor Workflows**
-    - /refactor
-    - /refactor-vue
-    - /refactor-ts
+- รัน type checker ก่อน commit
+- รัน linter และ formatter อย่างสม่ำเสมอ
+- เขียน tests สำหรับ critical paths
+- รักษา code coverage ไม่ให้ลดลง
 
-16. **ตรวจสอบความสมบูรณ์**
-    - รัน `bun run lint`
-    - รัน `bun run build`
-    - รัน `bun run dev` เพื่อทดสอบ
+5. Performance Standards
 
-## Expected Outcome
+กำหนดมาตรฐานประสิทธิภาพ
 
-- โปรเจกต์ใช้ Nuxt + NuxtHub ecosystem ได้อย่างเต็มประสิทธิภาพ
-- โครงสร้างโปรเจกต์เป็นมาตรฐาน (app.vue, app.config.ts, modules, server)
-- Composables และ Server API มี patterns ที่ consistent
-- Code ผ่าน Biome lint/format
-
-## Reference
-
-- `/refactor` - แนวทางการ refactor code
-- `/refactor-vue` - แนวทางการ refactor Vue components
-- `/refactor-ts` - แนวทางการ refactor TypeScript
-- `/follow-biome` - ตั้งค่าและใช้งาน Biome
-- `/follow-nuxt-composables` - แนวทางจัดโครงสร้าง Composables
-- [Nuxt Documentation](https://nuxt.com/docs)
-- [NuxtHub Documentation](https://hub.nuxt.com/docs)
+- วัด performance ก่อนและหลัง optimize
+- ใช้ Vue DevTools วิเคราะห์ bottlenecks
+- หลีกเลี่ยง premature optimization
+- validate improvements ด้วย data

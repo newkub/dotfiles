@@ -1,80 +1,111 @@
 ---
-description: ตั้งค่าและพัฒนา Desktop Applications ด้วย Tauri
-title: follow-tauri
+title: Follow Tauri
+description: ตั้งค่าและพัฒนา Desktop Applications ด้วย Tauri ร่วมกับ frontend frameworks
+auto_execution_mode: 3
+file-patterns:
+  - "src-tauri/**/*.rs"
+  - "tauri.conf.json"
+  - "vite.config.ts"
+follow:
+  skills:
+    - "@write-markdown"
+  workflows:
+    - "/validate"
+    - "/connect-workflows"
 ---
 
-## Objective
+## Purpose
 
-ตั้งค่าและพัฒนา Desktop Applications ด้วย Tauri ร่วมกับ frontend frameworks ต่างๆ
+ตั้งค่า Tauri สำหรับสร้าง Desktop Applications ด้วย web technologies (HTML, CSS, JS) และ Rust backend
 
 ## Scope
 
-- ติดตั้ง Tauri และ dependencies ที่จำเป็น
-- ตั้งค่า Tauri กับ frontend frameworks (Vite, Nuxt)
+- ติดตั้ง Tauri และ dependencies
+- กำหนดค่า Tauri กับ frontend frameworks (Vite, Nuxt)
 - สร้าง desktop application ด้วย web technologies
 - ตั้งค่า configuration files สำหรับ development และ production
 
-## Preconditions
+## Inputs
 
-- มี Rust ติดตั้งแล้ว
-- เลือก frontend framework ที่จะใช้ (Vite, Nuxt)
-- ทำตาม workflow ของ frontend framework ที่เลือกก่อน
+| Input | Details |
+|-------|-----------|
+| Runtime | Bun + Rust |
+| Frontend | Vite, Nuxt, หรืออื่นๆ |
+| OS | Windows, macOS, Linux |
 
-## Execution
+## Rules
 
-### 1. Create Tauri Project
+| Category | Requirements |
+|------|---------|
+| **Frontend** | ทำตาม workflow ของ framework ที่เลือกก่อน |
+| **Tauri API** | ติดตั้ง `@tauri-apps/api` |
+| **CLI** | ติดตั้ง `@tauri-apps/cli` เป็น dev dependency |
+| **Port** | Vite port ต้องตรงกับ tauri.conf.json |
+| **Watch** | ต้อง ignore `src-tauri/` ใน Vite config |
 
-สร้างโปรเจกต์ Tauri ใหม่:
+## Structure
 
-```bash
-bun create tauri-app
+### Directory Structure
+
+```text
+project/
+├── src-tauri/            # Rust backend
+│   ├── Cargo.toml
+│   ├── tauri.conf.json
+│   └── src/
+├── src/                  # Frontend source
+├── vite.config.ts        # Vite config (ถ้าใช้ Vite)
+└── package.json
 ```
 
-หรือใช้ command อื่น:
+### Phase Definitions
 
-- npm: `npm create tauri-app@latest`
-- yarn: `yarn create tauri-app`
-- pnpm: `pnpm create tauri-app`
-- cargo: `cargo create-tauri-app`
+| Phase | Description | Main Activities |
+|-------|-------------|---------------|
+| Setup | สร้างโปรเจกต์ | Create tauri-app |
+| Install | ติดตั้ง dependencies | Tauri API, CLI |
+| Configure | กำหนดค่า | Vite + Tauri config |
+| Develop | พัฒนา | Run dev server |
+| Build | Build | Production build |
 
-### 2. Install Dependencies
+## Steps
 
-ติดตั้ง Tauri API สำหรับ frontend:
+### Phase 0: Precondition
 
-```bash
-bun add @tauri-apps/api
-```
+- 0.1 **ตรวจสอบ Environment**
+  - มี Rust ติดตั้งแล้ว (`rustc --version`)
+  - มี Bun ติดตั้งแล้ว
+  - เลือก frontend framework ที่จะใช้
 
-ติดตั้ง Tauri CLI:
+### Phase 1: Setup
 
-```bash
-bun add -D @tauri-apps/cli
-```
+- 1.1 **สร้าง Tauri Project**
+  - รัน `bun create tauri-app`
+  - เลือก frontend framework ที่ต้องการ
 
-### 3. Configure Tauri with Frontend
+### Phase 2: Install
 
-เลือก framework ที่ใช้:
+- 2.1 **ติดตั้ง Tauri API**
+  - รัน `bun add @tauri-apps/api`
 
-#### Tauri + Vite
+- 2.2 **ติดตั้ง Tauri CLI**
+  - รัน `bun add -D @tauri-apps/cli`
 
-##### Configure Vite
+### Phase 3: Configure
 
-สร้าง/แก้ไข `vite.config.ts`:
+- 3.1 **กำหนดค่า Vite** (ถ้าใช้ Vite)
+  - แก้ไข `vite.config.ts`:
 
-```ts
+```ts [vite.config.ts]
 import { defineConfig } from 'vite'
 
 const host = process.env.TAURI_DEV_HOST
 
 export default defineConfig({
-  // prevent vite from obscuring rust errors
   clearScreen: false,
   server: {
-    // make sure this port matches the devUrl port in tauri.conf.json file
     port: 5173,
-    // Tauri expects a fixed port, fail if that port is not available
     strictPort: true,
-    // if the host Tauri is expecting is set, use it
     host: host || false,
     hmr: host
       ? {
@@ -84,163 +115,43 @@ export default defineConfig({
         }
       : undefined,
     watch: {
-      // tell vite to ignore watching `src-tauri`
       ignored: ['**/src-tauri/**'],
     },
   },
-  // Env variables starting with the item of `envPrefix` will be exposed in tauri's source code through `import.meta.env`.
-  envPrefix: ['VITE_', 'TAURI_ENV_*'],
-  build: {
-    // Tauri uses Chromium on Windows and WebKit on macOS and Linux
-    target:
-      process.env.TAURI_ENV_PLATFORM == 'windows'
-        ? 'chrome105'
-        : 'safari13',
-    // don't minify for debug builds
-    minify: !process.env.TAURI_ENV_DEBUG ? 'esbuild' : false,
-    // produce sourcemaps for debug builds
-    sourcemap: !!process.env.TAURI_ENV_DEBUG,
-  },
+  envPrefix: ['VITE_', 'TAURI_'],
 })
 ```
 
-##### Configure Tauri
+### Phase 4: Develop
 
-สร้าง/แก้ไข `src-tauri/tauri.conf.json`:
+- 4.1 **รัน Development Server**
+  - รัน `bun run tauri dev`
+  - ตรวจสอบ app ทำงานได้
 
-```json
-{
-  "build": {
-    "beforeDevCommand": "bun run dev",
-    "beforeBuildCommand": "bun run build",
-    "devUrl": "http://localhost:5173",
-    "frontendDist": "../dist"
-  }
-}
-```
+### Phase 5: Build
 
-#### Tauri + Nuxt
+- 5.1 **Build Production**
+  - รัน `bun run tauri build`
+  - ตรวจสอบ binaries ใน `src-tauri/target/`
 
-##### Configure Nuxt
+## Outputs
 
-สร้าง/แก้ไข `nuxt.config.ts`:
+| Output | Details |
+|--------|-----------|
+| src-tauri/ | Rust backend code |
+| Desktop App | Executables สำหรับ Windows/macOS/Linux |
+| Config files | tauri.conf.json, vite.config.ts |
 
-```ts
-export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
-  // (optional) Enable the Nuxt devtools
-  devtools: { enabled: true },
-  // Enable SSG
-  ssr: false,
-  // Enables the development server to be discoverable by other devices when running on iOS physical devices
-  devServer: {
-    host: '0',
-  },
-  vite: {
-    // Better support for Tauri CLI output
-    clearScreen: false,
-    // Enable environment variables
-    envPrefix: ['VITE_', 'TAURI_'],
-    server: {
-      // Tauri requires a consistent port
-      strictPort: true,
-    },
-  },
-  // Avoids error [unhandledRejection] EMFILE: too many open files, watch
-  ignore: ['**/src-tauri/**'],
-})
-```
+## Expected Outcome
 
-##### Configure Tauri
+- Tauri project สร้างสำเร็จ
+- Dev server ทำงานได้
+- Frontend และ Rust backend เชื่อมต่อกันได้
+- Production build สร้าง executables ได้
 
-สร้าง/แก้ไข `src-tauri/tauri.conf.json`:
+## Reference
 
-```json
-{
-  "build": {
-    "beforeDevCommand": "bun run dev",
-    "beforeBuildCommand": "bun run generate",
-    "devUrl": "http://localhost:3000",
-    "frontendDist": "../dist"
-  }
-}
-```
-
-### 4. Update Package.json Scripts
-
-เพิ่ม scripts ใน `package.json`:
-
-```json
-{
-  "scripts": {
-    "dev": "vite", // หรือ "nuxt dev" สำหรับ Nuxt
-    "build": "vite build", // หรือ "nuxt generate" สำหรับ Nuxt
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
-  }
-}
-```
-
-### 5. Development
-
-รัน development mode:
-
-```bash
-bun run tauri:dev
-```
-
-ครั้งแรกอาจใช้เวลาสักครู่เพื่อ download และ build Rust dependencies
-
-### 6. Using Tauri APIs
-
-ใช้งาน Tauri APIs ใน frontend:
-
-```ts
-import { invoke } from '@tauri-apps/api/tauri'
-import { open } from '@tauri-apps/api/shell'
-import { writeTextFile, readTextFile } from '@tauri-apps/api/fs'
-
-// เรียกใช้ Rust functions
-const result = await invoke('my_custom_command', { param: 'value' })
-
-// เปิด URL
-await open('https://tauri.app')
-
-// เขียนไฟล์
-await writeTextFile('file.txt', 'Hello Tauri!')
-
-// อ่านไฟล์
-const content = await readTextFile('file.txt')
-```
-
-### 7. Build for Production
-
-สร้าง executable สำหรับ production:
-
-```bash
-bun run tauri:build
-```
-
-Output จะอยู่ใน `src-tauri/target/release/bundle/`
-
-## Validation
-
-ตรวจสอบการตั้งค่า:
-
-### Development Test
-
-- รัน `bun run tauri:dev` และตรวจสอบว่า app เปิดขึ้นมา
-- ทดสอบการใช้ Tauri APIs ใน frontend
-- ตรวจสอบว่า hot reload ทำงาน
-
-### Production Build
-
-- รัน `bun run tauri:build` และตรวจสอบว่าสร้าง executable ได้
-- ทดสอบรัน executable ที่สร้างขึ้น
-- ตรวจสอบขนาดไฟล์และ performance
-
-### Debug Tools
-
-- เปิด Developer Tools ด้วย `Ctrl+Shift+I` (Windows/Linux) หรือ `Cmd+Option+I` (macOS)
-- ตรวจสอบ console สำหรับ errors
-- ใช้ Rust debugger สำหรับ backend logic
+- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
+- `/follow-vite` - ถ้าใช้ Vite
+- `/follow-nuxt` - ถ้าใช้ Nuxt
+- `/connect-workflows` - เชื่อมโยง workflows

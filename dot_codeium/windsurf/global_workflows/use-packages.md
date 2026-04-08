@@ -1,1 +1,1 @@
-package ที่เลือก หรือแต่ละ package คสรนำ packages อะไรที่มีอยู่มาใช้ได้บ้าง
+1. ดู workspace มี packages อะไรบ้าง และ นำอะไรใน packages มาใช้ได้บ้าง

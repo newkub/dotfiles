@@ -1,2 +1,1 @@
-1. /check-file-structure
-2. จัดกลุ่มให้เหมาะสม
+1. ถ้า folder มีเยอะเกินไป ให้ grouping ให้เหมาะสม

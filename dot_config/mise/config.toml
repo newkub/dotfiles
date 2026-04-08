@@ -1,6 +1,6 @@
 [tasks.update]
 description = "update scoop, winget, bun(global), mise, rustup, gh extensions, chezmoi"
-run = "scoop update * && winget upgrade --all && bun update -g && bun upgrade && mise up && mise upgrade && mise self-update -y && rustup self update && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
+run = "winget upgrade Microsoft.PowerShell && scoop update * && winget upgrade --all && bun update -g && bun upgrade && mise up && mise upgrade && mise self-update -y && rustup self update && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc, temp files"
@@ -99,6 +99,9 @@ oxlint = "latest"
 "github:stakpak/agent" = "latest"
 "cargo:cargo-clean-all" = "latest"
 watchexec = "latest"
+cargo-binstall = "latest"
+"cargo:cargo-show-asm" = "latest"
+docker-compose = "latest"
 
 
 [settings]

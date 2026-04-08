@@ -1,132 +1,199 @@
 ---
-description: ตั้งค่าและใช้งาน tsdown สำหรับ bundle TypeScript libraries
-title: follow-tsdown
+title: Follow Tsdown
+description: ตั้งค่าและใช้งาน tsdown สำหรับ bundle TypeScript libraries ด้วย Rolldown - รองรับทุก config options และ plugin ecosystems
+auto_execution_mode: 3
 ---
 
-## 1. Introduction
+## Prompt
 
-tsdown คือ library bundler ที่ออกแบบมาเพื่อความเรียบง่ายและความเร็ว พัฒนาด้วย Rolldown และ Oxc ให้ประสิทธิภาพสูงในการ bundle และสร้าง declaration files
+ตั้งค่า tsdown เป็น library bundler ที่ออกแบบมาเพื่อความเร็วสูงและ type declarations generation โดยใช้ Rolldown
 
-### 1.1 Key Features
+รองรับการติดตั้ง tsdown, กำหนดค่า tsdown.config.ts, เพิ่ม build scripts ใน package.json, และรองรับ multiple output formats (ESM, CJS, IIFE, UMD)
 
-- **Blazing fast**: ใช้ Oxc และ Rolldown ในการ build และสร้าง .d.ts files
-- **Powerful ecosystem**: รองรับ Rollup, Rolldown, unplugin และ Vite plugins
-- **Easy to use**: มีค่าเริ่มต้นที่ชาญฉลาด พร้อมใช้งาน
-- **Seamless migration**: ใช้งานร่วมกับ tsup ได้
+ไม่รวม Application bundling (ใช้ Vite หรือ frameworks อื่น) และ CSS/Asset bundling ที่ซับซ้อน
 
-## 2. Installation
+## Execute
 
-### 2.1 Install Dependencies
+1. วิเคราะห์โปรเจกต์และความต้องการ
 
-ติดตั้ง tsdown เป็น dev dependency:
+- ตรวจสอบว่าเป็น TypeScript library project
+- ยืนยันว่ามี Bun ติดตั้งแล้ว
+- ตรวจสอบว่ามี package.json อยู่แล้ว
+- ระบุ output formats ที่ต้องการ (ESM, CJS, IIFE)
 
-```bash
-bun add -D tsdown
+2. ดำเนินการตั้งค่า tsdown
+
+- ติดตั้ง tsdown ด้วยคำสั่ง `bun add -D tsdown`
+- สร้างไฟล์ tsdown.config.ts พร้อมกำหนด entry, format, dts generation
+- เพิ่ม build scripts ใน package.json (build, build:watch)
+- รัน build เพื่อตรวจสอบว่าทำงานได้ถูกต้อง
+
+3. ตรวจสอบความถูกต้องและยืนยันว่าพร้อมใช้งาน
+
+- ตรวจสอบ output ใน dist/ ว่าสร้างถูกต้อง
+- ยืนยันว่า type declarations (.d.ts) สร้างครบถ้วน
+- ทดสอบ build scripts ว่าทำงานได้
+
+## Rules
+
+1. การติดตั้ง
+
+- ใช้คำสั่ง `bun add -D tsdown` เท่านั้น
+- ติดตั้ง unplugin-vue/rolldown หากต้องการ build Vue components
+- ตรวจสอบ installation สำเร็จก่อนดำเนินการต่อ
+
+2. การกำหนดค่า
+
+- สร้างไฟล์ `tsdown.config.ts` ใช้ TypeScript format
+- ระบุ `entry` เป็น array เช่น `['./src/index.ts']`
+- กำหนด output formats เป็น array เช่น `['esm', 'cjs']`
+- Enable dts generation ด้วย `dts: true` หรือ `dts: { vue: true }`
+
+3. Build Scripts
+
+- เพิ่ม script `"build": "tsdown"` ใน package.json
+- เพิ่ม script `"build:watch": "tsdown --watch"` สำหรับ development
+- เพิ่ม script `"watch": "tsdown --watch"` สำหรับ shortcut
+
+4. Output Configuration
+
+- เปิดใช้ `clean: true` เพื่อล้าง dist ก่อน build
+- เปิดใช้ `treeshake: true` สำหรับ tree shaking
+- เปิดใช้ `minify: true` สำหรับ production build
+
+5. โครงสร้างไฟล์
+
+```text
+project/
+├── tsdown.config.ts      # Bundle config
+├── package.json          # Build scripts
+├── src/
+│   └── index.ts          # Entry point
+└── dist/                 # Output
 ```
 
-หากไม่ได้ใช้ `isolatedDeclarations` ต้องติดตั้ง TypeScript:
+6. Expected Output
 
-```bash
-bun add -D typescript
-```
+- tsdown.config.ts สร้างถูกต้อง
+- package.json มี build scripts ครบถ้วน
+- dist/ มี bundled files (ESM + CJS)
+- dist/*.d.ts มี type declarations ครบถ้วน
 
-### 2.2 Verify Installation
+## Configuration Options Reference
 
-ตรวจสอบเวอร์ชัน:
+### Core Options
 
-```bash
-bunx tsdown --version
-```
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `entry` | `string \| string[] \| Record<string, string>` | `['src/index.ts']` | Entry point(s) for bundling |
+| `format` | `'esm' \| 'cjs' \| 'iife' \| 'umd' \| array` | `'esm'` | Output format(s) |
+| `outDir` | `string` | `'dist'` | Output directory |
+| `platform` | `'node' \| 'neutral' \| 'browser'` | `'node'` | Target platform |
+| `target` | `string \| string[] \| false` | - | Compilation target (e.g., 'node18', 'es2020') |
 
-## 3. Configuration
+### Type Declaration Options
 
-### 3.1 Basic Config
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `dts` | `boolean \| DtsOptions` | auto-detect | Enable .d.ts generation |
+| `dts.vue` | `boolean` | - | Support Vue SFC type generation |
+| `tsconfig` | `string \| boolean` | - | Path to tsconfig.json |
 
-สร้างไฟล์ `tsdown.config.ts`:
+### Dependency Handling
 
-```typescript
-import { defineConfig } from 'tsdown'
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `deps.neverBundle` | `string[]` | - | Packages to never bundle (external) |
+| `deps.alwaysBundle` | `string[]` | - | Packages to always bundle |
+| `external` | `string \| RegExp \| array` | - | External dependencies (deprecated, use deps) |
 
-export default defineConfig({
-  entry: ['./src/index.ts'],
-})
-```
+### Output Options
 
-### 3.2 Advanced Config
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `clean` | `boolean \| string[]` | `true` | Clean directories before build |
+| `sourcemap` | `boolean \| Sourcemap` | `false` | Generate source maps |
+| `minify` | `boolean \| 'dce-only' \| MinifyOptions` | `false` | Minify output |
+| `treeshake` | `boolean \| TreeshakingOptions` | `true` | Tree shaking configuration |
+| `splitting` | `boolean` | `true` | Code splitting |
+| `hash` | `boolean` | `true` | Append hash to chunk filenames |
+| `fixedExtension` | `boolean` | `true` (node) | Use .cjs/.mjs extensions |
 
-```typescript
-import { defineConfig } from 'tsdown'
+### Plugin Options
 
-export default defineConfig({
-  dts: {
-    sourcemap: true,
-    vue: true // กำหนดถ้าใช้ vue
-  },
-  exports: true,
-  entry: "./src/index.ts",
-  format: "esm",
-  clean: true,
-  minify: true,
-  plugins: [],
-  hooks: {}
-})
-```
+| Option | Type | Description |
+|--------|------|-------------|
+| `plugins` | `RolldownPluginOption[]` | Rollup/Rolldown plugins |
+| `alias` | `Record<string, string>` | Path aliases |
+| `define` | `Record<string, string>` | Compile-time defines |
+| `loader` | `ModuleTypes` | File loaders |
+| `globImport` | `boolean` | Enable import.meta.glob |
 
-## 4. Package.json Setup
+### Advanced Options
 
-### 4.1 Scripts
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `bundle` | `boolean` | `true` | Bundle mode (deprecated, use unbundle) |
+| `unbundle` | `boolean` | `false` | Unbundle mode (mirror input structure) |
+| `shims` | `boolean` | `false` | Add shims for CJS/ESM interop |
+| `cjsDefault` | `boolean` | `true` | CJS default export handling |
+| `nodeProtocol` | `boolean \| 'strip'` | `false` | Handle node: protocol |
+| `workspace` | `boolean \| string[]` | - | Enable workspace mode |
+| `watch` | `boolean \| string[]` | `false` | Watch mode |
+| `write` | `boolean` | `true` | Write files to disk |
 
-กำหนด scripts ใน `package.json`:
+### Quality/Reporting Options
 
-```json
-{
-  "scripts": {
-    "build": "tsdown"
-  }
-}
-```
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `attw` | `boolean \| AttwOptions` | `false` | Run arethetypeswrong |
+| `publint` | `boolean \| PublintOptions` | `false` | Run publint |
+| `report` | `boolean \| ReportOptions` | `true` | Enable size reporting |
+| `unused` | `boolean \| UnusedOptions` | `false` | Check unused dependencies |
+| `checks` | `object` | - | Warning control |
+| `failOnWarn` | `boolean` | `false` | Fail on warnings |
 
-### 4.2 TypeScript Config
+### Hooks & Lifecycle
 
-ตั้งค่า `tsconfig.json`:
+| Option | Type | Description |
+|--------|------|-------------|
+| `hooks` | `TsdownHooks \| function` | Build hooks |
+| `onSuccess` | `string \| function` | Command after successful build |
 
-```json
-{
-  "compilerOptions": {
-    "isolatedDeclarations": true,
-    "declarationMap": true
-  }
-}
-```
+## Supported Plugin Ecosystems
 
-## 5. Building
+tsdown รองรับ plugins จากหลาย ecosystems:
 
-### 5.1 Build Command
+### 1. Rolldown Plugins (Native)
+- Built-in support เพราะ tsdown สร้างบน Rolldown
+- ใช้ได้ทันทีไม่มีปัญหา compatibility
 
-รัน build:
+### 2. Unplugin Plugins
+- [unplugin](https://unplugin.unjs.io/) framework รองรับหลาย bundlers
+- Plugins ที่ขึ้นต้นด้วย `unplugin-` ใช้ได้กับ tsdown
+- ตัวอย่าง: `unplugin-vue`, `unplugin-icons`, `unplugin-auto-import`
 
-```bash
-bun run build
-```
+### 3. Rollup Plugins
+- Rolldown compatible กับ Rollup plugin API
+- ใช้ Rollup plugins ได้โดยไม่ต้องแก้ไข
+- หากมี TypeScript errors ให้ใช้ `// @ts-expect-error` หรือ `as any`
 
-### 5.2 Watch Mode
+### 4. Vite Plugins (Limited)
+- Vite plugins ที่ไม่พึ่ง Vite-specific APIs ใช้ได้
+- Plugins ที่พึ่ง Vite internals อาจไม่ทำงาน
 
-ตรวจจับการเปลี่ยนแปลงและ build อัตโนมัติ:
+### Common Plugins
 
-```bash
-bunx tsdown --watch
-```
+| Plugin | Purpose | Install |
+|--------|---------|---------|
+| `unplugin-vue/rolldown` | Vue SFC support | `bun add -D unplugin-vue` |
+| `@rollup/plugin-json` | JSON imports | `bun add -D @rollup/plugin-json` |
+| `@rollup/plugin-node-resolve` | Node resolve | built-in |
+| `@rollup/plugin-commonjs` | CJS support | built-in |
 
-## 6. Output Formats
+## Configuration Templates
 
-### 6.1 Available Formats
-
-- **esm**: ECMAScript Module (default)
-- **cjs**: CommonJS
-- **iife**: Immediately Invoked Function Expression
-- **umd**: Universal Module Definition
-
-### 6.2 Multiple Formats
+### Basic Library
 
 ```typescript
 import { defineConfig } from 'tsdown'
@@ -134,107 +201,89 @@ import { defineConfig } from 'tsdown'
 export default defineConfig({
   entry: ['./src/index.ts'],
   format: ['esm', 'cjs'],
+  dts: true,
+  clean: true,
+  treeshake: true
 })
 ```
 
-## 7. Dependencies
-
-### 7.1 Smart Externalization
-
-- **dependencies**: ไม่ bundle (external)
-- **peerDependencies**: ไม่ bundle (external)
-- **devDependencies**: bundle ถ้าใช้งาน
-
-### 7.2 Override Behavior
+### Vue Library
 
 ```typescript
 import { defineConfig } from 'tsdown'
-
-export default defineConfig({
-  deps: {
-    onlyBundle: ['lodash'], // bundle เฉพาะที่ระบุ
-    neverBundle: ['react'], // ไม่ bundle เฉพาะที่ระบุ
-    alwaysBundle: ['utils'] // bundle เสมอ
-  }
-})
-```
-
-## 8. Declaration Files
-
-### 8.1 Auto-Enable
-
-tsdown จะเปิดใช้ .d.ts generation อัตโนมัติถ้ามี `types` หรือ `typings` field ใน package.json
-
-### 8.2 Performance Optimization
-
-ใช้ `isolatedDeclarations` ใน tsconfig.json เพื่อประสิทธิภาพสูงสุด
-
-## 9. Plugins
-
-### 9.1 Using Plugins
-
-```typescript
-import { defineConfig } from 'tsdown'
-import SomePlugin from 'some-plugin'
+import Vue from 'unplugin-vue/rolldown'
 
 export default defineConfig({
   entry: ['./src/index.ts'],
-  plugins: [SomePlugin()]
+  format: ['esm'],
+  plugins: [
+    Vue({ isProduction: true })
+  ],
+  dts: {
+    vue: true
+  },
+  clean: true,
+  treeshake: true,
+  deps: {
+    neverBundle: [
+      'vue',
+      'vue-router',
+      '@vueuse/core'
+    ]
+  }
 })
 ```
 
-### 9.2 Supported Plugin Types
+### Nuxt Module
 
-- Rolldown plugins
-- Unplugin plugins
-- Rollup plugins
-- บางส่วนของ Vite plugins
+```typescript
+import { defineConfig } from 'tsdown'
+import Vue from 'unplugin-vue/rolldown'
 
-## 10. Best Practices
-
-### 10.1 Project Structure
-
-```text
-my-library/
-├── src/
-│   ├── index.ts
-│   └── utils.ts
-├── tsdown.config.ts
-├── tsconfig.json
-├── package.json
-└── README.md
+export default defineConfig({
+  entry: ['./src/module.ts'],
+  format: ['esm'],
+  platform: 'neutral',
+  plugins: [
+    Vue({ isProduction: true })
+  ],
+  dts: {
+    vue: true
+  },
+  clean: true,
+  treeshake: true,
+  deps: {
+    neverBundle: [
+      '@nuxt/kit',
+      '@nuxt/schema',
+      'vue',
+      'vue-router',
+      '@vueuse/core',
+      'defu',
+      '#app',
+      '#imports'
+    ]
+  }
+})
 ```
 
-### 10.2 Entry Points
-
-ใช้ entry points หลายจุด:
+### Monorepo Workspace
 
 ```typescript
 import { defineConfig } from 'tsdown'
 
 export default defineConfig({
-  entry: {
-    index: './src/index.ts',
-    cli: './src/cli.ts'
-  }
+  workspace: true,
+  entry: ['./packages/*/src/index.ts'],
+  format: ['esm', 'cjs'],
+  dts: true,
+  clean: true
 })
 ```
 
-## 11. Migration from tsup
+## Reference
 
-### 11.1 Config Changes
-
-tsup และ tsdown มี config ที่คล้ายกัน สามารถ migrate ได้ง่าย
-
-### 11.2 CLI Differences
-
-- tsup: `tsup`
-- tsdown: `tsdown`
-
-Options ส่วนใหญ่เหมือนกัน
-
-## 12. Resources
-
-- [Official Documentation](https://tsdown.dev/)
-- [GitHub Repository](https://github.com/rolldown/tsdown)
-- [API Reference](https://tsdown.dev/reference/api/Interface.UserConfig)
+- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
+- `/connect-workflows` - เชื่อมโยง workflows
+- [tsdown Documentation](https://github.com/sxzz/tsdown)
+- [tsdown.dev](https://tsdown.dev)

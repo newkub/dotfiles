@@ -1,189 +1,221 @@
 ---
-title: Update README
-description: อัพเดท README.md ทุก workspace ให้มีรูปแบบที่สอดคล้องกัน
-type: workflow
-version: 1.0.0
+title: Update README Workflow
+description: อัพเดท README.md ให้มีโครงสร้างและเนื้อหาที่สมบูรณ์ตามมาตรฐาน
 auto_execution_mode: 3
-file-patterns:
-  - "**/README.md"
-  - "**/readme.md"
 follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/write-workflows"
-    - "/follow-readme-monorepo"
-    - "/follow-readme-apps"
-    - "/follow-readme-packages"
+- "/follow-workflows-template"
 ---
+
+## Prompt
+
+ใช้ workflow นี้เมื่อต้องการอัพเดท README.md ให้มีโครงสร้างและเนื้อหาที่สมบูรณ์ตามมาตรฐานที่กำหนด
 
 ## Purpose
 
-อัพเดท README.md ทุก workspace ให้มีรูปแบบและข้อมูลที่สอดคล้องกัน
-
-## Scope
-
-ใช้สำหรับ:
-
-- ตรวจสอบ README.md ในทุก workspace
-- อัพเดท README.md ที่ว่างหรือไม่สมบูรณ์
-- ใช้รูปแบบมาตรฐานสำหรับทุก README.md
-- ตรวจสอบความถูกต้องของข้อมูลและ commands
-
-## Inputs
-
-| Input | Details |
-|-------|---------|
-| Workspaces | รายการ workspaces ที่ต้องอัพเดท |
-| Structure | โครงสร้าง monorepo (apps/, packages/) |
-| Standards | รูปแบบมาตรฐานที่ต้องการ |
+กำหนดมาตรฐานการเขียน README.md สำหรับ Wrikka Platform:
+- **โครงสร้างสม่ำเสมอ** — ทุก README ใช้ sections เดียวกัน
+- **เนื้อหาครบถ้วน** — ครอบคลุม Introduction ถึง License
+- **Template ที่ใช้งานได้จริง** — มี code block สำหรับ Root และ Package
+- **ภาษาอังกฤษเข้าใจง่าย** — สื่อสารชัดเจนกับ developer ทุกระดับ
 
 ## Rules
 
-### Check Rules
+- Root README: ต้องมีหัวข้อ Introduction, Problems, Solutions, Features, Packages Overview, Contributing, License
+- Package README: ต้องมีหัวข้อ Introduction, Problems, Solutions, Features, Installation, Usage, Use Cases, Configuration, API Reference, Changelog, License
+- เนื้อหาต้องเป็นภาษาอังกฤษและเข้าใจง่าย
+- ต้องอัพเดทข้อมูลให้เป็นปัจจุบันเสมอ
+- ต้องมีตัวอย่างการใช้งานที่ชัดเจน
+- โครงสร้างต้องสอดคล้องกับ project จริง
 
-| Category | Requirements |
-|----------|--------------|
-| **Main README** | ตรวจสอบ README.md หลักของ workspace |
-| **Apps** | ตรวจสอบ README.md ใน apps/ ทุกตัว |
-| **Packages** | ตรวจสอบ README.md ใน packages/ ทุกตัว |
-| **List** | สร้างรายการ README.md ที่ต้องอัพเดท |
+## Execute
 
-### Update Rules
+1. check : ตรวจสอบสถานะ README.md ปัจจุบัน
+   - อ่านไฟล์ README.md ปัจจุบัน
+   - ตรวจสอบว่ามีโครงสร้างตามที่กำหนดหรือไม่
+   - ตรวจสอบว่าเนื้อหาเป็นปัจจุบันหรือไม่
 
-| Category | Requirements |
-|----------|--------------|
-| **Main** | ใช้ `/follow-readme-monorepo` สำหรับ README.md หลัก |
-| **Apps** | ใช้ `/follow-readme-apps` สำหรับแต่ละ app |
-| **Packages** | ใช้ `/follow-readme-packages` สำหรับแต่ละ package |
-| **Completeness** | ตรวจสอบข้อมูลครบถ้วนในแต่ละส่วน |
+2. analyze : วิเคราะห์โครงสร้างโปรเจกต์และเนื้อหาที่ต้องการ
+   - ตรวจสอบโครงสร้าง apps/ และ packages/
+   - วิเคราะห์ dependencies ที่ใช้จริง
+   - ตรวจสอบว่ามี application อะไรบ้างที่ต้องอธิบาย
 
-## Structure
+3. action : อัพเดทเนื้อหา README.md พร้อมใช้ template ที่กำหนด
+   - เขียน Introduction ที่อธิบายโปรเจกต์ชัดเจน
+   - อธิบาย Problems ที่โปรเจกต์แก้ไข
+   - อธิบาย Solutions และ Features ที่มี
+   - เขียน Installation พร้อมตัวอย่างคำสั่งติดตั้ง
+   - เขียน Usage พร้อมตัวอย่างการใช้งาน Basic และ Advanced
+   - เขียน Use Cases อย่างน้อย 2 สถานการณ์
+   - เขียน Configuration เป็น table format
+   - เขียน API Reference แบบ grouping by function type
+   - เพิ่ม License section (MIT)
+   - Template สำหรับ Root README (Monorepo):
 
-### Directory Structure
+      ```markdown
+      # {Project Name}
 
-```text
-workspace/
-├── README.md              # Main workspace README
-├── apps/
-│   ├── app1/
-│   │   └── README.md      # App-specific README
-│   └── app2/
-│       └── README.md
-└── packages/
-    ├── pkg1/
-    │   └── README.md      # Package-specific README
-    └── pkg2/
-        └── README.md
-```
+      ## Introduction
 
-## Steps
+      {1-2 sentences describing what this project is}
 
-### Phase 1: Setup
+      ## Problems
 
-- 1.1 **เตรียม Context**
-  - อ่าน `/write-workflows` เพื่อเข้าใจมาตรฐาน
-  - ตรวจสอบโครงสร้าง workspaces
-  - ยืนยัน target directories
+      - Problem 1
+      - Problem 2
+      - Problem 3
 
-- 1.2 **กำหนด Scope**
-  - ระบุ workspaces ที่ต้องอัพเดท
-  - กำหนดรูปแบบมาตรฐาน
-  - วางแผนลำดับการอัพเดท
+      ## Solutions
 
-### Phase 2: Research
+      {How this project solves the problems}
 
-- 2.1 **ศึกษา Reference**
-  - อ่าน `/follow-readme-monorepo` workflow
-  - อ่าน `/follow-readme-apps` workflow
-  - อ่าน `/follow-readme-packages` workflow
+      ## Features
 
-- 2.2 **รวบรวมข้อมูล**
-  - รวบรวมข้อมูล apps ทั้งหมด
-  - รวบรวมข้อมูล packages ทั้งหมด
-  - บันทึก dependencies และ relationships
+      - Feature 1
+      - Feature 2
+      - Feature 3
 
-### Phase 3: Analyze
+      ## Packages Overview
 
-- 3.1 **วิเคราะห์โครงสร้าง**
-  - ตรวจสอบ README.md หลัก
-  - ตรวจสอบ README.md ใน apps/
-  - ตรวจสอบ README.md ใน packages/
-  - สร้างรายการที่ต้องอัพเดท
+      | Package | Description | Version | Tags |
+      |---------|-------------|---------|------|
+      | [pkg1](./packages/pkg1) | Description | 1.0.0 | `tag1`, `tag2` |
+      | [pkg2](./packages/pkg2) | Description | 1.0.0 | `tag3` |
 
-- 3.2 **ระบุ Gaps**
-  - หา README.md ที่ขาดหาย
-  - หา README.md ที่ไม่สมบูรณ์
-  - หา README.md ที่ไม่ตรงมาตรฐาน
+      ## Contributing
 
-### Phase 4: Plan
+      {How to contribute guidelines}
 
-- 4.1 **วางแผนอัพเดท**
-  - กำหนดลำดับการอัพเดท (Main → Apps → Packages)
-  - วางแผน content สำหรับแต่ละ README.md
-  - เตรียม templates ที่จำเป็น
+      ## License
 
-### Phase 5: Execute
+      MIT
+      ```
+   - Template สำหรับ Package README (Workspace):
 
-- 5.1 **อัพเดท Main README**
-  - ใช้ `/follow-readme-monorepo` สำหรับ README.md หลัก
-  - ตรวจสอบว่าสร้างเสร็จแล้ว
-  - ตรวจสอบข้อมูล packages และ apps ครบถ้วน
+      ```markdown
+      # {Package Name}
 
-- 5.2 **อัพเดท Apps**
-  - ใช้ `/follow-readme-apps` สำหรับแต่ละ app
-  - ตรวจสอบว่า README.md ของแต่ละ app สร้างเสร็จแล้ว
-  - ตรวจสอบข้อมูลเฉพาะของแต่ละ app ครบถ้วน
+      ## Introduction
 
-- 5.3 **อัพเดท Packages**
-  - ใช้ `/follow-readme-packages` สำหรับแต่ละ package
-  - ตรวจสอบว่า README.md ของแต่ละ package สร้างเสร็จแล้ว
-  - ตรวจสอบข้อมูลเฉพาะของแต่ละ package ครบถ้วน
+      {What this package does}
 
-### Phase 6: Verify
+      ## Problems
 
-- 6.1 **ตรวจสอบรูปแบบ**
-  - ตรวจสอบว่าทุก README.md มีรูปแบบที่สอดคล้องกัน
-  - ตรวจสอบว่าทุก README.md มีข้อมูลครบถ้วน
-  - ตรวจสอบ formatting เป็นมาตรฐาน
+      - Problem this package solves
 
-- 6.2 **ตรวจสอบ Content**
-  - ตรวจสอบว่า commands ทั้งหมดถูกต้อง
-  - ตรวจสอบว่า examples ทั้งหมดใช้งานได้จริง
-  - ตรวจสอบ links และ references
+      ## Solutions
 
-### Phase 7: Review
+      {How this package solves it}
 
-- 7.1 **ตรวจสอบคุณภาพ**
-  - อ่านทวนเนื้อหาทั้งหมด
-  - ตรวจสอบความชัดเจนของภาษา
-  - ตรวจสอบ formatting
+      ## Features
 
-### Phase 8: Finalize
+      - Feature 1
+      - Feature 2
+      - Feature 3
 
-- 8.1 **สรุปผลงาน**
-  - สรุปรายการ README.md ที่อัพเดท
-  - ยืนยันความสมบูรณ์
+      ## Installation
 
-## Outputs
+      ```bash
+      bun install {package-name}
+      ```
 
-| Output | Details |
-|--------|---------|
-| Updated READMEs | รายการ README.md ที่อัพเดท |
-| Consistency | รูปแบบสอดคล้องกัน |
-| Completeness | ข้อมูลครบถ้วน |
+      ## Usage
+
+      ### Basic
+
+      ```typescript
+      import { something } from '{package-name}';
+
+      // Basic usage example
+      const result = something();
+      ```
+
+      ### Advanced
+
+      ```typescript
+      import { advanced } from '{package-name}';
+
+      // Advanced usage with options
+      const result = advanced({
+        option: 'value'
+      });
+      ```
+
+      ## Use Cases
+
+      ### Use Case 1: {Scenario name}
+
+      {Description of when to use this}
+
+      ```typescript
+      import { feature } from '{package-name}';
+
+      // Implementation for this use case
+      const result = feature({
+        specificOption: 'value'
+      });
+      ```
+
+      ### Use Case 2: {Another scenario}
+
+      {Description}
+
+      ```typescript
+      // Code example
+      ```
+
+      ## Configuration
+
+      | Option | Type | Default | Description |
+      |--------|------|---------|-------------|
+      | option1 | string | 'default' | Description |
+      | option2 | boolean | true | Description |
+
+      ## API Reference
+
+      ### Core Functions
+
+      | Function | Params | Returns | Description |
+      |----------|--------|---------|-------------|
+      | `functionName` | - | `ReturnType` | Description |
+      | | `param: Type` | | Parameter description |
+      | | `options: Options` | | Options description |
+
+      ### Utility Functions
+
+      | Function | Params | Returns | Description |
+      |----------|--------|---------|-------------|
+      | `anotherFn` | - | `Result` | Description |
+      | | `input: string` | | Input parameter |
+
+      ## Changelog
+
+      See [CHANGELOG.md](./CHANGELOG.md) for release history.
+
+      ## License
+
+      MIT
+      ```
+
+4. validate : ตรวจสอบความถูกต้องของเนื้อหา
+   - ตรวจสอบว่าโครงสร้างตามที่กำหนด
+   - ยืนยันว่าตัวอย่างการใช้งานถูกต้อง
+   - ตรวจสอบว่าไม่มีข้อมูลที่ผิดพลาด
+
+5. verify : ยืนยันผลลัพธ์สุดท้าย
+   - ตรวจสอบว่า README.md อัพเดทสำเร็จ
+   - ยืนยันว่าเนื้อหาสอดคล้องกับโปรเจกต์จริง
+   - ตรวจสอบว่ารูปแบบ markdown ถูกต้อง
+
+6. review : ทบทวนผลลัพธ์และกระบวนการเพื่อความมั่นใจ
+   - ตรวจสอบอีกครั้งว่าทุกอย่างถูกต้อง
+   - ยืนยันว่าไม่มีปัญหาที่ถูกมองข้าม
+   - ตรวจสอบว่า workflow ทำงานได้ตามที่คาดหวัง
 
 ## Expected Outcome
 
-- ทุก README.md มีรูปแบบที่กำหนด
-- ข้อมูลใน README.md ครบถ้วนและถูกต้อง
-- Commands และ examples ทำงานได้จริง
-- รูปแบบสอดคล้องกันในทุก workspace
-
-## Reference
-
-- `/follow-readme-monorepo` - สำหรับ README.md หลัก
-- `/follow-readme-apps` - สำหรับ apps
-- `/follow-readme-packages` - สำหรับ packages
-- `/write-workflows` - มาตรฐานการเขียน workflow
-- `@write-markdown` - แนวทางการเขียน Markdown
+README.md ที่อัพเดทแล้ว:
+- ใช้โครงสร้างตามมาตรฐานที่กำหนด
+- มีเนื้อหาครบถ้วนตั้งแต่ Introduction ถึง License
+- มีตัวอย่างการใช้งานที่ชัดเจนและถูกต้อง
+- สอดคล้องกับโครงสร้างโปรเจกต์จริง
+- เขียนด้วยภาษาอังกฤษที่เข้าใจง่าย

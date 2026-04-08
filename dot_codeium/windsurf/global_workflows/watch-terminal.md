@@ -1,93 +1,65 @@
 ---
-title: Watch Terminal
-description: ตรวจสอบ process ที่กำลังรัน (windsurf, wezterm, code) และ watch terminal ไปเรื่อยๆ จนกว่าจะปิด
+title: Watch Terminal Workflow
+description: เปิดเบราว์เซอร์และ watch ต่อเรื่อยๆ ทุก 5 วินาที พร้อมจัดการ error อัตโนมัติ
 auto_execution_mode: 3
-
-file-patterns:
-  - "**/*.md"
-
 follow:
-  skills: []
-
-  workflows:
-    - "/run-dev"
-
-  files: []
-
-  mcp: []
+- "/run-dev"
+- "/fix-error"
 ---
+
+## Prompt
+
+ใช้ workflow นี้เมื่อต้องการเปิดเบราว์เซอร์เพื่อดูผลลัพธ์และ watch terminal ทุกๆ 5 วินาที พร้อมจัดการ errors ที่เกิดขึ้นอัตโนมัติ
 
 ## Purpose
 
-ตรวจสอบว่ามีโปรแกรมที่เกี่ยวข้องกับการพัฒนา (windsurf, wezterm, code) กำลังรันอยู่หรือไม่ หากมีให้ watch terminal ต่อไปเรื่อยๆ ทุกๆ 5 วินาที
-จนกว่าผู้ใช้จะปิดโปรแกรม แล้วจึงเริ่ม run-dev
+ช่วยให้สามารถตรวจสอบและจัดการปัญหาใน development server ได้อย่างต่อเนื่องโดยการ watch terminal ทุก 5 วินาทีและแก้ไข errors อัตโนมัติ
 
-## Steps
+## Rules
 
-1. **ตรวจสอบ Process ที่กำลังรัน**
+- ต้องรัน development server ก่อนเสมอ
+- ต้องแก้ไข errors ที่พบก่อนดำเนินการต่อ
+- ต้องเปิดเบราว์เซอร์เพื่อดูผลลัพธ์
+- ต้อง watch terminal ทุก 5 วินาทีต่อเนื่อง
 
-   รันคำสั่ง PowerShell เพื่อดูรายละเอียด process:
+## Execute
 
-   ```powershell
-   Get-Process windsurf,wezterm*,code -ErrorAction SilentlyContinue |
-   Where-Object {$_.StartTime} |
-   Sort-Object @{Expression={$_.MainWindowTitle -eq ""};Descending=$false},
-                StartTime -Descending |
-   Select-Object @{n="Process";e={$_.ProcessName}},
-                @{n="PID";e={$_.Id}},
-                @{n="Threads";e={$_.Threads.Count}},
-                @{n="CPU_sec";e={"$([math]::Round($_.CPU,2)) s"}},
-                @{n="RAM_MB";e={"$([math]::Round($_.WS/1MB,2)) MB"}},
-                @{n="Handles";e={$_.HandleCount}},
-                @{n="Priority";e={$_.BasePriority}},
-                @{n="Responding";e={$_.Responding}},
-                @{n="StartTime";e={$_.StartTime.ToString("HH:mm:ss")}},
-                MainWindowTitle |
-   Format-Table -AutoSize
-   ```
+1. check : ตรวจสอบสถานะ project และ environment
+   - ตรวจสอบว่าอยู่ใน project directory ที่ถูกต้อง
+   - ตรวจสอบว่ามี development script ใน package.json
+   - ตรวจสอบว่า dependencies ถูกติดตั้งครบถ้วน
 
-2. **วิเคราะห์ผลลัพธ์**
+2. analyze : วิเคราะห์สถานะปัจจุบันและปัญหาที่อาจเกิดขึ้น
+   - วิเคราะห์ว่ามี errors หรือ warnings อยู่ในปัจจุบันหรือไม่
+   - ตรวจสอบว่า development server สามารถรันได้หรือไม่
+   - ประเมินว่าต้องการแก้ไขปัญหาอะไรก่อนเริ่ม watch
 
-   - ถ้าไม่มี process ใดๆ รันอยู่ → ข้ามไป step 6 (run-dev)
-   - ถ้ามี process รันอยู่ → ไป step 3 (watch loop)
+3. action : ดำเนินการตามขั้นตอน
+   - รัน development server ด้วย /run-dev
+   - แก้ไข errors ที่พบด้วย /fix-error
+   - เปิดเบราว์เซอร์เพื่อดูผลลัพธ์
+   - เริ่มการ watch terminal ทุก 5 วินาที
 
-3. **เริ่ม Watch Loop**
+4. validate : ตรวจสอบความถูกต้องของการดำเนินการ
+   - ตรวจสอบว่า development server รันสำเร็จ
+   - ยืนยันว่า errors ถูกแก้ไขหมดแล้ว
+   - ตรวจสอบว่าเบราว์เซอร์แสดงผลลัพธ์ถูกต้อง
 
-   - แสดงสถานะ "Watching terminal... กด Ctrl+C เพื่อหยุด"
-   - รอ 5 วินาที
-   - ตรวจสอบ process อีกครั้ง
+5. verify : ยืนยันผลลัพธ์สุดท้าย
+   - ตรวจสอบว่า terminal watch ทำงานทุก 5 วินาที
+   - ยืนยันว่าสามารถตรวจจับและแก้ไข errors ใหม่ๆ ได้
+   - ตรวจสอบว่าเบราว์เซอร์แสดงการเปลี่ยนแปลงแบบ real-time
 
-4. **ตรวจสอบ Process ซ้ำ**
-
-   รันคำสั่งเดิมอีกครั้งเพื่อดูว่ายังมี process รันอยู่หรือไม่:
-
-   ```powershell
-   $processes = Get-Process windsurf,wezterm*,code -ErrorAction SilentlyContinue
-   if ($processes) {
-       # ยังมี process รันอยู่ → กลับไป step 3
-   } else {
-       # ไม่มี process แล้ว → ไป step 5
-   }
-   ```
-
-5. **หยุด Watch**
-
-   - แสดงข้อความ "All processes closed. Starting development server..."
-   - รอ 1 วินาทีเพื่อให้แน่ใจว่า process ปิดสนิท
-
-6. **/run-dev**
-
-   - เริ่ม development server ด้วย workflow /run-dev
+6. review : ทบทวนผลลัพธ์และกระบวนการเพื่อความมั่นใจ
+   - ตรวจสอบอีกครั้งว่า watch system ทำงานได้ตามที่คาดหวัง
+   - ยืนยันว่าไม่มีปัญหาที่ถูกมองข้าม
+   - ตรวจสอบว่า workflow สามารถจัดการ errors ได้อย่างมีประสิทธิภาพ
 
 ## Expected Outcome
 
-- แสดงรายการ process ที่กำลังรันพร้อมรายละเอียดครบถ้วน
-- Watch terminal ต่อเนื่องทุกๆ 5 วินาที จนกว่าผู้ใช้จะปิดโปรแกรมทั้งหมด
-- เริ่ม run-dev อัตโนมัติเมื่อ process ทั้งหมดปิดแล้ว
-- ไม่มีการข้ามขั้นตอนหรือเริ่ม run-dev ก่อนเวลา
+Development environment ที่ทำงานได้อย่างต่อเนื่อง:
+- Development server รันอยู่เสมอ
+- Errors ถูกตรวจจับและแก้ไขอัตโนมัติ
+- เบราว์เซอร์แสดงผลลัพธ์แบบ real-time
+- Terminal ถูก watch ทุก 5 วินาทีต่อเนื่อง
 
-## Reference
-
-- `/run-dev` - รัน development server เมื่อ process ทั้งหมดปิดแล้ว
-- [PowerShell Get-Process](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-process) - Documentation สำหรับดู process information
-- [Process Monitoring Best Practices](https://docs.microsoft.com/en-us/windows/win32/procthread/process-management) - Microsoft Windows Process Management

@@ -1,230 +1,160 @@
 ---
-trigger: always_on
-description: ตั้งค่าและพัฒนาโปรเจกต์ Bun ด้วย TypeScript และ Effect-TS
-instruction:
-  - ตั้งค่า package.json ด้วย scripts พื้นฐานสำหรับ Bun
-  - ทำตาม workflows ย่อยตามลำดับที่กำหนด
-  - ใช้ Bun เป็น package manager
-  - ใช้ Effect-TS สำหรับจัดการ side effects
-condition:
-  - ใช้เมื่อสร้างโปรเจกต์ Bun ใหม่
-  - ใช้เมื่อพัฒนาโปรเจกต์ Bun
-goal:
-  - สร้างโปรเจกต์ Bun ที่มีโครงสร้างที่เหมาะสม
-  - ใช้ TypeScript 5.x, Effect-TS และ strict mode
-input:
-  - โปรเจกต์ Bun ที่ต้องการตั้งค่าหรือพัฒนา
-output:
-  - โปรเจกต์ Bun ที่มี configuration ครบถ้วน
-  - โครงสร้างโปรเจกต์ที่ถูกต้องตาม best practices
-outcome:
-  - โปรเจกต์ Bun พร้อมใช้งานด้วย TypeScript 5.x และ Effect-TS
-  - โค้ดที่มีคุณภาพและเป็นไปตาม best practices
+title: Follow Bun
+description: แนวทางการใช้งาน Bun native APIs ให้เต็มประสิทธิภาพ โดยใช้ทั้ง Bun-specific APIs และ Web-standard APIs ที่ Bun รองรับ
+auto_execution_mode: 3
 ---
 
-# การตั้งค่าและพัฒนาโปรเจกต์ Bun
+## Prompt
 
-## 0. การทำตาม Workflows ย่อย (ใช้เสมอ)
+ใช้สำหรับพัฒนาโปรเจกต์ด้วย Bun native APIs ให้เต็มประสิทธิภาพ โดยใช้ทั้ง Bun-specific APIs และ Web-standard APIs ที่ Bun รองรับ
 
-### 0.1. หลักการทำตาม Workflows ย่อย
+## Execute
 
-- อ่านและทำตาม workflow ย่อยทั้งหมดให้ครบถ้วน
-- ทำตามลำดับที่ระบุ รวมถึง dependencies ระหว่าง workflows
-- ตรวจสอบความครบถ้วนของไฟล์และ configuration ที่ระบุ
-- แจ้งเมื่อพบ workflow ย่อยที่ไม่มีอยู่
+1. วิเคราะห์ความต้องการและเลือก APIs ที่เหมาะสม
 
----
+- ตรวจสอบว่าต้องการ Bun native APIs หรือ Web APIs
+- ประเมิน performance requirements และ use case
+- เลือก APIs ที่เหมาะสมกับงาน (HTTP server, file I/O, networking, database, etc.)
 
-## 1. Installation (ใช้เสมอ)
+2. ดำเนินการพัฒนาตาม Bun APIs best practices
 
-### 1.1. ติดตั้ง Dependencies
+- ใช้ `Bun.serve()` สำหรับ HTTP server แทน Node.js http module
+- ใช้ `$` shell template literal สำหรับ shell commands
+- ใช้ `Bun.file()` และ `Bun.write()` สำหรับ file operations
+- ใช้ `Bun.spawn()` หรือ `Bun.spawnSync()` สำหรับ child processes
+- ใช้ Web-standard APIs เมื่อเป็นไปได้ (fetch, ReadableStream, etc.)
 
-**1.1.1. ติดตั้ง TypeScript 5.x**
-- รัน: `bun add -D typescript @types/node`
+3. ตรวจสอบและ optimize การใช้งาน Bun APIs
 
-**1.1.2. ติดตั้ง Effect-TS**
-- รัน: `bun add effect @effect/schema`
+- ยืนยันว่าใช้ Bun APIs อย่างถูกต้องตาม documentation
+- ตรวจสอบ error handling และ edge cases
+- เปรียบเทียบ performance กับ alternative approaches
 
-**1.1.3. ติดตั้ง Development Tools**
-- รัน: `bun add -D vitest @vitest/ui`
+## Rules
 
-**1.1.4. ติดตั้ง Linting Tools**
-- รัน: `bun add -D oxlint oxlint-tsgolint`
+1. HTTP Server APIs
 
----
+- `Bun.serve()` - HTTP server สำหรับสร้าง web server พร้อม routing และ WebSocket support
+- `Bun.websocket()` - WebSocket server สำหรับ real-time communication
+- รองรับ TLS, cookies, error handling, และ metrics
 
-## 2. Package.json Setup (ใช้เสมอ)
+2. Shell & Process APIs
 
-### 2.1. สร้าง package.json
+- `$` - Shell template literal สำหรับรัน shell commands แบบ cross-platform
+- `Bun.spawn()` - Spawn child process (async) คืน `Subprocess` object
+- `Bun.spawnSync()` - Spawn child process (sync) คืน `SpawnSyncResult`
+- รองรับ stdin/stdout/stderr redirection, environment variables
 
-**2.1.1. สร้างไฟล package.json**
-- สร้างไฟล์ `package.json` ใน root ของโปรเจกต์
-- ตั้งค่า scripts พื้นฐานสำหรับ Bun
+3. File I/O APIs
 
-**2.1.2. Scripts ที่ต้องมี**
-- `watch`: สำหรับ watch mode
-- `prepare`: สำหรับ setup หลัง install
-- `preinstall`: สำหรับ update dependencies
-- `dev`: สำหรับ development
-- `build`: สำหรับ production build
-- `lint`: สำหรับ linting
-- `test`: สำหรับ running tests
-- `typecheck`: สำหรับ type checking
-- `verify`: สำหรับ verify ก่อน deploy
+- `Bun.file()` - สร้าง `BunFile` object สำหรับอ่านไฟล์ (lazy loading)
+- `Bun.write()` - เขียนไฟล์ รองรับ string, Blob, ArrayBuffer, Response
+- `Bun.stdin` / `Bun.stdout` / `Bun.stderr` - Standard streams
 
-**2.1.3. ตัวอย่าง package.json**
+4. Networking APIs
 
-```json
-{
-  "type": "module",
-  "engines": {
-    "bun": ""
-  },
-  "scripts": {
-    "watch": "bun --watch verify",
-    "prepare": "lefthook install",
-    "preinstall": "bun update --latest",
-    "dev": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir ./dist --target bun",
-    "lint": "oxlint --fix --type-aware",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "verify": "bun run lint && bun run typecheck && bun run test && bun run build"
-  }
-}
-```
+- `Bun.listen()` - TCP server สำหรับสร้าง TCP listener
+- `Bun.connect()` - TCP client สำหรับเชื่อมต่อ TCP server
+- `Bun.udpSocket()` - UDP socket สำหรับ UDP communication
+- `Bun.dns.lookup()` - DNS resolution พร้อม prefetch และ cache
 
----
+5. Bundler & Build APIs
 
-## 3. Script Rules (ใช้เสมอ)
+- `Bun.build()` - Bundle JavaScript/TypeScript/CSS/HTML ด้วย esbuild-compatible API
+- `Bun.plugin()` - Register build plugin สำหรับ custom loaders
+- `Bun.Transpiler()` - Transpile code (TypeScript, JSX, TSX) เป็น JavaScript
+- `Bun.FileSystemRouter()` - File-based routing สำหรับ building frameworks
 
-### 3.1. Scripts ที่ต้องมี
+6. Database APIs
 
-| Script | คำสั่ง | คำอธิบาย |
-|--------|----------|-------------|
-| `watch` | `bun --watch verify` | Watch mode |
-| `prepare` | `lefthook install` | Setup หลัง install |
-| `preinstall` | `bun update --latest` | Update dependencies |
-| `dev` | `bun run src/index.ts` | Development |
-| `build` | `bun build src/index.ts --outdir ./dist --target bun` | Production build |
-| `lint` | `oxlint --fix --type-aware` | Linting |
-| `test` | `vitest` | Running tests |
-| `typecheck` | `tsc --noEmit` | Type checking |
-| `verify` | `bun run lint && bun run typecheck && bun run test && bun run build` | Verify ก่อน deploy |
+- `bun:sqlite` - Built-in SQLite driver สำหรับ high-performance queries
+- `Bun.SQL` / `Bun.sql` - SQL client สำหรับ PostgreSQL/MySQL ด้วย prepared statements
+- `Bun.RedisClient` / `Bun.redis` - Built-in Redis client สำหรับ Redis operations
 
----
+7. Hashing & Crypto APIs
 
-## 4. Configuration Files (ใช้เสมอ)
+- `Bun.password` - Password hashing (bcrypt, argon2, scrypt) พร้อม verification
+- `Bun.hash()` - Fast hash function สำหรับ general purpose hashing
+- `Bun.CryptoHasher()` - Streaming crypto hasher (SHA-1, SHA-256, SHA-512, MD5)
+- `Bun.sha` - SHA hash utilities (sha-256, sha-384, sha-512, sha-512-256)
 
-### 4.1. การตั้งค่า Configuration Files
+8. Utilities APIs
 
-**4.1.1. ลำดับการตั้งค่า**
-- ทำตาม `/follow-config-file` เพื่อตั้งค่า `tsconfig.json`
+- `Bun.sleep()` / `Bun.sleepSync()` - Sleep for milliseconds
+- `Bun.nanoseconds()` - High-resolution timer (monotonic)
+- `Bun.randomUUIDv7()` - Generate UUID v7 (time-ordered)
+- `Bun.which()` - Find executable path (cross-platform `which`)
+- `Bun.peek()` - Peek value from Promise (non-blocking)
+- `Bun.deepEquals()` - Deep equality comparison
+- `Bun.inspect()` - Object inspection (Node.js util.inspect compatible)
+- `Bun.escapeHTML()` - HTML escape special characters
+- `Bun.stringWidth()` - Calculate display width (handles Unicode, ANSI)
 
-**4.1.2. ความสำคัญของแต่ละ Configuration**
-- `tsconfig.json`: TypeScript configuration
-- `.oxlintrc.json`: Linting configuration (ทำตาม `/follow-oxlint`)
+9. Compression APIs
 
-**4.1.3. ตัวอย่าง tsconfig.json**
+- `Bun.gzipSync()` / `Bun.gunzipSync()` - Gzip compression/decompression
+- `Bun.deflateSync()` / `Bun.inflateSync()` - Deflate compression/decompression
+- `Bun.zstdCompressSync()` / `Bun.zstdDecompressSync()` - Zstd compression
+- `Bun.zstdCompress()` / `Bun.zstdDecompress()` - Async Zstd compression
 
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-    "useUnknownInCatchVariables": true,
-    "skipLibCheck": false
-  }
-}
-```
+10. Streams & Buffer APIs
 
----
+- `Bun.readableStreamTo*()` - Convert ReadableStream (toBlob, toArrayBuffer, toJSON, etc.)
+- `Bun.ArrayBufferSink` - Accumulate data into ArrayBuffer
+- `Bun.allocUnsafe()` - Allocate ArrayBuffer without zeroing (faster)
+- `Bun.concatArrayBuffers()` - Concatenate multiple ArrayBuffers
 
-## 5. Project Structure (ใช้เสมอ)
+11. Data Parsing APIs
 
-### 5.1. วางโครงสร้างโปรเจกต์
-- ทำตาม `/follow-project-structure`
+- `Bun.TOML.parse()` - Parse TOML files
+- `Bun.markdown()` - Parse and manipulate Markdown
+- `Bun.color()` - Color parsing and manipulation (RGB, HSL, HEX, CSS names)
+- `Bun.semver` - Semantic version parsing and comparison
+- `Bun.Glob` - Glob pattern matching (fast file matching)
+- `Bun.Cookie` / `Bun.CookieMap` - HTTP Cookie parsing and serialization
 
-### 5.2. Layers ที่ต้องสร้าง
-- **Utils**: `/follow-typescript-utils` - Helper functions ใน `src/utils/`
-- **Types**: `/follow-typescript-types` - Types และ Schema ใน `src/types/`
-- **App**: `/follow-typescript-app` - Controllers และ UI ใน `src/app/`
-- **Services**: `/follow-typescript-services` - Business logic ใน `src/services/`
-- **Adapter**: `/follow-typescript-adapter` - External adapters ใน `src/adapter/`
-- **Integrations**: `/follow-typescript-integrations` - Framework integrations ใน `src/integrations/`
-- **Lib**: `/follow-typescript-lib` - Shared libraries ใน `src/lib/`
-- **Error**: `/follow-typescript-error` - Error handling ใน `src/error/`
+12. Security APIs
 
----
+- `Bun.CSRF.generate()` / `Bun.CSRF.verify()` - CSRF token generation and verification
+- `Bun.CSRF.unsafe` - Low-level CSRF operations
+- `HTMLRewriter` - HTML streaming transformation (Cloudflare Workers compatible)
 
-## 6. Core Principles (ใช้เสมอ)
+13. FFI & Low-level APIs
 
-### 6.1. Functional Programming
-- **Pure Functions**: `utils/` และ `lib/` ไม่มี side effects
-- **Immutability**: ข้อมูลเป็น immutable โดยค่าเริ่มต้น ใช้ `readonly`
-- **Composition**: ฟังก์ชันถูกนำมาประกอบกัน
-- **Effect Management**: Side effects จัดการโดย `Effect-TS` ใน `services/` หรือ `adapter/`
+- `bun:ffi` - Foreign Function Interface สำหรับ calling C functions
+- `bun:jsc` - JavaScriptCore engine utilities
+- `Bun.mmap` - Memory-mapped files
+- `Bun.gc` - Garbage collection control
+- `Bun.generateHeapSnapshot()` - Generate heap snapshot for debugging
 
-### 6.2. Type Safety
-- หลีกเลี่ยง `any` ใช้ `unknown` แทนเมื่อจำเป็น
-- ใช้ type hints อย่างชัดเจน
-- ใช้ Schema จาก `@effect/schema` สำหรับ validation
+14. Other Bun APIs
 
-### 6.3. Performance
-- ใช้ `const` แทน `let` เมื่อเป็นไปได้
-- ใช้ `readonly` สำหรับ arrays และ objects
-- แยก hot paths
+- `bun:test` - Built-in test runner (Jest-compatible)
+- `Bun.env` - Environment variables (faster than `process.env`)
+- `Bun.version` / `Bun.revision` - Bun version information
+- `Bun.main` - Main entry point file path
+- `Bun.resolveSync()` - Module resolution (sync)
 
-### 6.4. Workflow
-- รัน `tsc --noEmit` สำหรับ type checking
-- รัน `vitest` สำหรับ testing
+15. Web-standard APIs (ที่ Bun รองรับ)
 
-### 6.5. Rust Integration
-- ใช้ **napi-rs** สำหรับ Bun integration
-- ใช้ **wasm-bindgen** สำหรับ WebAssembly
+- `fetch`, `Request`, `Response`, `Headers` - HTTP client APIs
+- `AbortController`, `AbortSignal` - Request cancellation
+- `URL`, `URLSearchParams` - URL manipulation
+- `Worker`, `self.postMessage` - Web Workers
+- `structuredClone`, `MessagePort`, `MessageChannel`, `BroadcastChannel` - Structured cloning
+- `ReadableStream`, `WritableStream`, `TransformStream` - Web Streams
+- `Blob`, `WebSocket` - Binary data และ WebSocket
+- `atob`, `btoa`, `TextEncoder`, `TextDecoder` - Encoding utilities
+- `setTimeout`, `setInterval`, `clearTimeout`, `clearInterval` - Timers
+- `crypto`, `SubtleCrypto`, `CryptoKey` - Web Crypto API
+- `console`, `performance`, `queueMicrotask`, `reportError` - Global utilities
+- `EventTarget`, `Event`, `ErrorEvent`, `CloseEvent`, `MessageEvent` - Event system
+- `ShadowRealm` - Isolated JavaScript execution environment
 
----
+## Reference
 
-## 7. Import Rules (ใช้เสมอ)
+- [Bun APIs Documentation](https://bun.com/docs/runtime/bun-apis)
+- [Web APIs Documentation](https://bun.com/docs/runtime/web-apis)
+- [Bun HTTP Server](https://bun.com/docs/runtime/http/server)
+- [Bun File I/O](https://bun.com/docs/runtime/file-io)
 
-### 7.1. ลำดับการ Import
-```
-types -> utils -> lib -> integrations -> services -> adapter -> app -> entry
-```
-
-### 7.2. กฎการ Import
-- ทำตาม `/follow-project-structure`
-- `app`: services, lib, utils, types
-- `services`: adapter, integrations, lib, utils, types
-- `adapter`: lib, utils, types
-- `integrations`: lib, utils, types
-- `lib`: utils, types
-- `utils`: types
-- `types`: ไม่มี internal dependencies
-
----
-
-## 8. Libraries (ใช้เสมอ)
-
-### 8.1. Libraries หลัก
-- **TypeScript**: 5.x
-- **effect-ts**: State management, error handling, side effects
-- **@effect/schema**: Schema และ validation
-- **vitest**: Testing framework
-- **bun**: Package manager และ runtime
-- **fetch**: HTTP client (built-in)
-
-### 8.2. Libraries ตาม Layer
-| Layer | Dependencies |
-|-------|--------------|
-| utils | ไม่มี external dependencies |
-| types | ไม่มี external dependencies |
-| lib | ไม่มี external dependencies |
-| services | effect-ts, @effect/schema |
-| adapter | fetch |
-| integrations | effect-ts |
-| app | effect-ts |

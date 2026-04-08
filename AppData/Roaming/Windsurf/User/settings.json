@@ -275,7 +275,7 @@
 	"vs-browser.favourites.list": {
 		"http://localhost:3000/": "http://localhost:3000/"
 	},
-	"windsurf.completionMode": "supercomplete",
+	"windsurf.completionMode": "off",
 	"[markdown]": {
 		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
 	},
@@ -287,5 +287,11 @@
 	"vp.port": 5173,
 	"rumdl.rules.disable": [
 		"MD013"
-	]
+	],
+	"typescript.experimental.useTsgo": true,
+	"codeCounter.debug": "none",
+	"terminal.integrated.commandsToSkipShell": [
+		"kilo-code.new.agentManagerOpen",
+		"kilo-code.new.agentManager.showTerminal"
+	],
 }

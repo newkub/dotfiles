@@ -1,32 +1,88 @@
 ---
-trigger: always_on
-description: ตั้งค่าและใช้งาน Knip สำหรับตรวจสอบ unused code
-instruction:
-  - ติดตั้ง Knip และ dependencies ที่จำเป็อง
-  - ตั้งค่า .knip.json พื้นฐาน
-  - กำหนด project structure และ include/exclude patterns
-  - รัน knip เพื่อตรวจสอบ unused code
-condition:
-  - ใช้เมื่อต้องการตรวจสอบ unused code ในโปรเจกต์
-  - ใช้เมื่อต้องการลดขนาด bundle และปรับปรุง performance
-  - ใช้เมื่อต้องการ clean up dependencies ที่ไม่ได้ใช้
+title: Follow Knip
+description: ตั้งค่าและใช้งาน Knip สำหรับตรวจสอบ unused files, dependencies และ exports
+auto_execution_mode: 3
+file-patterns:
+  - ".knip.json"
+  - "package.json"
+  - "turbo.json"
+follow:
+  skills:
+    - "@write-markdown"
+  workflows:
+    - "/validate"
+    - "/connect-workflows"
 ---
 
-# Knip Configuration
+## Purpose
 
-## 1. Installation (ใช้เสมอ)
+ตั้งค่า Knip สำหรับตรวจสอบและลบ unused files, dependencies และ exports เพื่อลด technical debt และ bundle size
 
-```bash
-bun add -D knip
+## Scope
+
+- ติดตั้ง Knip CLI
+- กำหนดค่า `.knip.json` สำหรับ single repo และ monorepo
+- เพิ่ม scripts ใน `package.json`
+- รองรับ Turborepo integration
+
+## Inputs
+
+| Input | Details |
+|-------|-----------|
+| Package Manager | Bun |
+| Project Type | Single repo หรือ monorepo |
+
+## Rules
+
+| Category | Requirements |
+|------|---------|
+| **Installation** | `bun add -D knip` |
+| **Config** | สร้าง `.knip.json` ที่ root |
+| **Entry** | ระบุ entry points สำหรับทุก project |
+| **Ignore** | กำหนด patterns ที่ไม่ต้องตรวจสอบ |
+| **Scripts** | มี `knip` และ `knip:fix` |
+
+## Structure
+
+### Directory Structure
+
+```text
+project/
+├── .knip.json            # Knip configuration
+├── package.json          # Scripts
+└── turbo.json            # Turborepo integration (ถ้ามี)
 ```
 
----
+### Phase Definitions
 
-## 2. Basic Configuration (ใช้เสมอ)
+| Phase | Description | Main Activities |
+|-------|-------------|---------------|
+| Setup | ติดตั้ง | Add knip |
+| Configure | กำหนดค่า | .knip.json |
+| Script | เพิ่ม scripts | package.json |
+| Turborepo | Integration | turbo.json |
+| Verify | ทดสอบ | Run knip |
 
-สร้าง `.knip.json` ที่ root:
+## Steps
 
-```json
+### Phase 0: Precondition
+
+- 0.1 **ตรวจสอบ Environment**
+  - มี Bun ติดตั้งแล้ว
+  - มี `package.json` อยู่แล้ว
+
+### Phase 1: Setup
+
+- 1.1 **ติดตั้ง Knip**
+  - รัน `bun add -D knip`
+  - ตรวจสอบ installation สำเร็จ
+
+### Phase 2: Configure
+
+- 2.1 **สร้าง .knip.json**
+  - สร้างไฟล์ `.knip.json` ที่ root:
+
+```json [.knip.json]
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
   "entry": ["apps/*/app.ts", "packages/*/src/index.ts"],
@@ -48,35 +104,12 @@ bun add -D knip
 }
 ```
 
----
+### Phase 3: Script
 
-## 3. Project Structure (ใช้เมื่อมี monorepo)
+- 3.1 **เพิ่ม Scripts**
+  - เพิ่มใน `package.json`:
 
-### 3.1. Turborepo Monorepo
-
-```json
-{
-  "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": [
-    "apps/*/app.ts",
-    "apps/*/app.vue",
-    "packages/*/src/index.ts"
-  ],
-  "project": [
-    "apps/*/package.json",
-    "packages/*/package.json"
-  ],
-  "ignoreWorkspaces": false
-}
-```
-
----
-
-## 4. Scripts (ใช้เสมอ)
-
-เพิ่มใน `package.json`:
-
-```json
+```json [package.json]
 {
   "scripts": {
     "knip": "knip",
@@ -85,13 +118,12 @@ bun add -D knip
 }
 ```
 
----
+### Phase 4: Turborepo (ถ้ามี)
 
-## 5. Integration with Turborepo (ใช้เมื่อมี Turborepo)
+- 4.1 **เพิ่ม Task ใน turbo.json**
+  - เพิ่มใน `turbo.json`:
 
-เพิ่มใน `turbo.json`:
-
-```json
+```json [turbo.json]
 {
   "tasks": {
     "knip": {
@@ -102,51 +134,30 @@ bun add -D knip
 }
 ```
 
----
+### Phase 5: Verify
 
-## 6. Best Practices (ใช้เสมอ)
+- 5.1 **ทดสอบการทำงาน**
+  - รัน `bun run knip`
+  - ตรวจสอบ unused files, dependencies, exports
+  - รัน `bun run knip:fix` เพื่อ auto-fix ที่เป็นไปได้
 
-- **Run Regularly**: รัน knip ก่อน commit
-- **Fix Issues**: ใช้ `--fix` flag เพื่อ auto-fix ที่เป็นไปได้
-- **Review Exports**: ตรวจสอบ exports ที่ไม่ได้ใช้จริง
-- **Keep Updated**: อัปเดต knip เป็น version ล่าสุดอย่างสม่ำเสมอ
+## Outputs
 
----
+| Output | Details |
+|--------|-----------|
+| .knip.json | Knip configuration |
+| Updated package.json | Knip scripts |
+| Updated turbo.json | Turborepo integration |
 
-## 7. Common Patterns (ใช้เมื่อจำเป็น)
+## Expected Outcome
 
-### 7.1. Ignore Test Files
+- Knip ติดตั้งและทำงานได้
+- Config กำหนด entry และ ignore ถูกต้อง
+- Scripts พร้อมใช้งาน
+- ตรวจพบ unused items ได้
+- Auto-fix ทำงานได้
 
-```json
-{
-  "ignore": [
-    "**/*.test.ts",
-    "**/*.spec.ts",
-    "**/__tests__/**"
-  ]
-}
-```
+## Reference
 
-### 7.2. Ignore Config Files
-
-```json
-{
-  "ignore": [
-    "**/*.config.ts",
-    "**/*.config.js",
-    "**/vite.config.*",
-    "**/vitest.config.*"
-  ]
-}
-```
-
-### 7.3. Ignore Dynamic Imports
-
-```json
-{
-  "ignoreExportsUsedInFile": [
-    "**/routes/**",
-    "**/pages/**"
-  ]
-}
-```
+- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
+- `/connect-workflows` - เชื่อมโยง workflows

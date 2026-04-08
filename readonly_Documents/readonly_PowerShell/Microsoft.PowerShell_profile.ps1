@@ -12,7 +12,9 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # --- PowerToys CommandNotFound ---
 # Shows suggestions from WinGet if a command is not found.
-Import-Module -Name Microsoft.WinGet.CommandNotFound
+if (Get-Command winget -ErrorAction SilentlyContinue) {
+    Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+}
 
 # --- x-cmd ---
 # https://github.com/x-cmd/x
@@ -21,7 +23,9 @@ if (Test-Path "$Home\.x-cmd.root\local\data\pwsh\_index.ps1") { Set-ExecutionPol
 # --- IntelliShell ---
 # https://intellishell.app/
 $env:INTELLI_HOME = "C:\Users\Veerapong\AppData\Roaming\IntelliShell\Intelli-Shell\data"
-intelli-shell.exe init powershell | Out-String | Invoke-Expression
+if (Get-Command intelli-shell.exe -ErrorAction SilentlyContinue) {
+    intelli-shell.exe init powershell | Out-String | Invoke-Expression
+}
 
 
 
@@ -212,7 +216,7 @@ function rf {
     ni && bun run format
 }
 function rc {
-    ni && bun run check
+    ni && bun run typecheck
 }
 
 function h { 
@@ -552,3 +556,5 @@ function op {
     param([int]$port)
     Start-Process "http://localhost:$port"
 }
+# source ~/.wezterm.sh  # Unix command, disabled for PowerShell
+

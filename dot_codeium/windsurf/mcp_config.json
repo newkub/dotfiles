@@ -25,80 +25,76 @@
       "command": "bunx",
       "disabled": true
     },
-    "mcp-playwright": {
-      "args": [
-        "-y",
-        "@playwright/mcp@latest"
-      ],
-      "command": "bunx",
-      "disabled": false
-    },
-    "memory": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ],
-      "command": "bunx"
-    },
-    "nuxt": {
-      "serverUrl": "http://localhost:3000/__mcp/sse"
-    },
-    "nuxt-docs": {
-      "serverUrl": "https://nuxt.com/mcp"
-    },
-    "playwriter": {
-      "args": [
-        "-y",
-        "playwriter@latest"
-      ],
-      "command": "bunx",
-      "disabled": true
-    },
-    "sequential-thinking": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
-      "command": "bunx",
-      "disabled": true
-    },
-    "terminator-mcp-agent": {
-      "args": [
-        "-y",
-        "terminator-mcp-agent@latest"
-      ],
-      "command": "bunx",
-      "disabled": true,
-      "env": {
-        "LOG_LEVEL": "info",
-        "RUST_BACKTRACE": "1"
-      }
-    },
-    "ui-tars": {
-      "args": [
-        "-y",
-        "agent-tars"
-      ],
-      "command": "bunx",
-      "disabled": true
-    },
-    "wezterm-mcp": {
-      "args": [
-        "-y",
-        "wezterm-mcp"
-      ],
-      "command": "bunx",
-      "disabled": true
-    },
-    "windows-mcp": {
-      "args": [
-        "windows-mcp"
-      ],
-      "command": "uvx",
-      "disabled": true,
-      "env": {
-        "ANONYMIZED_TELEMETRY": "false"
-      }
+    "filesystem": {
+      "command": "rust-mcp-filesystem.exe",
+      "args": []
+    }
+  },
+  "mcp-playwright": {
+    "args": [
+      "-y",
+      "@playwright/mcp@latest"
+    ],
+    "command": "bunx",
+    "disabled": false
+  },
+  "memory": {
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-memory"
+    ],
+    "command": "bunx"
+  },
+  "nuxt": {
+    "serverUrl": "http://localhost:3000/__mcp/sse"
+  },
+  "nuxt-docs": {
+    "serverUrl": "https://nuxt.com/mcp"
+  },
+  "sequential-thinking": {
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-sequential-thinking"
+    ],
+    "command": "bunx",
+    "disabled": true
+  },
+  "terminator-mcp-agent": {
+    "args": [
+      "-y",
+      "terminator-mcp-agent@latest"
+    ],
+    "command": "bunx",
+    "disabled": true,
+    "env": {
+      "LOG_LEVEL": "info",
+      "RUST_BACKTRACE": "1"
+    }
+  },
+  "ui-tars": {
+    "args": [
+      "-y",
+      "agent-tars"
+    ],
+    "command": "bunx",
+    "disabled": true
+  },
+  "wezterm-mcp": {
+    "args": [
+      "-y",
+      "wezterm-mcp"
+    ],
+    "command": "bunx",
+    "disabled": true
+  },
+  "windows-mcp": {
+    "args": [
+      "windows-mcp"
+    ],
+    "command": "uvx",
+    "disabled": true,
+    "env": {
+      "ANONYMIZED_TELEMETRY": "false"
     }
   }
 }
