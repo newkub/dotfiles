@@ -36,11 +36,12 @@ auto_execution_mode: 3
 
 ดำเนินการตามกฎที่กำหนดอย่างเคร่งครัด
 
-- no hard code 
+- no hard code
 - แยก separate concerns (types, config, utils ออกจาก logic หลัก เสมอ
-- ทุก folder ต้องมี barrel export 
-- ใช้ import alias เสมอ 
+- ทุก folder ต้องมี barrel export
+- ใช้ import alias เสมอ
 - ทำ bulk file ops ใช้ pwsh
+- ถ้าส่ง error ให้อ่านและทำตาม /fix-error
 
 
 5. Report

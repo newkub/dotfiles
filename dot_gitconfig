@@ -13,6 +13,10 @@ aiOpenAIKeyOption = butlerAPI
 aiModelProvider = openai
 gitbutlerCommitter = 0
 
+[split-diffs]
+	wrap-lines = true
+	theme-name = github-dark-dim
+
 [filter "lfs"]
 clean = git-lfs clean -- %f
 smudge = git-lfs smudge -- %f
@@ -69,3 +73,5 @@ sync = "!f() { git pull && git push && git submodule sync --recursive && git sub
 	helper = manager
 [credential "helperselector"]
 	selected = manager
+[safe]
+	directory = *

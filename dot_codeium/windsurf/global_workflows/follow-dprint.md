@@ -2,101 +2,37 @@
 title: Follow Dprint
 description: ตั้งค่าและใช้งาน dprint สำหรับ formatting code หลายภาษาด้วย pluggable architecture
 auto_execution_mode: 3
-file-patterns:
-  - "dprint.json"
-  - "package.json"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/connect-workflows"
 ---
 
-## Purpose
+## Execute
 
-ตั้งค่า dprint เป็น code formatter ที่รองรับหลายภาษา (TypeScript, JavaScript, Rust, Markdown, etc.) ด้วย pluggable architecture
+1. Precondition Check
 
-## Scope
+ตรวจสอบ environment ก่อนเริ่มติดตั้ง
 
-- ติดตั้ง dprint CLI
-- กำหนดค่า `dprint.json`
-- เพิ่ม format scripts ใน `package.json`
-- รองรับหลาย file types
+- ตรวจสอบว่ามี Bun ติดตั้งแล้ว
+- ตรวจสอบว่ามี package.json อยู่แล้ว
+- ตรวจสอบว่า project มี structure ที่ถูกต้อง
 
-## Inputs
+2. Install Dprint
 
-| Input | Details |
-|-------|-----------|
-| Package Manager | Bun |
-| Languages | TS, JS, Rust, JSON, Markdown |
+ติดตั้ง dprint ด้วย Bun
 
-## Rules
+- รันคำสั่ง `bun add -D dprint` เพื่อติดตั้ง dprint เป็น dev dependency
+- ตรวจสอบว่า installation สำเร็จโดยตรวจสอบ bun.lock และ package.json
+- ตรวจสอบว่าสามารถรัน `dprint --version` ได้
 
-| Category | Requirements |
-|------|---------|
-| **Installation** | `bun add -D dprint` |
-| **Config** | ดาวน์โหลด config จาก reference repository |
-| **Plugins** | ระบุ plugins สำหรับแต่ละภาษา |
-| **Excludes** | กำหนด files ที่ไม่ต้อง format |
+3. Create Configuration File
 
-## Structure
+สร้าง dprint.json config file
 
-### Directory Structure
-
-```text
-project/
-├── dprint.json           # Dprint configuration
-├── package.json          # Format scripts
-└── src/
-    └── *.ts              # Source files
-```
-
-### Phase Definitions
-
-| Phase | Description | Main Activities |
-|-------|-------------|---------------|
-| Setup | ติดตั้ง | Add dprint |
-| Configure | กำหนดค่า | Download config |
-| Script | เพิ่ม scripts | package.json |
-| Verify | ทดสอบ | Run format |
-
-## Steps
-
-### Phase 0: Precondition
-
-- 0.1 **ตรวจสอบ Environment**
-  - มี Bun ติดตั้งแล้ว
-  - มี `package.json` อยู่แล้ว
-
-### Phase 1: Setup
-
-- 1.1 **ติดตั้ง Dprint**
-  - รัน `bun add -D dprint`
-  - ตรวจสอบ installation สำเร็จ
-
-### Phase 2: Configure
-
-- 2.1 **ดาวน์โหลด Config**
-  - รัน `gh download https://github.com/newkub/my-config/blob/main/dprint.json`
-  - หรือสร้าง `dprint.json` พื้นฐาน:
+- ดาวน์โหลด config จาก reference repository ด้วย `gh download https://github.com/newkub/my-config/blob/main/dprint.json`
+- หรือสร้าง dprint.json ใหม่ด้วย configuration พื้นฐาน:
 
 ```json [dprint.json]
 {
-  "typescript": {
-    "indentWidth": 2,
-    "lineWidth": 100,
-    "semiColons": "asi",
-    "quoteStyle": "alwaysSingle"
-  },
-  "json": {
-    "indentWidth": 2
-  },
-  "markdown": {
-    "textWrap": "always"
-  },
   "includes": [
-    "**/*.{ts,tsx,js,jsx,json,md,rs}"
+    "**/*.{ts,tsx,js,jsx,json,md,rs,toml,yaml,yml,css,scss,sass,less,html,vue,svelte,astro,py,go,php}"
   ],
   "excludes": [
     "**/node_modules",
@@ -104,51 +40,61 @@ project/
     "**/.git"
   ],
   "plugins": [
-    "https://plugins.dprint.dev/typescript-0.88.1.wasm",
-    "https://plugins.dprint.dev/json-0.19.1.wasm",
+    "https://plugins.dprint.dev/typescript-0.95.13.wasm",
+    "https://plugins.dprint.dev/json-0.21.1.wasm",
     "https://plugins.dprint.dev/markdown-0.16.3.wasm",
-    "https://plugins.dprint.dev/rustfmt-0.6.2.wasm"
+    "https://plugins.dprint.dev/toml-0.5.4.wasm",
+    "https://plugins.dprint.dev/pretty_yaml-0.2.0.wasm",
+    "https://plugins.dprint.dev/dockerfile-0.3.1.wasm",
+    "https://plugins.dprint.dev/rustfmt-0.6.2.wasm",
+    "https://plugins.dprint.dev/malva-0.4.0.wasm",
+    "https://plugins.dprint.dev/markup_fmt-0.7.0.wasm",
+    "https://plugins.dprint.dev/ruff-0.2.0.wasm",
+    "https://plugins.dprint.dev/gofmt-0.3.0.wasm",
+    "https://plugins.dprint.dev/mago-0.1.0.wasm"
   ]
 }
 ```
 
-### Phase 3: Script
+- ตรวจสอบว่า dprint.json ถูกสร้างขึ้นอย่างถูกต้อง
+- ปรับแต่ง configuration ตามความต้องการของ project (ถ้าจำเป็น)
 
-- 3.1 **เพิ่ม Format Script**
-  - เพิ่มใน `package.json`:
+4. Add Format Scripts
+
+เพิ่ม scripts ใน package.json
+
+- เพิ่ม script `format` สำหรับ format files อัตโนมัติ
 
 ```json [package.json]
 {
   "scripts": {
-    "format": "dprint fmt",
-    "format:check": "dprint check"
+    "format": "dprint fmt"
   }
 }
 ```
 
-### Phase 4: Verify
+- ตรวจสอบว่า scripts ถูกเพิ่มเข้าไปใน package.json อย่างถูกต้อง
+- ตรวจสอบว่าไม่มี conflict กับ scripts ที่มีอยู่แล้ว
 
-- 4.1 **ทดสอบการทำงาน**
-  - รัน `bun run format`
-  - รัน `bun run format:check`
-  - ตรวจสอบว่า format ทำงานได้ถูกต้อง
+5. Verify Installation
 
-## Outputs
+ทดสอบการทำงานของ dprint
 
-| Output | Details |
-|--------|-----------|
-| dprint.json | Dprint configuration |
-| Updated package.json | Format scripts |
-| Formatted files | All included files |
+- รัน `bun run format` เพื่อ format files ทั้งหมด
+- ตรวจสอบว่า dprint ทำงานได้ถูกต้องกับทุก file types ที่ระบุ
+- ตรวจสอบว่า plugins ถูก download และใช้งานได้
 
-## Expected Outcome
+## Rules
 
-- Dprint ติดตั้งและทำงานได้
-- Config กำหนดค่าถูกต้อง
-- Format scripts พร้อมใช้งาน
-- รองรับหลาย file types
+ต้องปฏิบัติตามกฏและข้อกำหนดเหล่านี้เสมอ
 
-## Reference
-
-- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
-- `/connect-workflows` - เชื่อมโยง workflows
+- ต้องใช้ Bun เป็น package manager เสมอสำหรับการติดตั้ง dprint
+- ต้องติดตั้ง dprint เป็น dev dependency เสมอด้วย flag -D
+- ต้องดาวน์โหลด config จาก reference repository ก่อน ถ้ามี
+- ต้องระบุ plugins สำหรับทุกภาษาที่ต้องการรองรับ
+- ต้องกำหนด excludes patterns สำหรับ node_modules, dist, .git เสมอ
+- ต้องเพิ่ม format script ใน package.json
+- ต้องใช้ indentWidth: 2 สำหรับ TypeScript และ JSON
+- ต้องใช้ lineWidth: 100 สำหรับ TypeScript
+- ต้องใช้ quoteStyle: alwaysSingle สำหรับ TypeScript
+- ต้องใช้ semiColons: asi สำหรับ TypeScript

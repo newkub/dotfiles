@@ -143,27 +143,6 @@ function cc {
 
 
 
-function cpo {
-    $last = Get-History -Count 1
-    if (-not $last) { 
-        Write-Warning "No history found"
-        return
-    }
-
-    $cmd = $last[0].CommandLine
-    # ใช้ Out-String เพื่อดึง output แบบ plain text
-    $output = Invoke-Expression $cmd | Out-String -Width 4096
-
-    # เอา ANSI/escape codes ออก
-    $plainOutput = $output -replace "`e\[[\d;]*m", ''
-
-    # copy ไป clipboard
-    $plainOutput.TrimEnd() | Set-Clipboard
-    Write-Host "Last command output copied as plain text."
-}
-
-
-
 
 
 
@@ -175,7 +154,7 @@ function cpo {
 
 # --- Directory Listing with eza ---
 function dir {
-    eza --long --git --git-repos --octal-permissions --total-size --time-style=relative --group-directories-first --color-scale=age,size --header --all
+    eza --long --git --git-repos --octal-permissions --total-size --time-style=relative --group-directories-first --color-scale=age,size --header --hyperlink --all
 }
 
 # --- mise task run ---
@@ -356,36 +335,6 @@ function rmi {
 
 
 
-function omd {
-    param(
-        [string]$query = "",
-        [string]$path = "."  # default = current directory
-    )
-
-    # ตรวจสอบ path
-    if (-not (Test-Path $path)) {
-        Write-Host "Path not found: $path" -ForegroundColor Red
-        return
-    }
-
-    # ค้นหาไฟล์ .md
-    $searchQuery = if ($query) { $query } else { "." }
-    $files = fd -t f -e md $searchQuery $path
-
-    if (-not $files) {
-        Write-Host "No .md files found in $path" -ForegroundColor Yellow
-        return
-    }
-
-    # เลือกไฟล์ด้วย fzf (multi-select)
-    $selected = $files | fzf -m
-    if ($selected) {
-        foreach ($f in $selected) {
-            windsurf $f
-        }
-    }
-}
-
 function notes {
     param(
         [string]$action = ""
@@ -465,10 +414,6 @@ function f {
     }
 }
 
-
-function owindsurf_global_workflows {
-    cd "C:\Users\Veerapong\.codeium\windsurf\global_workflows" | fd -t f | fzf | ForEach-Object { windsurf $_ }
-}
 
 
 
@@ -557,4 +502,60 @@ function op {
     Start-Process "http://localhost:$port"
 }
 # source ~/.wezterm.sh  # Unix command, disabled for PowerShell
+
+
+function cpo {
+    $last = Get-History -Count 1
+    if (-not $last) {
+        Write-Warning "No history found"
+        return
+    }
+
+    $cmd = $last[0].CommandLine
+    # ใช้ Out-String เพื่อดึง output แบบ plain text
+    $output = Invoke-Expression $cmd | Out-String -Width 4096
+
+    # เอา ANSI/escape codes ออก
+    $plainOutput = $output -replace "`e\[[\d;]*m", ''
+
+    # copy ไป clipboard
+    $plainOutput.TrimEnd() | Set-Clipboard
+    Write-Host "Last command output copied as plain text."
+}
+
+# --- Long Files Check ---
+function loc {
+    param(
+        [int]$threshold = 200,
+        [string]$path = "."
+    )
+
+    # Use fd with ignore to find files
+    $files = fd -t f --ignore-vcs $path
+    $longFiles = @()
+
+    foreach ($file in $files) {
+        try {
+            $lineCount = (Get-Content $file -ErrorAction SilentlyContinue).Count
+            if ($lineCount -gt $threshold) {
+                $longFiles += [PSCustomObject]@{
+                    Filename = $file
+                    Lines = $lineCount
+                }
+            }
+        }
+        catch {
+            # Skip files that can't be read
+        }
+    }
+
+    if ($longFiles.Count -eq 0) {
+        Write-Host "No files with more than $threshold lines found." -ForegroundColor Green
+    }
+    else {
+        Write-Host "Files with more than $threshold lines:" -ForegroundColor Yellow
+        # Display 2 columns: Filename and Line count
+        $longFiles | Sort-Object Lines -Descending | Format-Table -AutoSize
+    }
+}
 

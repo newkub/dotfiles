@@ -166,7 +166,6 @@ config.key_tables = {
   search_mode = {
     { key = 'Enter', mods = 'NONE', action = wezterm.action.CopyMode 'PriorMatch' },
     { key = 'Escape', mods = 'NONE', action = wezterm.action.CopyMode 'Close' },
-    { key = 'Backspace', mods = 'NONE', action = wezterm.action.CopyMode 'Close' },
     { key = 'n', mods = 'CTRL', action = wezterm.action.CopyMode 'NextMatch' },
     { key = 'p', mods = 'CTRL', action = wezterm.action.CopyMode 'PriorMatch' },
     { key = 'r', mods = 'CTRL', action = wezterm.action.CopyMode 'CycleMatchType' },
@@ -179,16 +178,192 @@ config.key_tables = {
 }
 
 -- =============================================
+-- Right Status Bar (Beautiful UX/UI)
+-- =============================================
+
+-- Color palette (Catppuccin Mocha inspired)
+local colors = {
+  path = '#fab387',      -- Peach
+  path_icon = '#f5c2e7', -- Pink
+  remote = '#89dceb',    -- Sky blue
+  branch = '#b4befe',    -- Lavender
+  commit = '#f9e2af',    -- Yellow
+  time_ago = '#a6e3a1',  -- Green
+  separator = '#6c7086', -- Gray
+  clock = '#cba6f7',     -- Mauve
+  icon = '#94e2d5',      -- Teal
+}
+
+-- Helper: Format relative time
+local function format_relative_time(timestamp)
+  if not timestamp or timestamp == '' then return '' end
+
+  local now = os.time()
+  local diff = now - tonumber(timestamp)
+
+  if diff < 60 then
+    return diff .. 's'
+  elseif diff < 3600 then
+    return math.floor(diff / 60) .. 'm'
+  elseif diff < 86400 then
+    return math.floor(diff / 3600) .. 'h'
+  elseif diff < 604800 then
+    return math.floor(diff / 86400) .. 'd'
+  else
+    return math.floor(diff / 604800) .. 'w'
+  end
+end
+
+-- Helper: Get short path (last 2-3 components)
+local function get_short_path(full_path)
+  if not full_path or full_path == '' then return '~' end
+
+  -- Replace home path with ~
+  local home = os.getenv('USERPROFILE') or os.getenv('HOME') or ''
+  local short = full_path:gsub('^' .. home:gsub('\\', '\\'), '~')
+
+  -- Get last 2-3 parts
+  local parts = {}
+  for part in short:gmatch('([^\\/]+)') do
+    table.insert(parts, part)
+  end
+
+  if #parts <= 3 then
+    return short
+  else
+    return '.../' .. parts[#parts-1] .. '/' .. parts[#parts]
+  end
+end
+
+wezterm.on('update-right-status', function(window, pane)
+  -- Get current working directory
+  local cwd_uri = pane:get_current_working_dir()
+  local cwd = ''
+
+  if cwd_uri then
+    if type(cwd_uri) == 'userdata' then
+      cwd = tostring(cwd_uri)
+      cwd = cwd:gsub('^file:///', ''):gsub('^file://', '')
+      cwd = cwd:gsub('/', '\\')
+    elseif type(cwd_uri) == 'table' and cwd_uri.file_path then
+      cwd = cwd_uri.file_path
+    else
+      cwd = tostring(cwd_uri)
+    end
+  end
+
+  -- Get git info with timestamp
+  local git_remote = ''
+  local git_branch = ''
+  local git_commit = ''
+  local git_time = ''
+
+  if cwd and cwd ~= '' then
+    local safe_cwd = cwd:gsub('"', '`"')
+
+    local ps_cmd = string.format(
+      'Set-Location "%s"; $gitDir = git rev-parse --git-dir 2>$null; if ($LASTEXITCODE -eq 0) { '
+      .. '$remote = git remote get-url origin 2>$null; '
+      .. '$branch = git branch --show-current 2>$null; '
+      .. '$commit = git log -1 --format="%%h" 2>$null; '
+      .. '$ts = git log -1 --format="%%ct" 2>$null; '
+      .. 'Write-Output "$remote|$branch|$commit|$ts" '
+      .. '}',
+      safe_cwd
+    )
+
+    local success, stdout, stderr = wezterm.run_child_process({
+      'pwsh.exe', '-NoProfile', '-Command', ps_cmd
+    })
+
+    if success and stdout then
+      local output = stdout:gsub('^%s+', ''):gsub('%s+$', ''):gsub('\r?\n', '')
+      local parts = {}
+      for part in output:gmatch('([^|]+)') do
+        table.insert(parts, part)
+      end
+
+      if #parts >= 4 then
+        git_remote = parts[1]
+        git_branch = parts[2]
+        git_commit = parts[3]
+        git_time = format_relative_time(parts[4])
+      end
+    end
+  end
+
+  -- Get current time
+  local time = wezterm.strftime('%H:%M')
+
+  -- Build status line elements
+  local elements = {}
+
+  -- Section 1: Current Path
+  local short_path = get_short_path(cwd)
+  table.insert(elements, { Foreground = { Color = colors.path_icon } })
+  table.insert(elements, { Text = ' ' }) -- spacing
+  table.insert(elements, { Text = short_path })
+
+  -- Separator between sections
+  table.insert(elements, { Foreground = { Color = colors.separator } })
+  table.insert(elements, { Text = ' | ' })
+
+  -- Section 2: Git Info
+  if git_remote ~= '' and git_remote ~= 'no remote' then
+    -- Shorten remote URL
+    local short_remote = git_remote:gsub('https://', ''):gsub('git@', ''):gsub('github.com:', 'github.com/'):gsub('%.git$', '')
+
+    table.insert(elements, { Foreground = { Color = colors.remote } })
+    table.insert(elements, { Text = short_remote })
+
+    if git_branch ~= '' then
+      table.insert(elements, { Foreground = { Color = colors.separator } })
+      table.insert(elements, { Text = ' @ ' })
+      table.insert(elements, { Foreground = { Color = colors.branch } })
+      table.insert(elements, { Text = git_branch })
+    end
+
+    if git_commit ~= '' then
+      table.insert(elements, { Foreground = { Color = colors.separator } })
+      table.insert(elements, { Text = ' ' })
+      table.insert(elements, { Foreground = { Color = colors.commit } })
+      table.insert(elements, { Text = git_commit })
+    end
+
+    if git_time ~= '' then
+      table.insert(elements, { Foreground = { Color = colors.separator } })
+      table.insert(elements, { Text = ' ' })
+      table.insert(elements, { Foreground = { Color = colors.time_ago } })
+      table.insert(elements, { Text = git_time .. ' ago' })
+    end
+  end
+
+  -- Separator before clock
+  table.insert(elements, { Foreground = { Color = colors.separator } })
+  table.insert(elements, { Text = ' | ' })
+
+  -- Clock
+  table.insert(elements, { Foreground = { Color = colors.clock } })
+  table.insert(elements, { Text = time })
+  table.insert(elements, { Text = ' ' }) -- spacing
+
+  window:set_right_status(wezterm.format(elements))
+end)
+
+-- =============================================
 -- Auto-Start Behavior
 -- =============================================
 
--- On startup: open maximized window with 2 tabs
+-- On startup: open maximized window with 3 tabs
 wezterm.on('gui-startup', function(cmd)
   -- Spawn initial window
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
 
   -- Create second tab at D:\ drive
   local tab2 = window:spawn_tab { cwd = 'D:\\' }
+
+  -- Create third tab at D:\ drive
+  local tab3 = window:spawn_tab { cwd = 'D:\\' }
 
   -- Keep first tab active
   tab:activate()
