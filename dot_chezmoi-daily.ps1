@@ -8,25 +8,15 @@ try {
     & chezmoi re-add
     Write-Host "[$timestamp] Chezmoi re-add completed successfully"
     
-    # Show Windows notification on success
-    Add-Type -AssemblyName Windows.UI.Notifications
-    $toastXml = [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)
-    $toastXml.GetElementsByTagName("text")[0].InnerText = "Chezmoi Daily Update"
-    $toastXml.GetElementsByTagName("text")[1].InnerText = "Completed successfully at $(Get-Date -Format 'HH:mm:ss')"
-    $toast = [Windows.UI.Notifications.ToastNotification, Windows.UI.Notifications, ContentType = WindowsRuntime]::new($toastXml)
-    $notifier = [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]::CreateToastNotifier("Chezmoi")
-    $notifier.Show($toast)
+    # Show Windows notification on success using Wscript.Shell
+    $wshell = New-Object -ComObject Wscript.Shell
+    $wshell.Popup("Chezmoi re-add completed successfully at $(Get-Date -Format 'HH:mm:ss')", 0, "Chezmoi Daily Update", 0x40)
 } catch {
     Write-Error "Failed to run chezmoi re-add: $_"
     
-    # Show Windows notification on error
-    Add-Type -AssemblyName Windows.UI.Notifications
-    $toastXml = [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)
-    $toastXml.GetElementsByTagName("text")[0].InnerText = "Chezmoi Daily Update"
-    $toastXml.GetElementsByTagName("text")[1].InnerText = "Failed: $_"
-    $toast = [Windows.UI.Notifications.ToastNotification, Windows.UI.Notifications, ContentType = WindowsRuntime]::new($toastXml)
-    $notifier = [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]::CreateToastNotifier("Chezmoi")
-    $notifier.Show($toast)
+    # Show Windows notification on error using Wscript.Shell
+    $wshell = New-Object -ComObject Wscript.Shell
+    $wshell.Popup("Failed: $_", 0, "Chezmoi Daily Update", 0x10)
     
     exit 1
 }
