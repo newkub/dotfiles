@@ -10,6 +10,12 @@ gh completion -s powershell | Out-String | Invoke-Expression
 # https://github.com/ajeetdsouza/zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
+# --- Atuin Shell History ---
+# https://github.com/atuinsh/atuin
+if (Get-Command atuin -ErrorAction SilentlyContinue) {
+    atuin init powershell | Out-String | Invoke-Expression
+}
+
 # --- PowerToys CommandNotFound ---
 # Shows suggestions from WinGet if a command is not found.
 if (Get-Command winget -ErrorAction SilentlyContinue) {
@@ -133,8 +139,8 @@ function cc {
         fd -t d . $root
     }
 
-    # เลือก path ด้วย fzf สวย ๆ
-    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+    # เลือก path ด้วย tv สวย ๆ
+    $selected = $dirs | tv
 
     if ($selected) {
         Set-Location $selected
@@ -198,12 +204,12 @@ function rc {
     ni && bun run typecheck
 }
 
-function h { 
+function h {
     param(
         [Parameter(ValueFromRemainingArguments=$true)]
         [string[]]$Files
     )
-    
+
     if ($Files) {
         & hx.exe $Files
     } else {
@@ -219,8 +225,8 @@ function f {
     # หา files ด้วย fd
     $files = if ($query) { fd -t f $query } else { fd -t f }
 
-    # เลือก file ด้วย fzf สวย ๆ
-    $selected = $files | fzf --height 40% --reverse --border --ansi --prompt "File> "
+    # เลือก file ด้วย tv สวย ๆ
+    $selected = $files | tv
 
     if ($selected) {
         windsurf $selected
@@ -254,8 +260,8 @@ function ff {
     # หา directories ด้วย fd
     $dirs = if ($query) { fd -t d $query } else { fd -t d }
 
-    # เลือก path ด้วย fzf สวย ๆ
-    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+    # เลือก path ด้วย tv สวย ๆ
+    $selected = $dirs | tv
 
     if ($selected) {
         windsurf $selected
@@ -277,8 +283,30 @@ function cd {
         # หา directories ด้วย fd
         $dirs = fd -t d
 
-        # เลือก path ด้วย fzf สวย ๆ
-        $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+        # เลือก path ด้วย tv สวย ๆ
+        $selected = $dirs | tv
+
+        if ($selected) {
+            Set-Location $selected
+        }
+    }
+}
+
+function cdd {
+    param(
+        [string]$query = ""
+    )
+
+    $root = "D:\"
+
+    if ($query) {
+        Set-Location "$root$query"
+    } else {
+        # หา directories ด้วย fd จาก drive D
+        $dirs = fd -t d . $root
+
+        # เลือก path ด้วย tv สวย ๆ
+        $selected = $dirs | tv
 
         if ($selected) {
             Set-Location $selected
@@ -295,9 +323,9 @@ function rmi {
         [string]$query = ""
     )
 
-    # เลือก directory ด้วย fd + fzf (รวม dot folders ทั้งหมด)
+    # เลือก directory ด้วย fd + tv (รวม dot folders ทั้งหมด)
     $dirs = if ($query) { fd -t d --hidden $query } else { fd -t d --hidden }
-    $selected = $dirs | fzf --height 40% --reverse --border --ansi --prompt "Dir> "
+    $selected = $dirs | tv
 
     if ($selected) {
         # เลือกประเภทการลบ
@@ -371,7 +399,7 @@ function notes {
     else {
         # Search and open existing note
         $query = if ($action) { $action } else { "." }
-        $selected = fd -t f $query $notesDir | fzf
+        $selected = fd -t f $query $notesDir | tv
         if ($selected) {
             windsurf $selected
         }
@@ -406,8 +434,8 @@ function f {
     # หา files ด้วย fd
     $files = if ($query) { fd -t f $query } else { fd -t f }
 
-    # เลือก file ด้วย fzf สวย ๆ
-    $selected = $files | fzf --height 40% --reverse --border --ansi --prompt "File> "
+    # เลือก file ด้วย tv สวย ๆ
+    $selected = $files | tv
 
     if ($selected) {
         windsurf $selected

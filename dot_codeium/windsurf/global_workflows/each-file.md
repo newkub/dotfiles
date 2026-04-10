@@ -1,7 +1,1 @@
----
-description: For each file
-auto_execution_mode: 3
----
-
-แต่ละไฟล์
-
+ทำแต่ละ file จนครบ

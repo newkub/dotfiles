@@ -2,97 +2,57 @@
 title: Follow Ast Grep
 description: ตั้งค่าและใช้งาน ast-grep สำหรับ code search และ transformation ด้วย AST patterns
 auto_execution_mode: 3
-file-patterns:
-  - "sgconfig.yml"
-  - "package.json"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/connect-workflows"
 ---
-
-## Purpose
 
 ตั้งค่า ast-grep เป็นเครื่องมือสำหรับ code search, lint และ refactoring ด้วย AST-based patterns ที่แม่นยำกว่า regex
 
-## Scope
+## Execute
 
-- ติดตั้ง ast-grep CLI
-- กำหนดค่า `sgconfig.yml`
-- เพิ่ม rules submodule สำหรับ patterns
-- เพิ่ม scan script ใน `package.json`
+### 1. Check Reference
 
-## Inputs
+ตรวจสอบ reference ก่อนเริ่มตั้งค่า ast-grep
 
-| Input | Details |
-|-------|-----------|
-| Package Manager | Bun |
-| Git | ต้องมี git สำหรับ submodule |
+1. รัน `/check-reference` เพื่อตรวจสอบ reference จาก sources ต่างๆ
+2. อ่าน reference จาก ast-grep official documentation
+3. ตรวจสอบว่ามีข้อมูลเพียงพอสำหรับตั้งค่า ast-grep
+4. บันทึกข้อมูลสำคัญจาก reference ที่จะใช้ใน workflow
 
-## Rules
+### 2. Install Dependencies
 
-| Category | Requirements |
-|------|---------|
-| **Installation** | `bun add -D @ast-grep/cli` |
-| **Config** | สร้าง `sgconfig.yml` ที่ root |
-| **Rules** | ใช้ git submodule สำหรับ shared rules |
-| **Script** | มี `scan` script ใน package.json |
+ติดตั้ง ast-grep CLI ด้วย Bun
 
-## Structure
+1. รัน `bun add -D @ast-grep/cli`
+2. ตรวจสอบ installation สำเร็จ
+3. ตรวจสอบว่ามี Bun ติดตั้งแล้ว
+4. ตรวจสอบว่ามี git และ github CLI
+5. ตรวจสอบว่ามี `package.json` อยู่แล้ว
 
-### Directory Structure
+### 3. Configure sgconfig.yml
 
-```text
-project/
-├── sgconfig.yml          # Ast-grep config
-├── package.json          # Scan script
-└── rules/                # Git submodule
-    └── (shared patterns)
-```
+สร้างไฟล์ configuration สำหรับ ast-grep
 
-### Phase Definitions
+1. ดาวน์โหลด config จาก:
+   - `gh download https://github.com/newkub/my-config/blob/main/sgconfig.yml`
+   - หรือสร้าง `sgconfig.yml` พื้นฐาน
+2. สร้างไฟล์ `sgconfig.yml` ที่ root directory
+3. ตรวจสอบว่า config ถูกต้องตามความต้องการ
 
-| Phase | Description | Main Activities |
-|-------|-------------|---------------|
-| Setup | ติดตั้ง | Add ast-grep CLI |
-| Configure | สร้าง config | sgconfig.yml |
-| Rules | เพิ่ม rules | Git submodule |
-| Verify | ทดสอบ | Run scan |
+### 4. Add Rules Submodule
 
-## Steps
+เพิ่ม git submodule สำหรับ shared rule patterns
 
-### Phase 0: Precondition
+1. รัน `git submodule add https://github.com/newkub/ast-grep-rules`
+2. อัปเดต submodule: `git submodule update --init`
+3. ตรวจสอบว่า rules/ directory ถูกสร้างขึ้น
+4. ตรวจสอบว่า submodule พร้อมใช้งาน
 
-- 0.1 **ตรวจสอบ Environment**
-  - มี Bun ติดตั้งแล้ว
-  - มี git และ github CLI
-  - มี `package.json` อยู่แล้ว
+### 5. Add Scan Script
 
-### Phase 1: Setup
+เพิ่ม script สำหรับการ scan code
 
-- 1.1 **ติดตั้ง Ast Grep**
-  - รัน `bun add -D @ast-grep/cli`
-  - ตรวจสอบ installation สำเร็จ
+1. เพิ่ม script ใน `package.json`:
 
-### Phase 2: Configure
-
-- 2.1 **สร้าง sgconfig.yml**
-  - ดาวน์โหลด config:
-  - `gh download https://github.com/newkub/my-config/blob/main/sgconfig.yml`
-  - หรือสร้าง `sgconfig.yml` พื้นฐาน
-
-- 2.2 **เพิ่ม Rules Submodule**
-  - รัน `git submodule add https://github.com/newkub/rules`
-  - อัปเดต submodule: `git submodule update --init`
-
-### Phase 3: Script
-
-- 3.1 **เพิ่ม Scan Script**
-  - เพิ่มใน `package.json`:
-
-```json [package.json]
+```json
 {
   "scripts": {
     "scan": "ast-grep scan -r"
@@ -100,28 +60,48 @@ project/
 }
 ```
 
-### Phase 4: Verify
+2. ตรวจสอบว่า script ถูกเพิ่มอย่างถูกต้อง
+3. ตรวจสอบว่า script สามารถเรียกใช้ได้
 
-- 4.1 **ทดสอบการทำงาน**
-  - รัน `bun run scan`
-  - ตรวจสอบว่า scan ทำงานได้ถูกต้อง
+### 6. Verify Setup
 
-## Outputs
+ทดสอบการทำงานของ ast-grep
 
-| Output | Details |
-|--------|-----------|
-| sgconfig.yml | Ast-grep configuration |
-| rules/ submodule | Shared rule patterns |
-| Updated package.json | Scan script |
+1. รัน `bun run scan`
+2. ตรวจสอบว่า scan ทำงานได้ถูกต้อง
+3. ตรวจสอบว่า rules submodule ทำงานได้
+4. ตรวจสอบว่า config ถูกต้อง
 
-## Expected Outcome
+## Rules
 
-- Ast-grep ติดตั้งและทำงานได้
-- Config สามารถ scan code ได้
-- Rules submodule พร้อมใช้งาน
-- Scan script ทำงานได้ถูกต้อง
+### 1. Installation Rules
 
-## Reference
+กฎการติดตั้ง ast-grep CLI
 
-- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
-- `/connect-workflows` - เชื่อมโยง workflows ที่เกี่ยวข้อง
+1. ใช้ Bun เป็น package manager
+2. ติดตั้งเป็น dev dependency ด้วย `-D` flag
+3. ตรวจสอบ installation สำเร็จก่อนดำเนินการต่อ
+
+### 2. Configuration Rules
+
+กฎการตั้งค่า sgconfig.yml
+
+1. สร้าง `sgconfig.yml` ที่ root directory
+2. ดาวน์โหลด config จาก source ที่เชื่อถือได้
+3. ตรวจสอบว่า config ถูกต้องตามความต้องการ
+
+### 3. Rules Submodule Rules
+
+กฎการจัดการ rules submodule
+
+1. ใช้ git submodule สำหรับ shared rules
+2. อัปเดต submodule ด้วย `git submodule update --init`
+3. ตรวจสอบว่า rules/ directory ถูกสร้างขึ้น
+
+### 4. Script Rules
+
+กฎการเพิ่ม scan script
+
+1. มี `scan` script ใน package.json
+2. ใช้คำสั่ง `ast-grep scan -r` สำหรับ scanning
+3. ตรวจสอบว่า script สามารถเรียกใช้ได้

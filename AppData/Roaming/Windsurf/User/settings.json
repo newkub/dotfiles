@@ -102,7 +102,7 @@
 			"query": "state:open repo:${owner}/${repository} sort:updated-desc"
 		}
 	],
-	"javascript.updateImportsOnFileMove.enabled": "always",
+	"js/ts.updateImportsOnFileMove.enabled": "always",
 	"json.schemas": [
 		{
 			"fileMatch": [
@@ -143,7 +143,8 @@
 	"todo-tree.general.tags": [
 		"TODO",
 		"ISSUE",
-		"REVIEW"
+		"REVIEW",
+		"MOCK"
 	],
 	"todo-tree.highlights.customHighlight": {
 		"ISSUE": {
@@ -162,6 +163,14 @@
 			"iconColour": "#fc03d7",
 			"type": "tag-and-subTag"
 		},
+		"MOCK": {
+			"background": "#ff9800",
+			"foreground": "#ffffff",
+			"gutterIcon": true,
+			"icon": "check",
+			"iconColour": "#ff9800",
+			"type": "tag-and-subTag"
+		},
 		"TODO": {
 			"background": "#0fb12c",
 			"foreground": "#ffffff",
@@ -170,7 +179,6 @@
 			"type": "tag-and-subTag"
 		}
 	},
-	"typescript.updateImportsOnFileMove.enabled": "always",
 	"unocss.autocomplete.strict": true,
 	"vue.autoInsert.bracketSpacing": true,
 	"vue.autoInsert.dotValue": true,
@@ -277,7 +285,7 @@
 	},
 	"windsurf.completionMode": "off",
 	"[markdown]": {
-		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+		"editor.defaultFormatter": "vscode.markdown-language-features"
 	},
 	"workspaceSidebar.rootFolders": [
 		{
@@ -288,7 +296,7 @@
 	"rumdl.rules.disable": [
 		"MD013"
 	],
-	"typescript.experimental.useTsgo": true,
+	"js/ts.experimental.useTsgo": true,
 	"codeCounter.debug": "none",
 	"terminal.integrated.commandsToSkipShell": [
 		"kilo-code.new.agentManagerOpen",

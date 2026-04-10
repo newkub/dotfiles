@@ -71,7 +71,7 @@ config.unicode_version = 14
 --   "OpenGL"    - GPU accelerated, balanced performance
 --   "WebGpu"    - Modern GPU API, fastest but may have driver issues
 -- NOTE: WebGpu causes double rendering on some Windows GPUs, using Software for stability
-config.front_end = "Software"
+config.front_end = "WebGpu"
 
 -- Use dedicated GPU for rendering (if available)
 config.webgpu_power_preference = "HighPerformance"
@@ -292,9 +292,6 @@ wezterm.on('update-right-status', function(window, pane)
     end
   end
 
-  -- Get current time
-  local time = wezterm.strftime('%H:%M')
-
   -- Build status line elements
   local elements = {}
 
@@ -337,15 +334,6 @@ wezterm.on('update-right-status', function(window, pane)
       table.insert(elements, { Text = git_time .. ' ago' })
     end
   end
-
-  -- Separator before clock
-  table.insert(elements, { Foreground = { Color = colors.separator } })
-  table.insert(elements, { Text = ' | ' })
-
-  -- Clock
-  table.insert(elements, { Foreground = { Color = colors.clock } })
-  table.insert(elements, { Text = time })
-  table.insert(elements, { Text = ' ' }) -- spacing
 
   window:set_right_status(wezterm.format(elements))
 end)
