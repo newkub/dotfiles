@@ -10,11 +10,7 @@ gh completion -s powershell | Out-String | Invoke-Expression
 # https://github.com/ajeetdsouza/zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
-# --- Atuin Shell History ---
-# https://github.com/atuinsh/atuin
-if (Get-Command atuin -ErrorAction SilentlyContinue) {
-    atuin init powershell | Out-String | Invoke-Expression
-}
+
 
 # --- PowerToys CommandNotFound ---
 # Shows suggestions from WinGet if a command is not found.
