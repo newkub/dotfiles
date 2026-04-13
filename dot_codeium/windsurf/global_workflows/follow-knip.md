@@ -1,19 +1,6 @@
----
 title: Follow Knip
 description: ตั้งค่าและใช้งาน Knip สำหรับตรวจสอบ unused files, dependencies และ exports
 auto_execution_mode: 3
-file-patterns:
-  - ".knip.json"
-  - "package.json"
-  - "turbo.json"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/connect-workflows"
----
-
 ## Purpose
 
 ตั้งค่า Knip สำหรับตรวจสอบและลบ unused files, dependencies และ exports เพื่อลด technical debt และ bundle size

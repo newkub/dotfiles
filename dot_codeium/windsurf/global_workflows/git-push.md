@@ -2,7 +2,6 @@
 title: Git Push
 description: ทำการ push commits ไปยัง remote repository
 auto_execution_mode: 3
-follow:
 - "/git-push"
 ---
 

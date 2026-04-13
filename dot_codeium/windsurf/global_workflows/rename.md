@@ -1,2 +1,1 @@
-1. แก้ไขชื่อไฟล์ตาม conventional หรือตามที่บอก
-2. แก้ไข referce ที่เกี่ยวข้อง
+rename และ /edit-relative

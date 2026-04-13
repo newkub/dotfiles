@@ -1,85 +1,56 @@
 ---
 title: Follow Turborepo
-description: แนวทางการพัฒนา monorepo ด้วย Turborepo อย่างมืออาชีพ
+description: ตั้งค่า monorepo ด้วย Turborepo พร้อม caching และ parallel execution
 auto_execution_mode: 3
 ---
 
-## Prompt
+## Goal
 
-ใช้ workflow นี้เมื่อต้องตั้งค่าหรือปรับปรุง monorepo ด้วย Turborepo ให้เป็นไปตาม best practices และมีประสิทธิภาพสูงสุด
-
-เหมาะสำหรับ:
-- **New projects** — เริ่มต้น monorepo ใหม่
-- **Migration** — ย้ายจาก Lerna/Nx มา Turborepo
-- **Optimization** — ปรับปรุงประสิทธิภาพ monorepo ที่มีอยู่
-- **Enterprise setup** — ตั้งค่าระดับองค์กรพร้อม governance
+สร้าง monorepo ด้วย Turborepo ที่มี caching, parallel execution, และ package boundary enforcement
 
 ## Execute
 
-1. วิเคราะห์สภาพแวดล้อมและความต้องการ
+### 1. Analyze Environment
 
-- ตรวจสอบว่ามี `node`, `bun`, `rustc` ที่จำเป็น
-- ยืนยันว่า project เป็น monorepo (มีหลาย packages)
-- ตรวจสอบว่า `turbo` ยังไม่ได้ติดตั้งใน root package.json
-- ตรวจสอบว่ามี workspace structure ที่เหมาะสม
-- ระบุ packages ทั้งหมดใน monorepo และ dependencies ระหว่างกัน
-- วิเคราะห์ scripts ที่จำเป็นสำหรับแต่ละ package (dev, build, test, typecheck, format, verify, clean)
-- กำหนด caching strategy สำหรับ build และ test
-- วางแผน pipeline dependencies และ execution order
-- วางแผน `--filter` patterns สำหรับ partial development
-  - `turbo dev --filter=web` — development เฉพาะ web app
-  - `turbo build --filter=...^ui` — build ui และ dependencies ที่เกี่ยวข้อง
-  - `turbo test --filter=...[origin/main]` — test เฉพาะที่เปลี่ยนแปลง
+1. ตรวจสอบ `node`, `bun`, `rustc` ติดตั้งแล้ว
+2. ยืนยัน project เป็น monorepo (มีหลาย packages)
+3. ตรวจสอบ workspace structure
+4. ระบุ packages ทั้งหมดและ dependencies ระหว่างกัน
+5. วิเคราะห์ scripts ที่จำเป็น: dev, build, test, typecheck, format, verify, clean
+6. กำหนด caching strategy และ pipeline dependencies
+7. วางแผน `--filter` patterns:
+   - `turbo dev --filter=web` — development เฉพาะ web app
+   - `turbo build --filter=...^ui` — build ui และ dependencies
+   - `turbo test --filter=...[origin/main]` — test เฉพาะที่เปลี่ยนแปลง
 
-2. ดำเนินการติดตั้งและตั้งค่า
+### 2. Install And Configure
 
-**2.1 ติดตั้ง Turbo**
+#### 2.1 Install Turbo
 
 ```bash
 bun add --dev turbo
 ```
 
-**2.2 ตั้งค่า Workspace**
+#### 2.2 Configure Workspaces
 
-Update `package.json` workspaces:
-
-```json
-{
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ]
-}
-```
-
-**2.3 กำหนด Engine Versions**
-
-Add to `package.json` (CRITICAL: lock version ไม่ใช่ latest):
+Update `package.json`:
 
 ```json
 {
+  "workspaces": ["packages/*", "apps/*"],
   "engines": {
     "node": ">=20 <22",
     "bun": ">=1.3.10 <2.0.0",
     "rust": ">=1.70 <2.0.0"
-  }
-}
-```
-
-**2.4 ตั้งค่า Core Scripts**
-
-Add to `package.json`:
-
-```json
-{
+  },
   "scripts": {
     "prepare": "bunx lefthook install && bunx taze -r -w -i",
     "dev": "turbo dev",
     "devtools": "turbo devtools",
-    "format": "turbo format",
-    "typecheck": "turbo typecheck",
     "build": "turbo build",
     "test": "turbo test",
+    "typecheck": "turbo typecheck",
+    "format": "turbo format",
     "lint": "turbo lint",
     "verify": "turbo run build test lint typecheck format",
     "release": "turbo release",
@@ -88,9 +59,7 @@ Add to `package.json`:
 }
 ```
 
-**Note:** Granular tasks (test:unit, test:e2e, build:app, etc.) ให้ package.json ในแต่ละ package จัดการเอง
-
-**2.5 สร้าง Turbo Configuration**
+#### 2.3 Create Turbo Configuration
 
 Create `turbo.json`:
 
@@ -101,9 +70,7 @@ Create `turbo.json`:
     "enabled": true
   },
   "globalEnv": ["NODE_ENV"],
-  "globalDependencies": [
-    "**/.env.*local"
-  ],
+  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -144,16 +111,16 @@ Create `turbo.json`:
 }
 ```
 
-**2.6 Optional: Setup Remote Cache**
+#### 2.4 Optional Remote Cache
 
 ```bash
-npx turbo login
+bunx turbo login
 bunx turbo link --yes
 ```
 
-**2.7 Optional: CI/CD Integration**
+#### 2.5 CI/CD Integration
 
-สร้าง GitHub Actions workflow (`.github/workflows/ci.yml`):
+Create `.github/workflows/ci.yml`:
 
 ```yaml
 name: CI
@@ -163,21 +130,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        with: { fetch-depth: 0 }
       - uses: oven-sh/setup-bun@v1
       - run: bun install
-      - run: bun turbo run build --filter=...[origin/main]
       - run: bun turbo run verify --filter=...[origin/main]
 ```
 
-**2.8 Package Boundary Enforcement**
+#### 2.6 Package Boundary Enforcement
 
-ESLint Flat Config + import rules:
+Install: `bun add --dev eslint @eslint/js eslint-plugin-import eslint-plugin-boundaries`
 
-ติดตั้ง: `bun add --dev eslint @eslint/js eslint-plugin-import eslint-plugin-boundaries`
-
-Config (`eslint.config.js`):
+Config `eslint.config.js`:
 
 ```javascript
 import js from '@eslint/js';
@@ -188,221 +151,142 @@ export default [
   js.configs.recommended,
   importPlugin.configs.recommended,
   {
-    plugins: {
-      boundaries
-    },
+    plugins: { boundaries },
     rules: {
-      'boundaries/element-types': [
-        'error',
-        {
-          default: 'disallow',
-          rules: [
-            { from: 'app', allow: ['application'] },
-            { from: 'application', allow: ['domain'] },
-            { from: 'domain', allow: [] }
-          ]
-        }
-      ]
+      'boundaries/element-types': ['error', {
+        default: 'disallow',
+        rules: [
+          { from: 'app', allow: ['application'] },
+          { from: 'application', allow: ['domain'] },
+          { from: 'domain', allow: [] }
+        ]
+      }]
     }
   }
 ];
 ```
 
-**2.9 Package API Enforcement**
+#### 2.7 Dependency Cruiser
 
-ในแต่ละ package `package.json` ให้กำหนด `exports` อย่างชัดเจน:
+Install: `bun add --dev eslint-plugin-dependency-cruiser dependency-cruiser`
 
-```json
-{
-  "name": "@wrikka/domain",
-  "exports": {
-    ".": "./src/index.ts",
-    "./types": "./src/types/index.ts"
-  }
-}
+Config `eslint.config.js`:
+
+```javascript
+import dependencyCruiser from 'eslint-plugin-dependency-cruiser';
+export default [
+  dependencyCruiser.configs.recommended
+];
 ```
 
-**2.10 dependency-cruiser**
-
-ติดตั้ง: `bun add --dev dependency-cruiser`
-
-Config (`dependency-cruiser.config.js`):
+Config `dependency-cruiser.config.js`:
 
 ```javascript
 export default {
   forbidden: [
-    {
-      name: 'no-domain-to-app',
-      from: { path: '^packages/domain' },
-      to: { path: '^apps' }
-    },
-    {
-      name: 'no-app-to-infra',
-      from: { path: '^apps' },
-      to: { path: '^packages/infra' }
-    },
-    {
-      name: 'no-cross-domain',
-      from: { path: '^packages/domain' },
-      to: { path: '^packages/domain' },
-      except: { path: '^packages/domain/.*/test/.*' }
-    },
-    {
-      name: 'no-circular-dependencies',
-      from: { path: '.*' },
-      to: { circular: true }
-    }
+    { name: 'no-domain-to-app', from: { path: '^packages/domain' }, to: { path: '^apps' } },
+    { name: 'no-app-to-infra', from: { path: '^apps' }, to: { path: '^packages/infra' } },
+    { name: 'no-circular', from: { path: '.*' }, to: { circular: true } }
   ]
 };
 ```
 
-Scripts เพิ่มใน package.json:
+### 3. Verify Setup
 
-```json
-{
-  "scripts": {
-    "check:deps": "depcruise --config dependency-cruiser.config.js src",
-    "check:deps:graph": "depcruise --config dependency-cruiser.config.js --output-type dot src | dot -T svg > dependency-graph.svg"
-  }
-}
-```
-
-**2.11 TypeScript Project References**
-
-สร้าง `tsconfig.base.json`:
-
-```json
-{
-  "compilerOptions": {
-    "composite": true,
-    "declarationMap": true,
-    "paths": {
-      "@wrikka/domain/*": ["packages/domain/src/*"],
-      "@wrikka/infra/*": ["packages/infra/src/*"]
-    }
-  },
-  "references": [
-    { "path": "./packages/domain" },
-    { "path": "./packages/infra" }
-  ]
-}
-```
-
-ในแต่ละ package `tsconfig.json`:
-
-```json
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@wrikka/domain/*": ["../../packages/domain/src/*"]
-    }
-  }
-}
-```
-
-3. ตรวจสอบความถูกต้องและยืนยันผล
-
-- ตรวจสอบว่า turbo ติดตั้งสำเร็จและพร้อมใช้งาน (`bunx turbo --version`)
-- ยืนยันว่า workspace configuration ถูกต้อง (`bun workspaces list`)
-- ตรวจสอบว่า engine versions เป็นปัจจุบันและเข้ากันได้
-- ตรวจสอบว่า turbo.json syntax ถูกต้อง (`bunx turbo lint`)
-- ยืนยันว่า scripts ใน root package.json ถูกต้องและสมบูรณ์
-- ทดสอบ run verify command: `bun verify`
-- ตรวจสอบ pipeline: format → typecheck → build → test
-- ตรวจสอบ performance: caching และ parallel execution ทำงานได้
-- ตรวจสอบ dependencies: ระหว่าง packages ถูกต้อง
-- ทดสอบ partial run:
-  ```bash
-  turbo dev --filter=web
-  turbo build --filter=...^ui
-  ```
-- ทดสอบ affected strategy:
-  ```bash
-  turbo run build --filter=...[origin/main]
-  turbo run test --filter=...[origin/main]
-  turbo run verify --filter=...[origin/main]
-  ```
-- ใน CI/CD ใช้ BASE_REF:
-  ```bash
-  turbo run build --filter=...[${BASE_REF}]
-  turbo run test --filter=...[${BASE_REF}]
-  turbo run verify --filter=...[${BASE_REF}]
-  ```
-- ตรวจสอบว่า scripts ในทุก workspace สอดคล้องกัน
-- ยืนยันว่า performance ดีขึ้น (เวลา build ลดลง)
-- ตรวจสอบว่า developer experience ดีขึ้น
-- สร้าง documentation สำหรับ team members
+1. ตรวจสอบ `bunx turbo --version`
+2. ตรวจสอบ `bun workspaces list`
+3. ตรวจสอบ `turbo.json` syntax
+4. ทดสอบ `bun run verify`
+5. ตรวจสอบ pipeline: format → typecheck → build → test
+6. ทดสอบ partial run: `turbo dev --filter=web`
+7. ทดสอบ affected: `turbo run build --filter=...[origin/main]`
 
 ## Rules
 
-1. Core Requirements
+### 1. Frontmatter Standards
 
-- ติดตั้ง `turbo` ใน root package.json เป็น devDependency
-- กำหนด `workspaces` ใน package.json อย่างถูกต้อง
-- ใช้ exact version ไม่ใช้ `latest` สำหรับความเสถียร
-- ระบุ version ranges ที่ชัดเจนใน `engines`
+- title: Title Case
+- description: ไม่เกิน 100 ตัวอักษร
+- auto_execution_mode: 3
 
-2. Engine Versions (Locked)
+### 2. Engine Versions
 
-- **Bun:** `">=1.3.10 <2.0.0"` (current: 1.3.10)
-- **Node.js:** `">=20 <22"` (LTS)
-- **Rust:** `">=1.70 <2.0.0"` (stable)
+| Tool | Version |
+|------|---------|
+| Bun | `>=1.3.10 <2.0.0` |
+| Node.js | `>=20 <22` |
+| Rust | `>=1.70 <2.0.0` |
 
-3. Core Scripts (Required)
+### 3. Core Scripts
 
-```json
-{
-  "scripts": {
-    "prepare": "bunx lefthook install && bunx taze -r -w -i",
-    "dev": "turbo dev",
-    "watch": "turbo watch",
-    "build": "turbo build",
-    "typecheck": "turbo typecheck",
-    "format": "turbo format",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "verify": "turbo run build test lint typecheck format",
-    "release": "turbo release",
-    "clean": "turbo clean"
-  }
-}
-```
+- prepare: setup hooks และ update dependencies
+- dev/devtools: development mode (cache: false)
+- build: build ทั้งหมด (dependsOn: ["^build"])
+- test: test (dependsOn: ["build"])
+- lint: linting (dependsOn: ["^lint"])
+- typecheck: type checking
+- format: formatting (dependsOn: ["^format"])
+- verify: full pipeline
+- release: release build
+- clean: clean artifacts
 
-**หมายเหตุ:** สำหรับ project ที่ใช้ changesets ให้ใช้ `"release": "changeset publish"`
+### 4. Turbo Configuration
 
-5. Package Flexibility
+- ใช้ `^` prefix สำหรับ dependencies (upstream build)
+- กำหนด `outputs` ชัดเจนเพื่อ caching
+- `cache: false` สำหรับ dev, prepare, postinstall
+- `persistent: true` สำหรับ dev server
 
-- **Core packages:** ต้องมี scripts หลัก (dev, build, test, typecheck, format, clean)
-- **Utility packages:** อาจมี scripts เฉพาะที่จำเป็น (build, test, typecheck)
-- **Apps:** ต้องมี scripts ครบ (dev, build, test, typecheck, format, clean)
+### 5. Package Flexibility
 
-6. Turbo Orchestration Rules
+- Core packages: ต้องมี dev, build, test, typecheck, format, clean
+- Utility packages: build, test, typecheck
+- Apps: ต้องมีครบทุก scripts
 
-- ใช้ `turbo <command>` สำหรับ scripts ที่ต้องการ parallelization
-- ใช้ `--filter` สำหรับ development แบบ selective
-  - `turbo dev --filter=web` — dev เฉพาะ web app
-  - `turbo build --filter=...^ui` — build ui และ dependencies
-  - `turbo test --filter=...[origin/main]` — test เฉพาะที่เปลี่ยนแปลง
-- เฉพาะ tasks ที่ต้องการ orchestration ควรอยู่ใน turbo.json
-- กำหนด `outputs` และ `dependsOn` อย่างชัดเจน
+### 6. Filter Patterns
 
-7. Advanced Tips
+- `turbo dev --filter=<package>` — dev เฉพาะ package
+- `turbo build --filter=...^<package>` — build package + dependencies
+- `turbo test --filter=...[origin/main]` — test เฉพาะที่เปลี่ยนแปลง
 
-- ใช้ `turbo graph` เพื่อ visualize dependencies ระหว่าง packages
-- Monitor cache hit rates ด้วย `TURBO_LOG_LEVEL=debug` เพื่อ optimization
-- Custom environment variables สำหรับ different deployment stages (build-time เท่านั้น)
-- Incremental builds ด้วย affected strategy ใน CI/CD (ใช้ origin/main หรือ BASE_REF)
-- Performance monitoring ติดตาม build times และ cache effectiveness
-- Package API design ใช้ `exports` field เพื่อ enforce public boundaries
-- Environment strategy ใช้เฉพาะ `NODE_ENV` ใน turbo.json ป้องกัน cache invalidation
+### 7. Package Boundaries
+
+- ใช้ `eslint-plugin-boundaries` ป้องกัน import ข้าม layer
+- ใช้ `eslint-plugin-dependency-cruiser` ตรวจสอบ circular dependencies
+- กำหนด `exports` field ในแต่ละ package
+
+### 8. Environment Variables
+
+- `NODE_ENV` อยู่ใน `globalEnv`
+- ใช้เฉพาะ build-time variables
+- หลีกเลี่ยง runtime variables ที่เปลี่ยนบ่อย
+
+### 9. Performance Tips
+
+- ใช้ `turbo graph` visualize dependencies
+- Monitor cache hit rates ด้วย `TURBO_LOG_LEVEL=debug`
+- ใช้ affected strategy ใน CI/CD
+- ติดตาม build times และ cache effectiveness
+
+### 10. CI/CD
+
+- ใช้ `--filter=...[origin/main]` หรือ `${BASE_REF}`
+- Setup remote cache เพื่อแชร์ cache ระหว่าง builds
+- ใช้ `fetch-depth: 0` สำหรับ affected detection
+
+### 11. Package Manifest Setup
+
+- ตั้งค่า `package.json` ตาม `/follow-package-manifest`
+- เลือก template level ตามขนาดโปรเจกต์: Minimal, Standard หรือ Complete
+- กำหนด scripts ให้สอดคล้องกับ tech stack (Bun/TS, Rust, Go, PHP)
+- ตรวจสอบ verify pipeline: format → lint → typecheck → test
+- ใช้ `prepare` script สำหรับ setup hooks และ dependencies
 
 ## Expected Outcome
 
-- **Turborepo setup สมบูรณ์** — ติดตั้งและกำหนดค่าอย่างถูกต้องตาม best practices
-- **Workspace management** — dependencies และ scripts ที่สอดคล้องกันและมีประสิทธิภาพ
-- **Performance improvement** — caching และ parallel execution ทำงานได้อย่างเต็มประสิทธิภาพ
-- **Development workflow** — scripts ที่ใช้งานง่าย สม่ำเสมอ และ developer experience ที่ดีเยี่ยม
-- **Package boundary enforcement** — ป้องกันการ import ข้าม layer ด้วย ESLint + dependency-cruiser
-- **Documentation** — team members สามารถใช้งานได้ทันทีพร้อม best practices
+1. Turborepo ติดตั้งและทำงานพร้อม caching และ parallel execution
+2. Workspace configuration สมบูรณ์ด้วย engine versions และ scripts
+3. Build pipeline มีประสิทธิภาพสูงด้วย proper task dependencies
+4. Package boundaries ถูก enforce ด้วย ESLint
+5. CI/CD integration ทำงานร่วมกับ affected strategy
+6. Developer experience ดีขึ้นด้วย commands ที่สม่ำเสมอ

@@ -342,16 +342,13 @@ end)
 -- Auto-Start Behavior
 -- =============================================
 
--- On startup: open maximized window with 3 tabs
+-- On startup: open maximized window with 2 tabs
 wezterm.on('gui-startup', function(cmd)
   -- Spawn initial window
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
 
   -- Create second tab at D:\ drive
   local tab2 = window:spawn_tab { cwd = 'D:\\' }
-
-  -- Create third tab at D:\ drive
-  local tab3 = window:spawn_tab { cwd = 'D:\\' }
 
   -- Keep first tab active
   tab:activate()

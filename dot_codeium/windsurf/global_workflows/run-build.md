@@ -2,7 +2,6 @@
 title: Run Build
 description: รัน build process อย่างมีระบบเพื่อสร้าง production-ready artifacts
 auto_execution_mode: 3
-follow:
 - "/validate"
 - "/run-typecheck"
 - "/run-install"

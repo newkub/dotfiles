@@ -1,157 +1,165 @@
 ---
-title: Follow Tauri
-description: ตั้งค่าและพัฒนา Desktop Applications ด้วย Tauri ร่วมกับ frontend frameworks
+title: Create Tauri Desktop Applications
+description: สร้าง Desktop Applications ด้วย Tauri, Vite, React และ Rust backend
 auto_execution_mode: 3
-file-patterns:
-  - "src-tauri/**/*.rs"
-  - "tauri.conf.json"
-  - "vite.config.ts"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/connect-workflows"
 ---
 
-## Purpose
+## Goal
 
-ตั้งค่า Tauri สำหรับสร้าง Desktop Applications ด้วย web technologies (HTML, CSS, JS) และ Rust backend
+สร้าง Tauri desktop application ที่ใช้ web frontend (Vite + React) ร่วมกับ Rust backend สำหรับ cross-platform desktop apps
 
-## Scope
+## Execute
 
-- ติดตั้ง Tauri และ dependencies
-- กำหนดค่า Tauri กับ frontend frameworks (Vite, Nuxt)
-- สร้าง desktop application ด้วย web technologies
-- ตั้งค่า configuration files สำหรับ development และ production
+### 1. Setup Environment
 
-## Inputs
+1. ตรวจสอบ Rust ติดตั้งแล้ว: `rustc --version`
+2. ตรวจสอบ Bun ติดตั้งแล้ว: `bun --version`
+3. ยืนยัน WebView2 บน Windows (ติดตั้งอัตโนมัติตอน run ครั้งแรก)
 
-| Input | Details |
-|-------|-----------|
-| Runtime | Bun + Rust |
-| Frontend | Vite, Nuxt, หรืออื่นๆ |
-| OS | Windows, macOS, Linux |
+### 2. Install Dependencies
 
-## Rules
+1. รัน `bun install`
+2. ติดตั้ง Tauri API: `bun add @tauri-apps/api`
+3. ติดตั้ง Tauri CLI: `bun add -D @tauri-apps/cli`
 
-| Category | Requirements |
-|------|---------|
-| **Frontend** | ทำตาม workflow ของ framework ที่เลือกก่อน |
-| **Tauri API** | ติดตั้ง `@tauri-apps/api` |
-| **CLI** | ติดตั้ง `@tauri-apps/cli` เป็น dev dependency |
-| **Port** | Vite port ต้องตรงกับ tauri.conf.json |
-| **Watch** | ต้อง ignore `src-tauri/` ใน Vite config |
+### 3. Configure Vite
 
-## Structure
+แก้ไข `vite.config.ts`:
 
-### Directory Structure
-
-```text
-project/
-├── src-tauri/            # Rust backend
-│   ├── Cargo.toml
-│   ├── tauri.conf.json
-│   └── src/
-├── src/                  # Frontend source
-├── vite.config.ts        # Vite config (ถ้าใช้ Vite)
-└── package.json
-```
-
-### Phase Definitions
-
-| Phase | Description | Main Activities |
-|-------|-------------|---------------|
-| Setup | สร้างโปรเจกต์ | Create tauri-app |
-| Install | ติดตั้ง dependencies | Tauri API, CLI |
-| Configure | กำหนดค่า | Vite + Tauri config |
-| Develop | พัฒนา | Run dev server |
-| Build | Build | Production build |
-
-## Steps
-
-### Phase 0: Precondition
-
-- 0.1 **ตรวจสอบ Environment**
-  - มี Rust ติดตั้งแล้ว (`rustc --version`)
-  - มี Bun ติดตั้งแล้ว
-  - เลือก frontend framework ที่จะใช้
-
-### Phase 1: Setup
-
-- 1.1 **สร้าง Tauri Project**
-  - รัน `bun create tauri-app`
-  - เลือก frontend framework ที่ต้องการ
-
-### Phase 2: Install
-
-- 2.1 **ติดตั้ง Tauri API**
-  - รัน `bun add @tauri-apps/api`
-
-- 2.2 **ติดตั้ง Tauri CLI**
-  - รัน `bun add -D @tauri-apps/cli`
-
-### Phase 3: Configure
-
-- 3.1 **กำหนดค่า Vite** (ถ้าใช้ Vite)
-  - แก้ไข `vite.config.ts`:
-
-```ts [vite.config.ts]
+```typescript
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 const host = process.env.TAURI_DEV_HOST
 
 export default defineConfig({
+  plugins: [react()],
   clearScreen: false,
   server: {
     port: 5173,
     strictPort: true,
     host: host || false,
-    hmr: host
-      ? {
-          protocol: 'ws',
-          host,
-          port: 1421,
-        }
-      : undefined,
-    watch: {
-      ignored: ['**/src-tauri/**'],
-    },
+    hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,
+    watch: { ignored: ['**/src-tauri/**'] },
   },
   envPrefix: ['VITE_', 'TAURI_'],
 })
 ```
 
-### Phase 4: Develop
+### 4. Configure Tauri
 
-- 4.1 **รัน Development Server**
-  - รัน `bun run tauri dev`
-  - ตรวจสอบ app ทำงานได้
+แก้ไข `src-tauri/tauri.conf.json`:
 
-### Phase 5: Build
+```json
+{
+  "productName": "{project-name}",
+  "identifier": "com.company.{project-name}",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "bun run build"
+  },
+  "app": {
+    "windows": [{ "title": "{project-name}", "width": 1200, "height": 800 }],
+    "security": { "csp": null }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/icon.ico"]
+  }
+}
+```
 
-- 5.1 **Build Production**
-  - รัน `bun run tauri build`
-  - ตรวจสอบ binaries ใน `src-tauri/target/`
+กำหนด capabilities ใน `src-tauri/capabilities/default.json`:
 
-## Outputs
+```json
+{
+  "identifier": "default",
+  "permissions": ["core:default", "fs:allow-read-file", "dialog:allow-open"]
+}
+```
 
-| Output | Details |
-|--------|-----------|
-| src-tauri/ | Rust backend code |
-| Desktop App | Executables สำหรับ Windows/macOS/Linux |
-| Config files | tauri.conf.json, vite.config.ts |
+### 5. Develop IPC Commands
+
+1. สร้าง Rust command ใน `src-tauri/src/lib.rs`:
+
+```rust
+#[tauri::command]
+fn greet(name: &str) -> String {
+  format!("Hello, {}!", name)
+}
+```
+
+2. Register command:
+
+```rust
+tauri::Builder::default()
+  .invoke_handler(tauri::generate_handler![greet])
+  .run(tauri::generate_context!())
+```
+
+3. เรียกใช้จาก frontend:
+
+```typescript
+import { invoke } from '@tauri-apps/api/core'
+const response = await invoke('greet', { name: 'World' })
+```
+
+### 6. Build And Test
+
+1. Development mode: `bun run tauri dev`
+2. Production build: `bun run tauri build`
+3. Platform specific: `bun run tauri build --target x86_64-apple-darwin`
+
+## Rules
+
+### Frontmatter
+
+- title: Title Case
+- description: ไม่เกิน 100 ตัวอักษร
+- auto_execution_mode: 3
+
+### Project Structure
+
+```
+desktop-apps/{project}/
+├── src/                    # Frontend
+│   ├── components/
+│   ├── hooks/
+│   ├── App.tsx
+│   └── main.tsx
+├── src-tauri/              # Rust backend
+│   ├── src/
+│   │   ├── main.rs
+│   │   └── lib.rs
+│   ├── Cargo.toml
+│   ├── tauri.conf.json
+│   └── capabilities/
+├── vite.config.ts
+├── package.json
+└── index.html
+```
+
+### Standards
+
+- ใช้ `bun` สำหรับทุก commands
+- Vite port ต้องตรงกับ `tauri.conf.json` (default: 5173)
+- Vite ต้อง ignore `src-tauri/`
+- IPC ใช้ `invoke()` สำหรับ frontend → backend
+- กำหนด capabilities ใน `tauri.conf.json`
+
+### IPC Pattern
+
+| Direction | Method |
+|-----------|--------|
+| Frontend → Backend | `invoke('command', args)` |
+| Backend → Frontend | Events |
 
 ## Expected Outcome
 
-- Tauri project สร้างสำเร็จ
-- Dev server ทำงานได้
-- Frontend และ Rust backend เชื่อมต่อกันได้
+- Tauri project สร้างสำเร็จด้วย `bun create tauri-app`
+- Dev server ทำงานได้ที่ `bun run tauri dev`
+- Frontend และ Rust backend เชื่อมต่อกันผ่าน IPC
 - Production build สร้าง executables ได้
-
-## Reference
-
-- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
-- `/follow-vite` - ถ้าใช้ Vite
-- `/follow-nuxt` - ถ้าใช้ Nuxt
-- `/connect-workflows` - เชื่อมโยง workflows

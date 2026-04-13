@@ -2,7 +2,6 @@
 title: Watch Terminal Workflow
 description: เปิดเบราว์เซอร์และ watch ต่อเรื่อยๆ ทุก 5 วินาที พร้อมจัดการ error อัตโนมัติ
 auto_execution_mode: 3
-follow:
 - "/run-dev"
 - "/fix-error"
 ---

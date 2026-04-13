@@ -1,22 +1,6 @@
----
 title: Follow Vitest
 description: ตั้งค่าและใช้งาน Vitest สำหรับ unit testing ในโปรเจกต์ TypeScript และ JavaScript
 auto_execution_mode: 3
-file-patterns:
-  - "vitest.config.ts"
-  - "**/*.test.ts"
-  - "**/*.spec.ts"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/connect-workflows"
-    - "/follow-vitest-config"
-    - "/follow-vitest-projects"
-    - "/follow-vitest-best-practices"
----
-
 ## Purpose
 
 ตั้งค่า Vitest เป็น testing framework หลักสำหรับโปรเจกต์ TypeScript/JavaScript ด้วยความเร็วสูงและ feature ครบครัน

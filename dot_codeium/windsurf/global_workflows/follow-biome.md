@@ -2,15 +2,6 @@
 title: Follow Biome
 description: ตั้งค่าและใช้งาน Biome สำหรับ linting และ formatting แทน ESLint/Prettier
 auto_execution_mode: 3
-file-patterns:
-  - "biome.jsonc"
-  - "package.json"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/connect-workflows"
 ---
 
 ## Purpose

@@ -1,221 +1,238 @@
 ---
-title: Update README Workflow
-description: อัพเดท README.md ให้มีโครงสร้างและเนื้อหาที่สมบูรณ์ตามมาตรฐาน
+title: Update Readme
+description: Create comprehensive README.md with real project data, CLI accordion, and complete API coverage
 auto_execution_mode: 3
-follow:
-- "/follow-workflows-template"
 ---
 
-## Prompt
+## Goal
 
-ใช้ workflow นี้เมื่อต้องการอัพเดท README.md ให้มีโครงสร้างและเนื้อหาที่สมบูรณ์ตามมาตรฐานที่กำหนด
-
-## Purpose
-
-กำหนดมาตรฐานการเขียน README.md สำหรับ Wrikka Platform:
-- **โครงสร้างสม่ำเสมอ** — ทุก README ใช้ sections เดียวกัน
-- **เนื้อหาครบถ้วน** — ครอบคลุม Introduction ถึง License
-- **Template ที่ใช้งานได้จริง** — มี code block สำหรับ Root และ Package
-- **ภาษาอังกฤษเข้าใจง่าย** — สื่อสารชัดเจนกับ developer ทุกระดับ
-
-## Rules
-
-- Root README: ต้องมีหัวข้อ Introduction, Problems, Solutions, Features, Packages Overview, Contributing, License
-- Package README: ต้องมีหัวข้อ Introduction, Problems, Solutions, Features, Installation, Usage, Use Cases, Configuration, API Reference, Changelog, License
-- เนื้อหาต้องเป็นภาษาอังกฤษและเข้าใจง่าย
-- ต้องอัพเดทข้อมูลให้เป็นปัจจุบันเสมอ
-- ต้องมีตัวอย่างการใช้งานที่ชัดเจน
-- โครงสร้างต้องสอดคล้องกับ project จริง
+Create comprehensive README.md files with complete structure from Introduction to License using actual project analysis data without placeholders.
 
 ## Execute
 
-1. check : ตรวจสอบสถานะ README.md ปัจจุบัน
-   - อ่านไฟล์ README.md ปัจจุบัน
-   - ตรวจสอบว่ามีโครงสร้างตามที่กำหนดหรือไม่
-   - ตรวจสอบว่าเนื้อหาเป็นปัจจุบันหรือไม่
+### 1. Prepare Analysis
 
-2. analyze : วิเคราะห์โครงสร้างโปรเจกต์และเนื้อหาที่ต้องการ
-   - ตรวจสอบโครงสร้าง apps/ และ packages/
-   - วิเคราะห์ dependencies ที่ใช้จริง
-   - ตรวจสอบว่ามี application อะไรบ้างที่ต้องอธิบาย
+1. รัน `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์
+2. อ่าน `README.md` ปัจจุบันเพื่อดูสิ่งที่ต้องอัพเดท
+3. บันทึก tech stack, dependencies, และ file structure
 
-3. action : อัพเดทเนื้อหา README.md พร้อมใช้ template ที่กำหนด
-   - เขียน Introduction ที่อธิบายโปรเจกต์ชัดเจน
-   - อธิบาย Problems ที่โปรเจกต์แก้ไข
-   - อธิบาย Solutions และ Features ที่มี
-   - เขียน Installation พร้อมตัวอย่างคำสั่งติดตั้ง
-   - เขียน Usage พร้อมตัวอย่างการใช้งาน Basic และ Advanced
-   - เขียน Use Cases อย่างน้อย 2 สถานการณ์
-   - เขียน Configuration เป็น table format
-   - เขียน API Reference แบบ grouping by function type
-   - เพิ่ม License section (MIT)
-   - Template สำหรับ Root README (Monorepo):
+### Required Headings
 
-      ```markdown
-      # {Project Name}
+README.md ต้องมี headings ตามนี้เท่านั้น:
 
-      ## Introduction
+```
+# project-name
+## Purpose
+## Features
+## Installation
+## CLI / Components / Programmable API
+## Configuration
+## API Reference
+## License
+```
 
-      {1-2 sentences describing what this project is}
+### 2. Gather Project Information
 
-      ## Problems
+1. อ่าน manifest files: `package.json`, `Cargo.toml`, `pyproject.toml`
+2. ใช้ `list_dir` ดูโครงสร้าง `src/`, `apps/`, `packages/`
+3. อ่าน source code เพื่อเข้าใจ features
+4. อ่าน config files เพื่อดูตัวเลือกการตั้งค่า
 
-      - Problem 1
-      - Problem 2
-      - Problem 3
+### 3. Write Core Sections
 
-      ## Solutions
+สร้าง sections ด้วยข้อมูลจริงจากการวิเคราะห์:
 
-      {How this project solves the problems}
+**Format:**
 
-      ## Features
+```markdown
+# project-name
 
-      - Feature 1
-      - Feature 2
-      - Feature 3
+Brief description from tech stack.
 
-      ## Packages Overview
+## Purpose
 
-      | Package | Description | Version | Tags |
-      |---------|-------------|---------|------|
-      | [pkg1](./packages/pkg1) | Description | 1.0.0 | `tag1`, `tag2` |
-      | [pkg2](./packages/pkg2) | Description | 1.0.0 | `tag3` |
+Brief description of what this project does and why it exists.
 
-      ## Contributing
+## Features
 
-      {How to contribute guidelines}
+| Feature | Benefit |
+|---------|---------|
+| Feature 1 | What user gains from this feature |
 
-      ## License
+## Installation
+```bash
+bun install package-name
+```
 
-      MIT
-      ```
-   - Template สำหรับ Package README (Workspace):
+### 4. Write Entry Section
 
-      ```markdown
-      # {Package Name}
+เลือก heading ตามประเภท:
+- `## CLI` - สำหรับ CLI tools
+- `## Components` - สำหรับ UI components
+- `## Programmable API` - สำหรับ libraries
 
-      ## Introduction
+```markdown
+## CLI
 
-      {What this package does}
+```bash
+# Install
+npm install -g my-tool
 
-      ## Problems
+# Basic usage
+my-tool init
+my-tool build
+```
 
-      - Problem this package solves
+| Command | Description |
+|---------|-------------|
+| `init` | Initialize project |
+| `build` | Build application |
 
-      ## Solutions
+## Components
 
-      {How this package solves it}
+```tsx
+import { Button } from 'my-ui';
 
-      ## Features
+<Button variant="primary">Click me</Button>
+```
 
-      - Feature 1
-      - Feature 2
-      - Feature 3
+| Component | Props |
+|-----------|-------|
+| `Button` | `variant`, `size`, `onClick` |
 
-      ## Installation
+## Programmable API
 
-      ```bash
-      bun install {package-name}
-      ```
+```rust
+use my_lib::Client;
 
-      ## Usage
+let client = Client::new("api-key");
+let result = client.process().await?;
+```
 
-      ### Basic
+| Method | Params | Returns |
+|--------|--------|---------|
+| `process()` | `input: Data` | `Result<Output>` |
 
-      ```typescript
-      import { something } from '{package-name}';
 
-      // Basic usage example
-      const result = something();
-      ```
+### 5. Write Configuration
 
-      ### Advanced
+ใช้ code block (ไม่ใช่ตาราง):
 
-      ```typescript
-      import { advanced } from '{package-name}';
+```markdown
+## Configuration
 
-      // Advanced usage with options
-      const result = advanced({
-        option: 'value'
-      });
-      ```
+```yaml
+# config.yaml
+name: my-app
+version: 1.0.0
+options:
+  verbose: true
+```
 
-      ## Use Cases
+หรือถ้าเป็น library constants:
 
-      ### Use Case 1: {Scenario name}
+| Constant | Value | Description |
+|----------|-------|-------------|
+| `DEFAULT_TIMEOUT` | `30s` | Default timeout |
+```
 
-      {Description of when to use this}
+### 6. Write API Reference
 
-      ```typescript
-      import { feature } from '{package-name}';
+ใช้ตารางสรุป 
 
-      // Implementation for this use case
-      const result = feature({
-        specificOption: 'value'
-      });
-      ```
+```markdown
+## API Reference
 
-      ### Use Case 2: {Another scenario}
+### Services
 
-      {Description}
+| Service | Method | Params | Returns |
+|---------|--------|--------|---------|
+| `Orchestrator` | `create()` | `CreateRequest` | `Application` |
+| `Repository` | `find()` | `id: string` | `Entity \| null` |
 
-      ```typescript
-      // Code example
-      ```
+### DTOs
 
-      ## Configuration
+| DTO | Fields | Purpose |
+|-----|--------|---------|
+| `CreateRequest` | `name`, `version` | Create app |
+| `GenerateRequest` | `target`, `format` | Generate code |
+```
 
-      | Option | Type | Default | Description |
-      |--------|------|---------|-------------|
-      | option1 | string | 'default' | Description |
-      | option2 | boolean | true | Description |
+### 7. Write License Section
 
-      ## API Reference
+```markdown
+## License
 
-      ### Core Functions
+MIT License - See [LICENSE](./LICENSE)
+```
 
-      | Function | Params | Returns | Description |
-      |----------|--------|---------|-------------|
-      | `functionName` | - | `ReturnType` | Description |
-      | | `param: Type` | | Parameter description |
-      | | `options: Options` | | Options description |
+### 8. Validate and Verify
 
-      ### Utility Functions
+1. ตรวจสอบว่าทุก section ใช้ข้อมูลจริงจากโปรเจกต์
+2. ยืนยันว่า code examples ถูกต้องและ runnable ได้
+3. ตรวจสอบว่าไม่มี placeholder
+4. ตรวจสอบว่า `README.md` render ถูกต้อง
 
-      | Function | Params | Returns | Description |
-      |----------|--------|---------|-------------|
-      | `anotherFn` | - | `Result` | Description |
-      | | `input: string` | | Input parameter |
+## Rules
 
-      ## Changelog
+1. Frontmatter Standards
+- title: Title Case สื่อความหมายชัดเจน
+- description: อธิบายงานและ scope กระชับไม่เกิน 100 ตัวอักษร
+- auto_execution_mode: 3 เท่านั้น
+- ห้ามเพิ่ม field อื่นโดยไม่จำเป็น
 
-      See [CHANGELOG.md](./CHANGELOG.md) for release history.
+2. Structure & Format
+- โครงสร้างต้องเป็น: ## Goal, ## Execute, ## Rules, ## Expected Outcome
+- ใช้ numbered list (1., 2., 3.) เรียงตาม flow การทำงาน
+- Bullet points ชิดซ้าย ไม่ indent ใช้ dash (-)
+- เขียนให้กระชับ ตรงประเด็น ไม่วกวน
+- อ่านง่าย เข้าใจได้ทันทีโดยไม่ต้องอ่านซ้ำ
+- แต่ละ workflow file ต้องยาวไม่เกิน 200 บรรทัด
 
-      ## License
+3. Language Standards
+- หัวข้อ (Headers) ใช้ภาษาอังกฤษ Title Case
+- รายการแต่ละข้อ (numbered lists, bullet points) ใช้ภาษาไทย
+- ยกเว้นคำศัพท์เฉพาะทาง เช่น tool names, file names, commands
 
-      MIT
-      ```
+4. Content Standards
+- เขียนด้วยภาษาอังกฤษที่เข้าใจง่าย ไม่ใช้ศัพท์เทคนิคที่ซับซ้อนเกินไป
+- ใช้ข้อมูลจริงจากการ `/analyze-project` ไม่สมมติเนื้อหา
+- Code examples ต้อง runnable ได้จริง ไม่ใช้ pseudo-code
+- ไม่ใช้ placeholder เช่น `{...}`, `Feature 1`, `Description`
 
-4. validate : ตรวจสอบความถูกต้องของเนื้อหา
-   - ตรวจสอบว่าโครงสร้างตามที่กำหนด
-   - ยืนยันว่าตัวอย่างการใช้งานถูกต้อง
-   - ตรวจสอบว่าไม่มีข้อมูลที่ผิดพลาด
+5. Usage Section (เลือก heading ตามประเภท)
+- **CLI Tool**: ใช้ `## CLI`
+- **UI Components**: ใช้ `## Components`  
+- **Library**: ใช้ `## Programmable API`
+- เขียน entry point หลัก + ตารางสรุป
 
-5. verify : ยืนยันผลลัพธ์สุดท้าย
-   - ตรวจสอบว่า README.md อัพเดทสำเร็จ
-   - ยืนยันว่าเนื้อหาสอดคล้องกับโปรเจกต์จริง
-   - ตรวจสอบว่ารูปแบบ markdown ถูกต้อง
+6. Simple Headings
+- ใช้ชื่อ heading ที่เข้าใจง่าย: CLI, Components, Programmable API
+- ไม่ต้องซับซ้อน ไม่ต้องมีคำยาก
 
-6. review : ทบทวนผลลัพธ์และกระบวนการเพื่อความมั่นใจ
-   - ตรวจสอบอีกครั้งว่าทุกอย่างถูกต้อง
-   - ยืนยันว่าไม่มีปัญหาที่ถูกมองข้าม
-   - ตรวจสอบว่า workflow ทำงานได้ตามที่คาดหวัง
+7. Configuration Format
+- ใช้ **code block** (YAML/JSON) ไม่ใช่ตารางละเอียด
+- หรือใช้ตารางสั้นๆ ถ้าเป็น library constants
+
+8. API Reference Format
+- ใช้ **ตารางสรุป** (Service, Method, Params, Returns)
+- ไม่ต้องเขียนโค้ดรายละเอียด
+- ระบุแค่ signature หลักๆ
+
+9. Code and Tables
+- ใช้ backticks สำหรับ code, commands, file paths, functions
+- Tables must have headers and consistent columns
+- Use syntax highlighting: ```typescript, ```bash, ```rust
+
+10. File References
+- Internal links: `[Package Name](./packages/pkg-name)`
+- License link: `[LICENSE](./LICENSE)` หรือ `[LICENSE](../../LICENSE)`
+- ใช้ relative paths จากไฟล์ README.md
 
 ## Expected Outcome
 
-README.md ที่อัพเดทแล้ว:
-- ใช้โครงสร้างตามมาตรฐานที่กำหนด
-- มีเนื้อหาครบถ้วนตั้งแต่ Introduction ถึง License
-- มีตัวอย่างการใช้งานที่ชัดเจนและถูกต้อง
-- สอดคล้องกับโครงสร้างโปรเจกต์จริง
-- เขียนด้วยภาษาอังกฤษที่เข้าใจง่าย
+- README.md ที่มีเนื้อหาครบถ้วน
+- Features มี 2 columns: Feature, Benefit
+- Headings ง่ายๆ: Purpose, CLI/Components/Programmable API
+- ไม่มี Contributing section
+- Code examples พร้อมใช้งานได้ทันที

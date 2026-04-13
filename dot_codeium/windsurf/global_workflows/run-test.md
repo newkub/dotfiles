@@ -1,22 +1,6 @@
----
 title: Run Test
 description: รัน test suite อย่างเป็นระบบ พร้อมแก้ไข errors จนผ่านทั้งหมด
 auto_execution_mode: 3
-file-patterns:
-  - "package.json"
-  - "vitest.config.*"
-  - "jest.config.*"
-  - "**/*.test.ts"
-  - "**/*.spec.ts"
-follow:
-  skills:
-    - "@write-markdown"
-  workflows:
-    - "/validate"
-    - "/run-install"
-    - "/fix-error-warning"
----
-
 ## Purpose
 
 รัน test suite อย่างเป็นระบบ พร้อมแก้ไข errors และ failures จนผ่านทั้งหมด
