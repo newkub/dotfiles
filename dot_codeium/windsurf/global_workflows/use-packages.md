@@ -42,27 +42,17 @@ auto_execution_mode: 3
 
 ## Rules
 
-1. Analysis Requirements
-
 - ต้องรัน `/analyze-project` ก่อนนำมาใช้เสมอ
 - ต้องอ่าน README.md เพื่อเข้าใจ features
+- ต้องรัน `/update-readme` ของ workspace ที่จะนำมาใช้ก่อน integrate
 - ต้องตรวจสอบ compatibility ของ dependencies
-
-2. Refactoring Guidelines
-
 - Refactor ใน workspace ต้นทางก่อนนำมาใช้
 - แยก concerns ให้ชัดเจน
 - ใช้ import alias เสมอ
 - ทดสอบหลัง refactoring
-
-3. Integration Order
-
-1. เริ่มจาก utilities และ shared components
-2. ตามด้วย domain-specific features
-3. สุดท้ายคือ complex integrations
-
-4. Quality Checks
-
+- เริ่มจาก utilities และ shared components
+- ตามด้วย domain-specific features
+- สุดท้ายคือ complex integrations
 - รัน `/run-lint` หลัง integrate
 - รัน `/run-typecheck` ตรวจสอบ types
 - รัน `/run-test` ยืนยัน tests ผ่าน

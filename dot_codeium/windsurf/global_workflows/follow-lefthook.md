@@ -1,282 +1,358 @@
 ---
 title: Follow Lefthook
-description: ตั้งค่า Lefthook เป็น Git hooks manager สำหรับรัน scripts อัตโนมัติก่อน commit, rebase, checkout, push และอื่นๆ ด้วย production-grade best practices พร้อม fail fast mode, caching, และ optional hooks สำหรับ Bun/Node ecosystem
+description: ตั้งค่า Lefthook เป็น Git hooks manager พร้อม TypeScript scripts
 auto_execution_mode: 3
 ---
 
-Workflow นี้สำหรับตั้งค่า Lefthook เป็น Git hooks manager ที่ fast, deterministic และ cross-platform สำหรับรัน lint, typecheck, test และ automation อื่นๆ ก่อน commit, push, rebase, checkout และ receive ด้วย TypeScript scripts ที่ทำงานได้ทั้ง Windows และ Unix
+## Goal
+
+ตั้งค่า Lefthook เป็น Git hooks manager สำหรับรัน lint, typecheck, test อัตโนมัติก่อน commit, push, rebase ด้วย TypeScript scripts และ cross-platform compatibility
 
 ## Execute
 
-1. Check environment prerequisites
+### 1. Check Environment Prerequisites
 
-- ตรวจสอบว่ามี Bun ติดตั้งแล้ว
-- ตรวจสอบว่ามี package.json อยู่แล้ว
-- ตรวจสอบว่าอยู่ที่ root ของโปรเจกต์ (ไม่ใช่ workspace)
+1. ตรวจสอบว่ามี Bun ติดตั้งแล้ว
+2. ตรวจสอบว่ามี package.json อยู่แล้ว
+3. ตรวจสอบว่าอยู่ที่ root ของโปรเจกต์
 
-2. Install Lefthook package
+### 2. Install Lefthook Package
 
-- รัน bun add -D lefthook
-- ตรวจสอบว่า installation สำเร็จ
-- ตรวจสอบว่า lefthook ถูกเพิ่มใน devDependencies
+1. รัน bun add -D lefthook
+2. ตรวจสอบว่า lefthook ถูกเพิ่มใน devDependencies
 
-3. Add prepare script to package.json
+### 3. Add Prepare Script to Package.json
 
-- เพิ่ม script "prepare": "lefthook install" ใน package.json
-- ตรวจสอบว่า script ถูกเพิ่มอย่างถูกต้อง
-- ตรวจสอบว่าไม่มี prepare script เดิมทับซ้อน
+1. เพิ่ม script "prepare": "bunx lefthook install" ใน package.json **ที่ root เท่านั้น**
+2. ตรวจสอบว่าไม่มี prepare script เดิมทับซ้อน
+3. **สำคัญ: อย่าเพิ่ม lefthook install ใน prepare script ของ workspace packages** - ให้มีเฉพาะที่ root
 
-4. Create lefthook.yml at root
+### 4. Create Lefthook.yml at Root
 
-- สร้างไฟล์ lefthook.yml ที่ root ของโปรเจกต์
-- กำหนดค่า pre-commit hook ด้วย lint-staged (fast, staged only, cross-platform)
-- กำหนดค่า pre-push hook ด้วย typecheck + affected lint only (lightweight, no test unit เพื่อลด duplicate compute กับ CI)
-- กำหนดค่า pre-rebase hook เป็น optional (ใช้ lefthook-local.yml สำหรับ local overrides)
-- ตรวจสอบว่าไม่มี bun install ใน hooks
-- ตรวจสอบว่า hooks ใช้ TypeScript scripts (bun run scripts/*.ts) เท่านั้น
-- ตรวจสอบว่า scripts ที่ใช้มีอยู่ใน package.json (ดู /setup-verify สำหรับ scripts template)
+1. สร้างไฟล์ lefthook.yml ที่ root ของโปรเจกต์
+2. กำหนดค่า pre-commit hook ด้วย lint, format, typecheck (parallel: true)
+3. กำหนดค่า pre-push hook ด้วย typecheck + lint + test (turbo affected)
+4. กำหนดค่า commit-msg hook สำหรับ conventional commits validation
+5. กำหนดค่า pre-rebase hook เป็น optional (warning mode)
+6. **ใช้ glob patterns สำหรับ file filtering ใน lefthook.yml (เช่น `**/*.{ts,tsx,vue}`)**
+7. **ใช้ `{staged_files}` เพื่อส่ง files ที่ Lefthook filter แล้วไปยัง script**
+8. ใช้ stage_fixed: true สำหรับ auto git add หลังจาก fix
+9. เพิ่ม skip: [merge, rebase] สำหรับ pre-commit hooks
+10. เพิ่ม skip: [merge] สำหรับ commit-msg hook
+11. ตรวจสอบว่าไม่มี bun install ใน hooks
+12. ตรวจสอบว่า hooks ใช้ TypeScript scripts (bun run scripts/*.ts) เท่านั้น
 
-5. Create TypeScript script runners
+**ตัวอย่าง lefthook.yml แบบสมบูรณ์:**
 
-- สร้าง scripts/ directory ที่ root ของโปรเจกต์
-- สร้าง scripts/verify-affected.ts สำหรับ pre-push (typecheck + affected lint only, lightweight, ใช้ turbo affected)
-- สร้าง scripts/rebase-check.ts สำหรับ pre-rebase (optional warning mode)
-- สร้าง scripts/verify-quick.ts สำหรับ fail fast mode (typecheck + lint only)
-- ตรวจสอบว่า scripts ใช้ Bun APIs หรือ execa/zx เพื่อ cross-platform compatibility
-
-6. Add mode-based environment variables
-
-- เพิ่ม `LEFTHOOK_MODE=dev|ci|local` ใน .env.example
-- dev mode: hooks soft, pre-rebase warning only
-- local mode: hooks minimal, pre-rebase disabled
-- ci mode: hooks strict, pre-rebase disabled (CI ไม่ควรใช้ pre-rebase hook)
-
-7. Install git hooks
-
-- รัน bun run prepare หรือ lefthook install
-- ตรวจสอบว่า hooks ถูกติดตั้งใน .git/hooks/
-- ตรวจสอบว่า hooks ทำงานได้ถูกต้อง
-
-### Example
-
-ตัวอย่าง lefthook.yml ที่ root ของโปรเจกต์ (พร้อม mode-based config):
-
-```yml [lefthook.yml]
+```yaml
 pre-commit:
-  parallel: false
-  jobs:
-    - name: lint-staged
-      run: bun run lint-staged
+  parallel: true
+  commands:
+    lint:
+      glob: "**/*.{ts,tsx,vue}"
+      run: bun run scripts/githooks/lint-staged.ts {staged_files}
+      stage_fixed: true
+      skip: [merge, rebase]
+    typos:
+      glob: "**/*.{ts,tsx,vue,md,json,yml,yaml}"
+      run: bun run scripts/githooks/check-typos.ts {staged_files}
+      stage_fixed: true
+      skip: [merge, rebase]
+    format:
+      glob: "**/*.{ts,tsx,vue,json,md,yml,yaml,css,scss}"
+      run: bun run scripts/githooks/format-staged.ts {staged_files}
+      stage_fixed: true
+      skip: [merge, rebase]
+
+commit-msg:
+  commands:
+    conventional-commits:
+      run: bun run scripts/githooks/commit-msg-validator.ts {1}
+      skip: [merge]
 
 pre-push:
   parallel: false
-  jobs:
-    - name: verify-affected
-      run: bun run scripts/verify-affected.ts
+  commands:
+    verify-affected:
+      run: bun run scripts/githooks/verify-affected.ts
 
 pre-rebase:
   jobs:
     - name: fetch-origin
       run: git fetch origin
     - name: rebase-check
-      run: bun run scripts/rebase-check.ts
+      run: bun run scripts/githooks/rebase-check.ts
 ```
 
-ตัวอย่าง lefthook-local.yml สำหรับ local overrides (เพิ่มใน .gitignore):
+**หมายเหตุสำคัญ:**
+- `{staged_files}` คือตัวแปรพิเศษของ Lefthook ที่จะส่ง list of files ที่ match กับ glob pattern และถูก staged แล้ว
+- Script จะได้รับ files เป็น command-line arguments แทนการใช้ manual git diff
+- วิธีนี้สะอาดกว่า, เร็วกว่า, และลดความเสี่ยงจาก error
 
-```yml [lefthook-local.yml]
-# Skip pre-rebase hook in local development
-pre-rebase:
-  skip: true
-```
+### 5. Create TypeScript Script Runners
 
-ตัวอย่าง package.json ที่ root ของโปรเจกต์ (พร้อม fail fast mode):
+1. สร้าง scripts/githooks/ directory ที่ root ของโปรเจกต์
+2. สร้าง scripts/githooks/lint-staged.ts สำหรับ pre-commit lint
+3. สร้าง scripts/githooks/check-typos.ts สำหรับ pre-commit typo check
+4. สร้าง scripts/githooks/format-staged.ts สำหรับ pre-commit format
+5. สร้าง scripts/githooks/run-tests.ts สำหรับ pre-commit test
+6. สร้าง scripts/githooks/verify-affected.ts สำหรับ pre-push verification
+7. สร้าง scripts/githooks/rebase-check.ts สำหรับ pre-rebase check
+8. สร้าง scripts/githooks/commit-msg-validator.ts สำหรับ conventional commits validation
 
-```json [package.json]
-{
-  "scripts": {
-    "prepare": "lefthook install",
-    "lint-staged": "lint-staged",
-    "format": "biome format --write",
-    "lint": "biome lint --write",
-    "typecheck": "turbo typecheck",
-    "test:unit": "vitest run --coverage",
-    "verify": "bun run format && bun run lint && bun run typecheck && bun run test:unit",
-    "verify:quick": "bun run scripts/verify-quick.ts",
-    "git:check-rebase": "bun run scripts/rebase-check.ts"
-  },
-  "devDependencies": {
-    "lefthook": "^2.1.5",
-    "lint-staged": "^15.2.0"
-  }
-}
-```
+**lint-staged.ts (รับ files จาก Lefthook):**
 
-ตัวอย่าง .env.example (สำหรับ mode-based config):
-
-```env [.env.example]
-# Lefthook mode: dev (soft hooks), local (minimal), or ci (strict hooks)
-LEFTHOOK_MODE=dev
-```
-
-หมายเหตุ: dependency updates ควรรัน manual (bunx taze -r -w -i) เมื่อจำเป็นเท่านั้น
-
-หมายเหตุ: ดู /setup-verify สำหรับ scripts template ที่ครบถ้วน (7 layers)
-
-### TypeScript Script Examples
-
-scripts/verify-affected.ts (typecheck + affected lint only for pre-push, using turbo affected):
-
-```ts [scripts/verify-affected.ts]
+```typescript
 #!/usr/bin/env bun
-import { $ } from 'bun';
+import { $ } from "bun";
 
-// Get base commit for affected files
-const base = await $`git merge-base origin/main HEAD`.text().then(t => t.trim());
+// รับ files จาก command-line arguments ที่ Lefthook ส่งมา
+const files = process.argv.slice(2);
 
-// Run typecheck on affected packages only using turbo affected
-await $`turbo run typecheck --filter=...[${base}]`;
+if (files.length === 0) {
+	console.log("No files to lint");
+	process.exit(0);
+}
+
+console.log(`Linting ${files.length} staged files...`);
+
+try {
+	await $`bun run lint:fix ${files.join(" ")}`;
+	console.log("✓ Lint completed successfully");
+	process.exit(0);
+} catch (error) {
+	console.error("✗ Lint failed", error);
+	process.exit(1);
+}
 ```
 
-scripts/rebase-check.ts (cross-platform rebase check with warning mode):
+**check-typos.ts (cross-platform compatible):**
 
-```ts [scripts/rebase-check.ts]
+```typescript
 #!/usr/bin/env bun
-import { $ } from 'bun';
+import { $ } from "bun";
 
-const mode = process.env.LEFTHOOK_MODE || 'dev';
+// รับ files จาก command-line arguments
+const files = process.argv.slice(2);
 
-const local = await $`git rev-parse @`.then((o) => o.stdout.toString().trim());
-const remote = await $`git rev-parse @{u}`.then((o) => o.stdout.toString().trim());
-const base = await $`git merge-base @ @{u}`.then((o) => o.stdout.toString().trim());
+// Check if typos is installed (cross-platform)
+const isTyposInstalled = await $`typos --version`.nothrow().quiet();
 
-if (local === remote) {
-  process.exit(0);
+if (isTyposInstalled.exitCode !== 0) {
+	console.log("⚠ typos not installed, skipping typo check");
+	process.exit(0);
 }
 
-if (local === base) {
-  const msg = '⚠️  Branch behind remote. Run: git pull --rebase';
-  if (mode === 'ci') {
-    console.error(msg);
-    process.exit(1);
-  } else {
-    console.warn(msg);
-    process.exit(0); // Warning mode in dev
-  }
+if (files.length === 0) {
+	console.log("No files to check for typos");
+	process.exit(0);
 }
 
-if (remote === base) {
-  const msg = '⚠️  Branch has diverged. Run: git pull --rebase';
-  if (mode === 'ci') {
-    console.error(msg);
-    process.exit(1);
-  } else {
-    console.warn(msg);
-    process.exit(0); // Warning mode in dev
-  }
+console.log(`Checking ${files.length} files for typos...`);
+
+try {
+	await $`typos --write-changes ${files.join(" ")}`;
+	console.log("✓ Typo check completed");
+	process.exit(0);
+} catch (error) {
+	console.error("✗ Typo check failed", error);
+	process.exit(1);
 }
 ```
 
-scripts/verify-quick.ts (fail fast mode - typecheck + lint only):
+**format-staged.ts:**
 
-```ts [scripts/verify-quick.ts]
+```typescript
 #!/usr/bin/env bun
-import { $ } from 'bun';
+import { $ } from "bun";
 
-console.log('🚀 Running quick verification (typecheck + lint only)...');
+const files = process.argv.slice(2);
 
-await $`bun run typecheck`;
-await $`bun run lint`;
+if (files.length === 0) {
+	console.log("No files to format");
+	process.exit(0);
+}
 
-console.log('✅ Quick verification passed!');
+console.log(`Formatting ${files.length} staged files...`);
+
+try {
+	await $`bun run format ${files.join(" ")}`;
+	console.log("✓ Format completed successfully");
+	process.exit(0);
+} catch (error) {
+	console.error("✗ Format failed", error);
+	process.exit(1);
+}
 ```
 
-lint-staged.config.js (lint-staged configuration):
+**run-tests.ts (สำหรับ test files เท่านั้น):**
 
-```js [lint-staged.config.js]
-export default {
-  '*.{js,ts,jsx,tsx}': ['biome format --write', 'biome lint --write'],
-  '*.{json,jsonc}': ['biome format --write'],
-};
+```typescript
+#!/usr/bin/env bun
+import { $ } from "bun";
+
+const files = process.argv.slice(2);
+
+if (files.length === 0) {
+	console.log("No test files to run");
+	process.exit(0);
+}
+
+console.log(`Running tests for ${files.length} files...`);
+
+try {
+	await $`bun test ${files.join(" ")}`;
+	console.log("✓ Tests passed");
+	process.exit(0);
+} catch (error) {
+	console.error("✗ Tests failed", error);
+	process.exit(1);
+}
 ```
 
-หมายเหตุ: Biome จะ format และ lint ในครั้งเดียว (Biome handles staged files correctly)
+**verify-affected.ts (สำหรับ pre-push):**
 
-หมายเหตุ: ใช้ turbo cache ด้วย `--cache` flag เพื่อลดเวลาในการรัน affected commands
+```typescript
+#!/usr/bin/env bun
+import { $ } from "bun";
+
+console.log("Verifying affected packages...");
+
+try {
+	// ใช้ turbo affected สำหรับ monorepo หรือ run lint/test ทั้งหมด
+	await $`bun run lint`;
+	await $`bun run typecheck`;
+	await $`bun run test`;
+	console.log("✓ All verifications passed");
+	process.exit(0);
+} catch (error) {
+	console.error("✗ Verification failed", error);
+	process.exit(1);
+}
+```
+
+**rebase-check.ts (warning mode):**
+
+```typescript
+#!/usr/bin/env bun
+import { $ } from "bun";
+
+console.log("Checking branch state before rebase...");
+
+try {
+	// เช็คว่ามี uncommitted changes หรือไม่
+	const status = (await $`git status --porcelain`.text()).trim();
+
+	if (status) {
+		console.warn("⚠ You have uncommitted changes. Consider committing or stashing before rebase.");
+		// Warning mode: ไม่ block rebase
+		process.exit(0);
+	}
+
+	console.log("✓ Branch state clean");
+	process.exit(0);
+} catch (error) {
+	console.error("✗ Rebase check failed", error);
+	// Warning mode: ไม่ block rebase
+	process.exit(0);
+}
+```
+
+**commit-msg-validator.ts:**
+
+```typescript
+#!/usr/bin/env bun
+export {};
+
+const commitMsgFile = process.argv[2];
+
+if (!commitMsgFile) {
+	console.error("✗ No commit message file provided");
+	process.exit(1);
+}
+
+const commitMsg = await Bun.file(commitMsgFile).text();
+
+// Conventional commits pattern: type(scope): description
+const pattern = /^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+/;
+
+if (!pattern.test(commitMsg.trim())) {
+	console.error("✗ Invalid commit message format");
+	console.error("Expected format: type(scope): description");
+	console.error("Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert");
+	process.exit(1);
+}
+
+console.log("✓ Commit message format valid");
+process.exit(0);
+```
+
+9. ตรวจสอบว่า scripts ใช้ Bun APIs อย่างถูกต้อง: `(await $`command`.text()).trim()` แทน `await $`command`.text().trim()`
+10. ตรวจสอบว่า scripts ใช้ Bun APIs หรือ execa/zx เพื่อ cross-platform compatibility
+11. **ตรวจสอบว่า scripts รับ files จาก process.argv.slice(2) แทน manual git diff**
+
+### 6. Install Git Hooks
+
+1. รัน bun run prepare หรือ lefthook install
+2. ตรวจสอบว่า hooks ถูกติดตั้งใน .git/hooks/
+3. ตรวจสอบว่า hooks ทำงานได้ถูกต้อง
+4. **หลังจากแก้ lefthook.yml ทุกครั้ง ต้องรัน lefthook install อีกครั้ง**
+
+### 7. Troubleshooting
+
+**Hook ไม่ทำงาน:**
+- ตรวจสอบว่า lefthook install ถูกรันแล้ว
+- ตรวจสอบ .git/hooks/ directory ว่ามี hook files อยู่
+- รัน lefthook install อีกครั้ง
+- ตรวจสอบว่า lefthook.yml อยู่ที่ root ของโปรเจกต์
+
+**Windows compatibility issues:**
+- ใช้ Bun APIs หรือ execa/zx แทน shell commands โดยตรง
+- หลีกเลี่ยง `which`, `ls`, `cat` ที่ไม่มีใน Windows
+- ใช้ `await $`command`.nothrow().quiet()` สำหรับ check command existence
+
+**Skip hooks ชั่วคราว:**
+```bash
+git commit --no-verify -m "message"
+git push --no-verify
+```
+
+**Debug hooks:**
+- เพิ่ม console.log ใน scripts
+- รัน script ด้วย bun run scripts/githooks/script.ts <files>
+- ตรวจสอบ output จาก Lefthook: LEFTHOOK_DEBUG=1 git commit
+
+**Monorepo considerations:**
+- ใช้ `root: true` ใน lefthook.yml ถ้าต้องการ hooks ที่ root level
+- ใช้ turbo affected สำหรับ pre-push: `turbo run lint --filter=[HEAD]`
+
+## Expected Outcome
+
+- Lefthook ติดตั้งและตั้งค่าเรียบร้อย
+- Git hooks ทำงานอัตโนมัติก่อน commit, push, rebase
+- pre-commit hook รัน lint, format, typecheck บน staged files ด้วย `{staged_files}`
+- pre-push hook รัน typecheck, lint, test สำหรับ affected packages
+- commit-msg hook ตรวจสอบ conventional commits
+- pre-rebase hook ตรวจสอบ branch state ใน warning mode
+- TypeScript scripts รับ files จาก command-line arguments
+- Scripts ทำงานได้ทั้ง Windows และ Unix (cross-platform)
+- Glob patterns สำหรับ file filtering ใน lefthook.yml
+- stage_fixed: true สำหรับ auto git add หลังจาก fix
+- ไม่ใช้ manual git diff ใน scripts (ใช้ {staged_files} แทน)
 
 ## Rules
 
-1. Single file configuration
-
-- มี lefthook.yml เดียวที่ root เท่านั้น
-- ไม่สร้าง lefthook.yml ใน workspaces
-- ไม่สร้าง lefthook.yml ใน subdirectories
-
-2. Prepare script requirement
-
-- ต้องมี "prepare": "lefthook install" ใน package.json
-- prepare script ต้องทำงานอัตโนมัติเมื่อ install
-- ต้องอยู่ที่ root package.json เท่านั้น
-
-3. Bun execution only
-
-- ใช้ bun run ใน hooks เท่านั้น
-- ไม่ใช้ bun install ใน hooks
-- ไม่ใช้ npm หรือ yarn ใน hooks
-- หมายเหตุ: ถ้ามี contributor ภายนอกที่ใช้ Node-only ควรเตรียม fallback script
-
-4. Performance first
-
-- Hooks ต้อง fast และ deterministic
-- pre-commit ต้อง run เฉพาะ staged files ด้วย lint-staged
-- pre-push ต้อง run เฉพาะ affected files (ใช้ turbo affected)
-- ใช้ turbo cache หรือ nx cache สำหรับ affected commands
-- ไม่รัน heavy operations ใน pre-commit
-- หลีกเลี่ยง duplicate work (lint 2 รอบ, test 2 รอบ)
-- pre-push ไม่ควรรัน test unit เต็ม เพื่อลด duplicate compute กับ CI
-
-5. Lean hooks philosophy
-
-- hooks ต้อง minimal และ fast
-- หลีกเลี่ยง hooks ที่ noisy (post-checkout, post-merge, post-receive)
-- pre-rebase ควรเป็น optional warning หรือ CLI command แทน blocking
-- pre-push ควรเป็น lightweight (typecheck + affected lint only) เพื่อลด duplicate compute กับ CI
-- ให้ developer รัน manual commands สำหรับ dependency management
-- hooks ควร focus บน code quality และ branch safety เท่านั้น
-
-6. Non-blocking user experience
-
-- post-receive ต้องไม่ auto-open browser
-- post-receive ต้องแสดง URL แทน
-- hooks ต้องไม่ break git flow
-
-7. Branch protection
-
-- pre-rebase ต้องเช็ค branch state
-- pre-rebase ต้องแนะนำ command เมื่อ fail
-- pre-rebase ต้อง detect diverged branches
-- pre-rebase ควรเป็น warning mode ใน dev, disabled ใน CI (CI ไม่ควรใช้ pre-rebase hook)
-
-8. Verify pipeline alignment
-
-- pre-commit ต้องเป็น lint-staged เท่านั้น (fast, staged only, cross-platform)
-- pre-push ต้องเป็น typecheck + affected lint only (lightweight, no test unit เพื่อลด duplicate compute กับ CI)
-- CI ต้องรัน full verify (format + lint + typecheck + test) เป็น single source of truth
-- scripts ที่ใช้ต้องสอดคล้องกับ /setup-verify template
-- ดู /setup-verify สำหรับ scripts template และ verify pipeline
-
-9. Cross-platform compatibility
-
-- Hooks ต้องใช้ TypeScript scripts (bun run scripts/*.ts) แทน shell scripts
-- Scripts ต้องใช้ Bun APIs หรือ execa/zx เพื่อ cross-platform compatibility
-- หลีกเลี่ยง bash-specific syntax เช่น `[ ! -d "node_modules" ]`
-- ตรวจสอบว่าทำงานได้ทั้ง Windows (pwsh) และ Unix (bash/zsh)
-
-10. Mode-based configuration
-
-- ใช้ `LEFTHOOK_MODE` environment variable สำหรับ dev/ci/local mode
-- dev mode: hooks soft, pre-rebase warning only, fail fast enabled
-- local mode: hooks minimal, pre-rebase disabled
-- ci mode: hooks strict, pre-rebase disabled, full verify only
-- ใช้ `lefthook-local.yml` สำหรับ local overrides (skip specific hooks ใน local)
-- lefthook-local.yml ควรถูกเพิ่มใน .gitignore
+1. Lefthook prepare script ต้องอยู่เฉพาะใน root package.json เท่านั้น
+2. อย่าเพิ่ม lefthook install ใน prepare script ของ workspace packages หรือ apps
+3. ใช้ bun run ใน hooks เท่านั้น
+4. ไม่ใช้ bun install ใน hooks
+5. ไม่ใช้ npm หรือ yarn ใน hooks
+6. Hooks ต้อง fast และ deterministic
+7. pre-commit ต้อง run เฉพาะ staged files ด้วย `{staged_files}` จาก Lefthook
+8. pre-push ต้อง run เฉพาะ affected files (ใช้ turbo affected)
+9. Hooks ต้องใช้ TypeScript scripts (bun run scripts/*.ts) เท่านั้น
+10. Scripts ต้องใช้ Bun APIs อย่างถูกต้อง: `(await $`command`.text()).trim()` แทน `await $`command`.text().trim()`
+11. Scripts ต้องรับ files จาก process.argv.slice(2) แทน manual git diff
+12. Scripts ต้องใช้ Bun APIs หรือ execa/zx เพื่อ cross-platform compatibility
+13. Scripts ต้องใช้ .nothrow().quiet() สำหรับ check command existence (แทน which/where)
+14. ตรวจสอบว่าทำงานได้ทั้ง Windows และ Unix

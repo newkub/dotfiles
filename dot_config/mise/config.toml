@@ -1,7 +1,7 @@
 [tasks.update]
 description = "update scoop, winget, bun(global), mise, rustup, gh extensions, chezmoi"
-run = "winget upgrade Microsoft.PowerShell && scoop update * && winget upgrade --all && bun update -g && bun upgrade && mise up && mise upgrade && mise self-update -y && rustup self update && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
-
+run = "winget upgrade Microsoft.PowerShell && scoop update * && winget upgrade --all && bun update -g && bun upgrade && mise up && mise upgrade && mise self-update -y &&  self update && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update"
+rustup
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
 run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && cargo-clean-all && mise prune"

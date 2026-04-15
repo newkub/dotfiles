@@ -22,14 +22,36 @@ README.md ต้องมี headings ตามนี้เท่านั้น
 
 ```
 # project-name
-## Purpose
+## Table of Contents
+## Why
+## Key Concept
 ## Features
+## Built With
+## Getting Started
 ## Installation
-## CLI / Components / Programmable API
+## Usage
 ## Configuration
 ## API Reference
+## Contributing
+## Support / FAQ
 ## License
 ```
+
+**เรียงลำดับตามความสำคัญ:**
+1. **Badges** - ใต้ title เลย (version, license, build status)
+2. **Table of Contents** - ลิงก์ไปยังทุก section
+3. **Why** - ทำไมต้องใช้
+4. **Key Concept** - แนวคิดหลัก + preview
+5. **Features** - รายการ features
+6. **Built With** - tech stack ที่ใช้
+7. **Getting Started** - เริ่มต้นใช้งานอย่างง่าย
+8. **Installation** - วิธีติดตั้ง
+9. **Usage** - ตัวอย่างการใช้งาน
+10. **Configuration** - การตั้งค่า
+11. **API Reference** - เอกสารอ้างอิง API
+12. **Contributing** - วิธีร่วมพัฒนา
+13. **Support / FAQ** - ช่องทางช่วยเหลือ
+14. **License** - ใบอนุญาต
 
 ### 2. Gather Project Information
 
@@ -47,72 +69,104 @@ README.md ต้องมี headings ตามนี้เท่านั้น
 ```markdown
 # project-name
 
+[![Version](https://img.shields.io/npm/v/package-name)](https://www.npmjs.com/package/package-name)
+[![License](https://img.shields.io/npm/l/package-name)](./LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/org/repo/ci.yml)](https://github.com/org/repo/actions)
+[![Downloads](https://img.shields.io/npm/dm/package-name)](https://www.npmjs.com/package/package-name)
+[![Coverage](https://img.shields.io/codecov/c/github/org/repo)](https://codecov.io/gh/org/repo)
+
 Brief description from tech stack.
 
-## Purpose
+## Table of Contents
+
+- [Why](#why)
+- [Key Concept](#key-concept)
+- [Features](#features)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [API Reference](#api-reference)
+- [Contributing](#contributing)
+- [Support / FAQ](#support--faq)
+- [License](#license)
+
+## Why
 
 Brief description of what this project does and why it exists.
+
+## Key Concept
+
+| Feature | Preview |
+|---------|---------|
+| ✨ Feature 1 - Short description | ![Preview](placeholder-image-url) |
+| 🚀 Feature 2 - Short description | ![Preview](placeholder-image-url) |
+
+*Note: For CLI/TUI tools, use `[/run-examples]` and capture screenshots to `public/assets`. For UI components, use `[/watch-browser]` and capture screenshots.*
 
 ## Features
 
 | Feature | Benefit |
 |---------|---------|
-| Feature 1 | What user gains from this feature |
+| ✨ Feature 1 | What user gains from this feature |
+| 🚀 Feature 2 | What user gains from this feature |
+
+## Built With
+
+- [Vue 3](https://vuejs.org/) - Progressive JavaScript framework
+- [Nuxt 3](https://nuxt.com/) - Vue framework for production
+- [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
+- [UnoCSS](https://unocss.dev/) - Atomic CSS engine
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ or Bun 1.0+
+- Package manager (npm, yarn, pnpm, or bun)
+
+### Quick Start
+
+```bash
+# Install
+bun add package-name
+
+# Basic usage
+import { createApp } from 'package-name'
+const app = createApp()
+```
 
 ## Installation
+
 ```bash
 bun install package-name
 ```
 
-### 4. Write Entry Section
+## Usage
 
-เลือก heading ตามประเภท:
-- `## CLI` - สำหรับ CLI tools
-- `## Components` - สำหรับ UI components
-- `## Programmable API` - สำหรับ libraries
+```typescript
+// Basic example
+import { MyComponent } from 'package-name'
+
+const app = useMyApp()
+app.run()
+```
+
+### 4. Write Usage Section
+
+เขียนตัวอย่างการใช้งานพื้นฐาน:
 
 ```markdown
-## CLI
+## Usage
 
-```bash
-# Install
-npm install -g my-tool
+```typescript
+// Import and use
+import { useFeature } from 'package-name'
 
-# Basic usage
-my-tool init
-my-tool build
+const result = useFeature({ option: true })
 ```
-
-| Command | Description |
-|---------|-------------|
-| `init` | Initialize project |
-| `build` | Build application |
-
-## Components
-
-```tsx
-import { Button } from 'my-ui';
-
-<Button variant="primary">Click me</Button>
 ```
-
-| Component | Props |
-|-----------|-------|
-| `Button` | `variant`, `size`, `onClick` |
-
-## Programmable API
-
-```rust
-use my_lib::Client;
-
-let client = Client::new("api-key");
-let result = client.process().await?;
-```
-
-| Method | Params | Returns |
-|--------|--------|---------|
-| `process()` | `input: Data` | `Result<Output>` |
-
 
 ### 5. Write Configuration
 
@@ -135,30 +189,98 @@ options:
 |----------|-------|-------------|
 | `DEFAULT_TIMEOUT` | `30s` | Default timeout |
 ```
+```
 
 ### 6. Write API Reference
 
-ใช้ตารางสรุป 
+ใช้ตารางสรุป - รวม CLI, Components, Programmatic API, Composables, Server API, Types ทั้งหมดไว้ในส่วนนี้
 
 ```markdown
 ## API Reference
 
-### Services
+### CLI Commands (if applicable)
 
-| Service | Method | Params | Returns |
-|---------|--------|--------|---------|
-| `Orchestrator` | `create()` | `CreateRequest` | `Application` |
-| `Repository` | `find()` | `id: string` | `Entity \| null` |
+| Command | Description | Example |
+|---------|-------------|---------|
+| `init` | Initialize project | `my-tool init` |
+| `build` | Build application | `my-tool build` |
 
-### DTOs
+### Components (if applicable)
 
-| DTO | Fields | Purpose |
-|-----|--------|---------|
-| `CreateRequest` | `name`, `version` | Create app |
-| `GenerateRequest` | `target`, `format` | Generate code |
+| Component | Props | Description |
+|-----------|-------|-------------|
+| `Button` | `variant`, `size`, `onClick` | Primary action button |
+| `Card` | `hoverable`, `bordered` | Container component |
+
+### Programmatic API (if applicable)
+
+| Class/Module | Method | Params | Returns |
+|--------------|--------|--------|---------|
+| `Client` | `connect()` | `options: ConnectOptions` | `Connection` |
+| `Worker` | `process()` | `task: Task` | `Result` |
+
+### Composables (if applicable)
+
+| Composable | Returns | Purpose |
+|------------|---------|---------|
+| `useModal()` | `{ open, close, isOpen }` | Modal state management |
+| `useFetch()` | `{ data, pending, error }` | Data fetching |
+
+### Server API (if applicable)
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/api/auth/login` | POST | User authentication |
+| `/api/users` | GET | List users |
+
+### Types
+
+| Type | Fields | Purpose |
+|------|--------|---------|
+| `User` | `id`, `email`, `name` | User entity |
+| `Config` | `apiKey`, `endpoint` | Configuration options |
+
+### Utils/Helpers (if applicable)
+
+| Util | Params | Returns | Purpose |
+|------|--------|---------|---------|
+| `formatDate()` | `date: Date`, `format: string` | `string` | Date formatting |
+| `debounce()` | `fn: Function`, `delay: number` | `Function` | Debounce wrapper |
 ```
 
-### 7. Write License Section
+### 7. Write Contributing Section
+
+```markdown
+## Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details on how to submit pull requests, report issues, and suggest improvements.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+```
+
+### 8. Write Support / FAQ Section
+
+```markdown
+## Support / FAQ
+
+**Q: How do I get help?**
+A: Open an issue on GitHub or join our Discord community.
+
+**Q: Is this production ready?**
+A: Yes, used in production by multiple organizations.
+
+### Support Channels
+
+- 🐛 [Issues](https://github.com/org/repo/issues)
+- 💬 [Discussions](https://github.com/org/repo/discussions)
+- 📧 Email: support@example.com
+```
+
+### 9. Write License Section
 
 ```markdown
 ## License
@@ -166,7 +288,7 @@ options:
 MIT License - See [LICENSE](./LICENSE)
 ```
 
-### 8. Validate and Verify
+### 10. Validate and Verify
 
 1. ตรวจสอบว่าทุก section ใช้ข้อมูลจริงจากโปรเจกต์
 2. ยืนยันว่า code examples ถูกต้องและ runnable ได้
@@ -200,15 +322,33 @@ MIT License - See [LICENSE](./LICENSE)
 - Code examples ต้อง runnable ได้จริง ไม่ใช้ pseudo-code
 - ไม่ใช้ placeholder เช่น `{...}`, `Feature 1`, `Description`
 
-5. Usage Section (เลือก heading ตามประเภท)
-- **CLI Tool**: ใช้ `## CLI`
-- **UI Components**: ใช้ `## Components`  
-- **Library**: ใช้ `## Programmable API`
-- เขียน entry point หลัก + ตารางสรุป
+5. Key Concept Section
+- ใช้ตาราง 2 columns: ซ้าย (Features + Description), ขวา (Preview/Screenshot)
+- ใส่ emoji ในชื่อ feature
+- Screenshot สำหรับ CLI/TUI: ใช้ `[/run-examples]` แล้ว capture ไป `public/assets`
+- Screenshot สำหรับ UI: ใช้ `[/watch-browser]` แล้ว capture
+- ถ้ายังไม่มี screenshot จริง ให้ใส่ placeholder URL (เช่น `https://via.placeholder.com/600x400?text=Feature+Preview`)
 
-6. Simple Headings
-- ใช้ชื่อ heading ที่เข้าใจง่าย: CLI, Components, Programmable API
-- ไม่ต้องซับซ้อน ไม่ต้องมีคำยาก
+6. Section Ordering
+- Badges อยู่ใต้ title เลย
+- Table of Contents อยู่หลัง description
+- Built With อยู่หลัง Features
+- Getting Started อยู่ก่อน Installation
+- Usage อยู่หลัง Installation
+- Contributing อยู่หลัง API Reference
+- Support / FAQ อยู่ก่อน License
+
+7. Badges Format
+- Version: `![Version](https://img.shields.io/npm/v/package-name)`
+- License: `![License](https://img.shields.io/npm/l/package-name)`
+- Build: `![Build](https://img.shields.io/github/actions/workflow/status/org/repo/ci.yml)`
+- Downloads: `![Downloads](https://img.shields.io/npm/dm/package-name)`
+- Coverage: `![Coverage](https://img.shields.io/codecov/c/github/org/repo)`
+
+8. Simple Headings
+- ใช้ `## Why` แทน `## Purpose`
+- ใช้ `## Key Concept` สำหรับ feature preview
+- ไม่ต้องมี `## CLI`, `## Components` แยก (รวมใน API Reference)
 
 7. Configuration Format
 - ใช้ **code block** (YAML/JSON) ไม่ใช่ตารางละเอียด
@@ -232,7 +372,14 @@ MIT License - See [LICENSE](./LICENSE)
 ## Expected Outcome
 
 - README.md ที่มีเนื้อหาครบถ้วน
-- Features มี 2 columns: Feature, Benefit
-- Headings ง่ายๆ: Purpose, CLI/Components/Programmable API
-- ไม่มี Contributing section
+- Badges: Version, License, Build, Downloads, Coverage
+- Table of Contents ลิงก์ไปยังทุก section
+- Features มี emoji และ 2 columns: Feature, Benefit
+- Built With: Tech stack ที่ใช้
+- Getting Started: Prerequisites และ Quick Start
+- Usage: ตัวอย่างการใช้งานพื้นฐาน
+- Headings: Why, Key Concept, Features, Built With, Getting Started, Installation, Usage, Configuration, API Reference, Contributing, Support/FAQ, License
+- API Reference รวม CLI, Components, Services, DTOs ทั้งหมด
+- Contributing: วิธีร่วมพัฒนา
+- Support / FAQ: ช่องทางช่วยเหลือ
 - Code examples พร้อมใช้งานได้ทันที
