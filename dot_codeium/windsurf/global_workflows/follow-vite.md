@@ -1,187 +1,69 @@
 ---
-description: ตั้งค่า Vite
-title: follow-vite
+description: แนวทางการพัฒนาด้วย Vite build tool สำหรับ modern web projects
+title: Vite Best Practices
 auto_execution_mode: 3
 ---
 
-## 1. Framework Detection (ใช้เสมอ)
+## Goal
 
-1.1. ตรวจสอบ framework ที่ใช้กับ Vite
+กำหนดแนวทางการพัฒนาด้วย Vite ให้มีประสิทธิภาพสูงสุด
 
-- ตรวจสอบ dependencies ใน package.json
-- ตรวจสอบไฟล์ components (.vue, .tsx, .svelte)
+## Execute
 
-1.2. ระบุ framework ที่ใช้
+### 1. Installation
 
-- Vue: มี vue ใน dependencies หรือมีไฟล์ .vue
-- React: มี react ใน dependencies หรือมีไฟล์ .tsx
-- Svelte: มี svelte ใน dependencies หรือมีไฟล์ .svelte
-- Solid: มี solid-js ใน dependencies
+1. ติดตั้ง Vite ด้วย `bun add -D vite` หรือใช้ `bun create vite` สำหรับ scaffolding
+2. ตรวจสอบ Node.js version >= 20.19+ หรือ 22.12+
+3. เลือก template ที่ต้องการ: vanilla, vue, react, preact, lit, svelte, solid, qwik
+4. สร้าง project ด้วย `bun create vite my-app --template <template>`
+5. รัน dev server ด้วย `bunx vite`
 
-## 2. Base Configuration (ใช้เสมอ)
+### 2. Configuration
 
-2.1. ตั้งค่า scripts ใน package.json
+1. สร้าง `vite.config.ts` หรือใช้ default configuration
+2. ตั้งค่า plugins สำหรับ framework ที่ใช้
+3. กำหนด build options สำหรับ production
+4. ตั้งค่า server options สำหรับ development
+5. ใช้ path aliases สำหรับ clean imports
 
-```json [package.json]
-{
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview"
-  }
-}
-```
+### 3. Development
 
-2.2. ตั้งค่า vite.config.ts (base)
+1. รัน dev server ด้วย `bunx vite` หรือ `bun run dev`
+2. ใช้ Hot Module Replacement (HMR) สำหรับ fast refresh
+3. ตั้งค่า proxy สำหรับ API requests
+4. ใช้ environment variables ด้วย `.env` files
+5. ตั้งค่า source maps สำหรับ debugging
 
-```ts [vite.config.ts]
-import { defineConfig } from 'vite';
-import checker from 'vite-plugin-checker';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import Unocss from '@unocss/vite';
-import AutoImport from 'unplugin-auto-import/vite';
-import Replace from 'unplugin-replace/vite';
-import Unused from 'unplugin-unused/vite';
-import TurboConsole from 'unplugin-turbo-console/vite';
-import Terminal from 'vite-plugin-terminal';
-import { analyzer } from 'vite-bundle-analyzer';
-import Inspect from 'vite-plugin-inspect';
-import AST from 'unplugin-ast/vite';
-import Macros from 'unplugin-macros/vite';
-import UnpluginIsolatedDecl from 'unplugin-isolated-decl/vite';
-import Icons from 'unplugin-icons/vite';
-import { nitro } from "nitro/vite";
+### 4. Build
 
-export default defineConfig({
-  plugins: [
-    nitro(),
-    Unocss(), // /follow-unocss
-    AutoImport({
-      imports: ['FRAMEWORK'], // แทนที่ด้วย framework ที่ใช้
-      dts: true
-    }),
-    AST(),
-    Icons({
-      autoInstall: true,
-    }),
-    UnpluginIsolatedDecl(),
-    Macros(),
-    Replace(),
-    TurboConsole({}),
-    Terminal(),
-    analyzer(),
-    Inspect(),
-    Unused({
-      include: [/\.([cm]?[jt]sx?|vue|svelte)$/],
-      exclude: [/node_modules/],
-      level: 'warning',
-      ignore: {
-        peerDependencies: ['FRAMEWORK'], // แทนที่ด้วย framework ที่ใช้
-      },
-      depKinds: ['dependencies', 'peerDependencies'],
-    }),
-    tsconfigPaths(),
-    checker({
-      overlay: {
-        initialIsOpen: false,
-      },
-      typescript: true,
-      oxlint: true,
-    })
-  ]
-});
-```
+1. รัน build ด้วย `bunx vite build`
+2. ตั้งค่า target browsers สำหรับ production
+3. ใช้ Rolldown สำหรับ optimized builds
+4. ตั้งค่า code splitting สำหรับ performance
+5. กำหนด assets naming และ output directory
 
-2.3. ตั้งค่า tsconfig.json (base)
+### 5. Best Practices
 
-```json [tsconfig.json]
-{
-  "compilerOptions": {
-    "types": ["vite/client", "FRAMEWORK"] // แทนที่ด้วย framework ที่ใช้
-  }
-}
-```
+1. ใช้ ES modules แทน CommonJS
+2. ใช้ plugins สำหรับ framework-specific features
+3. ตั้งค่า proper caching headers
+4. ใช้ lazy loading สำหรับ large bundles
+5. ตรวจสอบ bundle size ด้วย build analyzer
 
-## 3. Framework-specific Configuration (ใช้เมื่อพบ framework)
+## Rules
 
-3.1. Vue
+- ต้องมี `vite.config.ts` หรือใช้ default configuration
+- ใช้ `bun add -D vite` สำหรับ installation
+- ตรวจสอบ Node.js version compatibility
+- ใช้ HMR สำหรับ development experience
+- ตั้งค่า proper build targets
+- ใช้ plugins สำหรับ framework integration
+- ตรวจสอบ browser support สำหรับ production
 
-- เพิ่ม framework plugin: ไม่ต้องเพิ่ม (Vue ใช้ built-in)
-- แทนที่ FRAMEWORK ด้วย 'vue'
-- แทนที่ checker.vueTsc ด้วย true
-- ทำ /follow-vite-vue
+## Expected Outcome
 
-3.2. React
-
-- เพิ่ม framework plugin: ไม่ต้องเพิ่ม (React ใช้ built-in)
-- แทนที่ FRAMEWORK ด้วย ['react', 'react-dom']
-- ทำ /follow-vite-react
-
-3.3. Svelte
-
-- เพิ่ม framework plugin: svelte() จาก @sveltejs/vite-plugin-svelte
-- แทนที่ FRAMEWORK ด้วย 'svelte'
-- ทำ /follow-vite-svelte
-
-3.4. Solid
-
-- เพิ่ม framework plugin: solid() จาก vite-plugin-solid
-- แทนที่ FRAMEWORK ด้วย 'solid-js'
-- ทำ /follow-vite-solid
-
-## 4. Vite Plugin Checker Configuration (ใช้เสมอ)
-
-4.1. ตั้งค่า checker ใน vite.config.ts
-
-```ts [vite.config.ts]
-import checker from "vite-plugin-checker";
-
-export default defineConfig({
-  plugins: [
-    checker({
-      overlay: {
-        initialIsOpen: false,
-      },
-      oxlint: true,
-      typescript: true,
-      eslint: true,
-      vueTsc: true, // ถ้าใช้ Vue
-    }),
-  ],
-});
-```
-
-4.2. ตั้งค่า checker ใน nuxt.config.ts (ถ้าใช้ Nuxt)
-
-```ts [nuxt.config.ts]
-import checker from "vite-plugin-checker";
-
-export default defineNuxtConfig({
-  vite: {
-    plugins: [
-      checker({
-        overlay: {
-          initialIsOpen: false,
-        },
-        biome: { command: "lint" },
-        oxlint: true,
-        typescript: true,
-        vueTsc: true,
-      }),
-    ],
-  },
-});
-```
-
-## 5. Code Refactoring (ใช้เสมอ)
-
-5.1. ทำ /refactor
-
-- refactor โค้ดให้ถูกต้องตาม framework
-
-## หมายเหตุ
-
-- ถ้าไม่พบ framework ใดๆ ให้ใช้ /follow-best-practices
-- ตรวจสอบว่า Vite config เข้ากันได้กับ framework ที่ใช้
-- ใช้ plugins ที่เหมาะสมกับ framework นั้นๆ
-- FRAMEWORK คือ placeholder ที่ต้องแทนที่ด้วย framework ที่ใช้จริง
+- Vite ติดตั้งและทำงานได้
+- Development server ที่มี HMR
+- Production builds ที่ optimized
+- Configuration ที่เหมาะสมกับ project
+- Performance ที่ดีขึ้น

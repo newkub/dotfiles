@@ -302,4 +302,9 @@
 		"kilo-code.new.agentManagerOpen",
 		"kilo-code.new.agentManager.showTerminal"
 	],
+	"windsurf.autoContinue": 0,
+	"windsurf.allowCascadeAccessGitignoreFiles": true,
+	"windsurf.acp.enabledAgents": {
+		"devin-cloud": false
+	},
 }

@@ -8,3 +8,5 @@ alias gemini="vibekit gemini"
 
 # VibeKit alias - do not modify
 alias codex="vibekit codex"
+
+source "C:\Users\Veerapong\.bash_completion.d\test-cli.bash"

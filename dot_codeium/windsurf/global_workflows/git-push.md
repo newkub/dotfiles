@@ -2,18 +2,11 @@
 title: Git Push
 description: ทำการ push commits ไปยัง remote repository
 auto_execution_mode: 3
-- "/git-push"
 ---
 
-## Prompt
+## Goal
 
-ใช้ workflow นี้เมื่อต้องการ push commits จาก local repository ไปยัง remote repository
-
-## Purpose
-
-- ส่ง commits ที่ทำใน local ไปยัง remote repository
-- ตรวจสอบว่าไม่มี conflicts ก่อน push
-- ยืนยันว่าโค้ดถูก push สำเร็จ
+Push commits จาก local repository ไปยัง remote repository อย่างปลอดภัย
 
 ## Rules
 
@@ -24,36 +17,44 @@ auto_execution_mode: 3
 
 ## Execute
 
-1. check : ตรวจสอบสถานะ repository และ remote
-   - รัน `git status` เพื่อดูสถานะ local repository
-   - รัน `git log --oneline origin/HEAD..HEAD` เพื่อดู commits ที่จะ push
-   - ตรวจสอบว่ามี commits ที่ต้องการ push หรือไม่
+### 1. Check Status
 
-2. analyze : วิเคราะห์สถานการณ์ก่อน push
-   - รัน `git fetch origin` เพื่ออัพเดทข้อมูล remote
-   - วิเคราะห์ว่ามี commits บน remote ที่ local ไม่มีหรือไม่
-   - ประเมินว่าจะมี conflicts หรือไม่
+1. รัน `git status` เพื่อดูสถานะ local repository
+2. รัน `git log --oneline origin/HEAD..HEAD` เพื่อดู commits ที่จะ push
+3. ตรวจสอบว่ามี commits ที่ต้องการ push หรือไม่
 
-3. action : ดำเนินการ push
-   - รัน `git pull --rebase` ก่อน push เสมอ (ถ้ามี commits บน remote)
-   - แก้ไข conflicts ถ้ามี (rebase ใหม่จนกว่าจะผ่าน)
-   - รัน `git push origin <branch>` เพื่อ push commits
-   - รอให้ push เสร็จสมบูรณ์
+### 2. Analyze Situation
 
-4. validate : ตรวจสอบความถูกต้องหลัง push
-   - ตรวจสอบว่าไม่มี error messages จาก git
-   - ยืนยันว่า commits ปรากฏบน remote repository
-   - ตรวจสอบว่าไม่มี conflicts เหลืออยู่
+1. รัน `git fetch origin` เพื่ออัพเดทข้อมูล remote
+2. วิเคราะห์ว่ามี commits บน remote ที่ local ไม่มีหรือไม่
+3. ประเมินว่าจะมี conflicts หรือไม่
 
-5. verify : ยืนยันผลลัพธ์สุดท้าย
-   - รัน `git log --oneline origin/HEAD -5` เพื่อตรวจสอบ commits บน remote
-   - รัน `git status` เพื่อยืนยันว่า local และ remote sync กัน
-   - ตรวจสอบว่า commits ที่ push ถูกต้องครบถ้วน
+### 3. Push Commits
 
-6. review : ทบทวนผลลัพธ์
-   - ตรวจสอบว่า commits ปรากฏใน remote repository ถูกต้อง
-   - ยืนยันว่าไม่มีปัญหาที่ถูกมองข้าม
-   - ตรวจสอบว่า workflow ทำงานได้ตามที่คาดหวัง
+1. รัน `git pull --rebase` ก่อน push เสมอ (ถ้ามี commits บน remote)
+2. แก้ไข conflicts ถ้ามี (rebase ใหม่จนกว่าจะผ่าน)
+3. รัน `git push origin <branch>` เพื่อ push commits
+4. รอให้ push เสร็จสมบูรณ์
+
+### 4. Validate Push
+
+1. ตรวจสอบว่าไม่มี error messages จาก git
+2. ยืนยันว่า commits ปรากฏบน remote repository
+3. ตรวจสอบว่าไม่มี conflicts เหลืออยู่
+
+### 5. Verify Result
+
+1. รัน `git log --oneline origin/HEAD -5` เพื่อตรวจสอบ commits บน remote
+2. รัน `git status` เพื่อยืนยันว่า local และ remote sync กัน
+3. ตรวจสอบว่า commits ที่ push ถูกต้องครบถ้วน
+
+### 6. Check GitHub Actions
+
+1. รัน `gh workflow list` เพื่อตรวจสอบว่ามี GitHub Actions ใน repository ไหม
+2. ถ้ามี workflow ที่ trigger จาก push นี้ ให้รอดูผลลัพธ์
+3. รัน `gh run list --limit 1` เพื่อดู recent workflow runs
+4. รัน `gh run watch <run-id>` เพื่อติดตาม real-time
+5. ใช้ `/check-github-action` ถ้า workflow ล้มเหลว
 
 ## Expected Outcome
 

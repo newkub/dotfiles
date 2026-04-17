@@ -49,7 +49,7 @@ auto_execution_mode: 3
 
 ## Rules
 
-1. Build Order
+### 1. Build Order
 
 - Optimize: optimize build ก่อนเริ่ม
 - Typecheck: ตรวจสอบ types ก่อน build
@@ -58,7 +58,7 @@ auto_execution_mode: 3
 - Build: รัน build command
 - Verify: ตรวจสอบ output
 
-2. Error Handling
+### 2. Error Handling
 
 - Typecheck ล้มเหลว: หยุดและแก้ไข errors ก่อน build
 - Build ล้มเหลว: วิเคราะห์ error และแก้ไข

@@ -14,11 +14,14 @@ auto_execution_mode: 3
 
 เตรียมความพร้อมก่อนเริ่มงาน
 
-1. ใช้ git สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ pwsh
-2. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
-3. คุยกับผู้ใช้เป็นภาษาไทยเสมอในทุกการสื่อสาร
-4. "." หมายถึงให้ทำ `/continue`
-5. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+1. ใช้ bun แทน npm เสมอ
+2. ใช้ git สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ pwsh
+3. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
+4. ทำ `/analyze-project` ก่อนเริ่มงานทุกครั้ง
+5. คุยกับผู้ใช้เป็นภาษาไทยเสมอในทุกการสื่อสาร
+6. "." หมายถึงให้ทำ `/continue`
+7. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+8. ถ้า user prompt มีคำว่า `ต้อง`, `ห้าม`, `ไม่ใช้` ให้บันทึกสิ่งนั้นไปใน memories ด้วย
 
 ### 2. Analyze
 
@@ -42,8 +45,11 @@ auto_execution_mode: 3
 
 1. อ่าน `/refactor` และ `/do-not` ก่อนเขียน code ทุกครั้ง แล้วนำตามนั้น
 2. รัน `/watch-browser` เมื่อ execute ต้องเปิด web
-3. ทำ `/update-reference` เสมอสำหรับ file operations
-4. ไม่ mock, ไม่ TODO โดย default แต่ถ้าจำเป็นจริงๆ ต้อง comment `// MOCK` หรือ `// TODO`
+3. ทำ `/update-reference` เสมอสำหรับ file operations ไม่ว่าจะทำที่ใดๆ เช่น project, global workflows, skills, global rules, etc.
+4. ทำตาม `/write-test` เสมอเมื่อเขียน code
+5. ไม่ mock, ไม่ TODO โดย default แต่ถ้าจำเป็นจริงๆ ต้อง comment `// MOCK` หรือ `// TODO`
+6. mock data ให้แยกออกไปในโฟลเดอร์ `mock/` แล้วนำมาใช้
+7. ทุก global workflows ที่ขึ้นต้นด้วย `run-` ให้ใช้ `/loop-until-complete` เสมอ
 
 ### 5. Reflex
 
@@ -52,21 +58,84 @@ auto_execution_mode: 3
 1. ทำ `/refactor` เสมอหลังจาก execute เสร็จ
 2. กลับไป check ข้อ 2 planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมดแล้ว
 
-### 6. Commit
-
-บันทึกการเปลี่ยนแปลงหลังจากทำงานเสร็จ
-
-1. ใช้ `/commit` เมื่อจบ plan ที่วางไว้ตามข้อ 3
-
-### 7. Documentation
+### 6. Documentation
 
 อัพเดทเอกสารให้สอดคล้องกับการเปลี่ยนแปลง
 
 1. ใช้ `/update-readme` ถ้ามีการเปลี่ยนแปลงที่ต้องอัพเดทเอกสาร
-2. ใช้ `/update-docs` สำหรับสร้างหรืออัพเดทเอกสารประกอบโครงสร้างโปรเจกต์
+2. ใช้ `/write-docs` สำหรับสร้างหรืออัพเดทเอกสารประกอบโครงสร้างโปรเจกต์
 
-### 8. Report
+### 7. Report
 
 สรุปและรายงานผล
 
-1. ทำตาม `/reporting`
+1. ก่อนจบทุกครั้ง ต้องรัน `/run-verify` เสมอ
+2. ทำตาม `/reporting`
+3. เมื่อจบ task หลัง commit ให้รัน `/suggest-next-action` เสมอ
+
+## Rules
+
+### 1. Communication
+
+กฎการสื่อสารกับผู้ใช้
+
+- คุยกับผู้ใช้เป็นภาษาไทยเสมอในทุกการสื่อสาร
+- ให้คำตอบกระชับ ตรงประเด็น
+- หลีกเลี่ยงการใช้คำยืนยันที่ไม่จำเป็น
+- ถ้า user prompt มีคำว่า "ต้อง", "ห้าม", "ไม่ใช้" ให้บันทึกสิ่งนั้นไปใน memories ด้วย
+
+### 2. Development Workflow
+
+ขั้นตอนการพัฒนาตามลำดับที่กำหนด
+
+- ทำตามลำดับ: Prepare -> Analyze -> Planning -> Execute -> Reflex -> Documentation -> Report
+- อ่าน `/refactor` และ `/do-not` ก่อนเขียน code ทุกครั้ง
+- ทำตาม `/write-test` เสมอเมื่อเขียน code
+- ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
+
+### 3. File Operations
+
+การจัดการไฟล์และการอัพเดท references
+
+- ใช้ git สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ pwsh
+- ทำ `/update-reference` เสมอสำหรับ file operations ไม่ว่าจะทำที่ใดๆ เช่น project, global workflows, skills, global rules, etc.
+- ทุกครั้งที่เปิด url ให้ใช้ `/watch-browser` เสมอ
+
+### 4. Setup
+
+การตั้งค่าและเตรียมความพร้อม
+
+- เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+- ทำตาม `/follow-write-workflows` เมื่อแก้ไขไฟล์ workflows
+- ทำตาม `/follow-write-skills` เมื่อแก้ไขไฟล์ skills
+
+### 5. Error Handling
+
+การจัดการและแก้ไขข้อผิดพลาด
+
+- ทำตาม `/fix-error` เมื่อได้รับ error
+- เมื่อแก้ไขไม่ได้สักที ลอง `/learn-from-web`
+- วิเคราะห์ root cause ก่อนแก้ไข
+
+### 6. Quality Assurance
+
+การรับประกันคุณภาพและการตรวจสอบ
+
+- ทำ `/refactor` เสมอหลังจาก execute เสร็จ
+- กลับไป check planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมดแล้ว
+- พยายามทำให้ `/make-real` ในทุกๆเลย
+- ก่อนจบทุกครั้ง ต้องรัน `/run-verify` เสมอ
+
+### 7. Workflow Execution
+
+การดำเนินการตาม workflows ที่กำหนด
+
+- ทุก global workflows ที่ขึ้นต้นด้วย `run-` ให้ใช้ `/loop-until-complete` เสมอ
+- ติดตามลำดับการทำงานตาม workflow ที่กำหนด
+- ห้ามข้ามขั้นตอนใน workflow
+
+## Expected Outcome
+
+- global_rules.md ที่มีโครงสร้างสม่ำเสมอ
+- Rules อยู่ใน standalone Rules section
+- สอดคล้องกับ `/follow-write-workflows`

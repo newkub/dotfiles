@@ -44,16 +44,16 @@ auto_execution_mode: 3
 
 ## Rules
 
-1. Pre-run Checks
+### 1. Pre-run Checks
 
 - ต้องตรวจสอบ main config ก่อนรัน dev server
 - ต้องแก้ไขข้อผิดพลาดทั้งหมดจนกว่าจะผ่าน
 
-2. Error Handling
+### 2. Error Handling
 
 - ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันที
 
-3. Browser Testing
+### 3. Browser Testing
 
 - ถ้า run dev ที่ต้องเปิด URL ให้รัน `/watch-browser` เสมอ
 
