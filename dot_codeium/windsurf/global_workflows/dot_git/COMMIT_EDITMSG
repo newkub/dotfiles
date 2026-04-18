@@ -1,4 +1,1 @@
-refactor: simplify update-global-workflows
-
-- Shorten content to just follow follow-write-workflows
-- Remove verbose steps and rules sections
+chore: update global workflows with new workflows and improvements

@@ -9,3 +9,4 @@ bf532e12c057c786ec31c7734d39737504b8bf5a e42520e5f80faa1b3d26b19d66e3432310f9959
 e42520e5f80faa1b3d26b19d66e3432310f99590 e9311738ab2acea72b0791722d090791d53de1e5 Veerapong <newkubise@gmail.com> 1776490804 +0700	commit: refactor: change improve-config to optimize-config
 e9311738ab2acea72b0791722d090791d53de1e5 65f542a5a71d23bd71b2a40c79c07b233e6b014a Veerapong <newkubise@gmail.com> 1776491090 +0700	commit: refactor: improve workflows quality
 65f542a5a71d23bd71b2a40c79c07b233e6b014a 56921782aa5b4f8ea9fdef51efe868c56deb330d Veerapong <newkubise@gmail.com> 1776491146 +0700	commit: refactor: simplify update-global-workflows
+56921782aa5b4f8ea9fdef51efe868c56deb330d e8f30e18b31f4c6eae45c9eee70d1bfdfaca62ee Veerapong <newkubise@gmail.com> 1776540879 +0700	commit: chore: update global workflows with new workflows and improvements

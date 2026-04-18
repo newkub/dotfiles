@@ -30,20 +30,31 @@ auto_execution_mode: 3
 ### 3. Configuration
 
 1. ตั้งค่า `Cargo.toml` (workspace หรือ single crate)
-2. ตั้งค่า `.cargo/config.toml` สำหรับ build configurations
+2. ตั้งค่า `.cargo/config.toml` สำหรับ build configurations:
+   ```toml
+   [build]
+   jobs = 4
+   # rustc-wrapper = "sccache"
+
+   [profile.dev]
+   debug = "line-tables-only"
+   incremental = true
+
+   [profile.dev.package."*"]
+   debug = false
+
+   [profile.release]
+   lto = true
+   opt-level = "z"
+   strip = true
+   codegen-units = 1
+   panic = "abort"
+   ```
 3. ตั้งค่า `rust-toolchain.toml` สำหรับ Rust version
 4. สร้าง `justfile` สำหรับ development scripts
 5. ตั้งค่า sccache สำหรับ shared compilation cache
 
-### 4. Error Handling
-
-1. ใช้ `thiserror` สำหรับ library errors
-2. ใช้ `anyhow` สำหรับ application errors
-3. กำหนด error types ชัดเจนด้วย `#[from]`
-4. เพิ่ม context ด้วย `.context()`
-5. หลีกเลี่ยง `unwrap()` ใน production code
-
-### 5. Verification
+### 4. Verification
 
 1. รัน `/follow-cargo` เพื่อตั้งค่า Cargo lint rules
 2. รัน `/follow-clippy` เพื่อตั้งค่า Clippy lint rules
@@ -66,7 +77,21 @@ auto_execution_mode: 3
 - ตั้งชื่อ types ด้วย PascalCase
 - ใช้ `mod.rs` เป็น barrel exports เท่านั้น
 
-### 2. Code Standards
+### 2. Configuration
+
+ตั้งค่า configuration files ให้ถูกต้อง
+
+- ตั้งค่า `Cargo.toml` สำหรับ workspace หรือ single crate
+- ตั้งค่า `.cargo/config.toml` ด้วย:
+  - `[build] jobs = 4` สำหรับ parallel compilation
+  - `[profile.dev]` มี `debug = "line-tables-only"` และ `incremental = true`
+  - `[profile.dev.package."*"]` มี `debug = false` สำหรับ dependencies
+  - `[profile.release]` มี `lto = true`, `opt-level = "z"`, `strip = true`, `codegen-units = 1`, `panic = "abort"`
+- ตั้งค่า `rust-toolchain.toml` สำหรับ lock Rust version
+- สร้าง `justfile` สำหรับ development scripts
+- ตั้งค่า sccache สำหรับ shared compilation cache
+
+### 3. Code Standards
 
 ทำตาม Rust API Guidelines และ naming conventions
 
@@ -78,7 +103,7 @@ auto_execution_mode: 3
 - ไม่ใช้ `unwrap()` ใน production code
 - ใช้ `?` แทน `unwrap()` หรือ `try!`
 
-### 3. Error Handling
+### 4. Error Handling
 
 ใช้ error handling patterns ที่เหมาะสมกับ context
 
@@ -88,7 +113,7 @@ auto_execution_mode: 3
 - เพิ่ม context ด้วย `.context()`
 - Error types ควร implement std::error::Error
 
-### 4. Documentation
+### 5. Documentation
 
 เขียน documentation ครบถ้วนสำหรับ public API
 
