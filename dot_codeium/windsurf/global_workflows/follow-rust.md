@@ -1,6 +1,6 @@
 ---
 description: สร้างหรือปรับปรุง Rust project ด้วย Clean Architecture และ Workspace
-title: Rust Best Practices
+title: Follow Rust
 auto_execution_mode: 3
 ---
 
@@ -35,112 +35,74 @@ auto_execution_mode: 3
 4. สร้าง `justfile` สำหรับ development scripts
 5. ตั้งค่า sccache สำหรับ shared compilation cache
 
-### 4. Code Standards
+### 4. Error Handling
 
-1. ใช้ modules ตาม Clean Architecture layers
-2. ตั้งชื่อไฟล์ด้วย snake_case
-3. ตั้งชื่อ types ด้วย PascalCase
-4. ใช้ traits สำหรับ abstraction
-5. ไม่ใช้ unwrap() ใน production code
+1. ใช้ `thiserror` สำหรับ library errors
+2. ใช้ `anyhow` สำหรับ application errors
+3. กำหนด error types ชัดเจนด้วย `#[from]`
+4. เพิ่ม context ด้วย `.context()`
+5. หลีกเลี่ยง `unwrap()` ใน production code
 
-### 5. API Design
+### 5. Verification
 
-1. **Naming Conventions** - ทำตาม Rust naming conventions (RFC 430)
-   - Casing conforms to RFC 430
-   - Ad-hoc conversions follow `as_`, `to_`, `into_` conventions
-   - Getter names follow Rust convention
-   - Methods on collections that produce iterators follow `iter`, `iter_mut`, `into_iter`
-   - Iterator type names match the methods that produce them
-   - Feature names are free of placeholder words
-   - Names use a consistent word order
-
-2. **Interoperability** - Types ควร interact nicely กับ library อื่นๆ
-   - Types eagerly implement common traits (Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Display, Default)
-   - Conversions use standard traits (From, AsRef, AsMut)
-   - Collections implement FromIterator and Extend
-   - Data structures implement Serde's Serialize, Deserialize
-   - Types are Send and Sync where possible
-   - Error types are meaningful and well-behaved
-   - Binary number types provide Hex, Octal, Binary formatting
-   - Generic reader/writer functions take `R: Read` and `W: Write` by value
-
-3. **Macros** - Macros ควร present อย่าง well-behaved
-   - Input syntax is evocative of the output
-   - Macros compose well with attributes
-   - Item macros work anywhere that items are allowed
-   - Item macros support visibility specifiers
-   - Type fragments are flexible
-
-### 6. Documentation
-
-1. **Crate Level Docs** - Crate level docs ควร thorough และมี examples
-   - ใช้ `//!` สำหรับ crate-level documentation
-   - อธิบาย role ของ crate
-   - ให้ links ไปยัง technical details
-   - อธิบายว่าทำไมควรใช้ crate นี้
-   - ให้ examples ของการใช้งานใน real-world setting
-
-2. **Component Documentation** - Public API ทุกอย่างควรมี documentation
-   - ใช้โครงสร้าง: [short sentence] [detailed explanation] [code example] [advanced explanations]
-   - ทุก public module, trait, struct, enum, function, method, macro, type definition ควรมี example
-   - Examples ควรใช้ `?` ไม่ใช่ `try!` หรือ `unwrap`
-   - Function docs ควร include error, panic, และ safety considerations
-   - ใช้ `# Errors`, `# Panics`, `# Safety` sections ตามความเหมาะสม
-
-3. **Documentation Testing** - Examples ควร compile และ test ได้
-   ```rust
-   /// ```rust
-   /// # use std::error::Error;
-   /// #
-   /// # fn main() -> Result<(), Box<dyn Error>> {
-   /// your;
-   /// example?;
-   /// code;
-   /// #
-   /// # Ok(())
-   /// # }
-   /// ```
-   ```
-
-### 7. Development
-
-1. สร้าง directory structure ตามที่วางแปลง
-2. ติดตั้ง dependencies ด้วย `cargo add`
-3. สร้าง base types, errors, config
-4. สร้าง traits และ implementations
-5. สร้าง tests สำหรับ critical paths
-
-### 8. Verification
-
-1. รัน `cargo check` ตรวจสอบ compilation errors
-2. รัน `cargo clippy` ตรวจสอบ linting
-3. รัน `cargo fmt` ตรวจสอบ formatting
-4. รัน `cargo test` ยืนยัน tests ผ่าน
-5. ทดสอบ `cargo build --release` สำเร็จ
+1. รัน `/follow-cargo` เพื่อตั้งค่า Cargo lint rules
+2. รัน `/follow-clippy` เพื่อตั้งค่า Clippy lint rules
+3. รัน `cargo check` ตรวจสอบ compilation errors
+4. รัน `cargo clippy` ตรวจสอบ linting
+5. รัน `cargo fmt` ตรวจสอบ formatting
+6. รัน `cargo test` ยืนยัน tests ผ่าน
+7. ทดสอบ `cargo build --release` สำเร็จ
 
 ## Rules
 
-- ใช้ Clean Architecture principles
+### 1. Project Structure
+
+ใช้ Clean Architecture และ workspace patterns เพื่อ maintainability
+
 - ใช้ workspace สำหรับ multi-crate projects
+- แยก concerns ตาม layers: domain, application, infrastructure
+- ใช้ `crates/` สำหรับ workspace members
 - ตั้งชื่อไฟล์ด้วย snake_case
 - ตั้งชื่อ types ด้วย PascalCase
-- ไม่ใช้ unwrap() ใน production code
+- ใช้ `mod.rs` เป็น barrel exports เท่านั้น
+
+### 2. Code Standards
+
+ทำตาม Rust API Guidelines และ naming conventions
+
+- ทำตาม Rust naming conventions (RFC 430)
+- Implement common traits: Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Display, Default
+- ใช้ traits สำหรับ abstraction
 - จัดเรียง imports: std, external, internal
 - ใช้ `crate::` สำหรับ internal imports
-- รัน `cargo check` และ `cargo test` ก่อน commit
-- ทำตาม Rust API Guidelines
-- เขียน documentation สำหรับ public API ทุกอย่าง
+- ไม่ใช้ `unwrap()` ใน production code
+- ใช้ `?` แทน `unwrap()` หรือ `try!`
+
+### 3. Error Handling
+
+ใช้ error handling patterns ที่เหมาะสมกับ context
+
+- ใช้ `thiserror` สำหรับ library errors
+- ใช้ `anyhow` สำหรับ application errors
+- กำหนด error types ชัดเจนด้วย `#[from]`
+- เพิ่ม context ด้วย `.context()`
+- Error types ควร implement std::error::Error
+
+### 4. Documentation
+
+เขียน documentation ครบถ้วนสำหรับ public API
+
+- ใช้ `//!` สำหรับ crate-level documentation
+- Public API ทุกอย่างควรมี documentation
 - Examples ใช้ `?` ไม่ใช่ `unwrap` หรือ `try!`
-- Implement common traits สำหรับ types
+- Function docs ควร include error, panic, safety considerations
+- ใช้ `# Errors`, `# Panics`, `# Safety` sections ตามความเหมาะสม
 
 ## Expected Outcome
 
 - Rust project ที่มีโครงสร้างถูกต้อง
 - Clean Architecture ที่จัดระเบียบดี
 - Code ที่มี memory safety และ performance
-- Tests ที่ครอบคลุม
+- Error handling ที่ robust
 - Build และ lint ที่ผ่านทั้งหมด
 - Documentation ที่ครบถ้วน
-- API ที่ interoperable กับ ecosystem
-
-/e

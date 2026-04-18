@@ -79,6 +79,24 @@ project/
 		"enabled": true,
 		"clientKind": "git",
 		"useIgnoreFile": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noParameterAssign": "error",
+				"useDefaultParameterLast": "error",
+				"useSingleVarDeclarator": "error",
+				"useConst": "error"
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineWidth": 80
 	}
 }
 ```

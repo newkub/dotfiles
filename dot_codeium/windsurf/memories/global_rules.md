@@ -8,6 +8,12 @@ auto_execution_mode: 3
 
 กำหนดกฎและแนวทางการพัฒนาโปรเจกต์ที่ใช้กับทุก workspace เพื่อให้การทำงานสม่ำเสมอ
 
+## Definitions
+
+- global rules หมายถึงไฟล์นี้ `c:\Users\Veerapong\.codeium\windsurf\memories\global_rules.md`
+- global workflows หมายถึง `C:\Users\Veerapong\.codeium\windsurf\global_workflows`
+- mcp หมายถึง `C:\Users\Veerapong\.codeium\windsurf\mcp_config.json`
+
 ## Execute
 
 ### 1. Prepare
@@ -21,23 +27,24 @@ auto_execution_mode: 3
 5. คุยกับผู้ใช้เป็นภาษาไทยเสมอในทุกการสื่อสาร
 6. "." หมายถึงให้ทำ `/continue`
 7. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
-8. ถ้า user prompt มีคำว่า `ต้อง`, `ห้าม`, `ไม่ใช้` ให้บันทึกสิ่งนั้นไปใน memories ด้วย
 
 ### 2. Analyze
 
 วิเคราะห์โปรเจกต์และความต้องการก่อนเริ่มทำงาน
 
 1. ทำ `/analyze-project` เพื่อดูภาพรวมโปรเจกต์
-2. ทำตาม `/fix-error` เมื่อได้รับ error
-3. เมื่อแก้ไขไม่ได้สักที ลอง `/learn-from-web`
+2. ใช้ `/write-ast-grep-rules` เพื่อตรวจสอบ code patterns ด้วย AST-based matching
+3. ทำตาม `/fix-error` เมื่อได้รับ error
+4. เมื่อแก้ไขไม่ได้สักที ลอง `/learn-from-web`
 
 ### 3. Planning
 
 วางแผนงานก่อนดำเนินการ
 
-1. พยายามทำให้ `/make-real` ในทุกๆเลย
-2. ทำตาม `/follow-write-workflows` เมื่อแก้ไขไฟล์ workflows
-3. ทำตาม `/follow-write-skills` เมื่อแก้ไขไฟล์ skills
+1. ใช้ `/plan` สำหรับการวางแผนงานครอบคล้ว
+2. พยายามทำให้ `/make-real` ในทุกๆเลย
+3. ทำตาม `/follow-write-workflows` เมื่อแก้ไขไฟล์ workflows
+4. ทำตาม `/follow-write-skills` เมื่อแก้ไขไฟล์ skills
 
 ### 4. Execute
 
@@ -69,9 +76,8 @@ auto_execution_mode: 3
 
 สรุปและรายงานผล
 
-1. ก่อนจบทุกครั้ง ต้องรัน `/run-verify` เสมอ
-2. ทำตาม `/reporting`
-3. เมื่อจบ task หลัง commit ให้รัน `/suggest-next-action` เสมอ
+1. ทำตาม `/report`
+2. เมื่อจบ task หลัง commit ให้รัน `/suggest-next-action` เสมอ
 
 ## Rules
 
@@ -126,7 +132,18 @@ auto_execution_mode: 3
 - พยายามทำให้ `/make-real` ในทุกๆเลย
 - ก่อนจบทุกครั้ง ต้องรัน `/run-verify` เสมอ
 
-### 7. Workflow Execution
+### 7. AST-based Analysis
+
+การวิเคราะห์ code ด้วย AST-based matching
+
+- ใช้ `/write-ast-grep-rules` เพื่อตรวจสอบ code patterns ด้วย AST-based matching
+- สร้าง rules จาก AGENTs.md ทุกไฟล์ในโปรเจกต์
+- ใช้ meta variables ($VAR) สำหรับ capture AST nodes
+- เขียน test cases สำหรับ rules (valid และ invalid)
+- รัน `ast-grep test` เพื่อ verify rules
+- รัน `ast-grep scan` เพื่อ test กับ codebase
+
+### 8. Workflow Execution
 
 การดำเนินการตาม workflows ที่กำหนด
 

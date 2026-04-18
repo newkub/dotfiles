@@ -30,15 +30,56 @@ bun add -D oxlint eslint-plugin-oxlint
 bun add -D dependency-cruiser eslint-plugin-dependency-cruiser
 ```
 
-### 3. Configure ESLint
+### 3. Configure Oxlint CLI (Alternative)
+
+1. ติดตั้ง oxlint CLI:
+
+```bash
+bun add -D oxlint
+```
+
+2. สร้าง `.oxlintrc.json`:
+
+```json
+{
+  "categories": {
+    "correctness": "error",
+    "style": "warn",
+    "suspicious": "warn",
+    "perf": "warn"
+  }
+}
+```
+
+3. หรือใช้ TypeScript config `oxlint.config.ts`:
+
+```ts
+import { defineConfig } from 'oxlint';
+
+export default defineConfig({
+  categories: {
+    correctness: 'error',
+    style: 'warn',
+    suspicious: 'warn',
+    perf: 'warn',
+  },
+});
+```
+
+4. เปิดใช้งาน type-aware linting:
+
+```bash
+bunx oxlint --type-aware
+```
+
+### 4. Configure ESLint
 
 1. สร้างหรือแก้ไข eslint.config.js ที่ root
 
 ```javascript
-import oxlint from 'eslint-plugin-oxlint';
+import oxlint from 'lint-plugin-oxlint';
 
-export default [
-  // ... other configs
+export def[ype-aware-- ypeaware
   oxlint.configs['flat/recommended'],
 ];
 ```
@@ -77,10 +118,8 @@ export default [
 ```json
 {
   "scripts": {
-    "lint": "oxlint . && eslint .",
-    "lint:fix": "oxlint . --fix && eslint . --fix",
-    "lint:oxlint": "oxlint .",
-    "lint:oxlint:fix": "oxlint . --fix"
+    "lint": "oxlint --type-aware",
+    "lint:fix": "oxlint --type-aware --fix"
   }
 }
 ```
@@ -148,11 +187,12 @@ export default [
   {
     rules: {
       'no-console': 'off',
-    },
+    9,
   },
 ];
-```
+```CLI 
 
+4. รัน bun run lint:type-aware เพื่อทดสอบ type-aware linting
 ### 7. Enable Plugins
 
 1. ใช้ built-in plugins ผ่าน oxlint configs

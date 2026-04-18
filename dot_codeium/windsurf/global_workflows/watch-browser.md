@@ -1,55 +1,72 @@
 ---
 title: Browser Watch Workflow
-description: เปิดเบราว์เซอร์และ watch ต่อเรื่อยๆ ทุก 5 วินาที พร้อมจัดการ error อัตโนมัติ
+description: เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง พร้อมจัดการ error อัตโนมัติ
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-เปิดเบราว์เซอร์เพื่อ watch หน้าเว็บต่อเนื่องทุก 5 วินาที และจัดการ errors อัตโนมัติด้วย /fix-error
+เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง พร้อมจัดการ errors อัตโนมัติด้วย /fix-error
 
 ## Execute
 
-### 1. Analyze Requirements
+### 1. Quick Open (Fast Mode)
 
-1. ตรวจสอบว่ามี URL ที่ต้องการ watch หรือไม่
-2. ตรวจสอบว่า agent-browser พร้อมใช้งานด้วย `agent-browser --help`
-3. วิเคราะห์ว่า URL ที่จะ watch มีลักษณะอย่างไร
-4. ประเมินว่าต้องการ monitor อะไรบ้าง (console, network, UI)
+1. เปิดเบราว์เซอร์ด้วย `agent-browser --headed open <url>`
+2. ใช้ command chaining && สำหรับ operations ต่อเนื่อง
+3. ถ้า daemon error ให้ใช้ browser-preview แทน
 
-### 2. Open Browser and Start Watch
+### 2. CLI Options Reference
 
-1. เปิดเบราว์เซอร์ด้วย `agent-browser --headed open <url>` (ใช้ --headed เสมอ ไม่ใช้แบบ headless)
-2. ตั้งค่าการ watch ทุก 5 วินาทีด้วย snapshot loop
-3. เริ่ม monitoring console และ network requests
-4. ตั้งค่า logging สำหรับบันทึกข้อมูลการ watch
+| Flag | Description | Usage |
+|------|-------------|-------|
+| `--headed` | Show browser window | `agent-browser --headed open <url>` |
+| `--session <name>` | Isolated session | `agent-browser --session mysession open <url>` |
+| `--profile <path>` | Persistent profile | `agent-browser --profile ./data open <url>` |
+| `--cdp <port>` | Connect via CDP | `agent-browser --cdp 9222 open <url>` |
+| `--auto-connect` | Auto-discover Chrome | `agent-browser --auto-connect open <url>` |
+| `--json` | JSON output | `agent-browser --json snapshot` |
+| `--full` | Full screenshot | `agent-browser --full screenshot` |
+| `--annotate` | Annotated screenshot | `agent-browser --annotate screenshot` |
 
-### 3. Verify and Continue Monitoring
+### 3. Environment Variables
 
-1. ตรวจสอบว่าเบราว์เซอร์เปิด URL ได้สำเร็จ
-2. ยืนยันว่าการ watch ทำงานทุก 5 วินาทีตามที่ตั้งค่า
-3. ถ้าเจอ error ให้เรียก /fix-error ทันที
-4. ตรวจสอบว่าการแก้ error ไม่กระทบการ watch ต่อเนื่อง
+| Variable | Description |
+|----------|-------------|
+| `AGENT_BROWSER_HEADED` | Show browser window |
+| `AGENT_BROWSER_SESSION` | Session name |
+| `AGENT_BROWSER_PROFILE` | Profile path |
+| `AGENT_BROWSER_CONFIG` | Config file path |
+
+### 4. Error Handling
+
+1. ถ้า daemon failed to start: ใช้ browser-preview แทน
+2. ถ้า timeout: เพิ่ม --session-name หรือใช้ command chaining
+3. ถ้า no Chrome found: ใช้ --auto-connect หรือ --cdp
 
 ## Rules
 
-1. การจัดการเบราว์เซอร์
+### 1. Browser Configuration
+
 - ใช้ agent-browser เท่านั้นในการจัดการเบราว์เซอร์
-- ต้องใช้ --headed เสมอ ไม่ใช้แบบ headless
-- ห้ามปิดเบราว์เซอร์โดยเด็ดขาด
+- ใช้ --headed เพื่อเปิด browser แบบมองเห็นหน้าต่าง
+- ใช้ environment variables สำหรับ configuration ที่ซ้ำซ้อน
 
-2. การ Watch
-- ตั้งค่า watch ทุก 5 วินาทีต่อเนื่องไม่หยุด
-- Monitor สถานะและ console messages อย่างต่อเนื่อง
+### 2. Performance
 
-3. การจัดการ Error
+- ใช้ command chaining && สำหรับ operations ต่อเนื่อง
+- ใช้ --session สำหรับ isolated sessions
+- ใช้ --profile สำหรับ persistent data
+
+### 3. Error Handling
+
 - เมื่อเจอ error ต้องเรียก /fix-error ทันที
-- ตรวจสอบว่าการแก้ error ไม่กระทบการ watch ต่อเนื่อง
+- ถ้า daemon error ให้ใช้ browser-preview แทน
 
 ## Expected Outcome
 
-1. Browser เปิดและ watch URL อย่างต่อเนื่องทุก 5 วินาที
+1. Browser เปิดและ watch URL อย่างต่อเนื่อง
 2. Console และ network requests ถูก monitor อย่างต่อเนื่อง
-3. Errors ที่เกิดขึ้นถูกแก้ไขอัตโนมัติด้วย /fix-error
+3. Errors ที่เกิดขึ้นถูกแก้ไขอัตโนมัติ
 4. การ watch ทำงานต่อเนื่องโดยไม่ขัดจังหวะ
 

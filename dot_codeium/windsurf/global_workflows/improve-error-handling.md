@@ -70,14 +70,6 @@ auto_execution_mode: 3
 4. เขียน tests สำหรับ error recovery
 5. เขียน tests สำหรับ error messages
 
-### 7. Commit
-
-ทำการ commit เฉพาะบรรทัดที่ workflow แก้ไป
-
-1. ใช้ `/commit` (จะทำงานใน workflow mode โดยอัตโนมัติ)
-2. ตรวจสอบว่า commit เสร็จสมบูรณ์
-3. ตรวจสอบว่ามีเฉพาะบรรทัดที่ workflow แก้ไปถูก commit
-
 ## Rules
 
 ### Error Types
@@ -138,4 +130,3 @@ auto_execution_mode: 3
 - Error propagation ที่ correct
 - Error messages ที่ user-friendly
 - Error tests ที่ครอบคลุม
-- Commit เสร็จสมบูรณ์ตาม conventional commits
