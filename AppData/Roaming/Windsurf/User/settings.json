@@ -17,11 +17,17 @@
 	"[javascript]": {
 		"editor.defaultFormatter": "dprint.dprint"
 	},
-	"[json,jsonc]": {
+	"[json]": {
 		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
 	},
 	"[jsx, tsx]": {
 		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[markdown]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
 	},
 	"[md]": {
 		"editor.defaultFormatter": "dprint.dprint"
@@ -38,56 +44,79 @@
 	"[vue]": {
 		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
-	"amp.tab.enabled": false,
+	"app": {
+		"configAdvancedAutoUpdate": true,
+		"configAdvancedProxyMode": "system",
+		"configAdvancedProxyURL": "",
+		"configChatAskModeUseTools": true,
+		"configChatAutoRunMcpTools": true,
+		"configChatCommandAllowlist": "",
+		"configChatCommandDenyList": "rm,mv,sudo,wget,curl,chown",
+		"configChatEditFileTool": false,
+		"configChatMethodQuickOperation": false,
+		"configChatShowSelectionToolbar": true,
+		"configChatTerminalRunMode": "askEveryTime",
+		"configChatWebToolsMode": "Auto-execute",
+		"configCompletionEnableNES": true,
+		"configGeneralAiResponseLanguage": "en-us",
+		"configGeneralDisplayLanguage": "en-us",
+		"configGeneralImportSettings": "VS Code",
+		"configGeneralImprovementPlan": "agree",
+		"configMemoryAutoGenerate": true,
+		"configQuestEnable": true
+	},
 	"breadcrumbs.enabled": false,
 	"chat.detectParticipant.enabled": true,
 	"code-runner.saveAllFilesBeforeRun": true,
 	"code-runner.saveFileBeforeRun": true,
-	"CodeGPT.apiKey": "Groq",
 	"codeium.enableCodeLens": false,
 	"codeium.enableConfig": {
 		"*": true,
 		"markdown": true
 	},
-	"codesnap-plus.containerPadding": "1em",
-	"console-ninja.featureSet": "Community",
-	"continue.enableQuickActions": true,
-	"continue.enableTabAutocomplete": false,
 	"cssVariables.trace.server": "messages",
 	"database-client.autoSync": true,
 	"debug.openDebug": "openOnDebugBreak",
 	"debug.showInStatusBar": "always",
-	"deepsource.highlightAffectedLines": false,
-	"deepsource.installationUrl": "https://app.deepsource.com",
-	"deepsource.showCodelens": true,
 	"docker.extension.enableComposeLanguageServer": false,
+	"editor.cursorBlinking": "solid",
+	"editor.cursorSmoothCaretAnimation": "off",
 	"editor.defaultFormatter": "biomejs.biome",
+	"editor.quickSuggestions": "off",
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,
 	"editor.formatOnType": true,
 	"editor.inlineSuggest.suppressSuggestions": true,
 	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
+	"editor.largeFileOptimizations": true,
+	"editor.minimap.enabled": false,
 	"editor.pasteAs.preferences": [],
+	"editor.scrollBeyondLastLine": false,
+	"editor.semanticHighlighting.enabled": false,
+	"editor.smoothScrolling": false,
 	"editor.stickyScroll.enabled": false,
 	"editor.suggest.showWords": false,
 	"editor.tabCompletion": "on",
+	"editor.wordBasedSuggestions": "off",
 	"editor.wordWrap": "on",
-	"excalidraw.image": {
-		"exportScale": 1,
-		"exportWithBackground": false
-	},
-	"excalidraw.theme": "auto",
 	"explorer.confirmDelete": false,
 	"explorer.confirmDragAndDrop": false,
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
-	"files.autoSave": "afterDelay",
-	"files.autoSaveDelay": 1,
+	"files.autoSave": "onFocusChange",
+	"files.autoSaveDelay": 1000,
 	"files.eol": "\r\n",
-	"geminicodeassist.project": "",
-	"git.autorefresh": true,
-	"git.enableSmartCommit": true,
-	"git.showPushSuccessNotification": true,
+	"files.watcherExclude": {
+		"**/.git/**": true,
+		"**/.nuxt/**": true,
+		"**/.output/**": true,
+		"**/build/**": true,
+		"**/dist/**": true,
+		"**/node_modules/**": true
+	},
+	"git.autorefresh": false,
+	"git.defaultCloneDirectory": "d:\\cli",
+	"git.openRepositoryInParentFolders": "never",
 	"githubIssues.queries": [
 		{
 			"label": "My Issues",
@@ -102,33 +131,55 @@
 			"query": "state:open repo:${owner}/${repository} sort:updated-desc"
 		}
 	],
-	"js/ts.updateImportsOnFileMove.enabled": "always",
-	"json.schemas": [
-		{
-			"fileMatch": [
-				"*dev-docs.json"
-			],
-			"url": "c:\\Users\\Veerapong\\.vscode\\extensions\\dev-docs.dev-docs-0.186.0\\devDocsSchema.json"
-		}
-	],
-	"mdnDocs.openInBrowser": true,
+	"js/ts.tsserver.maxMemory": 8192,
+	"js/ts.preferences.importModuleSpecifier": "relative",
+	"js/ts.preferences.includePackageJsonAutoImports": "auto",
+	"js/ts.preferences.quoteStyle": "single",
+	"js/ts.suggest.autoImports": true,
+	"js/ts.suggest.includeAutomaticOptionalChainCompletions": true,
+	"js/ts.format.semicolons": "insert",
+	"js/ts.format.insertSpaceAfterConstructor": true,
+	"js/ts.tsserver.experimental.useVsCodeWatcher": true,
+	"js/ts.tsserver.watchOptions": {
+		"excludeDirectories": [
+			"**/node_modules",
+			"**/.git",
+			"**/dist",
+			"**/build",
+			"**/.output",
+			"**/.nuxt"
+		],
+		"watchDirectory": "useFsEvents",
+		"watchFile": "useFsEvents"
+	},
 	"mise.binPath": "C:\\Users\\Veerapong\\scoop\\shims\\mise.exe",
-	"notebook.defaultFormatter": "dprint.dprint",
-	"notebook.lineNumbers": "on",
-	"notebook.stickyScroll.enabled": true,
 	"npm-intellisense.packageSubfoldersIntellisense": true,
+	"npm.scriptRunner": "bun",
+	"nuxt-intellisense.showWelcomeMessage": false,
+	"nuxtr.defaultPackageManager": "Bun",
 	"nuxtr.vueFiles.firstTag": "script",
 	"nuxtr.vueFiles.style.addStyleTag": false,
-	"package-manager-enhancer.enablePackageJsonDependenciesCodeLens": false,
-	"quokka.automaticRestart": true,
+	"oxc.typeAware": true,
+	"redhat.telemetry.enabled": false,
 	"remote.downloadExtensionsLocally": true,
-	"security.workspace.trust.untrustedFiles": "open",
-	"task.allowAutomaticTasks": "on",
+	"search.exclude": {
+		"**/.git": true,
+		"**/.nuxt": true,
+		"**/.output": true,
+		"**/build": true,
+		"**/dist": true,
+		"**/node_modules": true
+	},
+	"terminal.integrated.commandsToSkipShell": [
+		"kilo-code.new.agentManagerOpen",
+		"kilo-code.new.agentManager.showTerminal"
+	],
 	"terminal.integrated.cursorStyle": "line",
 	"terminal.integrated.defaultProfile.windows": "PowerShell",
+	"terminal.integrated.enableMultiLinePasteWarning": "never",
 	"terminal.integrated.env.windows": {},
 	"terminal.integrated.focusAfterRun": "terminal",
-	"terminal.integrated.gpuAcceleration": "on",
+	"terminal.integrated.gpuAcceleration": "auto",
 	"terminal.integrated.persistentSessionReviveProcess": "never",
 	"terminal.integrated.profiles.windows": {
 		"NuShell": {
@@ -138,55 +189,25 @@
 			"path": "pwsh.exe"
 		}
 	},
-	"terminal.integrated.rightClickBehavior": "default",
 	"terminal.integrated.shellIntegration.enabled": false,
-	"todo-tree.general.tags": [
-		"TODO",
-		"ISSUE",
-		"REVIEW",
-		"MOCK"
-	],
-	"todo-tree.highlights.customHighlight": {
-		"ISSUE": {
-			"background": "#ff0000",
-			"foreground": "#ffffff",
-			"gutterIcon": true,
-			"icon": "check",
-			"iconColour": "#ff0000",
-			"type": "tag-and-subTag"
-		},
-		"REVIEW": {
-			"background": "#fc03d7",
-			"foreground": "#ffffff",
-			"gutterIcon": true,
-			"icon": "check",
-			"iconColour": "#fc03d7",
-			"type": "tag-and-subTag"
-		},
-		"MOCK": {
-			"background": "#ff9800",
-			"foreground": "#ffffff",
-			"gutterIcon": true,
-			"icon": "check",
-			"iconColour": "#ff9800",
-			"type": "tag-and-subTag"
-		},
-		"TODO": {
-			"background": "#0fb12c",
-			"foreground": "#ffffff",
-			"icon": "check",
-			"iconColour": "#0fb12c",
-			"type": "tag-and-subTag"
-		}
-	},
+	"terminal.integrated.showCommandHint": false,
+	"terminal.integrated.stickyScroll.enabled": false,
 	"unocss.autocomplete.strict": true,
 	"vue.autoInsert.bracketSpacing": true,
 	"vue.autoInsert.dotValue": true,
 	"vue.codeActions.askNewComponentName": true,
+	"vue.complete.casing.props": "kebab",
+	"vue.complete.casing.tags": "kebabKebab",
+	"vue.server.hybridMode": true,
+	"vue.server.maxOldSpaceSize": 4096,
+	"vue.server.volar.useWorkspaceTsdk": true,
+	"vue.sugar.js": true,
+	"vue.sugar.ts": true,
 	"vue.format.script.initialIndent": true,
 	"vue.format.style.initialIndent": true,
 	"vue.format.template.initialIndent": true,
 	"vue.inlayHints.destructuredProps": true,
+	"vue.inlayHints.inlineHandlerLeading": true,
 	"vue.inlayHints.missingProps": true,
 	"vue.inlayHints.optionsWrapper": true,
 	"vue.inlayHints.vBindShorthand": true,
@@ -194,6 +215,14 @@
 		"vue"
 	],
 	"vue.trace.server": "off",
+	"window.customTitleBarVisibility": "windowed",
+	"window.newWindowDimensions": "maximized",
+	"windsurf.acp.enabledAgents": {
+		"devin-cloud": false
+	},
+	"windsurf.allowCascadeAccessGitignoreFiles": true,
+	"windsurf.autoContinue": 0,
+	"windsurf.completionMode": "off",
 	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
 	"windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
 	"workbench.colorCustomizations": {
@@ -203,108 +232,9 @@
 		"pings.custom_color-fa6c00": "#fa6c00"
 	},
 	"workbench.colorTheme": "GitHub Dark Dimmed",
-	"workbench.iconTheme": "symbols",
-	"yaml.schemas": {
-		"c:\\Users\\Veerapong\\.windsurf\\extensions\\continue.continue-1.1.49\\config-yaml-schema.json": [
-			".continue/**/*.yaml"
-		]
-	},
-	"npm.scriptRunner": "bun",
-	"window.customTitleBarVisibility": "windowed",
-	"chronicler.ffmpeg-binary": "C:\\Users\\Veerapong\\scoop\\shims\\ffmpeg.exe",
-	"git.autoStash": true,
-	"git.autofetch": true,
-	"[jsonc]": {
-		"editor.defaultFormatter": "vscode.json-language-features"
-	},
-	"git.defaultCloneDirectory": "d:\\cli",
-	"favorites.disablePreviewWarning": true,
-	"git.confirmSync": false,
-	"terminal.integrated.stickyScroll.enabled": false,
-	"app": {
-		"configGeneralDisplayLanguage": "en-us",
-		"configGeneralAiResponseLanguage": "en-us",
-		"configGeneralImprovementPlan": "agree",
-		"configGeneralImportSettings": "VS Code",
-		"configCompletionEnableNES": true,
-		"configChatWebToolsMode": "Auto-execute",
-		"configChatAskModeUseTools": true,
-		"configChatEditFileTool": false,
-		"configChatTerminalRunMode": "askEveryTime",
-		"configChatCommandDenyList": "rm,mv,sudo,wget,curl,chown",
-		"configChatCommandAllowlist": "",
-		"configChatAutoRunMcpTools": true,
-		"configChatMethodQuickOperation": false,
-		"configChatShowSelectionToolbar": true,
-		"configQuestEnable": true,
-		"configMemoryAutoGenerate": true,
-		"configAdvancedAutoUpdate": true,
-		"configAdvancedProxyMode": "system",
-		"configAdvancedProxyURL": ""
-	},
-	"redhat.telemetry.enabled": false,
-	"[json]": {
-		"editor.defaultFormatter": "dprint.dprint"
-	},
-	"nuxt-intellisense.showWelcomeMessage": false,
-	"git.openRepositoryInParentFolders": "never",
-	"vue.inlayHints.inlineHandlerLeading": true,
-	"nuxtr.defaultPackageManager": "Bun",
-	"diffEditor.ignoreTrimWhitespace": false,
+	"workbench.editor.closeEmptyGroups": true,
+	"workbench.editor.enablePreview": false,
 	"workbench.experimental.share.enabled": true,
-	"dbcode.connections": [
-		{
-			"connectionId": "XNtzp4kdZ0EAPdCKYhoYG",
-			"name": "learn-wrikka-com",
-			"driver": "sqlite",
-			"connectionType": "socket",
-			"socket": "d:\\learn-wrikka-com2\\server\\db\\sqlite.db",
-			"readOnly": false,
-			"postConnectionSqlType": "inline",
-			"driverOptions": {
-				"extensions": []
-			},
-			"idleTimeout": 0
-		}
-	],
-	"dbcode.resultLocation": "panel",
-	"fileNestingUpdater.autoUpdate": false,
-	"kilo-code.debug": false,
-	"kilo-code.allowedCommands": [
-		"git log",
-		"git diff",
-		"git show"
-	],
-	"kilo-code.deniedCommands": [],
-	"terminal.integrated.enableMultiLinePasteWarning": "never",
-	"oxc.typeAware": true,
-	"window.newWindowDimensions": "maximized",
-	"terminal.integrated.showCommandHint": false,
-	"vs-browser.favourites.list": {
-		"http://localhost:3000/": "http://localhost:3000/"
-	},
-	"windsurf.completionMode": "off",
-	"[markdown]": {
-		"editor.defaultFormatter": "vscode.markdown-language-features"
-	},
-	"workspaceSidebar.rootFolders": [
-		{
-			"path": "c:\\Users\\Veerapong\\Desktop"
-		}
-	],
-	"vp.port": 5173,
-	"rumdl.rules.disable": [
-		"MD013"
-	],
-	"js/ts.experimental.useTsgo": true,
-	"codeCounter.debug": "none",
-	"terminal.integrated.commandsToSkipShell": [
-		"kilo-code.new.agentManagerOpen",
-		"kilo-code.new.agentManager.showTerminal"
-	],
-	"windsurf.autoContinue": 0,
-	"windsurf.allowCascadeAccessGitignoreFiles": true,
-	"windsurf.acp.enabledAgents": {
-		"devin-cloud": false
-	},
+	"workbench.iconTheme": "symbols",
+	"workbench.list.smoothScrolling": false
 }

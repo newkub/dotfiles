@@ -41,15 +41,16 @@ Definitions
 
 1. อ่าน `/improve-to-ready-code` ก่อน planning เสมอ
 2. ใช้ `/plan` สำหรับการวางแผนงานครอบคล้ว
-3. พยายามทำให้ `/make-real` ในทุกๆเลย
-4. เมื่อแก้ไขไฟล์ workflows ทำตาม `/follow-write-workflows`
-5. เมื่อแก้ไขไฟล์ skills ทำตาม `/follow-write-skills`
+3. พยายาม `/plan` ออกเป็น file structure บ่อยๆ แยกตามหลักการ `separate of concern` เช่น `types`, `constant`, `error`, `config`, `ui`, `composables`, `infra` ออกเป็นส่วนๆ ไม่สร้างไฟล์เกิน 200 บรรทัด
+4. พยายามทำให้ `/make-real` เสมอ
+5. เมื่อแก้ไขไฟล์ workflows ทำตาม `/follow-write-workflows`
+6. เมื่อแก้ไขไฟล์ skills ทำตาม `/follow-write-skills`
 
 ### 4. Execute
 
 ดำเนินการตามกฎที่กำหนดอย่างเคร่งครัด
 
-1. อ่าน `/refactor` และ `/do-not` ก่อนเขียน code ทุกครั้ม
+1. อ่าน `/refactor` และ `/do-not` ก่อนเขียน code ทุกครั้ง
 2. เมื่อ execute ต้องเปิด web ให้รัน `/watch-browser`
 3. ทำ `/update-reference` เสมอสำหรับ file operations (project, global workflows, skills, global rules, etc.)
 4. เมื่อเขียน code ทำตาม `/write-test` เสมอ
@@ -63,7 +64,6 @@ Definitions
 
 1. ทำ `/refactor` เสมอหลังจาก execute เสร็จ
 2. กลับไป check planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมดแล้ว
-3. ก่อนจบทุกครั้ง ต้องรัน `/run-verify` เสมอ
 
 ### 6. Documentation
 
@@ -94,7 +94,7 @@ Definitions
 
 กฎคุณภาพโค้ด
 
-- อ่าน `/refactor` และ `/do-not` ก่อนเขียน code ทุกครั้ม
+- อ่าน `/refactor` และ `/do-not` ก่อนเขียน code ทุกครั้ง
 - ทำตาม `/write-test` เสมอเมื่อเขียน code
 - ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
 - ทำ `/refactor` เสมอหลังจาก execute เสร็จ

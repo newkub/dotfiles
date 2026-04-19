@@ -1,240 +1,152 @@
 ---
-title: improve-naming
-description: ปรับปรุงชื่อไฟล์ โฟลเดอร์ และตัวแปรให้ตรงตาม conventions และสื่อความหมายชัดเจน
+title: Improve Naming
+description: ปรับปรุงการตั้งชื่อให้สอดคล้องกับ conventions
 auto_execution_mode: 3
-file-patterns:
-  - "**/*"
 ---
 
-## Purpose
+## Goal
 
-ปรับปรุง naming conventions ทั้งหมดในโปรเจกต์ให้:
+ปรับปรุงการตั้งชื่อให้ชัดเจน สอดคล้อง และตาม conventions
 
-- ตรงตามมาตรฐาน conventional ที่เหมาะสม
-- สื่อความหมายชัดเจน ไม่กำกวม
-- มีความสอดคล้องกันในทุกส่วนของโปรเจกต์
-- 1 file = 1 single responsibility
+## Execute
 
-## Scope
+### 1. Analyze Naming
 
-ใช้สำหรับ:
+วิเคราะห์การตั้งชื่อปัจจุบัน
 
-- ตรวจสอบและปรับปรุงชื่อไฟล์
-- ตรวจสอบและปรับปรุงชื่อโฟลเดอร์
-- ตรวจสอบและปรับปรุงชื่อตัวแปร/ฟังก์ชัน
-- ตรวจสอบ single responsibility ของแต่ละไฟล์
+1. ตรวจสอบ file names ทั้งหมด
+2. ตรวจสอบ type names ทั้งหมด
+3. ตรวจสอบ constant names ทั้งหมด
+4. ตรวจสอบ function names ทั้งหมด
+5. ตรวจสอบ component names ทั้งหมด
+6. ตรวจสอบ variable names ทั้งหมด
 
-## Inputs
+### 2. File Naming
 
-| Input | Details |
-|-------|-----------|
-| Target Directory | Directory to be reviewed |
-| Naming Convention | Standard to use (kebab-case, camelCase, PascalCase) |
-| File Patterns | File patterns to be reviewed |
+ปรับปรุงการตั้งชื่อไฟล์
+
+1. ใช้ `kebab-case` สำหรับไฟล์ทั่วไป
+2. ใช้ `PascalCase` สำหรับ components
+3. ใช้ `kebab-case` สำหรับ utilities
+4. ใช้ `kebab-case` สำหรับ composables
+5. ใช้ `kebab-case` สำหรับ types ที่อยู่ในไฟล์แยก
+6. อัพเดท imports/exports ทั้งหมด
+
+### 3. Type Naming
+
+ปรับปรุงการตั้งชื่อ types
+
+1. ใช้ `PascalCase` สำหรับ interfaces
+2. ใช้ `PascalCase` สำหรับ type aliases
+3. ใช้ `PascalCase` สำหรับ enums
+4. ใช้ `PascalCase` สำหรับ classes
+5. เพิ่ม prefix `I` สำหรับ interfaces (ถ้าจำเป็น)
+6. เพิ่ม suffix `Type` สำหรับ type aliases (ถ้าจำเป็น)
+
+### 4. Constant Naming
+
+ปรับปรุงการตั้งชื่อ constants
+
+1. ใช้ `UPPER_SNAKE_CASE` สำหรับ global constants
+2. ใช้ `camelCase` สำหรับ local constants
+3. ใช้ `PascalCase` สำหรับ enum members
+4. จัดกลุ่ม constants ที่เกี่ยวข้อง
+5. แยก constants ไปไฟล์ `constants/` ถ้ามีมาก
+
+### 5. Error Naming
+
+ปรับปรุงการตั้งชื่อ errors
+
+1. ใช้ `PascalCase` พร้อม suffix `Error`
+2. ใช้ `PascalCase` พร้อม suffix `Exception`
+3. ตั้งชื่อที่บอก cause ชัดเจน
+4. จัดกลุ่ม errors ตาม domain
+5. แยก error types ไปไฟล์ `errors/` ถ้ามีมาก
+
+### 6. Function Naming
+
+ปรับปรุงการตั้งชื่อ functions
+
+1. ใช้ `camelCase` สำหรับ functions
+2. ใช้ verb นำหน้าเสมอ (get, set, create, update, delete)
+3. ใช้ prefix `use` สำหรับ composables
+4. ใช้ prefix `handle` สำหรับ event handlers
+5. ใช้ prefix `is/has/can/should` สำหรับ booleans
+6. ใช้ prefix `on` สำหรับ callbacks
+
+### 7. Component Naming
+
+ปรับปรุงการตั้งชื่อ components
+
+1. ใช้ `PascalCase` สำหรับ component names
+2. ใช้คำนามเดียว หรือ compound nouns
+3. ใช้ suffix `UI` สำหรับ UI components (ถ้าจำเป็น)
+4. ใช้ prefix `Base` สำหรับ base components (ถ้าจำเป็น)
+5. ตั้งชื่อตาม function ไม่ใช่ implementation
+6. ใช้ descriptive names ไม่ใช้ generic
+
+### 8. Variable Naming
+
+ปรับปรุงการตั้งชื่อ variables
+
+1. ใช้ `camelCase` สำหรับ variables
+2. ตั้งชื่อที่บอก purpose ชัดเจน
+3. หลีกเลี่ยง abbreviations ยกเว้นที่รู้จักกันดี
+4. ใช้ prefix `_` สำหรับ private members
+5. ใช้ `$` สำหรับ refs ใน Vue (ถ้าจำเป็น)
+6. หลีกเลี่ยง single-letter variables ยกเว้น loops
 
 ## Rules
 
-### Naming Convention Standards
+### 1. Universal Naming Principles
 
-| Type | Convention | Example |
-|--------|-----------|---------|
-| **General Files** | kebab-case | `my-file.ts`, `user-service.ts` |
-| **React Components** | PascalCase | `MyComponent.tsx`, `UserCard.tsx` |
-| **Folders** | kebab-case | `utils/`, `user-management/` |
-| **Variables** | camelCase | `userName`, `totalCount` |
-| **Constants** | UPPER_SNAKE_CASE | `MAX_RETRY`, `API_BASE_URL` |
-| **Functions** | camelCase | `getUserData()`, `handleSubmit()` |
-| **Classes/Interfaces** | PascalCase | `UserService`, `ApiResponse` |
-| **Test Files** | .test.ts or .spec.ts | `utils.test.ts`, `helpers.spec.ts` |
-| **Type Files** | .types.ts | `user.types.ts` |
-| **Config Files** | Literal name | `tsconfig.json`, `.eslintrc.js` |
+หลักการทั่วไปที่ใช้ได้กับทุกภาษา
 
-### Single Responsibility Rules
+- ชื่อบอก purpose ชัดเจน (what it does, not how)
+- ใช้ domain language ที่ถูกต้อง
+- หลีกเลี่ยง abbreviations ยกเว้นที่รู้จักกันดี
+- ตั้งชื่อตาม business concepts
+- รักษา consistency ทั้ง codebase
+- ชื่อสั้นแต่ชัดเจน
+- ใช้คำเชิงบวก (is_valid) ไม่ใช่เชิงลบ
 
-| Criteria | Description |
-|-------|---------|
-| **1 File = 1 Purpose** | Each file has a single clear purpose |
-| **Max 300 Lines** | Split if exceeds |
-| **Max 10 Exports** | Refactor into module if exceeds |
-| **Cohesive** | Everything in file is related |
+### 2. Language-Specific Conventions
 
-### Language Standards
+ใช้ conventions ตามภาษาที่ใช้
 
-| Aspect | Requirement |
-|--------|-------------|
-| **Headings** | All headings must be in English |
-| **Content** | All content in Thai with English loanwords for clarity (e.g., naming, convention, refactor), except code which must be in English |
-| **Table Headers** | Use English for table column headers |
-| **Technical Terms** | Use English loanwords for technical terms (e.g., directory, export, import, build, test) |
+- ทำตาม style guide ของภาษา
+- ทำตาม conventions ของ community
+- ใช้ linter ที่เหมาะสม
 
-## Structure
+### 3. Naming Conventions
 
-### Directory Structure (Example)
+ใช้ conventions ที่ถูกต้องสำหรับแต่ละประเภท
 
-```text
-project/
-├── src/
-│   ├── components/           # React/Vue components (PascalCase files)
-│   ├── utils/                # Utility functions (kebab-case files)
-│   ├── services/             # Business logic services
-│   ├── types/                # Type definitions
-│   └── constants/            # Constants
-├── tests/                    # Test files (.test.ts)
-├── docs/                     # Documentation
-└── config/                   # Configuration files
-```
+- File: `PascalCase.vue`, `kebab-case.ts`, `use-kebab-case.ts`
+- Type: `PascalCase`, `IPascalCase`, `PascalCaseType`
+- Constant: `UPPER_SNAKE_CASE` (global), `camelCase` (local)
+- Error: `PascalCaseError`, `PascalCaseException`, `UPPER_SNAKE_CASE`
+- Function: `camelCase` (verb), `useCamelCase`, `handleCamelCase`, `isCamelCase`, `onCamelCase`
+- Component: `PascalCase`, `BasePascalCase`, `PascalCaseUI`, `PascalCaseLayout`
+- Variable: `camelCase`, `_camelCase`, `$camelCase`, `camelCaseList`
 
-### File Categories by Naming
+### 4. Consistency And Updates
 
-| Category | Pattern | Example |
-|---------|---------|---------|
-| Components | `PascalCase.tsx` | `UserCard.tsx` |
-| Utilities | `kebab-case.ts` | `date-utils.ts` |
-| Types | `*.types.ts` | `user.types.ts` |
-| Tests | `*.test.ts` | `utils.test.ts` |
-| Config | Literal name | `vite.config.ts` |
+รักษา consistency และอัพเดท references
 
-## Steps
-
-### Phase 1: Setup
-
-- 1.1 **เตรียม Context**
-  - อ่าน global rules ของโปรเจกต์
-  - ตรวจสอบว่ามี naming conventions ที่กำหนดไว้หรือไม่
-  - ยืนยันสิทธิ์ในการ rename files
-
-- 1.2 **กำหนด Scope**
-  - ระบุ directory ที่ต้องการตรวจสอบ
-  - กำหนด file patterns ที่สนใจ
-  - วางแผนลำดับการตรวจสอบ
-
-### Phase 2: Research
-
-- 2.1 **ศึกษา Conventions**
-  - อ่านไฟล์ที่มีอยู่เพื่อเข้าใจ patterns ปัจจุบัน
-  - หา conventions ที่ใช้แล้วสม่ำเสมอ
-  - จดบันทึก inconsistencies ที่พบ
-
-- 2.2 **วิเคราะห์ File Purposes**
-  - อ่านแต่ละไฟล์เพื่อเข้าใจหน้าที่
-  - ระบุไฟล์ที่มีหลาย responsibility
-  - ทำรายการไฟล์ที่ต้อง refactor
-
-### Phase 3: Analyze
-
-- 3.1 **ตรวจสอบชื่อไฟล์**
-  - ตรวจสอบว่าชื่อสื่อความหมายหรือไม่
-  - ตรวจสอบ convention ที่ใช้
-  - หาไฟล์ที่ชื่อคล้ายกันแต่ทำงานต่างกัน
-
-- 3.2 **ตรวจสอบชื่อโฟลเดอร์**
-  - ตรวจสอบโครงสร้างโฟลเดอร์
-  - หาโฟลเดอร์ที่ชื่อไม่สื่อความหมาย
-  - ตรวจสอบความสอดคล้องของโครงสร้าง
-
-- 3.3 **ตรวจสอบ Single Responsibility**
-  - นับจำนวน exports ในแต่ละไฟล์
-  - นับจำนวนบรรทัด
-  - ประเมินความเกี่ยวข้องของ code ในไฟล์
-
-### Phase 4: Plan
-
-- 4.1 **วางแผนการ Rename**
-  - สร้างรายการไฟล์/โฟลเดอร์ที่ต้อง rename
-  - กำหนดชื่อใหม่ที่เหมาะสม
-  - ตรวจสอบว่าชื่อใหม่ไม่ซ้ำ
-
-- 4.2 **วางแผนการ Refactor**
-  - หาไฟล์ที่ต้องแยกเป็น 2+ ไฟล์
-  - วางแผนการย้าย functions/classes
-  - กำหนดลำดับการ refactor
-
-- 4.3 **วางแผนการอัพเดท References**
-  - หาไฟล์ที่ import/ reference ไฟล์ที่จะ rename
-  - วางแผนการอัพเดท paths
-  - ตรวจสอบ circular dependencies
-
-### Phase 5: Execute
-
-- 5.1 **Rename Files/Folders**
-  - 5.1.1 Rename ตามรายการที่วางแผน
-  - 5.1.2 อัพเดท imports ในไฟล์ที่ affected
-  - 5.1.3 อัพเดท config files (tsconfig, vite, etc.)
-
-- 5.2 **Refactor Multi-Responsibility Files**
-  - 5.2.1 ใช้ `/refactor-files` ถ้าไฟล์มีหลาย responsibility
-  - 5.2.2 แยกไฟล์ตามหน้าที่
-  - 5.2.3 สร้าง barrel exports ถ้าจำเป็น
-
-- 5.3 **อัพเดท Documentation**
-  - 5.3.1 อัพเดท README ถ้ามีการเปลี่ยนโครงสร้าง
-  - 5.3.2 อัพเดท comments ที่ reference ชื่อเก่า
-  - 5.3.3 อัพเดท docs อื่นๆ ที่เกี่ยวข้อง
-
-### Phase 6: Verify
-
-- 6.1 **ตรวจสอบการทำงาน**
-  - 6.1.1 รัน build/compile เพื่อตรวจสอบ errors
-  - 6.1.2 รัน tests เพื่อตรวจสอบว่าไม่พัง
-  - 6.1.3 ตรวจสอบ imports ทั้งหมดถูกต้อง
-
-- 6.2 **ตรวจสอบ Naming**
-  - 6.2.1 ตรวจสอบว่าทุกชื่อตรงตาม conventions
-  - 6.2.2 ตรวจสอบว่าไม่มีชื่อซ้ำ
-  - 6.2.3 ตรวจสอบว่าชื่อสื่อความหมาย
-
-- 6.3 **ตรวจสอบ References**
-  - 6.3.1 ตรวจสอบว่า paths ทั้งหมดถูกต้อง
-  - 6.3.2 ตรวจสอบว่าไม่มี broken links
-  - 6.3.3 ตรวจสอบว่า imports ทำงานได้
-
-### Phase 7: Review
-
-- 7.1 **Review คุณภาพ**
-  - 7.1.1 ตรวจสอบว่าชื่อใหม่ดีกว่าเดิม
-  - 7.1.2 ตรวจสอบว่าโครงสร้างชัดเจนขึ้น
-  - 7.1.3 ตรวจสอบว่า maintain ง่ายขึ้น
-
-- 7.2 **Consistency Check**
-  - 7.2.1 ตรวจสอบว่า conventions สม่ำเสมอทั้งโปรเจกต์
-  - 7.2.2 ตรวจสอบว่าไม่มีการใช้ conventions ผสม
-  - 7.2.3 ตรวจสอบว่า patterns ใช้ consistently
-
-### Phase 8: Finalize
-
-- 8.1 **สรุปผล**
-  - 8.1.1 สร้างรายการสิ่งที่เปลี่ยนแปลง
-  - 8.1.2 บันทึก conventions ที่ใช้
-  - 8.1.3 อัพเดท documentation ถ้าจำเป็น
-
-- 8.2 **Commit Changes**
-  - 8.2.1 ใช้ conventional commit message
-  - 8.2.2 แยก commits ตามประเภทการเปลี่ยนแปลง
-  - 8.2.3 รัน `/commit` เพื่อ commit ที่ถูกต้อง
-
-## Outputs
-
-| Output | Details |
-|--------|-----------|
-| Renamed Files | List of renamed files |
-| Refactored Files | List of split/merged files |
-| Updated References | List of files with updated imports |
-| Conventions Doc | Document of conventions used |
+- ใช้ conventions เดียวกันทั้ง project
+- อัพเดท references ทั้งหมดเมื่อเปลี่ยนชื่อ
+- ตรวจสอบ imports/exports ทั้งหมด
+- รัน linting และ type checking หลังเปลี่ยนชื่อ
 
 ## Expected Outcome
 
-หลังจากทำตาม workflow นี้:
-
-- ✅ ทุกชื่อไฟล์สื่อความหมายและตรงตาม conventions
-- ✅ ทุกชื่อโฟลเดอร์สื่อความหมายและตรงตาม conventions
-- ✅ แต่ละไฟล์มี single responsibility ชัดเจน
-- ✅ โครงสร้างโปรเจกต์สม่ำเสมอและ maintain ง่าย
-- ✅ ไม่มี broken imports หรือ references
-- ✅ Build และ tests ผ่านทั้งหมด
-
-## Reference
-
-- `/write-workflows` - มาตรฐานการเขียน workflow
-- `/review-structure` - การตรวจสอบโครงสร้าง
-- `/refactor-files` - การ refactor ไฟล์
-- `/commit` - การ commit ตาม conventions
+- File names สอดคล้องกับ conventions
+- Type names สอดคล้องกับ conventions
+- Constant names สอดคล้องกับ conventions
+- Error names สอดคล้องกับ conventions
+- Function names สอดคล้องกับ conventions
+- Component names สอดคล้องกับ conventions
+- Variable names สอดคล้องกับ conventions
+- Consistency สูงทั่วทั้ง codebase
+- Code อ่านง่ายและ maintainable
