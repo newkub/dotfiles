@@ -1,30 +1,28 @@
 ---
 title: Use Packages
-description: Analyze and integrate packages from workspaces with proper refactoring
+description: นำ packages ย่อยๆ มาใช้งานอย่างมีประสิทธิภาพ
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-วิเคราะห์และนำ packages จาก workspaces มาใช้งานอย่างมีประสิทธิภาพ พร้อม refactoring ตามความเหมาะสม
+นำ packages ย่อยๆ มาใช้งานอย่างมีประสิทธิภาพ เพื่อ:
+- เพิ่ม reusability ของ code
+- ลด code duplication
+- ทำให้ code มี modularity สูงขึ้น
+- ใช้ packages ที่มีอยู่แล้วอย่างเต็มประสิทธิภาพ
 
 ## Execute
 
-### 1. Analyze Source Workspaces
+### 1. Analyze Available Packages
 
-1. อ่าน package manifest เพื่อดูรายการ workspaces ทั้งหมด
-2. รัน `/analyze-project` ใน workspace ที่สนใจ
-3. อ่าน README.md เพื่อเข้าใจ features และ architecture
+1. อ่าน package manifest เพื่อดูรายการ packages ย่อยๆ ทั้งหมด
+2. รัน `/analyze-project` เพื่อดูภาพรวม packages
+3. อ่าน README.md ของ packages ที่สนใจ
 4. ตรวจสอบ compatibility ของ dependencies
+5. วิเคราะห์ public API ของ packages
 
-### 2. Refactor Source Code
-
-1. รัน `/update-readme` ของ workspace ที่จะนำมาใช้
-2. ปรับปรุงโค้ดใน workspace ต้นทางให้เหมาะสม
-3. แยก concerns ให้ชัดเจน
-4. ทดสอบหลัง refactoring
-
-### 3. Integrate Packages
+### 2. Integrate Packages
 
 1. ย้ายหรือ copy components/functions ที่ต้องการ
 2. ปรับ imports และ dependencies
@@ -33,7 +31,7 @@ auto_execution_mode: 3
 5. ตามด้วย domain-specific features
 6. สุดท้ายคือ complex integrations
 
-### 4. Apply and Clean
+### 3. Apply Packages
 
 1. ค้นหาไฟล์ที่ควรใช้ packages ที่ integrate แล้ว
 2. อัพเดท imports ในไฟล์ต่างๆ ให้ใช้ packages ใหม่
@@ -46,23 +44,14 @@ auto_execution_mode: 3
 
 ### 1. Analysis Requirements
 
-ต้องวิเคราะห์ workspace ต้นทางอย่างละเอียดก่อนนำมาใช้
+ต้องวิเคราะห์ packages ย่อยๆ อย่างละเอียดก่อนนำมาใช้
 
 - รัน `/analyze-project` ก่อนนำมาใช้เสมอ
 - อ่าน README.md เพื่อเข้าใจ features
-- รัน `/update-readme` ของ workspace ที่จะนำมาใช้ก่อน integrate
 - ตรวจสอบ compatibility ของ dependencies
+- วิเคราะห์ public API ของ packages
 
-### 2. Refactoring Principles
-
-Refactor ใน workspace ต้นทางก่อนนำมาใช้เพื่อให้โค้ดมีคุณภาพ
-
-- Refactor ใน workspace ต้นทางก่อนนำมาใช้
-- แยก concerns ให้ชัดเจน
-- ใช้ import alias เสมอ
-- ทดสอบหลัง refactoring
-
-### 3. Integration Order
+### 2. Integration Order
 
 จัดลำดับการ integrate ตาม impact order เพื่อลดความเสี่ยง
 
@@ -70,7 +59,7 @@ Refactor ใน workspace ต้นทางก่อนนำมาใช้เ
 - ตามด้วย domain-specific features
 - สุดท้ายคือ complex integrations
 
-### 4. File Operations
+### 3. File Operations
 
 จัดการไฟล์อย่างเป็นระบบและอัพเดท references
 
@@ -80,9 +69,8 @@ Refactor ใน workspace ต้นทางก่อนนำมาใช้เ
 
 ## Expected Outcome
 
-- เข้าใจโครงสร้างและ features ของทุก workspaces
-- นำ packages มาใช้งานได้อย่างมีประสิทธิภาพ
-- โค้ดถูก refactor ตามมาตรฐานก่อน integrate
+- เข้าใจโครงสร้างและ features ของ packages ย่อยๆ
+- นำ packages ย่อยๆ มาใช้งานได้อย่างมีประสิทธิภาพ
 - Packages ถูกนำไปใช้ในไฟล์ต่างๆ อย่างถูกต้อง
 - ไฟล์ที่ซ้ำซ้อนถูกลบออกแล้ว
 - ไม่มี code duplication 

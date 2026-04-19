@@ -1,6 +1,6 @@
 ---
-description: สร้างหรือปรับปรุง Rust project ด้วย Clean Architecture และ Workspace
 title: Follow Rust
+description: สร้างหรือปรับปรุง Rust project ด้วย Clean Architecture และ Workspace
 auto_execution_mode: 3
 ---
 
@@ -10,7 +10,7 @@ auto_execution_mode: 3
 
 ## Execute
 
-### 1. Setup
+### 1. Project Planning
 
 1. ระบุ Project Location ใน monorepo
 2. ตัดสินใจใช้ Workspace หรือ Single Crate
@@ -30,39 +30,26 @@ auto_execution_mode: 3
 ### 3. Configuration
 
 1. ตั้งค่า `Cargo.toml` (workspace หรือ single crate)
-2. ตั้งค่า `.cargo/config.toml` สำหรับ build configurations:
-   ```toml
-   [build]
-   jobs = 4
-   # rustc-wrapper = "sccache"
-
-   [profile.dev]
-   debug = "line-tables-only"
-   incremental = true
-
-   [profile.dev.package."*"]
-   debug = false
-
-   [profile.release]
-   lto = true
-   opt-level = "z"
-   strip = true
-   codegen-units = 1
-   panic = "abort"
-   ```
+2. ตั้งค่า `.cargo/config.toml` สำหรับ build configurations
 3. ตั้งค่า `rust-toolchain.toml` สำหรับ Rust version
 4. สร้าง `justfile` สำหรับ development scripts
 5. ตั้งค่า sccache สำหรับ shared compilation cache
 
-### 4. Verification
+### 4. Quality Enforcement
 
 1. รัน `/follow-cargo` เพื่อตั้งค่า Cargo lint rules
 2. รัน `/follow-clippy` เพื่อตั้งค่า Clippy lint rules
-3. รัน `cargo check` ตรวจสอบ compilation errors
-4. รัน `cargo clippy` ตรวจสอบ linting
-5. รัน `cargo fmt` ตรวจสอบ formatting
-6. รัน `cargo test` ยืนยัน tests ผ่าน
-7. ทดสอบ `cargo build --release` สำเร็จ
+3. ตั้งค่า `forbid unsafe_code` ใน workspace
+4. ตั้งค่า `cargo-deny` สำหรับ security advisories
+5. ตั้งค่า rustdoc warnings เป็น errors
+
+### 5. Verification
+
+1. รัน `cargo check` ตรวจสอบ compilation errors
+2. รัน `cargo clippy` ตรวจสอบ linting
+3. รัน `cargo fmt` ตรวจสอบ formatting
+4. รัน `cargo test` ยืนยัน tests ผ่าน
+5. ทดสอบ `cargo build --release` สำเร็จ
 
 ## Rules
 
@@ -82,12 +69,12 @@ auto_execution_mode: 3
 ตั้งค่า configuration files ให้ถูกต้อง
 
 - ตั้งค่า `Cargo.toml` สำหรับ workspace หรือ single crate
-- ตั้งค่า `.cargo/config.toml` ด้วย:
-  - `[build] jobs = 4` สำหรับ parallel compilation
-  - `[profile.dev]` มี `debug = "line-tables-only"` และ `incremental = true`
-  - `[profile.dev.package."*"]` มี `debug = false` สำหรับ dependencies
-  - `[profile.release]` มี `lto = true`, `opt-level = "z"`, `strip = true`, `codegen-units = 1`, `panic = "abort"`
+- ตั้งค่า `.cargo/config.toml` ด้วย `[build] jobs = 4`
+- ตั้งค่า `[profile.dev]` มี `debug = "line-tables-only"` และ `incremental = true`
+- ตั้งค่า `[profile.dev.package."*"]` มี `debug = false`
+- ตั้งค่า `[profile.release]` มี `lto = true`, `opt-level = "z"`, `strip = true`, `codegen-units = 1`, `panic = "abort"`
 - ตั้งค่า `rust-toolchain.toml` สำหรับ lock Rust version
+- ตั้งค่า `rust-version` ใน workspace package
 - สร้าง `justfile` สำหรับ development scripts
 - ตั้งค่า sccache สำหรับ shared compilation cache
 
@@ -102,6 +89,7 @@ auto_execution_mode: 3
 - ใช้ `crate::` สำหรับ internal imports
 - ไม่ใช้ `unwrap()` ใน production code
 - ใช้ `?` แทน `unwrap()` หรือ `try!`
+- ตั้งค่า `forbid unsafe_code` ใน workspace
 
 ### 4. Error Handling
 
@@ -122,6 +110,18 @@ auto_execution_mode: 3
 - Examples ใช้ `?` ไม่ใช่ `unwrap` หรือ `try!`
 - Function docs ควร include error, panic, safety considerations
 - ใช้ `# Errors`, `# Panics`, `# Safety` sections ตามความเหมาะสม
+- ตั้งค่า `RUSTDOCFLAGS="-D rustdoc::all"` ใน CI
+
+### 6. CI/CD
+
+ตั้งค่า CI/CD pipeline สำหรับ quality assurance
+
+- ใช้ GitHub Actions สำหรับ CI
+- รัน linting, formatting, tests แบบ parallel
+- ทดสอบกับ stable, beta, nightly, และ MSRV
+- ทดสอบ cross-platform (ARM, WASM)
+- ใช้ `cargo-deny` สำหรับ dependency checks
+- ตรวจสอบ dependencies sorted
 
 ## Expected Outcome
 
@@ -131,3 +131,4 @@ auto_execution_mode: 3
 - Error handling ที่ robust
 - Build และ lint ที่ผ่านทั้งหมด
 - Documentation ที่ครบถ้วน
+- CI/CD pipeline ที่เข้มงวด
