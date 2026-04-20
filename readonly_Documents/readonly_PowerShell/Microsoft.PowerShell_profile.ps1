@@ -583,3 +583,5 @@ function loc {
     }
 }
 
+
+Remove-Item Alias:ni -Force -ErrorAction Ignore

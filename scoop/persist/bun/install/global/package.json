@@ -6,7 +6,7 @@
   "dependencies": {
     "@antfu/ni": "^28.2.0",
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "@moonrepo/cli": "^1.41.7",
+    "@moonrepo/cli": "^2.2.2",
     "@nuxt/cli": "^3.34.0",
     "@shikijs/cli": "^3.23.0",
     "@volar/source-map": "^2.4.28",

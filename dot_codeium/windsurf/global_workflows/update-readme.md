@@ -1,4 +1,5 @@
 ---
+title: Update README
 description: Create comprehensive README.md files with actual project analysis data without placeholders
 auto_execution_mode: 3
 ---
@@ -13,46 +14,22 @@ Create comprehensive README.md files with actual project analysis data without p
 
 1. รัน `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์
 2. อ่าน `README.md` ปัจจุบันเพื่อดูสิ่งที่ต้องอัพเดท
-3. บันทึก tech stack, dependencies, และ file structure
+3. บันทึก `tech stack`, `dependencies`, และ `file structure`
 
 ### 2. Gather Project Information
 
 1. อ่าน manifest files: `package.json`, `Cargo.toml`, `pyproject.toml`
 2. ใช้ `list_dir` ดูโครงสร้าง `src/`, `apps/`, `packages/`
-3. อ่าน source code เพื่อเข้าใจ features
+3. อ่าน source code เพื่อเข้าใจ `features`
 4. อ่าน config files เพื่อดูตัวเลือกการตั้งค่า
 
 ### 3. Write Core Sections
 
 สร้าง sections ด้วยข้อมูลจริงจากการวิเคราะห์:
 
-**Required Headings:**
-```
-# project-name
-## Why
-## Key Concept
-## Features
-## Built With
-## Getting Started
-## Installation
-## Usage
-## Configuration
-## API Reference
-## License
-```
+**Required:** `Title`, `Why`, `Key Concept`, `Features`, `Tech Stack`, `Getting Started`, `Installation`, `Usage`, `Configuration`, `API Reference`, `License`
 
-**Section Order:**
-1. Title
-2. Why
-3. Key Concept
-4. Features (table 3 col: features, description, benefit)
-5. Built With
-6. Getting Started
-7. Installation
-8. Usage
-9. Configuration
-10. API Reference (bullet format, no table)
-11. License
+**Optional:** `Integrations`, `Architecture`, `Performance`, `Migration`, `Showcase`, `Packages`, `Release Notes`, `FAQs`
 
 ### 4. Write Usage Section
 
@@ -60,93 +37,160 @@ Create comprehensive README.md files with actual project analysis data without p
 
 ### 5. Write Configuration Section
 
-ใช้ code block (YAML/JSON) หรือตารางสั้นๆ สำหรับ library constants
+ใช้ code block (`YAML/JSON`) หรือตารางสั้นๆ สำหรับ `library constants`
 
 ### 6. Write API Reference
 
-เขียนแค่ API ของ interface หลักๆ เท่านั้น ใช้ bullet format:
-
-```markdown
-## API Reference
-
-### @wrikka/cli-builder
-- `CLIController`, `CommandController`, `HelpController`
-- `CommandBuilder` - Fluent API for commands
-- `loadSpec()`, `parse()` - Core functions
-- `CLIValidationService`, `CommandParsingService`, `PromptValidationService`
-
-### @wrikka/cli-completions
-- `createBashAdapter()`, `createZshAdapter()`, `createFishAdapter()`, `createPowerShellAdapter()`
-- `runCompleter()`, `generateBashOutput()`, `generateZshOutput()`, `generateFishOutput()`, `generatePowerShellOutput()`
-
-### @wrikka/cli-tui-prompt
-- `TUIPromptController`
-- `TextInputHandler`, `SelectInputHandler`, `ConfirmInputHandler`
-- `BaseTUIRenderer`, `TextPromptRenderer`, `SelectPromptRenderer`, `ConfirmPromptRenderer`
-- `TUIKeyboardHandler`
-```
+เขียนแค่ `public API` หลักๆ ใช้ตาราง 3 col (`name`, `description`, `benefit`) และ grouping ตามประเภท
 
 ### 7. Write License Section
 
-### 8. Validate and Verify
+ระบุ `license type` ชัดเจน, เพิ่ม link ไปยัง `LICENSE.md`, ใช้ภาษาอังกฤษกระชับ
+
+### 8. Write Optional Sections
+
+เขียน optional sections ตามความเหมาะสม:
+
+**Release Notes:** ตาราง 6 col (`Version`, `Date`, `Type`, `Category`, `Breaking`, `Changes`)
+**FAQs:** ตาราง 2 col (`Question`, `Answer`)
+**Architecture:** ASCII art แสดง `workflow diagrams`
+**Performance:** รัน benchmark จริงๆ แล้ว report ผล
+**Migration:** แบ่งเป็น migration จาก tools ต่างๆ
+**Showcase:** bullet หรือ card format
+**Packages:** ตาราง 2 col (`Name`, `Description`)
+
+### 9. Write Skills Section
+
+รวม Skills เข้าไปใน Getting Started section:
+
+```markdown
+## Getting Started
+
+### Skills
+ดู skills ที่เกี่ยวข้องใน `.skills/` ของ project
+```
+
+### 10. Validate and Verify
 
 1. ตรวจสอบว่าทุก section ใช้ข้อมูลจริงจากโปรเจกต์
 2. ยืนยันว่า code examples ถูกต้องและ runnable ได้
 3. ตรวจสอบว่าไม่มี placeholder
+4. ตรวจสอบว่าทุก link ใช้งานได้ (external และ internal)
+5. ตรวจสอบว่ามี skills ที่เกี่ยวข้องใน `.skills/` ถ้าไม่มีให้สร้างตาม `/follow-write-skills`
 
 ## Rules
 
 ### 1. Frontmatter Standards
+
+ตั้งค่า frontmatter ให้ถูกต้อง:
 - title: Title Case สื่อความหมายชัดเจน
 - description: กระชับไม่เกิน 100 ตัวอักษร
 - auto_execution_mode: 3 เท่านั้น
 - ห้ามเพิ่ม field อื่นโดยไม่จำเป็น
 
 ### 2. Structure & Format
-- โครงสร้าง: ## Goal, ## Execute, ## Rules, ## Expected Outcome
+
+รักษาโครงสร้างและ format ให้สม่ำเสมอ:
+- โครงสร้าง: `## Goal`, `## Execute`, `## Rules`, `## Expected Outcome`
 - ใช้ numbered list (1., 2., 3.) เรียงตาม flow การทำงาน
 - Bullet points ชิดซ้าย ใช้ dash (-)
 - เขียนกระชับ ตรงประเด็น
 - ไฟล์ไม่เกิน 200 บรรทัด
 
 ### 3. Language Standards
+
+ใช้ภาษาที่ถูกต้อง:
 - หัวข้อภาษาอังกฤษ Title Case
 - รายการใช้ภาษาไทย
 - ยกเว้นคำศัพท์เฉพาะทาง
 
 ### 4. Content Standards
+
+รักษาคุณภาพเนื้อหา:
 - ใช้ข้อมูลจริงจาก `/analyze-project`
 - Code examples ต้อง runnable ได้จริง
 - ไม่ใช้ placeholder
 
 ### 5. Features Format
-- ใช้ตาราง 3 col: features, description, benefit
+
+จัดรูปแบบ features ตามมาตรฐาน:
+- ใช้ตาราง 3 col: `features`, `description`, `benefit`
 - เพิ่ม emoji ใน column features
 
-### 6. API Reference Format
+### 6. Tech Stack Format
+
+จัดรูปแบบ tech stack ตามมาตรฐาน:
+- ใช้ตาราง 3 col: `category`, `technology`, `description`
+- จัดเรียงตาม category (`Framework`, `Database`, `UI`, `Deployment`, etc.)
+- เพิ่ม emoji ใน column category
+- Technology เป็น markdown link ไปยัง website
+
+### 7. Integrations Format
+
+จัดรูปแบบ integrations ตามมาตรฐาน:
+- เป็น optional section
+- ใช้ bullet format แสดง integrations ที่รองรับ
+- แต่ละ integration ให้ระบุชื่อและคำอธิบายสั้นๆ
+
+### 8. API Reference Format
+
+จัดรูปแบบ API Reference ตามมาตรฐาน:
 - เขียนแค่ interface หลักๆ
-- ใช้ bullet format ไม่ใช้ตาราง
+- ใช้ตาราง 3 col: `name`, `description`, `benefit`
+- Grouping ตาม API types (`Components`, `Composables`, `Functions`, etc.)
+- col แรก link ไปยังไฟล์จริงๆ
 
-### 7. No Badges
-- ไม่ต้องมี badges ด้านบน
+### 9. License Format
 
-### 8. No Contributing/Support Sections
-- ไม่ต้องมี Contributing และ Support sections
+จัดรูปแบบ License ตามมาตรฐาน:
+- ระบุ license type ชัดเจน
+- เพิ่ม link ไปยัง `LICENSE.md`
+- เพิ่ม bullet points สำคัญๆ เกี่ยวกับสิทธิ์และเงื่อนไข (optional)
+- ใช้ภาษาอังกฤษกระชับ
 
-### 9. No Examples Section
-- ไม่ต้องมี Examples section ใน README
-- เขียนเป็น list แล้ว link ไป examples/
+### 10. Optional Sections Format
 
-### 10. Markdown Links
+จัดรูปแบบ optional sections ตามมาตรฐาน:
+- CHANGELOG: ตาราง 3 col (`Version`, `Date`, `Changes`)
+- FAQs: ตาราง 2 col (`Question`, `Answer`)
+- Architecture: ASCII art แสดง workflow diagrams
+- Performance: ต้อง run benchmark จริงๆ
+- Migration: แบ่งเป็น migration จาก tools ต่างๆ
+- Showcase: bullet หรือ card format
+- Packages: ตาราง 2 col (`Name`, `Description`)
+
+### 11. Link Validation
+
+ตรวจสอบความถูกต้องของ links:
+- ตรวจสอบว่าทุก link ใน README.md ใช้งานได้
+- External links ต้องเข้าถึงได้จริง
+- Internal links ต้องเชื่อมโยงถูกต้อง
+- แก้ไขหรือลบ links ที่ไม่ใช้งานได้
+
+### 12. Skills Creation
+
+สร้าง skills ตามมาตรฐาน:
+- ตรวจสอบว่ามี skills ที่เกี่ยวข้องใน `.skills/`
+- ถ้าไม่มี สร้าง skills ตาม `/follow-write-skills`
+- ใช้โครงสร้างโฟลเดอร์: `project/`, `core/`, `api/`, `rules/`, `patterns/`
+- สร้าง SKILL.md พร้อมตารางสรุปเนื้อหา
+- เชื่อมโยง skills ใน Getting Started section
+
+### 13. Markdown Links
+
+ใช้ markdown link อย่างถูกต้อง:
 - External references: ใช้ markdown link เสมอ
 - Internal references: ใช้ markdown link เสมอ
 
 ## Expected Outcome
 
-- README.md ที่มีเนื้อหาครบถ้วน
+- README.md ที่มีเนื้อหาครบถ้วน ไม่มี placeholder
 - Features มี emoji และเป็นตาราง 3 col
-- Built With: Tech stack ที่ใช้
-- Getting Started: Prerequisites และ Quick Start
-- API Reference เขียนแค่ interface หลักๆ ในรูปแบบ bullet
-- License: License section
+- Tech Stack มีตาราง 3 col (category, technology, description) พร้อม emoji และ link
+- Getting Started: Prerequisites, Quick Start และ Skills
+- API Reference เขียนแค่ interface หลักๆ ในรูปแบบตาราง 3 col (name, description, benefit)
+- License: License section พร้อม link
 - Code examples พร้อมใช้งานได้ทันที
+- Links ทั้งหมดใช้งานได้
+- Skills ที่เกี่ยวข้องถูกสร้างใน `.skills/`
+- Optional sections: Integrations, Architecture, Performance, Migration, Showcase, Packages, Release Notes, FAQs
