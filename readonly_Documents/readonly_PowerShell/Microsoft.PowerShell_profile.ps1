@@ -585,3 +585,5 @@ function loc {
 
 
 Remove-Item Alias:ni -Force -ErrorAction Ignore
+
+Remove-Item Alias:ni -Force -ErrorAction Ignore

@@ -6,7 +6,7 @@
         "https://docs.mcp.cloudflare.com/mcp"
       ],
       "command": "bunx",
-      "disabled": false
+      "disabled": true
     },
     "context7": {
       "disabled": false,

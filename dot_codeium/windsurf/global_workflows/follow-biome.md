@@ -4,73 +4,22 @@ description: ตั้งค่าและใช้งาน Biome สำหร
 auto_execution_mode: 3
 ---
 
-## Purpose
+ตั้งค่า Biome เป็นเครื่องมือหลักสำหรับ linting และ formatting แทน ESLint/Prettier
 
-ตั้งค่า Biome เป็นเครื่องมือหลักสำหรับ linting และ formatting แทน ESLint/Prettier ด้วยความเร็วและประสิทธิภาพสูง
+## Goal
 
-## Scope
+ติดตั้งและกำหนดค่า Biome สำหรับ linting และ formatting ด้วย Bun
 
-- ติดตั้ง Biome CLI ผ่าน Bun
-- กำหนดค่า `biome.jsonc` สำหรับ root และ workspaces
-- เพิ่ม scripts ใน `package.json`
-- รองรับ monorepo configuration
+## Execute
 
-## Inputs
+### 1. Setup
 
-| Input | Details |
-|-------|-----------|
-| Package Manager | Bun (เท่านั้น) |
-| Project Type | Single repo หรือ monorepo |
+1. ติดตั้ง Biome CLI ด้วย `bun add -D @biomejs/biome`
+2. ตรวจสอบว่ามี `package.json` อยู่แล้ว
 
-## Rules
+### 2. Configure
 
-| Category | Requirements |
-|------|---------|
-| **Installation** | ใช้ `bun add -D @biomejs/biome` เท่านั้น |
-| **Scripts** | ต้องมี `lint` และ `format` ใน `package.json` |
-| **Config** | ใช้ `biome.jsonc` (with comments) ไม่ใช่ `.json` |
-| **VCS** | Enable git integration ใน config |
-| **Monorepo** | Root = true, workspaces ใช้ `root: false` + `extends` |
-
-## Structure
-
-### Directory Structure
-
-```text
-project/
-├── biome.jsonc           # Root config (root: true)
-├── package.json          # Scripts
-└── apps/
-    └── app1/
-        └── biome.jsonc   # Workspace config (root: false, extends)
-```
-
-### Phase Definitions
-
-| Phase | Description | Main Activities |
-|-------|-------------|---------------|
-| Setup | ติดตั้ง dependencies | Add Biome CLI |
-| Configure | สร้าง config files | biome.jsonc, scripts |
-| Verify | ตรวจสอบการทำงาน | Run lint/format |
-
-## Steps
-
-### Phase 0: Precondition
-
-- 0.1 **ตรวจสอบ Environment**
-  - มี Bun ติดตั้งแล้ว
-  - มี `package.json` อยู่แล้ว
-
-### Phase 1: Setup
-
-- 1.1 **ติดตั้ง Biome**
-  - รัน `bun add -D @biomejs/biome`
-  - ตรวจสอบ installation สำเร็จ
-
-### Phase 2: Configure
-
-- 2.1 **สร้าง Root Config**
-  - สร้าง `biome.jsonc` ที่ root:
+1. สร้าง `biome.jsonc` ที่ root พร้อม VCS integration และ recommended rules
 
 ```json [biome.jsonc]
 {
@@ -83,13 +32,7 @@ project/
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
-			"style": {
-				"noParameterAssign": "error",
-				"useDefaultParameterLast": "error",
-				"useSingleVarDeclarator": "error",
-				"useConst": "error"
-			}
+			"recommended": true
 		}
 	},
 	"formatter": {
@@ -101,8 +44,7 @@ project/
 }
 ```
 
-- 2.2 **เพิ่ม Scripts**
-  - เพิ่มใน `package.json`:
+2. เพิ่ม scripts `lint` และ `format` ใน `package.json`
 
 ```json [package.json]
 {
@@ -113,10 +55,9 @@ project/
 }
 ```
 
-### Phase 3: Monorepo Setup (ถ้ามี)
+### 3. Monorepo
 
-- 3.1 **Workspace Config**
-  - ในแต่ละ workspace สร้าง `biome.jsonc`:
+1. ในแต่ละ workspace สร้าง `biome.jsonc` ด้วย `root: false` และ `extends: "//"`
 
 ```json [biome.jsonc]
 {
@@ -125,20 +66,65 @@ project/
 }
 ```
 
-### Phase 4: Verify
+### 4. Optional Domains
 
-- 4.1 **ทดสอบการทำงาน**
-  - รัน `bun run lint`
-  - รัน `bun run format`
-  - ตรวจสอบว่าทำงานได้ถูกต้อง
+1. เลือก domains ที่เกี่ยวข้องกับโปรเจกต์
+2. เพิ่ม domains ใน `biome.jsonc` ผ่าน `linter.domains`
 
-## Outputs
+```json [biome.jsonc]
+{
+	"linter": {
+		"domains": {
+			"drizzle": "recommended",
+			"project": "recommended",
+			"types": "recommended",
+			"turborepo": "recommended",
+			"vue": "recommended",
+			"vitest": "recommended"
+		}
+	}
+}
+```
 
-| Output | Details |
-|--------|-----------|
-| biome.jsonc | Root configuration file |
-| Updated package.json | Scripts for lint/format |
-| Workspace configs | ถ้าเป็น monorepo |
+### 5. Verify
+
+1. รัน `bun run lint`
+2. รัน `bun run format`
+
+## Rules
+
+### 1. Installation
+
+- ใช้ `bun add -D @biomejs/biome` เท่านั้น
+- ต้องมี `package.json` อยู่แล้ว
+
+### 2. Configuration
+
+- ใช้ `biome.jsonc` (with comments) ไม่ใช่ `.json`
+- Enable VCS integration ด้วย git
+- Root config ใช้ `root: true`
+- Workspace configs ใช้ `root: false` + `extends: "//"`
+
+### 3. Scripts
+
+- ต้องมี `lint` script: `biome lint --write`
+- ต้องมี `format` script: `biome format --write`
+
+### 4. Optional Domains
+
+- Domain ใช้ `recommended` เท่านั้น ไม่ใช้ `all`
+- Drizzle: สำหรับโปรเจกต์ที่ใช้ Drizzle ORM
+- Next: สำหรับ Next.js projects
+- Playwright: สำหรับ Playwright test projects
+- Project: สำหรับ project-level analysis (มีผลต่อ performance)
+- Qwik: สำหรับ Qwik projects
+- React: สำหรับ React projects (conflict กับ Solid)
+- ReactNative: สำหรับ React Native projects
+- Solid: สำหรับ Solid projects (conflict กับ React)
+- Test: สำหรับ test files
+- Turborepo: สำหรับ Turborepo projects
+- Types: สำหรับ type analysis (มีผลต่อ performance)
+- Vue: สำหรับ Vue projects
 
 ## Expected Outcome
 
@@ -146,8 +132,3 @@ project/
 - มี scripts `lint` และ `format` พร้อมใช้
 - Config รองรับ git ignore
 - Monorepo workspaces extends จาก root config ถูกต้อง
-
-## Reference
-
-- `/validate` - ตรวจสอบความถูกต้องก่อนเริ่ม
-- `/connect-workflows` - เชื่อมโยง workflows ที่เกี่ยวข้อง
