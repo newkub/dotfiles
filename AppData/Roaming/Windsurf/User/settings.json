@@ -236,5 +236,6 @@
 	"workbench.editor.enablePreview": false,
 	"workbench.experimental.share.enabled": true,
 	"workbench.iconTheme": "symbols",
-	"workbench.list.smoothScrolling": false
+	"workbench.list.smoothScrolling": false,
+	"security.workspace.trust.untrustedFiles": "open"
 }

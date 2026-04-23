@@ -32,24 +32,30 @@ auto_execution_mode: 3
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"nursery": {
+				"noExcessiveLinesPerFile": {
+					"level": "error",
+					"options": {
+						"maxLines": 200
+					}
+				}
+			}
 		}
 	},
 	"formatter": {
-		"enabled": true,
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineWidth": 80
+		"enabled": true
 	}
 }
 ```
 
-2. เพิ่ม scripts `lint` และ `format` ใน `package.json`
+2. เพิ่ม scripts `lint`, `lint:fix` และ `format` ใน `package.json`
 
 ```json [package.json]
 {
     "scripts": {
-       "lint" : "biome lint --write",
+       "lint" : "biome lint",
+       "lint:fix" : "biome lint --write",
        "format" : "biome format --write"
     }
 }
@@ -91,6 +97,35 @@ auto_execution_mode: 3
 1. รัน `bun run lint`
 2. รัน `bun run format`
 
+### 6. GitHub Actions CI
+
+1. สร้าง `.github/workflows/biome.yml` สำหรับ CI/CD
+
+```yaml [.github/workflows/biome.yml]
+name: Code quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .
+```
+
 ## Rules
 
 ### 1. Installation
@@ -107,7 +142,8 @@ auto_execution_mode: 3
 
 ### 3. Scripts
 
-- ต้องมี `lint` script: `biome lint --write`
+- ต้องมี `lint` script: `biome lint` (check only)
+- ต้องมี `lint:fix` script: `biome lint --write` (fix issues)
 - ต้องมี `format` script: `biome format --write`
 
 ### 4. Optional Domains
@@ -129,6 +165,6 @@ auto_execution_mode: 3
 ## Expected Outcome
 
 - Biome ติดตั้งและทำงานได้
-- มี scripts `lint` และ `format` พร้อมใช้
+- มี scripts `lint`, `lint:fix` และ `format` พร้อมใช้
 - Config รองรับ git ignore
 - Monorepo workspaces extends จาก root config ถูกต้อง

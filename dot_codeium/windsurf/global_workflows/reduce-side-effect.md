@@ -1,116 +1,110 @@
 ---
-title: Reduce Side Effect
-description: จัดการและลด side effects โดยแยก pure logic จาก impure operations
+title: Reduce Side Effects
+description: แยก pure functions จาก side effects เพื่อเพิ่ม testability และ maintainability
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-แยก pure logic จาก impure operations เพื่อทำให้ code predictable, testable และ maintainable
+แยก business logic จาก side effects เพื่อให้ code สามารถ test ได้ง่ายขึ้นและ maintain ได้ดีขึ้น
 
 ## Execute
 
-### 1. Identify Side Effects
+### 1. Analyze Functions
 
-ระบุ side effects ใน codebase
+วิเคราะห์ functions ทั้งหมดใน codebase
 
-1. รัน `/analyze-project` เพื่อดูโครงสร้างปัจจุบัน
-2. ระบุ functions ที่มี I/O, state mutations, external calls
-3. หา functions ที่ควรเป็น pure แต่ไม่ pure
-4. ตรวจสอบ hidden side effects เช่น logging, caching, timing
-5. บันทึก areas ที่ต้องแปลงเป็น pure
+1. ค้นหา functions ที่มี side effects (I/O, database calls, network requests, mutations)
+2. ค้นหา pure functions (functions ที่ไม่มี side effects)
+3. ระบุ functions ที่ผสมกันระหว่าง pure logic และ side effects
 
-### 2. Separate Pure And Impure Code
+### 2. Extract Pure Logic
 
-แยก pure logic จาก impure operations
+แยก business logic ออกจาก side effects
 
-1. แยก business logic ออกจาก I/O operations
-2. ทำให้ core functions เป็น pure
-3. ย้าย side effects ไปยัง boundary layers
-4. ใช้ dependency injection สำหรับ external dependencies
-5. ตรวจสอบว่า pure functions ไม่มี side effects
+1. สร้าง pure functions สำหรับ business logic
+2. ย้าย calculations, validations, transformations ไปยัง pure functions
+3. ให้แน่ใจว่า pure functions ไม่มี dependencies ภายนอก
 
-### 3. Encapsulate Side Effects
+### 3. Isolate Side Effects
 
-จัดการ side effects อย่างชัดเจน
+แยก side effects ออกเป็น functions เฉพาะ
 
-1. สร้าง explicit interfaces สำหรับ side effects
-2. ใช้ ports and adapters pattern
-3. จัดเก็บ side effects ที่ centralized
-4. ทำให้ side effects predictable และ testable
-5. รัน `/follow-error-handling` สำหรับ error handling
+1. สร้าง functions สำหรับ I/O operations เท่านั้น
+2. สร้าง functions สำหรับ database operations เท่านั้น
+3. สร้าง functions สำหรับ network requests เท่านั้น
+4. ให้แน่ใจว่า side effect functions ไม่มี business logic
 
-### 4. Make Effects Explicit
+### 4. Use Dependency Injection
 
-ทำให้ effects ชัดเจนใน type signatures
+ใช้ dependency injection สำหรับ side effects
 
-1. ใช้ type signatures ที่ระบุ effects อย่างชัดเจน
-2. ใช้ effect types ถ้า language รองรับ
-3. บันทึก effects ใน documentation
-4. ตรวจสอบว่า effects ชัดเจนจาก function signatures
-5. หลีกเลี่ยง hidden effects
+1. สร้าง interfaces สำหรับ side effect operations
+2. Inject dependencies แทนการ hardcode
+3. ใช้ mock implementations สำหรับ testing
 
-### 5. Refactor For Reduced Side Effects
+### 5. Write Tests for Pure Functions
 
-ปรับปรุง code ให้ลด side effects
+เขียน tests สำหรับ pure functions
 
-1. รัน `/refactor` เพื่อปรับปรุง code
-2. แปลง impure functions เป็น pure เท่าที่ทำได้
-3. ย้าย side effects ไปยัง boundary
-4. แยก concerns ระหว่าง pure และ impure
-5. รัน `/follow-immutability` สำหรับ immutability
+1. เขียน unit tests สำหรับทุก pure function
+2. ใช้ property-based testing สำหรับ functions ที่มี logic ซับซ้อน
+3. ให้แน่ใจว่า tests ครอบคลุม edge cases
 
-### 6. Validate Side Effect Reduction
+### 6. Write Tests for Side Effects
 
-ทดสอบว่า side effects ลดลงเพียงพอ
+เขียน tests สำหรับ side effect functions
 
-1. รัน tests ทั้งหมดให้ผ่าน
-2. ตรวจสอบว่า pure functions ทำงานได้ถูกต้อง
-3. รัน `/run-lint` เพื่อตรวจสอบ code quality
-4. ตรวจสอบว่า side effects ถูกจัดการอย่างชัดเจน
-5. รัน `/run-verify` เพื่อยืนยัน side effect reduction
+1. เขียน integration tests สำหรับ side effect operations
+2. ใช้ mocks หรือ stubs สำหรับ external dependencies
+3. เขียน E2E tests สำหรับ critical user flows
+
+### 7. Validate Separation
+
+ตรวจสอบการแยก concerns
+
+1. ตรวจสอบว่า pure functions ไม่มี side effects
+2. ตรวจสอบว่า side effect functions ไม่มี business logic
+3. ตรวจสอบว่า dependency injection ใช้งานได้ถูกต้อง
 
 ## Rules
 
-### Pure Function Standards
+### 1. Pure Functions
 
-- Core business logic ต้องเป็น pure functions
+Pure functions ต้องเป็น deterministic และไม่มีผลข้างเคียง
+
 - Pure functions ต้องไม่มี side effects
-- Pure functions ต้อง deterministic เมื่อ input เดียวกัน
-- Pure functions ต้องไม่ mutate parameters หรือ global state
+- Pure functions ต้อง return ค่าเดิมเสมอเมื่อได้ input เดิม
+- Pure functions ต้องไม่ mutate input parameters
 
-### Side Effect Identification
+### 2. Side Effect Isolation
 
-- ระบุ side effects ทั้งหมดใน codebase
-- บันทึก side effects ใน documentation
-- ตรวจสอบ hidden side effects
-- Side effects ต้องชัดเจนและ predictable
+แยก side effects ออกจาก business logic อย่างชัดเจน
 
-### Separation Of Concerns
+- Side effect functions ต้องทำ I/O เท่านั้น
+- Side effect functions ต้องไม่มี business logic
+- Side effect functions ต้องสามารถ mock ได้ง่าย
 
-- แยก pure logic จาก impure operations
-- ย้าย side effects ไปยัง boundary layers
-- ใช้ dependency injection สำหรับ external dependencies
-- Core domain ต้องไม่มี direct side effects
+### 3. Dependency Injection
 
-### Effect Management
+ใช้ dependency injection เพื่อเพิ่ม testability และ flexibility
 
-- ใช้ monads หรือ effect systems ถ้าเหมาะสม
-- ใช้ Result/Option types สำหรับ error handling
-- ใช้ async/await สำหรับ asynchronous operations
-- Effects ต้องถูกจัดการอย่างชัดเจน
+- ห้าม hardcode dependencies
+- ใช้ interfaces สำหรับ abstractions
+- ให้แน่ใจว่าสามารถ inject mocks ได้
 
-### Type Safety
+### 4. Testing
 
-- Type signatures ต้องระบุ effects อย่างชัดเจน
-- ใช้ effect types ถ้า language รองรับ
-- หลีกเลี่ยง hidden effects
-- Effects ต้องชัดเจนจาก signatures
+เขียน tests ครอบคลุมทั้ง pure functions และ side effects
+
+- Pure functions ต้องมี unit tests
+- Side effects ต้องมี integration tests
+- Critical flows ต้องมี E2E tests
 
 ## Expected Outcome
 
-- Pure functions สำหรับ core business logic
-- Side effects ที่จัดการอย่างชัดเจน
-- Code ที่ predictable และ testable
-- Separation ระหว่าง pure และ impure code
-- Type signatures ที่ระบุ effects อย่างชัดเจน
+- Business logic แยกจาก side effects อย่างชัดเจน
+- Pure functions สามารถ test ได้ง่ายด้วย unit tests
+- Side effects สามารถ mock ได้ง่ายสำหรับ testing
+- Codebase มี testability สูงขึ้น
+- Maintainability ดีขึ้นด้วยการแยก concerns

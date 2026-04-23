@@ -4,7 +4,6 @@
 # https://starship.rs/
 Invoke-Expression (&starship init powershell)
 
-gh completion -s powershell | Out-String | Invoke-Expression
 
 # --- Zoxide Navigation ---
 # https://github.com/ajeetdsouza/zoxide

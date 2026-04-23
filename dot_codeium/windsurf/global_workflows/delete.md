@@ -23,22 +23,14 @@ auto_execution_mode: 3
 3. อัพเดท imports ทั้งหมด
 4. อัพเดท barrel exports ถ้าจำเป็น
 
-### 3. Verify
-
-1. รัน `/run-verify` เพื่อตรวจสอบ
-2. รัน `/run-test` เพื่อทดสอบ
-3. ตรวจสอบว่าไม่มี broken references
-
 ## Rules
 
 1. ตรวจสอบ references ทั้งหมดก่อน delete
 2. อัพเดต references ทั้งหมดหลัง delete
 3. ตรวจสอบว่าไม่มี circular dependencies เกิดขึ้น
-4. ทำการ verify หลัง delete เสร็จ
 
 ## Expected Outcome
 
 - ไฟล์หรือ folder ลบสำเร็จ
 - References ทั้งหมดอัพเดตแล้ว
 - ไม่มี broken references
-- Tests ผ่านทั้งหมด
