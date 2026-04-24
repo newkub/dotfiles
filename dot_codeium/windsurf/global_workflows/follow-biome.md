@@ -30,18 +30,7 @@ auto_execution_mode: 3
 		"useIgnoreFile": true
 	},
 	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true,
-			"nursery": {
-				"noExcessiveLinesPerFile": {
-					"level": "error",
-					"options": {
-						"maxLines": 200
-					}
-				}
-			}
-		}
+		"enabled": true
 	},
 	"formatter": {
 		"enabled": true

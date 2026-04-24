@@ -1,87 +1,76 @@
 ---
 title: Refactor Packages
-description: Refactor packages structure ด้วย Clean Architecture
+description: Refactor code from apps to existing or new packages to reduce duplication
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-Refactor packages structure ให้เป็นไปตาม Clean Architecture โดยแบ่งเป็น shared, interface, domain, application, infrastructure
+แยก code จาก apps ไปยัง packages เพื่อลดความซ้ำซ้อนและเพิ่ม reusability
 
 ## Execute
 
-### 1. Analyze Current Structure
+### 1. Analyze Apps
 
-1. รัน `/analyze-project` เพื่อดูโครงสร้างปัจจุบัน
-2. ตรวจสอบ `packages/framework` ที่มีอยู่
-3. ระบุ dependencies ระหว่าง `packages/modules`
-4. วิเคราะห์ code ที่ซ้ำซ้อน
+1. สำรวจทุก app ใน `apps/`
+2. ระบุ code ที่ซ้ำซ้อนระหว่าง apps
+3. ระบุ code ที่สามารถ reuse ได้
+4. จัดกลุ่ม code ตาม functionality
 
-### 2. Create New Structure
+### 2. Check Existing Packages
 
-1. สร้าง `packages/shared` สำหรับ common types, utilities, traits ที่ใช้ร่วมกัน
-2. สร้าง `packages/interface` สำหรับ abstractions และ contracts
-3. สร้าง `packages/domain` สำหรับ business logic และ entities
-4. สร้าง `packages/application` สำหรับ use cases และ orchestration
-5. สร้าง `packages/infrastructure` สำหรับ external dependencies และ implementations
+1. ตรวจสอบ packages ที่มีอยู่ใน `nuxt-modules/packages/`
+2. เปรียบเทียบ code ที่ซ้ำซ้อนกับ packages ที่มีอยู่
+3. ระบุ code ที่สามารถย้ายไป existing packages ได้
+4. ระบุ code ที่ต้องสร้าง new packages
 
-### 3. Move Code
+### 3. Move to Existing Packages
 
-1. ย้าย code ที่ควรอยู่ใน `shared`
-2. ย้าย code ที่ควรอยู่ใน `interface`
-3. ย้าย code ที่ควรอยู่ใน `domain`
-4. ย้าย code ที่ควรอยู่ใน `application`
-5. ย้าย code ที่ควรอยู่ใน `infrastructure`
-6. ลบ code ที่ซ้ำซ้อนหลังจากย้าย
-7. ตรวจสอบ circular dependencies หลังย้าย
+1. ย้าย code ไปยัง existing packages ที่เหมาะสม
+2. อัพเดท imports ใน apps ให้ใช้จาก packages
+3. ลบ code เดิมจาก apps
 
-### 4. Update References
+### 4. Create New Packages
 
-1. อัพเดท dependencies ที่ต้องแก้ไข
-2. อัพเดท module/namespace paths ทั้งหมด
-3. สร้าง public entry points ใหม่
-4. อัพเดท dependency configuration files (เช่น package.json, Cargo.toml, pom.xml)
+1. สร้าง new packages สำหรับ code ที่ไม่มี package เหมาะสม
+2. ตั้งชื่อ package ตาม functionality
+3. ย้าย code ไปยัง new packages
+4. อัพเดท imports ใน apps
+5. ลบ code เดิมจาก apps
 
-### 5. Verify
+### 5. Verify No Duplication
 
-1. รัน `/run-verify` เพื่อตรวจสอบว่าทุกอย่างยังทำงานได้
-2. ตรวจสอบว่าไม่มี broken imports
-3. ยืนยันว่าโครงสร้างใหม่สอดคล้องกับ Clean Architecture
+1. ตรวจสอบว่าไม่มี code ซ้ำซ้อนระหว่าง apps และ packages
+2. ตรวจสอบว่า apps ใช้ packages แทน code ซ้ำ
 
 ## Rules
 
-### 1. Package Organization
+### 1. Package Structure
 
-- `packages/shared`: จัดเก็บ common types, utilities, traits, constants ที่ใช้ร่วมกันทั้งโปรเจกต์
-- `packages/interface`: จัดเก็บ abstractions, traits, protocols
-- `packages/domain`: จัดเก็บ business logic, entities, value objects
-- `packages/application`: จัดเก็บ use cases, orchestrators, services
-- `packages/infrastructure`: จัดเก็บ implementations, external dependencies
+- ใช้ `nuxt-modules/packages/` สำหรับ packages
+- ตั้งชื่อ package ตาม functionality เช่น `auth-workos`, `ui`, `composables`
+- แต่ละ package มี Single Responsibility
 
-### 2. Dependency Direction
+### 2. Refactoring Priority
 
-- `shared` ต้องไม่ depend บน packages อื่น (เว้นแต่ external dependencies)
-- `interface` ต้อง depend เฉพาะ `shared`
-- `domain` ต้อง depend `shared` และ `interface`
-- `application` ต้อง depend `shared`, `interface`, และ `domain`
-- `infrastructure` ต้อง depend `shared`, `interface`, `domain`, และ `application`
+- ย้ายไป existing packages ก่อน
+- สร้าง new packages เฉพาะที่จำเป็น
+- ย้าย code ที่มีการใช้งานหลาย app ก่อน
 
-### 3. Naming Conventions
+### 3. Import Updates
 
-- ใช้ชื่อที่สะท้อนหน้าที่ของ package
-- ใช้ import/using alias สำหรับ cross-package references
-- รักษา consistency กับโปรเจกต์
+- อัพเดท imports ในทุก app ที่ใช้ code
+- ใช้ import alias ถ้ามี
+- ตรวจสอบว่า imports ถูกต้อง
 
-### 4. Public API
+### 4. Dependencies
 
-- แต่ละ package ต้องมี entry point สำหรับ exports
-- entry point ต้อง exports เท่านั้น ไม่มี logic
-- public API ต้องชัดเจนผ่าน public exports
+- อัพเดท dependencies ใน packages
+- อัพเดท dependencies ใน apps
+- ลบ dependencies ที่ไม่ได้ใช้
 
 ## Expected Outcome
 
-- โครงสร้าง packages ใหม่ตาม Clean Architecture
-- code ย้ายไปยัง packages ที่ถูกต้อง
-- module/namespace paths อัพเดทแล้ว
-- functionality ทั้งหมดยังทำงานได้
-- ไม่มี broken imports หรือ missing references
+- Code ใน apps ไม่ซ้ำซ้อนกับ packages
+- Apps ใช้ packages แทน code ซ้ำ
+- Packages มี Single Responsibility ชัดเจน
