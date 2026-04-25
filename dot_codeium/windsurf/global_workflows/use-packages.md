@@ -1,76 +1,96 @@
 ---
 title: Use Packages
-description: นำ packages ย่อยๆ มาใช้งานอย่างมีประสิทธิภาพ
+description: วิเคราะห์และแนะนำ packages/crates ที่มีอยู่ใน monorepo
 auto_execution_mode: 3
+follow.workflows:
+  - /analyze-project
+  - /use-lib-better
+  - /use-deps-better
 ---
 
 ## Goal
 
-นำ packages ย่อยๆ มาใช้งานอย่างมีประสิทธิภาพ เพื่อ:
-- เพิ่ม reusability ของ code
-- ลด code duplication
-- ทำให้ code มี modularity สูงขึ้น
-- ใช้ packages ที่มีอยู่แล้วอย่างเต็มประสิทธิภาพ
+วิเคราะห์ packages/ และ crates/ ที่มีอยู่ใน monorepo เพื่อระบุสิ่งที่ควรนำมาใช้ จัดลำดับความสำคัญ และให้คำแนะนำ
 
 ## Execute
 
-### 1. Analyze Available Packages
+### 1. Scan Directories
 
-1. อ่าน package manifest เพื่อดูรายการ packages ย่อยๆ ทั้งหมด
-2. รัน `/analyze-project` เพื่อดูภาพรวม packages
-3. อ่าน README.md ของ packages ที่สนใจ
-4. ตรวจสอบ compatibility ของ dependencies
-5. วิเคราะห์ public API ของ packages
+1. ใช้ `list_dir` ที่ `packages/` เพื่อดู packages ทั้งหมด
+2. ใช้ `list_dir` ที่ `crates/` ถ้ามีเพื่อดู crates ทั้งหมด
+3. อ่าน `package.json` หรือ `Cargo.toml` ของแต่ละ package/crate
+4. รวบรวม metadata: name, version, description, keywords, dependencies
+5. อ่าน `README.md` ของแต่ละ package/crate ถ้ามี
 
-### 2. Integrate Packages
+### 2. Analyze Each Package
 
-1. ย้ายหรือ copy components/functions ที่ต้องการ
-2. ปรับ imports และ dependencies
-3. ใช้ import alias เสมอ
-4. เริ่มจาก utilities และ shared components ก่อน
-5. ตามด้วย domain-specific features
-6. สุดท้ายคือ complex integrations
+1. ตรวจสอบ source structure: src/, lib/, bin/
+2. ระบุ main exports และ public APIs
+3. ดู dependencies และ peer dependencies
+4. ตรวจสอบ test coverage และ documentation quality
+5. ประเมิน maintenance status: last update, issues, PRs
+6. ตรวจสอบ version stability และ semver compliance
 
-### 3. Apply Packages
+### 3. Evaluate Relevance
 
-1. ค้นหาไฟล์ที่ควรใช้ packages ที่ integrate แล้ว
-2. อัพเดท imports ในไฟล์ต่างๆ ให้ใช้ packages ใหม่
-3. แทนที่โค้ดที่ซ้ำซ้อนด้วยการเรียกใช้ packages
-4. ค้นหาไฟล์ที่มีโค้ดซ้ำซ้อน
-5. ลบไฟล์ที่ไม่จำเป็นและซ้ำซ้อน
-6. รัน `/update-reference` สำหรับไฟล์ที่ลบ
+1. ให้คะแนนแต่ละ package/crate ตามเกณฑ์ (1-5 points):
+   - Relevance (1-5): ตรงกับ requirements ปัจจุบันหรือไม่
+   - Maturity (1-5): Stable, tested, well-documented
+   - Maintenance (1-5): Active development, responsive maintainers
+   - Dependencies (1-5): Minimal, no conflicts
+   - Performance (1-5): Efficient, no known bottlenecks
+2. คำนวณ Total Score (สูงสุด 25 points)
+3. ประเมิน Integration Effort (Low/Medium/High)
+4. ตรวจสอบ compatibility กับ current stack
+
+### 4. Recommend and Prioritize
+
+1. สร้างรายการแนะนำพร้อมเหตุผลสำหรับแต่ละ package/crate
+2. จัดลำดับตาม Priority Matrix:
+   - High Priority: Total Score >= 20, Integration Effort: Low
+   - Medium Priority: Total Score 15-19, Integration Effort: Medium
+   - Low Priority: Total Score < 15, Integration Effort: High
+3. ระบุ use cases ที่เหมาะสมสำหรับแต่ละ package/crate
+4. แนะนำ integration approach
 
 ## Rules
 
-### 1. Analysis Requirements
+### 1. Scanning
 
-ต้องวิเคราะห์ packages ย่อยๆ อย่างละเอียดก่อนนำมาใช้
+สแกนทุก packages และ crates
 
-- รัน `/analyze-project` ก่อนนำมาใช้เสมอ
-- อ่าน README.md เพื่อเข้าใจ features
-- ตรวจสอบ compatibility ของ dependencies
-- วิเคราะห์ public API ของ packages
+- ไม่ข้าม package/crate ใดๆ
+- อ่าน metadata ให้ครบถ้วน
+- บันทึก findings พร้อมหลักฐาน
 
-### 2. Integration Order
+### 2. Evaluation
 
-จัดลำดับการ integrate ตาม impact order เพื่อลดความเสี่ยง
+ประเมินตามเกณฑ์ที่กำหนด
 
-- เริ่มจาก utilities และ shared components
-- ตามด้วย domain-specific features
-- สุดท้ายคือ complex integrations
+- ใช้ scoring system 1-5 points ตามเกณฑ์ที่กำหนด
+- ประเมิน objectively ด้วยข้อมูลจริง
+- ตรวจสอบ compatibility กับ current stack
 
-### 3. File Operations
+### 3. Prioritization
 
-จัดการไฟล์อย่างเป็นระบบและอัพเดท references
+จัดลำดับตาม Priority Matrix
 
-- นำ packages ไปใช้ในไฟล์ต่างๆ ที่เกี่ยวข้อง
-- ลบไฟล์ที่ซ้ำซ้อนหลังจาก integrate เสร็จ
-- รัน `/update-reference` เมื่อลบไฟล์
+- ใช้ Priority Matrix สำหรับการจัดลำดับ (High/Medium/Low)
+- พิจารณา Relevance, Maturity, Maintenance, Dependencies, Performance
+- จัดลำดับตาม impact และ effort ที่ต้องใช้
+
+### 4. Documentation
+
+บันทึก findings อย่างเป็นระบบ
+
+- สร้างรายการ packages/crates พร้อม scores, use cases, integration effort
+- ระบุ reasons สำหรับแต่ละ recommendation
+- ให้ actionable next steps
 
 ## Expected Outcome
 
-- เข้าใจโครงสร้างและ features ของ packages ย่อยๆ
-- นำ packages ย่อยๆ มาใช้งานได้อย่างมีประสิทธิภาพ
-- Packages ถูกนำไปใช้ในไฟล์ต่างๆ อย่างถูกต้อง
-- ไฟล์ที่ซ้ำซ้อนถูกลบออกแล้ว
-- ไม่มี code duplication 
+- รายการ packages/crates ทั้งหมดพร้อม metadata
+- Scoring system ชัดเจน (Total Score 1-25 points)
+- Priority Matrix สำหรับการจัดลำดับ (High/Medium/Low)
+- คำแนะนำ use cases ที่เหมาะสมสำหรับแต่ละ package/crate
+- Integration approach ที่ realistic และ prioritized
