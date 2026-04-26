@@ -15,11 +15,11 @@ C-W = ":buffer-close-others"         # Close Other Tabs
 # Edit Operations (VS Code Standard)
 C-z = "undo"                         # Undo
 C-Z = "redo"                         # Redo
-C-c = ":q"                           # Quit immediately (VS Code Ctrl+C close tab)
-C-y = "yank"                         # Copy (yank) - moved from C-c
+C-c = ":q"                           # Quit (no selection)
+C-y = "yank"                         # Copy (yank)
 C-v = "paste_clipboard_after"        # Paste
 C-V = "paste_clipboard_before"       # Paste Before
-C-x = "delete_selection"             # Cut (delete and yank)
+C-x = ["extend_to_line_bounds", "delete_selection"]  # Delete line
 C-a = "select_all"                   # Select All
 C-d = "delete_selection"             # Delete Selection
 
@@ -79,12 +79,11 @@ C-S-s = ":wa"                        # Save All
 # Edit Operations
 C-z = "undo"                         # Undo
 C-Z = "redo"                         # Redo
-C-c = ":wq"                          # Save and quit (VS Code Ctrl+C behavior)
+C-c = "yank_main_selection_to_clipboard"  # Copy (with selection)
 C-v = "paste_clipboard_before"       # Paste
 C-V = "paste_clipboard_after"        # Paste after
-C-x = ["yank_main_selection_to_clipboard", "delete_selection"]
-                                     # Cut (yank then delete)
-C-a = "goto_line_start"              # Go to line start
+C-x = ["extend_to_line_bounds", "delete_selection"]  # Delete line
+C-a = "select_all"                   # Select All
 C-e = "goto_line_end"                # Go to line end
 
 # Navigation - Ctrl+Arrow moves by word (no selection)
@@ -112,6 +111,12 @@ C-f = "search"                       # Find
 # Tab Switching - Alt+Arrow (easier than Shift+Tab)
 A-left = ":buffer-previous"          # Alt+Left = Previous Tab
 A-right = ":buffer-next"             # Alt+Right = Next Tab
+
+[keys.select]
+# VS Code-like keybindings for select mode
+C-c = "yank_main_selection_to_clipboard"  # Copy
+C-x = ["extend_to_line_bounds", "delete_selection"]  # Delete line
+C-a = "select_all"                   # Select All
 
 # Note: Ctrl+C in insert mode = Save and Quit (like closing VS Code tab)
 # ⚠️ LIMITATION: Helix always starts in NORMAL mode (no default-mode setting)

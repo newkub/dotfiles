@@ -10,36 +10,25 @@ auto_execution_mode: 3
 
 ## Execute
 
-### 1. Check Existing Gitignore
+### 1. Analyze Project
 
-1. รัน `test -f .gitignore` เพื่อตรวจสอบว่ามีไฟล์อยู่แล้วหรือไม่
-2. ถ้ามีอยู่แล้ว ให้ตรวจสอบว่าครอบคลุมพอหรือไม่
-3. ถ้ายังไม่มี ให้ดำเนินการสร้างใหม่
+1. ตรวจสอบโครงสร้างโปรเจกต์ (package.json, Cargo.toml, go.mod, pyproject.toml)
+2. ตรวจสอบไฟล์ที่มีอยู่ด้วย `eza -la`
+3. ระบุประเภทโปรเจกต์และ tools ที่ใช้
 
-### 2. Analyze Project Type
+### 2. Create Gitignore
 
-1. ตรวจสอบโครงสร้างโปรเจกต์:
-   - มี `package.json` หรือไม่ (Node.js project)
-   - มี `Cargo.toml` หรือไม่ (Rust project)
-   - มี `go.mod` หรือไม่ (Go project)
-   - มี `pyproject.toml` หรือไม่ (Python project)
-2. ใช้ `eza -la` เพื่อดูไฟล์ทั้งหมดในโปรเจกต์
-3. ระบุไฟล์ที่ควร ignore ตามประเภทโปรเจกต์
+1. สร้าง .gitignore ที่ root ของ workspace
+2. เพิ่ม patterns ตามประเภทโปรเจกต์ (ดู Rules)
+3. เพิ่ม patterns ตาม tools ที่ใช้จริงเท่านั้น
 
-### 3. Create Gitignore
-
-1. สร้าง .gitignore ตามประเภทโปรเจกต์:
+ตัวอย่าง .gitignore:
 
 ```gitignore
 # Dependencies
 node_modules/
-.pnp
-.pnp.js
 
-# Testing
-coverage/
-
-# Production
+# Build
 dist/
 build/
 .next/
@@ -48,45 +37,36 @@ build/
 # TypeScript
 *.tsbuildinfo
 
+# Build Tools
+.turbo/
+.vite/
+.swc/
+
+# Linter Cache
+.eslintcache
+.prettiercache
+.biome/
+.oxlint/
+
 # Environment
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
 
 # Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 *.log
-
-# Rust
-target/
-Cargo.lock
-**/*.rs.bk
-.rustc_info.json
-.cargo/
 
 # OS
 .DS_Store
 Thumbs.db
-desktop.ini
 
 # IDE
 .vscode/
 .idea/
-*.sublime-*
-.vim/
-*.swp
-*.swo
-*~
 ```
 
-### 4. Validate Gitignore
+### 3. Validate
 
-1. ตรวจสอบว่า .gitignore ครอบคลุมไฟล์ที่ควร ignore
-2. ทดสอบด้วย `git check-ignore <file>` สำหรับไฟล์ที่ควรถูก ignore
+1. ตรวจสอบว่าครอบคลุมไฟล์ที่ควร ignore
+2. ทดสอบด้วย `git check-ignore <file>`
 3. ตรวจสอบว่าไม่ ignore ไฟล์ที่จำเป็น
 
 ## Rules
@@ -94,12 +74,29 @@ desktop.ini
 ### 1. File Structure
 
 - ต้องมี .gitignore ที่ root ของ workspace เสมอ
-- ใช้ `eza` ในการตรวจสอบไฟล์ที่ควร ignore
 
-### 2. Coverage
+### 2. Patterns by Project Type
 
-- ครอบคลุมไฟล์ตามประเภทโปรเจกต์ (Node.js, Rust, อื่นๆ)
-- ไม่ ignore ไฟล์ที่จำเป็นสำหรับ development
+- Node.js: node_modules/, .pnp, .pnp.js, npm/yarn logs
+- Rust: target/, Cargo.lock, **/*.rs.bk, .rustc_info.json, .cargo/
+- Python: __pycache__/, *.pyc, .pytest_cache/, .venv/
+- Go: bin/, *.sum
+- Common: .env*, *.log, .DS_Store, Thumbs.db, desktop.ini
+
+### 3. Patterns by Tools
+
+- Build: dist/, build/, .next/, .nuxt/, .vite/, .turbo/, .swc/
+- Framework: .svelte-kit/, .astro/, .remix/, .parcel-cache/
+- Deployment: .vercel/, .netlify/, .wrangler/, .sst/, .amplify/, .firebase/
+- Linter Cache: .eslintcache, .prettiercache, .biome/, .oxlint/, node_modules/.cache/
+- TypeScript: *.tsbuildinfo
+- IDE: .vscode/, .idea/, *.sublime-*, .vim/, *.swp, *.swo, *~
+
+### 4. Selective Addition
+
+- เพิ่มเฉพาะ patterns ที่ project ใช้จริง
+- ตรวจสอบ package.json หรือ Cargo.toml ว่ามี dependencies ของ tools หรือไม่
+- ถ้าไม่ใช้ tool → ไม่ต้องใส่ patterns ของ tool นั้น
 
 ## Expected Outcome
 

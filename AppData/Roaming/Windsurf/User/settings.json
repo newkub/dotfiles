@@ -84,7 +84,6 @@
 	"editor.defaultFormatter": "biomejs.biome",
 	"editor.quickSuggestions": "off",
 	"editor.formatOnPaste": true,
-	"editor.formatOnSave": true,
 	"editor.formatOnType": true,
 	"editor.inlineSuggest.suppressSuggestions": true,
 	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
@@ -103,7 +102,6 @@
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
 	"files.autoSave": "onFocusChange",
-	"files.autoSaveDelay": 1000,
 	"files.eol": "\r\n",
 	"files.watcherExclude": {
 		"**/.git/**": true,
