@@ -2,9 +2,6 @@
 title: Follow Functional Programming
 description: พัฒนาโปรเจกต์ด้วย functional programming principles พร้อม pure functions, immutability, composition
 auto_execution_mode: 3
-connected_workflows:
-  - /follow-declarative-programming
-  - /follow-typescript
 ---
 
 ## Goal

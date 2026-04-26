@@ -2,8 +2,6 @@
 title: Run Test
 description: รัน test suite อย่างเป็นระบบ พร้อมแก้ไข errors จนผ่านทั้งหมด
 auto_execution_mode: 3
-connected_workflows:
-  - /review-test-result
 ---
 
 ## Goal
