@@ -1,10 +1,1 @@
-refactor: move follow-project steps to ship workflow and delete follow-project
-
-- Move Setup Package Manifest, Documentation, Windsurf Config, Git Config steps from follow-project to ship
-- Update step numbering in ship.md
-- Delete follow-project.md workflow
-- Update all references from /follow-project to /ship in:
-  - follow-config.md
-  - follow-dev-workflows.md
-  - follow-package-manifest.md
-  - setup-tasks.md
+refactor: rename each- to every- in global workflows

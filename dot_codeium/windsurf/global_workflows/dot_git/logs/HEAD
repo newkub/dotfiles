@@ -14,3 +14,4 @@ e8f30e18b31f4c6eae45c9eee70d1bfdfaca62ee a217da86ac41615ce630554b48d7984ee5ac8cd
 a217da86ac41615ce630554b48d7984ee5ac8cd8 0ca15d8e95ac03964957cd1e97edbd88eb85c76d Veerapong <newkubise@gmail.com> 1776549219 +0700	commit: docs(global-workflows): merge follow-vue-best-practices into follow-vue and delete duplicate
 0ca15d8e95ac03964957cd1e97edbd88eb85c76d f8280715c2e3d5581f3df2d5beac073dd2949128 Veerapong <newkubise@gmail.com> 1777170142 +0700	commit: refactor(workflows): update workflows to follow clean architecture and best practices
 f8280715c2e3d5581f3df2d5beac073dd2949128 80950e88120bd4969c3d8e075cbee3f23d461fde Veerapong <newkubise@gmail.com> 1777200501 +0700	commit: refactor: move follow-project steps to ship workflow and delete follow-project
+80950e88120bd4969c3d8e075cbee3f23d461fde f83402c691eb7d957fb9e9b40a8dc584e2051e2e Veerapong <newkubise@gmail.com> 1777260358 +0700	commit: refactor: rename each- to every- in global workflows

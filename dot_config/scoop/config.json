@@ -1,7 +1,7 @@
 {
-  "last_update": "2026-04-27T06:14:11.4719817+07:00",
+  "last_update": "2026-04-27T14:53:23.0723663+07:00",
   "scoop_repo": "https://github.com/ScoopInstaller/Scoop",
   "scoop_branch": "master",
-  "cache_path": "D:\\scoop\\cache",
+  "cache_path": "D:\\.cache\\scoop",
   "root_path": "C:\\Users\\Veerapong\\scoop"
 }

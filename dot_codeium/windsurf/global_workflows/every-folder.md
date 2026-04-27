@@ -1,76 +1,52 @@
 ---
-title: Every Folder
-description: ประมวลผลหรือวิเคราะห์ทุกโฟลเดอร์ในโปรเจกต์อย่างเป็นระบบ
+title: Process Every Folder
+description: ทำทุก folder จนครบ
 auto_execution_mode: 3
 ---
 
-## Prompt
+## Goal
 
-ใช้ workflow นี้เมื่อต้องการประมวลผลหรือวิเคราะห์ทุกโฟลเดอร์ในโปรเจกต์อย่างเป็นระบบและครอบคลุม
+ทำทุก folder จนครบ
 
 ## Execute
 
-1. Discover All Folders
+### 1. List Folders
 
-- ใช้ fd หรือ find เพื่อ list ทุกโฟลเดอร์ในโปรเจกต์
-- ยกเว้นโฟลเดอร์ที่ไม่จำเป็น (node_modules, .git, dist, etc.)
-- จัดกลุ่มโฟลเดอร์ตามระดับชั้น
-- สร้าง directory tree overview
+1. ใช้ `find_by_name` หรือ `list_dir` เพื่อดู folders ทั้งหมด
+2. ระบุ pattern หรือ depth ที่ต้องการ
 
-2. Analyze Folder Structure
+### 2. Process Every Folder
 
-- วิเคราะห์ organization ของแต่ละโฟลเดอร์
-- ระบุ naming conventions
-- หา inconsistencies ใน structure
-- ประเมิน coupling และ cohesion
+1. อ่าน folder ด้วย `list_dir`
+2. ประมวลผล folder ตาม workflow ที่เกี่ยวข้อง
+3. ทำตาม workflow ที่เกี่ยวข้องกับแต่ละ folder
 
-3. Process Folders
+### 3. Verify
 
-- ทำการแก้ไข structure ที่จำเป็น
-- สร้างโฟลเดอร์ที่ขาดหายไป
-- ย้ายไฟล์ให้อยู่ในโฟลเดอร์ที่เหมาะสม
-- ใช้ git mv สำหรับการย้าย
-
-4. Verify Results
-
-- ตรวจสอบว่าทุกโฟลเดอร์ถูกประมวลผล
-- ยืนยันว่าไม่มี broken imports หรือ references
-- ทดสอบการทำงานหลัง restructure
-- สร้างรายงานสรุป
+1. ตรวจสอบว่าทุก folder ได้รับการประมวลผลแล้ว
+2. ตรวจสอบความถูกต้องของการประมวลผล
 
 ## Rules
 
-1. Systematic Approach
+### 1. Folder Discovery
 
-- ประมวลผลโฟลเดอร์จาก root ไป leaves
-- ไม่ข้ามโฟลเดอร์ใดโฟลเดอร์หนึ่ง
-- Document changes อย่างสม่ำเสมอ
-- Handle circular dependencies
+- ใช้ `find_by_name` สำหรับค้นหาด้วย pattern
+- ใช้ `list_dir` สำหรับดูทุก folder ใน directory
+- ระบุ MaxDepth หรือ pattern ที่ชัดเจน
 
-2. Batch Processing
+### 2. Processing Order
 
-- จัดกลุ่มโฟลเดอร์ตาม level
-- ประมวลผลทีละ batch
-- รีสตาร์ทจากจุดที่ค้างได้
-- Monitor side effects
+- ทำตามลำดับที่เหมาะสมกับ dependencies
+- ทำ folder ที่เป็น foundation ก่อน
+- หลีกเลี่ยง circular dependencies
 
-3. Safety First
+### 3. Batch Operations
 
-- สำรองก่อน restructure
-- Test บน subset ก่อน full run
-- ใช้ git ติดตามการเปลี่ยนแปลง
-- มี rollback plan
-
-4. Documentation
-
-- บันทึกโฟลเดอร์ที่แก้ไขทั้งหมด
-- Document new structure
-- สร้าง before/after comparison
-- Update README ถ้าจำเป็น
+- อ่าน folders แบบ parallel เมื่อเป็นไปได้
+- ประมวลผล folders แบบ sequential เพื่อหลีกเลี่ยง conflicts
 
 ## Expected Outcome
 
-- ทุกโฟลเดอร์ในโปรเจกต์ถูกวิเคราะห์และ/หรือปรับปรุง
-- โครงสร้างโฟลเดอร์เป็นระเบียบและ consistent
-- ไม่มี broken references หรือ imports
-- รายงานสรุปผลการทำงาน
+- ทุก folder ได้รับการประมวลผลครบถ้วน
+- การประมวลผลเป็นไปตาม workflow ที่กำหนด
+- ไม่มี folder ที่ถูกข้าม

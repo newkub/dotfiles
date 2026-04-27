@@ -29,6 +29,9 @@ if (Get-Command intelli-shell.exe -ErrorAction SilentlyContinue) {
 }
 
 
+# --- mise ---
+# https://mise.jdx.dev/
+mise activate pwsh | Out-String | Invoke-Expression
 
 # ==============================================================================
 # >> ENVIRONMENT VARIABLES

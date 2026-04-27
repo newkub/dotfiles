@@ -44,36 +44,8 @@
 	"[vue]": {
 		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
-	"app": {
-		"configAdvancedAutoUpdate": true,
-		"configAdvancedProxyMode": "system",
-		"configAdvancedProxyURL": "",
-		"configChatAskModeUseTools": true,
-		"configChatAutoRunMcpTools": true,
-		"configChatCommandAllowlist": "",
-		"configChatCommandDenyList": "rm,mv,sudo,wget,curl,chown",
-		"configChatEditFileTool": false,
-		"configChatMethodQuickOperation": false,
-		"configChatShowSelectionToolbar": true,
-		"configChatTerminalRunMode": "askEveryTime",
-		"configChatWebToolsMode": "Auto-execute",
-		"configCompletionEnableNES": true,
-		"configGeneralAiResponseLanguage": "en-us",
-		"configGeneralDisplayLanguage": "en-us",
-		"configGeneralImportSettings": "VS Code",
-		"configGeneralImprovementPlan": "agree",
-		"configMemoryAutoGenerate": true,
-		"configQuestEnable": true
-	},
 	"breadcrumbs.enabled": false,
 	"chat.detectParticipant.enabled": true,
-	"code-runner.saveAllFilesBeforeRun": true,
-	"code-runner.saveFileBeforeRun": true,
-	"codeium.enableCodeLens": false,
-	"codeium.enableConfig": {
-		"*": true,
-		"markdown": true
-	},
 	"cssVariables.trace.server": "messages",
 	"database-client.autoSync": true,
 	"debug.openDebug": "openOnDebugBreak",
@@ -82,7 +54,7 @@
 	"editor.cursorBlinking": "solid",
 	"editor.cursorSmoothCaretAnimation": "off",
 	"editor.defaultFormatter": "biomejs.biome",
-	"editor.quickSuggestions": "off",
+	"editor.quickSuggestions": "on",
 	"editor.formatOnPaste": true,
 	"editor.formatOnType": true,
 	"editor.inlineSuggest.suppressSuggestions": true,
@@ -111,23 +83,7 @@
 		"**/dist/**": true,
 		"**/node_modules/**": true
 	},
-	"git.autorefresh": false,
-	"git.defaultCloneDirectory": "d:\\cli",
 	"git.openRepositoryInParentFolders": "never",
-	"githubIssues.queries": [
-		{
-			"label": "My Issues",
-			"query": "default"
-		},
-		{
-			"label": "Created Issues",
-			"query": "author:${user} state:open repo:${owner}/${repository} sort:created-desc"
-		},
-		{
-			"label": "Recent Issues",
-			"query": "state:open repo:${owner}/${repository} sort:updated-desc"
-		}
-	],
 	"js/ts.tsserver.maxMemory": 8192,
 	"js/ts.preferences.importModuleSpecifier": "relative",
 	"js/ts.preferences.includePackageJsonAutoImports": "auto",
@@ -212,7 +168,7 @@
 	},
 	"windsurf.allowCascadeAccessGitignoreFiles": true,
 	"windsurf.autoContinue": 0,
-	"windsurf.completionMode": "off",
+	"windsurf.completionMode": "supercomplete",
 	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
 	"windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
 	"workbench.colorCustomizations": {
@@ -224,6 +180,10 @@
 	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"workbench.editor.closeEmptyGroups": true,
 	"workbench.editor.enablePreview": false,
+	/*
+	"workbench.editorAssociations": {
+		"*.md": "vscode.markdown.preview.editor"
+	},*/
 	"workbench.experimental.share.enabled": true,
 	"workbench.iconTheme": "symbols",
 	"workbench.list.smoothScrolling": false,

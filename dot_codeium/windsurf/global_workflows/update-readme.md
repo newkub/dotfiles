@@ -27,17 +27,19 @@ Create comprehensive README.md files with actual project analysis data without p
 
 สร้าง sections ด้วยข้อมูลจริงจากการวิเคราะห์:
 
-**Required:** `Title`, `Why`, `Key Concept`, `Features`, `Getting Started`, `Installation`, `Usage`, `Configuration`, `API Reference`, `License`
+**Required:** `Title`, `Why`, `Key Concept`, `Features`, `Installation`, `Usage`, `Configuration`, `Reference`, `License`
 
 **Optional:** `Integrations`, `Architecture`, `Performance`, `Migration`, `Showcase`, `Packages`, `Release Notes`, `FAQs`
+
+**Structure Rule:** README.md ต้องมีโครงสร้างเฉพาะ sections ที่ระบุข้างต้นเท่านั้น ห้ามเพิ่ม sections อื่นๆ นอกเหนือจากที่ระบุ
 
 ### 4. Write Usage Section
 
 เขียน usage ตาม usecase จริงของโปรเจกต์ แบ่งเป็น subsections ตาม usecase แต่ละอัน
 
-### 4.1 Getting Started, Installation, Usage Format
+### 4.1 Installation, Usage Format
 
-จัดรูปแบบ Getting Started, Installation, Usage ตามมาตรฐาน:
+จัดรูปแบบ Installation, Usage ตามมาตรฐาน:
 - แสดง manifest file (package.json/Cargo.toml) ใน code block
 - แสดง terminal commands ใน code block อีกอันพร้อม comment
 - เรียงลำดับตามการดำเนินการจริง
@@ -160,9 +162,8 @@ export default defineConfig({
 ### 5. Features Format
 
 จัดรูปแบบ features ตามมาตรฐาน:
-- ใช้ตาราง 4 col: `features`, `description`, `benefit`, `dependencies`
+- ใช้ตาราง 3 col: `features`, `description`, `benefit`
 - เพิ่ม emoji ใน column features
-- dependencies แสดงชื่อ package หรือ library ที่ใช้ใน feature นั้นๆ
 
 ### 6. Integrations Format
 
@@ -171,13 +172,14 @@ export default defineConfig({
 - ใช้ bullet format แสดง integrations ที่รองรับ
 - แต่ละ integration ให้ระบุชื่อและคำอธิบายสั้นๆ
 
-### 7. API Reference Format
+### 7. Reference Format
 
-จัดรูปแบบ API Reference ตามมาตรฐาน:
-- เขียนแค่ interface หลักๆ
+จัดรูปแบบ Reference ตามมาตรฐาน:
+- แบ่งเป็น subsections: `API Reference` (ถ้ามี), `CLI Reference` (ถ้ามี), `xxx Reference` (ถ้ามี)
+- เขียนแค่ usage API หลักๆ
 - ใช้ตาราง 3 col: `name`, `description`, `benefit`
-- Grouping ตาม API types (`Components`, `Composables`, `Functions`, etc.)
-- col แรก link ไปยังไฟล์จริงๆ
+- Grouping ตามประเภท
+- col แรก link ไปยังไฟล์จริงๆ (ถ้ามี)
 
 ### 8. License Format
 
