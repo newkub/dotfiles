@@ -27,15 +27,98 @@ Create comprehensive README.md files with actual project analysis data without p
 
 สร้าง sections ด้วยข้อมูลจริงจากการวิเคราะห์:
 
-**Required:** `Title`, `Why`, `Key Concept`, `Features`, `Installation`, `Usage`, `Configuration`, `Reference`, `License`
+**Required:** `Title`, `Why`, `When`, `Key Concept`, `Principles`, `Features`, `Installation`, `Usage`, `Configuration`, `Reference`, `License`
 
 **Optional:** `Integrations`, `Architecture`, `Performance`, `Migration`, `Showcase`, `Packages`, `Release Notes`, `FAQs`
 
 **Structure Rule:** README.md ต้องมีโครงสร้างเฉพาะ sections ที่ระบุข้างต้นเท่านั้น ห้ามเพิ่ม sections อื่นๆ นอกเหนือจากที่ระบุ
 
+### 3.1 Why Section Format
+
+จัดรูปแบบ Why section เป็นตาราง 3 columns:
+- **Column 1:** `Icon` - Iconify icon พร้อม color: `![name](https://api.iconify.design/mdi:icon-name.svg?color=%23ff6b6b)`
+- **Column 2:** `Problem` - ปัญหาที่ต้องการแก้ไข
+- **Column 3:** `Solution` - วิธีแก้ปัญหาของ package
+- แสดงปัญหาและวิธีแก้แบบจับคู่กัน
+- **Important:** Icons ต้องอยู่เฉพาะใน column แรกเท่านั้น ห้ามใช้ใน description หรือ column อื่น
+
+ตัวอย่าง format:
+
+```markdown
+## Why
+
+| Icon | Problem | Solution |
+|------|---------|----------|
+| ![config](https://api.iconify.design/mdi:file-multiple.svg?color=%23ff6b6b) | Task configurations scattered across formats | Unified loader with auto-format detection |
+| ![slow](https://api.iconify.design/mdi:timer-sand.svg?color=%23ffd93d) | Slow repetitive task execution | Built-in local and remote caching system |
+```
+
+### 3.2 When Section Format
+
+จัดรูปแบบ When section เป็นตาราง 2 columns:
+- **Column 1:** `Icon` - Iconify icon พร้อม color
+- **Column 2:** `Use Case` - สถานการณ์ที่ควรใช้ package พร้อมคำอธิบายสั้นๆ
+- **Important:** Icons ต้องอยู่เฉพาะใน column แรกเท่านั้น ห้ามใช้ใน description หรือ column อื่น
+
+ตัวอย่าง format:
+
+```markdown
+## When
+
+| Icon | Use Case |
+|------|----------|
+| ![pipeline](https://api.iconify.design/mdi:pipeline.svg?color=%234ecdc4) | **Build pipelines** - Run build, test, lint tasks with dependencies |
+| ![dev](https://api.iconify.design/mdi:code-tags.svg?color=%2345b7d1) | **Development workflows** - Watch mode, auto-rebuild, hot reload |
+```
+
+### 3.3 Key Concept Section Format
+
+จัดรูปแบบ Key Concept section พร้อม `(Why + Rules)`:
+- ใช้ Iconify API สำหรับ icons พร้อม color: `![name](https://api.iconify.design/mdi:icon-name.svg?color=%23ff6b6b)`
+- แสดงแนวคิดหลักพร้อม icon
+- ใช้ตาราง 3 columns: `Icon`, `Concept`, `Rule` (Icon เป็น column แรก)
+- อธิบายว่าทำไมต้องใช้แนวคิดนี้ และกฎที่ต้องปฏิบัติ
+- **Important:** Icons ต้องอยู่เฉพาะใน column แรกเท่านั้น ห้ามใช้ใน description หรือ column อื่น
+
+ตัวอย่าง format:
+
+```markdown
+## Key Concept (Why + Rules)
+
+![architecture](https://api.iconify.design/mdi:folder-cog.svg?color=%236c5ce7) **Clean Architecture 2** principles:
+
+| Icon | Concept | Rule |
+|------|---------|------|
+| ![pure](https://api.iconify.design/mdi:function-variant.svg?color=%2300b894) | **Pure Functions** | No side effects |
+| ![immutable](https://api.iconify.design/mdi:lock-outline.svg?color=%23d63031) | **Immutability** | All types readonly |
+```
+
+### 3.4 Principles Section Format
+
+จัดรูปแบบ Principles section พร้อม `(What + Mental Models)`:
+- ใช้ Iconify API สำหรับ icons พร้อม color
+- ใช้ตาราง 3 columns: `Icon`, `Principle`, `Mental Model` (Icon เป็น column แรก)
+- แสดงหลักการทำงานและ mental model ที่ใช้คิด
+- **Important:** Icons ต้องอยู่เฉพาะใน column แรกเท่านั้น ห้ามใช้ใน description หรือ column อื่น
+
+ตัวอย่าง format:
+
+```markdown
+## Principles (What + Mental Models)
+
+| Icon | Principle | Mental Model |
+|------|-----------|--------------|
+| ![compose](https://api.iconify.design/mdi:puzzle.svg?color=%23e17055) | **Composition** | Build from small functions |
+| ![failfast](https://api.iconify.design/mdi:alert-circle-outline.svg?color=%23d63031) | **Fail Fast** | Validate early |
+```
+
 ### 4. Write Usage Section
 
-เขียน usage ตาม usecase จริงของโปรเจกต์ แบ่งเป็น subsections ตาม usecase แต่ละอัน
+เขียน usage ตาม usecase จริงของโปรเจกต์ แบ่งเป็น subsections ตาม usecase แต่ละอัน:
+- ใช้ naming convention: `Method 1: Usage via XXX`, `Method 2: Usage via XXX`, ...
+- XXX คือประเภทการใช้งาน เช่น Programmatic API, CLI, Website, Configuration File, etc.
+- ทุก API usage ที่เกี่ยวข้องกับ method เดียวกัน ต้องอยู่ภายใน subsection เดียวกัน
+- อย่าแยก API usage ที่เกี่ยวข้องกันออกเป็น subsection ต่างหาก
 
 ### 4.1 Installation, Usage Format
 
@@ -79,6 +162,8 @@ bun run dev:firefox
 ### 7. Write License Section
 
 ระบุ `license type` ชัดเจน, เพิ่ม link ไปยัง `LICENSE.md`, ใช้ภาษาอังกฤษกระชับ
+- ใช้รูปแบบ: `MIT License` ตามด้วย `See LICENSE.md for full license` ที่ด้านล่าง
+- ห้ามมี `Key Points:` หรือ bullet points เพิ่มเติม
 
 ### 8. Write Optional Sections
 
@@ -162,8 +247,9 @@ export default defineConfig({
 ### 5. Features Format
 
 จัดรูปแบบ features ตามมาตรฐาน:
-- ใช้ตาราง 3 col: `features`, `description`, `benefit`
-- เพิ่ม emoji ใน column features
+- ใช้ตาราง 4 col: `Icon`, `Feature`, `Description`, `Benefit` (Icon เป็น column แรก)
+- ใช้ Iconify API สำหรับ icons พร้อม color: `![name](https://api.iconify.design/mdi:icon-name.svg?color=%23ff6b6b)`
+- หา icon ที่เหมาะสมกับ feature จาก https://icon-sets.iconify.design/mdi/
 
 ### 6. Integrations Format
 

@@ -1,12 +1,12 @@
 ---
 title: Process Each Folder
-description: ทำแต่ละ folder จนครบ
+description: ทำทุก folder จนครบ
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-ทำแต่ละ folder จนครบ
+ทำทุก folder จนครบ
 
 ## Execute
 

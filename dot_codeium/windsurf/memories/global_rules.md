@@ -19,9 +19,9 @@ auto_execution_mode: 3
 3. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
 4. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
 5. ทำ `/analyze-project` ก่อนเริ่มงานทุกครั้ง
-6. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
-7. `"."` หมายถึงให้ทำ `/continue`
-8. `"s."` หมายถึงให้ทำ `/use-bun-scripts`
+6. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
+7. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+8. `"."` หมายถึงให้ทำ `/continue`
 
 ### 2. Analyze
 
@@ -53,6 +53,7 @@ auto_execution_mode: 3
 7. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
 8. ทุก global workflows ที่ขึ้นต้นด้วย `run-` ให้ใช้ `/loop-until-complete` เสมอ
 9. ถ้า file operation หรือ analyze ไฟล์จำนวนมาก ให้ใช้ `/use-bun-scripts`
+10. README.md ให้ทำตาม `/update-readme` เสมอ
 
 ### 5. Reflex
 

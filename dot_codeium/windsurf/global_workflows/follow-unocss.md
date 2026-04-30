@@ -44,7 +44,6 @@ auto_execution_mode: 3
    import { defineConfig, presetWind4, transformerVariantGroup, transformerDirectives, transformerCompileClass } from 'unocss'
 
    export default defineConfig({
-     darkMode: 'class',
      presets: [
        presetWind4({
          preflights: {
@@ -152,7 +151,6 @@ auto_execution_mode: 3
 
 ### Installation
 
-- ใช้ `bun` เท่านั้น ห้ามใช้ npm/npx/yarn/pnpm
 - ติดตั้ง `unocss` และ `@unocss/preset-wind4` สำหรับทุก framework
 - ใช้ `preflights.reset: true` แทนการ import `@unocss/reset`
 
@@ -161,7 +159,6 @@ auto_execution_mode: 3
 - ใช้ `presetWind4` เป็น preset หลัก
 - ใช้ `preflights.theme: 'on-demand'` เพื่อ generate theme keys เฉพาะที่ใช้
 - เพิ่ม transformers 3 ตัว: `transformerVariantGroup`, `transformerDirectives`, `transformerCompileClass`
-- กำหนด `darkMode: 'class'` สำหรับ manual dark mode toggle
 
 ### Framework
 

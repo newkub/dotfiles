@@ -1,76 +1,104 @@
 ---
 title: Refactor Packages
-description: Refactor code from apps to existing or new packages to reduce duplication
+description: Refactor code ไปยัง packages เพื่อลด duplication และเพิ่ม reusability
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-แยก code จาก apps ไปยัง packages เพื่อลดความซ้ำซ้อนและเพิ่ม reusability
+Refactor code ที่มี duplication ไปยัง existing packages หรือสร้าง new packages เพื่อให้ general และ reusable ได้กับ apps อื่นๆ
 
 ## Execute
 
-### 1. Analyze Apps
+### 1. Analyze Duplication
 
-1. สำรวจทุก app ใน `apps/`
-2. ระบุ code ที่ซ้ำซ้อนระหว่าง apps
-3. ระบุ code ที่สามารถ reuse ได้
-4. จัดกลุ่ม code ตาม functionality
+วิเคราะห์ code duplication ใน codebase
 
-### 2. Check Existing Packages
+1. ทำ `/analyze-project` เพื่อดูภาพรวมโปรเจกต์
+2. ทำ `/check-duplication` เพื่อตรวจสอบ code duplication
+3. ระบุ functions, types, utilities ที่ใช้ซ้ำกัน
+4. จัดกลุ่ม code ที่เกี่ยวข้องกัน
 
-1. ตรวจสอบ packages ที่มีอยู่ใน `nuxt-modules/packages/`
-2. เปรียบเทียบ code ที่ซ้ำซ้อนกับ packages ที่มีอยู่
-3. ระบุ code ที่สามารถย้ายไป existing packages ได้
-4. ระบุ code ที่ต้องสร้าง new packages
+### 2. Identify Package Candidates
 
-### 3. Move to Existing Packages
+ระบุ code ที่ควร refactor เป็น packages
 
-1. ย้าย code ไปยัง existing packages ที่เหมาะสม
-2. อัพเดท imports ใน apps ให้ใช้จาก packages
-3. ลบ code เดิมจาก apps
+1. พิจารณา reusability ของแต่ละ code block
+2. ตรวจสอบ dependencies ที่จำเป็น
+3. ระบุ boundary ของแต่ละ package
+4. ตัดสินใจว่าควรใช้ existing package หรือสร้าง new package
 
-### 4. Create New Packages
+### 3. Create Refactor Plan
 
-1. สร้าง new packages สำหรับ code ที่ไม่มี package เหมาะสม
-2. ตั้งชื่อ package ตาม functionality
-3. ย้าย code ไปยัง new packages
-4. อัพเดท imports ใน apps
-5. ลบ code เดิมจาก apps
+สร้างแผนการ refactor ในรูปแบบตาราง
 
-### 5. Verify No Duplication
+1. สร้างตารางที่มี columns: Original Folder, Target Folder, Types, Priority, Dependencies, Risk Level, Description
+2. จัดลำดับตาม priority
+3. ระบุ dependencies ระหว่าง packages
+4. กำหนดขั้นตอนการ migration
 
-1. ตรวจสอบว่าไม่มี code ซ้ำซ้อนระหว่าง apps และ packages
-2. ตรวจสอบว่า apps ใช้ packages แทน code ซ้ำ
+### 4. Execute Refactor
+
+ทำการ refactor ตามแผนที่สร้างไว้
+
+1. ทำตาม `/idea-refactor-packages` เพื่อสร้างแผนการ refactor
+2. ย้าย code ไปยัง packages ตามลำดับ priority
+3. ทำ `/update-reference` เพื่ออัพเดท imports
+4. ทำ `/run-typecheck` หลังจากแต่ละ refactor
+
+### 5. Verify And Test
+
+ตรวจสอบและทดสอบการ refactor
+
+1. รัน tests ทั้งหมดเพื่อยืนยันว่ายังทำงานได้
+2. ตรวจสอบ imports และ exports
+3. ทำ `/check-duplication` อีกครั้งเพื่อยืนยันการลด duplication
 
 ## Rules
 
-### 1. Package Structure
+### 1. Package Boundaries
 
-- ใช้ `nuxt-modules/packages/` สำหรับ packages
-- ตั้งชื่อ package ตาม functionality เช่น `auth-workos`, `ui`, `composables`
-- แต่ละ package มี Single Responsibility
+กำหนด boundary ของแต่ละ package ให้ชัดเจน
 
-### 2. Refactoring Priority
+- แต่ละ package ต้องมี single responsibility
+- ห้ามมี circular dependencies ระหว่าง packages
+- แต่ละ package ต้องสามารถ test แยกได้
+- แต่ละ package ต้องมี API ที่ชัดเจน
+- packages ต้อง general และ reusable ได้กับ apps อื่นๆ
 
-- ย้ายไป existing packages ก่อน
-- สร้าง new packages เฉพาะที่จำเป็น
-- ย้าย code ที่มีการใช้งานหลาย app ก่อน
+### 2. Refactor Order
 
-### 3. Import Updates
+จัดลำดับการ refactor ตามความสำคัญ
 
-- อัพเดท imports ในทุก app ที่ใช้ code
-- ใช้ import alias ถ้ามี
-- ตรวจสอบว่า imports ถูกต้อง
+- ทำ packages ที่เป็น dependencies ของ packages อื่นก่อน
+- ทำ packages ที่มี impact สูงก่อน
+- ทำ packages ที่ simple ก่อนเพื่อ build momentum
+- ทำ packages ที่ critical path ก่อน
 
-### 4. Dependencies
+### 3. Migration Strategy
 
-- อัพเดท dependencies ใน packages
-- อัพเดท dependencies ใน apps
-- ลบ dependencies ที่ไม่ได้ใช้
+กลยุทธ์การ migrate code ไปยัง packages
+
+- ทำตามตารางที่สร้างไว้เท่านั้น
+- อัพเดท references ทั้งหมดเมื่อย้าย code
+- ทำ `/update-reference` เสมอ
+- ทำ `/run-typecheck` หลังจากแต่ละ refactor
+- ใช้ existing packages ก่อนเมื่อเป็นไปได้
+
+### 4. Package Structure
+
+โครงสร้างของแต่ละ package ต้องชัดเจน
+
+- มี `index.ts` สำหรับ re-exports
+- มี `README.md` อธิบายการใช้งาน
+- มี `package.json` พร้อม dependencies
+- มี types ที่ชัดเจนและ export ออกมา
+- มี examples หรือ documentation ถ้าจำเป็น
 
 ## Expected Outcome
 
-- Code ใน apps ไม่ซ้ำซ้อนกับ packages
-- Apps ใช้ packages แทน code ซ้ำ
-- Packages มี Single Responsibility ชัดเจน
+- Code duplication ลดลงอย่างมีนัยสำคัญ
+- Packages ที่ general และ reusable ได้กับ apps อื่นๆ
+- Architecture ที่ดีขึ้นและ maintainable มากขึ้น
+- Dependencies ที่ชัดเจนและไม่ซับซ้อน
+- Functionality ทั้งหมดยังทำงานได้ปกติ

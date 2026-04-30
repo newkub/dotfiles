@@ -1,12 +1,12 @@
 ---
 title: Process Each File
-description: ทำแต่ละ file จนครบ
+description: ทำทุก file จนครบ
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-ทำแต่ละ file จนครบ
+ทำทุก file จนครบ
 
 ## Execute
 

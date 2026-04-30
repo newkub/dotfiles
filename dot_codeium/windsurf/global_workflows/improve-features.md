@@ -1,1 +1,1 @@
-improve features ที่มีอยู่ให้ uxui ดีขึ้น มีอะไรต่อยอดมากขึ้น และใช้งานได้จริงๆ
+- improve features ตาม codebase context ที่มีอยู่ (ห้ามสร้าง context ใหม่เพื่อสร้าง features ใหม่)

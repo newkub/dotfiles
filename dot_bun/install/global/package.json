@@ -35,6 +35,7 @@
     "tree-sitter-cli": "^0.26.6",
     "turbo": "^2.8.12",
     "vercel": "^50.25.6",
+    "vue-tsc": "^3.2.7",
     "wrangler": "^4.69.0"
   }
 }

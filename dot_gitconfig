@@ -75,3 +75,5 @@ sync = "!f() { git pull && git push && git submodule sync --recursive && git sub
 	selected = manager
 [safe]
 	directory = *
+[url "git@github.com:"]
+	insteadOf = https://github.com/

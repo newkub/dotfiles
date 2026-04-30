@@ -4,78 +4,78 @@ description: แนวทางการใช้งาน Pinia สำหรั
 auto_execution_mode: 3
 ---
 
-## Prompt
+## Goal
 
-ใช้ workflow นี้เมื่อต้องการใช้งาน Pinia สำหรับ state management ใน Vue applications
+กำหนดแนวทางการใช้งาน Pinia สำหรับ state management ใน Vue applications ให้มีประสิทธิภาพและเป็นมาตรฐาน
 
 ## Execute
 
-1. Setup Pinia Store
+### 1. Setup Pinia Store
 
-- ติดตั้ง Pinia dependency
-- สร้าง stores directory
-- กำหนด main store file
-- Setup Pinia plugin ใน main.js
+1. ติดตั้ง Pinia dependency ด้วย `bun add pinia @pinia/nuxt`
+2. สร้าง stores directory ที่ `stores/`
+3. กำหนด main store file `stores/index.ts`
+4. Setup Pinia module ใน `nuxt.config.ts`
 
-2. Define Store Structure
+### 2. Define Store Structure
 
-- ใช้ Composition API style (setup stores)
-- กำหนด state, getters, actions
-- ใช้ proper naming conventions
-- แยก stores ตาม domain/feature
+1. ใช้ Composition API style (setup stores) เท่านั้น
+2. กำหนด state, getters, actions อย่างชัดเจน
+3. ใช้ proper naming conventions ตาม feature/domain
+4. แยก stores ตาม domain/feature ไม่ใช่ generic names
 
-3. Implement State Management
+### 3. Implement State Management
 
-- ใช้ ref/reactive สำหรับ state
-- สร้าง getters ด้วย computed
--  implement actions สำหรับ mutations
-- ใช้ $reset สำหรับ resetting state
+1. ใช้ `ref`/`reactive` สำหรับ state
+2. สร้าง getters ด้วย `computed`
+3. implement actions สำหรับ mutations
+4. ใช้ `$reset` สำหรับ resetting state
 
-4. Use Stores in Components
+### 4. Use Stores in Components
 
-- ใช้ storeToRefs สำหรับ destructuring
-- Access stores ใน setup functions
-- ใช้ actions ใน event handlers
-- จัดการ subscriptions ถ้าจำเป็น
+1. ใช้ `storeToRefs` สำหรับ destructuring
+2. Access stores ใน `<script setup>` components
+3. ใช้ actions ใน event handlers
+4. จัดการ subscriptions ถ้าจำเป็น
 
-5. Add Persistence (Optional)
+### 5. Add Persistence (Optional)
 
-- ติดตั้ง pinia-plugin-persistedstate
-- กำหนด persist strategies
-- เลือก fields ที่จะ persist
-- Handle serialization
+1. ติดตั้ง `pinia-plugin-persistedstate`
+2. กำหนด persist strategies
+3. เลือก fields ที่จะ persist
+4. Handle serialization
 
-6. Test Stores
+### 6. Test Stores
 
-- เขียน unit tests สำหรับ stores
-- Test actions และ state changes
-- Mock external dependencies
-- Test edge cases
+1. เขียน unit tests สำหรับ stores ด้วย Vitest
+2. Test actions และ state changes
+3. Mock external dependencies
+4. Test edge cases
 
 ## Rules
 
-1. Setup Store Pattern
+### 1. Setup Store Pattern
 
 - ใช้ setup function pattern (ไม่ใช่ option stores)
 - ใช้ arrow functions สำหรับ actions
 - Return state ที่จำเป็นเท่านั้น
-- ใช้ const สำหรับ store definition
+- ใช้ `const` สำหรับ store definition
 
-2. State Naming
+### 2. State Naming
 
 - ใช้ descriptive names สำหรับ state properties
-- หลีกเลี่ยง generic names เช่น data, value
-- ใช้ isLoading, hasError pattern สำหรับ async states
+- หลีกเลี่ยง generic names เช่น `data`, `value`
+- ใช้ `isLoading`, `hasError` pattern สำหรับ async states
 - กลุ่ม related state เข้าด้วยกัน
 
-3. Action Conventions
+### 3. Action Conventions
 
-- ใช้ async/await สำหรับ async actions
+- ใช้ `async/await` สำหรับ async actions
 - Handle errors อย่างครบถ้วน
 - Return values จาก actions เมื่อเหมาะสม
 - ไม่ mutate state นอก actions
 
-4. Getters Usage
+### 4. Getters Usage
 
 - ใช้ getters สำหรับ derived state
 - หลีกเลี่ยง duplicate computations

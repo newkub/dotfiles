@@ -17,6 +17,12 @@
     },
     "deepwiki": {
       "serverUrl": "https://mcp.deepwiki.com/mcp"
+    },
+    "nuxt": {
+      "serverUrl": "http://localhost:3000/__mcp/sse"
+    },
+    "nuxt-docs": {
+      "serverUrl": "https://nuxt.com/mcp"
     }
   }
 }

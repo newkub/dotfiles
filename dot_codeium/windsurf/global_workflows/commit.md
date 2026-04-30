@@ -14,7 +14,7 @@ auto_execution_mode: 3
 
 ตรวจสอบว่า `/commit` ถูกเรียกจาก workflow อื่นหรือรันโดยตรง
 
-1. ตรวจสอบ context ว่าถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship`, `/enhance-codebase`)
+1. ตรวจสอบ context ว่าถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship-run`, `/enhance-codebase`)
 2. ถ้าถูกเรียกจาก workflow: ใช้ workflow mode
 3. ถ้ารันโดยตรง: ใช้ standalone mode
 
@@ -142,7 +142,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 
 ใช้เมื่อถูกเรียกจาก workflow อื่น
 
-- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship`, `/enhance-codebase`)
+- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship-run`, `/enhance-codebase`)
 - Commit เฉพาะบรรทัดที่ workflow แก้ไป (ใช้ `git add -p`)
 - ไม่ commit ไฟล์อื่นๆ ที่ไม่ได้ถูกแก้ไปโดย workflow
 

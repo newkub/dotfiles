@@ -42,6 +42,11 @@ auto_execution_mode: 3
 3. Server API: ใช้ `defineEventHandler` หรือ `defineNitroPlugin`
 4. Types: ไม่ใช้ `any`, กำหนด types ชัดเจนใน `shared/types/`
 5. Import: Auto-import สำหรับ Nuxt built-ins, barrel export สำหรับ shared
+6. Icons: ใช้ `@nuxt/icon` ด้วย preset `mdi` เท่านั้น ไม่ใช้ SVG โดยตรง
+7. Components: Import จาก `components/ui/` เท่านั้น สำหรับ shared UI components
+8. Barrel Exports: ทุก `index.ts` แค่ re-export เท่านั้น ไม่มี logic
+9. Deprecated: ลบ `@deprecated` ทั้งหมด ไม่ให้เหลือใน codebase
+10. SEO: ใช้ `useHead` ในทุก page component สำหรับ meta tags
 
 ### 5. Development
 
@@ -79,7 +84,7 @@ auto_execution_mode: 3
    })
    ```
 
-4. **NuxtLink Smart Prefetching** - ใช้ `<NuxtLink>` แทน `<a>` tag
+4. **NuxtLink Smart Prefetching** - ใช้ `<NuxtLink>` แทน `<a>` tag ทั้งหมด ไม่ใช้ `<a>` โดยตรง
    ```vue
    <NuxtLink to="/about">About page</NuxtLink>
    ```
@@ -161,8 +166,13 @@ auto_execution_mode: 3
 - ไม่ใช้ `any` โดยเด็ดขาด
 - ใช้ barrel exports สำหรับทุก folder
 - ใช้ auto-imports สำหรับ Nuxt built-ins
-- ไม่ใช้ relative path ใน cross-layer imports
-- ใช้ `<NuxtLink>` แทน `<a>` tag
+- ไม่ใช้ relative path ใน cross-layer imports ใช้ default import alias (`~/`, `#server`, `#shared`)
+- ใช้ `<NuxtLink>` แทน `<a>` tag ทั้งหมด ไม่ใช้ `<a>` โดยตรง
+- ใช้ `@nuxt/icon` ด้วย preset `mdi` สำหรับ icons ทั้งหมด
+- Components ที่ใช้ซ้ำต้อง import จาก `components/ui/`
+- ทุก `index.ts` แค่ re-export ไม่มี logic
+- ลบ `@deprecated` ทั้งหมดจาก codebase
+- ใช้ `useHead` ในทุก page component สำหรับ SEO meta tags
 - ใช้ `Lazy` prefix สำหรับ lazy loading
 - หลีกเลี่ยง costly plugins
 - ใช้ `~/assets` สำหรับ processed files

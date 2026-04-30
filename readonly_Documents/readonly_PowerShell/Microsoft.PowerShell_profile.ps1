@@ -182,14 +182,8 @@ function rb {
 function rl {
     ni && bun run lint
 }
-function wrl {
-    ni && turbo watch bun run lint
-}
 function rt {
     ni && bun run test
-}
-function wr {
-    ni && turbo watch 
 }
 function rr {
     ni && bun run review
@@ -200,6 +194,39 @@ function rf {
 }
 function rc {
     ni && bun run typecheck
+}
+
+# --- Moon Script Runners ---
+function md {
+    ni && moon run :dev
+}
+
+function mw {
+    ni && moon run :watch
+}
+
+function mb {
+    ni && moon run :build
+}
+
+function ml {
+    ni && moon run :lint
+}
+
+function mt {
+    ni && moon run :test
+}
+
+function mr {
+    ni && moon run :review
+}
+
+function mf {
+    ni && moon run :format
+}
+
+function mc {
+    ni && moon run :typecheck
 }
 
 function h {
