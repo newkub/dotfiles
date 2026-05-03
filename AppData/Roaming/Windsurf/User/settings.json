@@ -73,7 +73,7 @@
 	"explorer.confirmDragAndDrop": false,
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
-	"files.autoSave": "onFocusChange",
+	"files.autoSave": "afterDelay",
 	"files.eol": "\r\n",
 	"files.watcherExclude": {
 		"**/.git/**": true,
@@ -191,4 +191,10 @@
 	"codeCounter.debug": "none",
 	"scm.repositories.selectionMode": "single",
 	"js/ts.updateImportsOnFileMove.enabled": "always",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit",
+		"source.fixAll.biome": "explicit"
+	},
+	"files.autoSaveDelay": 1,
+	"js/ts.experimental.useTsgo": true
 }

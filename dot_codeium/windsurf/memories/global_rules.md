@@ -22,6 +22,8 @@ auto_execution_mode: 3
 6. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
 7. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
 8. `"."` หมายถึงให้ทำ `/continue`
+9. `"s."` หมายถึงให้ทำ `/use-bun-scripts`
+10. ใช้ `/use-import-alias` เสมอ
 
 ### 2. Analyze
 
