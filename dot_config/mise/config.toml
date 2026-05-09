@@ -156,6 +156,10 @@ oxlint = "latest"
 "npm:@modelcontextprotocol/sdk" = "latest"
 "npm:@moonrepo/cli" = "latest"
 "npm:@shikijs/cli" = "latest"
+"npm:@continuedev/cli" = "latest"
+"npm:@google/gemini-cli" = "latest"
+"npm:@openai/codex" = "latest"
+starship = "latest"
 
 
 [settings]

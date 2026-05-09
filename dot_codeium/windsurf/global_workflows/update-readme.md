@@ -62,10 +62,11 @@ auto_execution_mode: 3
 ใช้ Iconify API:
 
 ```
-![name](https://api.iconify.design/mdi:icon-name.svg?color=%23HEX_COLOR)
+<center>![name](https://api.iconify.design/mdi:icon-name.svg?color=%23HEX_COLOR)</center>
 ```
 
-- Icons อยู่ใน column แรกของตารางเท่านั้น
+- Icons อยู่ใน column แรกของตารางเท่านั้นและจัดให้อยู่ตรงกลาง
+- ใช้ `<center>` tag ครอบ icon เพื่อให้จัดวางตรงกลาง
 - ห้ามใช้ icons ใน description หรือ column อื่น
 - เลือกสีให้เหมาะสมกับเนื้อหา
 - หา icon จาก https://icon-sets.iconify.design/mdi/

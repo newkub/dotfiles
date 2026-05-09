@@ -15,6 +15,13 @@
       },
       "serverUrl": "https://mcp.context7.com/mcp"
     },
+    "moon": {
+      "command": "moon",
+      "args": ["mcp"],
+      "env": {
+        "MOON_WORKSPACE_ROOT": "/"
+      }
+    },
     "deepwiki": {
       "serverUrl": "https://mcp.deepwiki.com/mcp"
     },

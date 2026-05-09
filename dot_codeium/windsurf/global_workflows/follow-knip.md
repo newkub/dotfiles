@@ -13,7 +13,7 @@ auto_execution_mode: 3
 ### 1. Setup Knip
 
 1. รัน `bun add -D knip`
-2. สร้าง `.knip.json` ใน root directory
+2. สร้าง `knip.json` ใน root directory
 3. ตั้งค่า config options
 
 ### 2. Configure Package.json
