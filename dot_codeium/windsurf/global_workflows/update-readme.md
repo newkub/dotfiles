@@ -12,20 +12,20 @@ auto_execution_mode: 3
 
 ### 1. Prepare Analysis
 
-1. รัน `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์
+1. ทำ `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์
 2. อ่าน `README.md` ปัจจุบันเพื่อดูสิ่งที่ต้องอัพเดท
-3. บันทึก `dependencies` และ `file structure`
+3. บันทึก dependencies และ file structure
 
 ### 2. Gather Project Information
 
 1. อ่าน manifest files: `package.json`, `Cargo.toml`, `pyproject.toml`
 2. ใช้ `list_dir` ดูโครงสร้าง `src/`, `apps/`, `packages/`
-3. อ่าน source code เพื่อเข้าใจ `features`
+3. อ่าน source code เพื่อเข้าใจ features
 4. อ่าน config files เพื่อดูตัวเลือกการตั้งค่า
 
 ### 3. Write Core Sections
 
-1. เขียน required sections: Title, Why, When, Key Concept, Principles, Features, Installation, Usage, Configuration, Reference, License
+1. เขียน required sections: Title, Why, When, Key Concept ( What + Mental Model), Principle ( Why + Rules ), Features, Installation, Usage, Configuration, Reference, License
 2. เขียน optional sections ตามความเหมาะสม
 
 ### 4. Write Usage Section
@@ -50,8 +50,8 @@ auto_execution_mode: 3
 |---------|---------|-------|
 | Why | 2 (Problem, Solution) | ไม่มี |
 | When | 3 (Icon, Use Case, Description) | column แรก |
-| Key Concept | 3 (Icon, Concept, Mental Model) | column แรก |
-| Principles | 3 (Icon, Principle, Rule) | column แรก |
+| Key Concept ( What + Mental Model) | 3 (Icon, Concept, Mental Model) | column แรก |
+| Principle ( Why + Rules ) | 3 (Icon, Principle, Rule) | column แรก |
 | Features | 4 (Icon, Feature, Description, Benefit) | column แรก |
 | License | MIT License + See LICENSE.md | ไม่มี |
 
@@ -107,3 +107,8 @@ auto_execution_mode: 3
 - โครงสร้างสม่ำเสมอตาม section formats
 - Code examples ถูกต้องและพร้อมใช้งาน
 - Links ทั้งหมดใช้งานได้
+
+## References
+
+- ทำ `/follow-write-workflows` เพื่อดูมาตรฐานการเขียน workflow files
+- ทำ `/follow-content-quality` เพื่อดูแนวทางการสร้างเนื้อหาคุณภาพสูง

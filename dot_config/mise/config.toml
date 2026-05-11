@@ -157,7 +157,6 @@ oxlint = "latest"
 "npm:@moonrepo/cli" = "latest"
 "npm:@shikijs/cli" = "latest"
 ast-grep = "latest"
-"npm:@qoder-ai/qodercli" = "latest"
 "npm:mmx-cli" = "latest"
 
 
