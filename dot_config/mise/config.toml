@@ -158,6 +158,7 @@ oxlint = "latest"
 "npm:@shikijs/cli" = "latest"
 ast-grep = "latest"
 "npm:mmx-cli" = "latest"
+"npm:@qoder-ai/qodercli" = "latest"
 
 
 [settings]
