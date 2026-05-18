@@ -46,9 +46,8 @@ auto_execution_mode: 3
 6. mock data ห้ามเขียนในไฟล์เดียวกัน ต้องแยกไฟล์ไปในโฟลเดอร์ `mock/` แล้วนำไปใช้
 7. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
 8. ทุก global workflows ที่ขึ้นต้นด้วย `run-` ให้ใช้ `/loop-until-complete` เสมอ
-9. ถ้า file operation หรือ analyze ไฟล์จำนวนมาก ให้ใช้ `/use-bun-scripts`
-10. ห้ามใช้ `npx` ให้ใช้ `bunx` แทนเสมอ
-11. README.md ให้ทำตาม `/update-readme` เสมอ
+9. ห้ามใช้ `npx` ให้ใช้ `bunx` แทนเสมอ
+10. README.md ให้ทำตาม `/update-readme` เสมอ
 
 ### 5. Reflex
 

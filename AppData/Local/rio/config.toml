@@ -29,7 +29,6 @@ hide-if-single = true
 
 [renderer]
 performance = "High"
-backend = "Automatic"
 disable-unfocused-render = false
 level = 1
 target-fps = 120
@@ -39,9 +38,7 @@ target-fps = 120
 
 
 [fonts]
-family = "MesloLGL Nerd Font"
 size = 22
-features = ["ss01", "ss02", "ss03", "ss04", "calt", "liga"]
 use-drawable-chars = true
 symbol-map = []
 disable-warnings-not-found = false
@@ -56,7 +53,6 @@ divider = 1.0
 [window]
 mode = "Maximized"
 blur = true
-opacity = 0.5
 decorations = "enabled"
 width = 600
 height = 400
@@ -68,7 +64,6 @@ windows-corner-preference = "Round"
 
 
 [navigation]
-mode = "bookmark"
 clickable = true
 hide-if-single = true
 use-split = true
@@ -86,8 +81,3 @@ windows.shell.args = []
 
 linux.shell.program = "pwsh"
 linux.shell.args = []
-
-
-[developer]
-log-level = "OFF"
-enable-log-file = false
