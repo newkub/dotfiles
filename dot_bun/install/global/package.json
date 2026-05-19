@@ -1,5 +1,9 @@
 {
   "scripts": {
     "node-modules-inspector": "bunx node-modules-inspector"
+  },
+  "dependencies": {
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.1"
   }
 }
