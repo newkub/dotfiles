@@ -142,7 +142,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 
 ใช้เมื่อถูกเรียกจาก workflow อื่น
 
-- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship-run`, `/enhance-codebase`)
+- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship`, `/enhance-codebase`)
 - Commit เฉพาะบรรทัดที่ workflow แก้ไป (ใช้ `git add -p`)
 - ไม่ commit ไฟล์อื่นๆ ที่ไม่ได้ถูกแก้ไปโดย workflow
 

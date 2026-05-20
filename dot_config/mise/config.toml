@@ -160,6 +160,7 @@ oxlint = "latest"
 "npm:@antfu/ni" = "latest"
 "npm:@openai/codex" = "latest"
 "npm:@ast-grep/cli" = "latest"
+"npm:changelogen" = "latest"
 
 
 [settings]
