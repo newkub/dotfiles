@@ -12,23 +12,17 @@ auto_execution_mode: 3
 
 ### 1. Prepare
 
-1. ทำ `/check-architecture` เพื่อดูโครงสร้างโปรเจกต์ก่อนเสมอ
-2. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
-3. ใช้ `/use-import-alias` เสมอ
-4. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
-5. ทำ `/analyze-project` ด้วย `/use-bun-shell` ก่อนเริ่มงานทุกครั้ง
-6. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
-7. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
-8. `"."` หมายถึงให้ทำ `/continue`
-9. `"s."` หมายถึงให้ทำ `/use-bun-scripts`
+1. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
+2. ใช้ `/use-import-alias` เสมอ
+3. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
+4. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
+5. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+6. `"."` หมายถึงให้ทำ `/continue`
 
 ### 2. Analyze
 
-1. ทำ `/check-architecture` เพื่อดูโครงสร้างโปรเจกต์ก่อนเสมอ
-2. ทำ `/analyze-project` ด้วย `/use-bun-shell` เพื่อดูภาพรวมโปรเจกต์
-3. เมื่อได้รับ error ทำตาม `/fix-error`
-4. เมื่อแก้ไขไม่ได้สักที ลอง `/learn-from-web`
-5. วิเคราะห์ root cause ก่อนแก้ไข
+1. ทำ `/analyze-project` ด้วย `/use-bun-shell` เพื่อดูภาพรวมโปรเจกต์
+2. เมื่อได้รับ error ทำตาม `/fix-error`
 
 ### 3. Planning
 

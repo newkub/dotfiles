@@ -180,10 +180,10 @@
 	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"workbench.editor.closeEmptyGroups": true,
 	"workbench.editor.enablePreview": false,
-	/*
+	
 	"workbench.editorAssociations": {
 		"*.md": "vscode.markdown.preview.editor"
-	},*/
+	},
 	"workbench.experimental.share.enabled": true,
 	"workbench.iconTheme": "symbols",
 	"workbench.list.smoothScrolling": false,
@@ -192,9 +192,12 @@
 	"scm.repositories.selectionMode": "single",
 	"js/ts.updateImportsOnFileMove.enabled": "always",
 	"editor.codeActionsOnSave": {
+
 		"source.organizeImports.biome": "explicit",
 		"source.fixAll.biome": "explicit"
 	},
 	"files.autoSaveDelay": 1,
-	"js/ts.experimental.useTsgo": true
+	"js/ts.experimental.useTsgo": true,
+	"workbench.activityBar.location": "default",
+	"workbench.sideBar.location": "left"
 }

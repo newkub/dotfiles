@@ -3,6 +3,11 @@
 -- Define the leader key
 vim.g.mapleader = " "
 
+-- Monkey patch for deprecated vim.lsp.get_active_clients (Neovim 0.10+)
+if vim.lsp.get_clients then
+	vim.lsp.get_active_clients = vim.lsp.get_clients
+end
+
 -- Load core modules
 require("core.options")
 require("core.autocmds").setup()

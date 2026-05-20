@@ -4,7 +4,7 @@ run = "scoop update * && winget upgrade --all && bun update -g && bun upgrade &&
 
 [tasks.cleanup]
 description = "cleanup scoop, mise, podman, git gc"
-run = "scoop cleanup * && cargo cache --autoclean && scoop cache rm * && cargo-clean-all && mise prune"
+run = "scoop cleanup * && scoop cache rm * && cargo-clean-all && mise prune"
 
 
 [tasks.commit]
@@ -135,7 +135,6 @@ oxlint = "latest"
 "npm:actions-up" = "latest"
 "npm:ctx7" = "latest"
 "npm:npkill" = "latest"
-"npm:opencode-ai" = "latest"
 "npm:pake-cli" = "latest"
 "npm:rimraf" = "latest"
 "npm:rumdl" = "latest"
@@ -157,10 +156,14 @@ oxlint = "latest"
 "npm:@shikijs/cli" = "latest"
 "npm:@qoder-ai/qodercli" = "latest"
 "npm:command-code" = "latest"
-"npm:@antfu/ni" = "latest"
-"npm:@openai/codex" = "latest"
-"npm:@ast-grep/cli" = "latest"
 "npm:changelogen" = "latest"
+claude = { version = "latest", bin = "claude", platforms = { windows-x64 = { bin = "claude.exe", url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/win32-x64/claude.exe" } }, url = 'https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/{{ os(macos="darwin") }}-{{ arch() }}/claude', version_list_url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest" }
+biome = "latest"
+amp = "latest"
+opencode = "latest"
+"npm:@continuedev/cli" = "latest"
+"npm:mmx-cli" = "latest"
+ripgrep = "latest"
 
 
 [settings]

@@ -3,7 +3,7 @@ return {
 	require("plugins.ui.lualine"),
 	require("plugins.ui.fidget"),
 	require("plugins.ui.dropbar"),
-	require("plugins.ui.noice"),
+	require("plugins.ui.noice"), 
 	require("plugins.ui.edgy"),
 	require("plugins.ui.snacks"),
 	require("plugins.ui.scrollbar"),
