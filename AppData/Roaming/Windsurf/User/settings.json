@@ -157,9 +157,7 @@
 	"vue.inlayHints.missingProps": true,
 	"vue.inlayHints.optionsWrapper": true,
 	"vue.inlayHints.vBindShorthand": true,
-	"vue.server.includeLanguages": [
-		"vue"
-	],
+	"vue.server.includeLanguages": ["vue"],
 	"vue.trace.server": "off",
 	"window.customTitleBarVisibility": "windowed",
 	"window.newWindowDimensions": "maximized",
@@ -180,7 +178,7 @@
 	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"workbench.editor.closeEmptyGroups": true,
 	"workbench.editor.enablePreview": false,
-	
+
 	"workbench.editorAssociations": {
 		"*.md": "vscode.markdown.preview.editor"
 	},
@@ -192,12 +190,14 @@
 	"scm.repositories.selectionMode": "single",
 	"js/ts.updateImportsOnFileMove.enabled": "always",
 	"editor.codeActionsOnSave": {
-
 		"source.organizeImports.biome": "explicit",
 		"source.fixAll.biome": "explicit"
 	},
 	"files.autoSaveDelay": 1,
 	"js/ts.experimental.useTsgo": true,
 	"workbench.activityBar.location": "default",
-	"workbench.sideBar.location": "left"
+	"workbench.sideBar.location": "left",
+	"kilo-code.new.autoApprove.enabled": true,
+	"kilo-code.new.autocomplete.enableAutoTrigger": false,
+	"kilo-code.new.fontSize": 13
 }

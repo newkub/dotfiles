@@ -110,5 +110,5 @@ auto_execution_mode: 3
 
 ## References
 
-- ทำ `/follow-write-workflows` เพื่อดูมาตรฐานการเขียน workflow files
+- ทำ `/follow-workflows-creator` เพื่อดูมาตรฐานการเขียน workflow files
 - ทำ `/follow-content-quality` เพื่อดูแนวทางการสร้างเนื้อหาคุณภาพสูง

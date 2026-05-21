@@ -616,3 +616,11 @@ function loc {
 Remove-Item Alias:ni -Force -ErrorAction Ignore
 
 Remove-Item Alias:ni -Force -ErrorAction Ignore
+
+# proto
+$env:PROTO_HOME = Join-Path $HOME ".proto";
+$env:Path = @(
+  (Join-Path $env:PROTO_HOME "shims")
+  (Join-Path $env:PROTO_HOME "bin")
+  $env:Path
+) -join [IO.PATH]::PathSeparator;
