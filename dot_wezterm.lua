@@ -14,7 +14,7 @@ local config = wezterm.config_builder()
 config.default_cwd = 'D:\\'
 
 -- Default shell program (PowerShell 7+)
-config.default_prog = { 'pwsh.exe' }
+config.default_prog = { 'C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe' }
 
 -- Cursor style: SteadyBar | BlinkingBar | SteadyBlock | BlinkingBlock | SteadyUnderline | BlinkingUnderline
 config.default_cursor_style = 'SteadyBar'
@@ -45,14 +45,15 @@ config.scrollback_lines = 10000
 -- Primary font with fallback for Thai characters
 config.font = wezterm.font_with_fallback({
   'JetBrains Mono',    -- Primary monospace font (programming)
-  'Noto Sans Thai',    -- Fallback for Thai script support
+  'Sarabun',           -- Thai font (primary fallback)
+  'Prompt',            -- Thai font (secondary fallback)
+  'Noto Sans Thai',    -- Thai font (tertiary fallback)
+  'Segoe UI',          -- Windows system font
 })
 
--- Disable ligatures (font character combinations like != → ≠)
--- liga=0: standard ligatures off
--- clig=0: contextual ligatures off
--- calt=0: contextual alternates off
-config.harfbuzz_features = { 'liga=0', 'clig=0', 'calt=0' }
+-- Enable ligatures for Thai text (important for correct Thai rendering)
+-- Thai requires ligatures for proper character composition
+config.harfbuzz_features = { 'calt', 'clig', 'liga' }
 
 -- Don't let wide characters (like emoji) overflow their cell width
 config.allow_square_glyphs_to_overflow_width = "Never"
@@ -120,6 +121,9 @@ config.keys = {
   -- Copy/Paste: Ctrl+Shift+C/V (terminal standard)
   { key = 'c', mods = 'CTRL|SHIFT', action = wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
   { key = 'v', mods = 'CTRL|SHIFT', action = wezterm.action.PasteFrom 'Clipboard' },
+
+  -- Send SIGINT (Ctrl+C)
+  { key = 'c', mods = 'CTRL', action = wezterm.action.SendString '\x03' },
 
   -- Tab Management
   { key = 't', mods = 'CTRL', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },

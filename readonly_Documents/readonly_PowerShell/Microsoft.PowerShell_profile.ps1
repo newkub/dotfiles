@@ -85,13 +85,13 @@ function ai {
 
     if ($Prompt) {
         $promptString = $Prompt -join ' '
-        driod run "`"$promptString`""
+        droid run "`"$promptString`""
     } else {
-        driod
+        droid
     }
 }
 Set-Alias -Name v -Value bat
-Set-Alias -Name o -Value helix
+Set-Alias -Name o -Value hx
 
 function cpc {
     param(

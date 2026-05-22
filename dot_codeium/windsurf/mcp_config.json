@@ -25,11 +25,12 @@
       "registry": "io.windsurf/github-mcp-server",
       "url": "https://api.githubcopilot.com/mcp"
     },
+    /*
     "io.windsurf/vercel": {
       "disabled": true,
       "registry": "io.windsurf/vercel",
       "url": "https://mcp.vercel.com"
-    },
+    },*/
     "linear": {
       "args": [
         "-y",
@@ -38,10 +39,11 @@
       ],
       "command": "bunx"
     },
+    /*
     "mcpmarket": {
       "disabled": true,
       "serverUrl": "https://link.mcpmarket.com/newkubise/toolkits/mcpmarket/mcp"
-    },
+    },*/
     "mise": {
       "args": [
         "-y"

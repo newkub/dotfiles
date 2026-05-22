@@ -55,8 +55,6 @@
 	"editor.cursorSmoothCaretAnimation": "off",
 	"editor.defaultFormatter": "biomejs.biome",
 	"editor.quickSuggestions": "on",
-	"editor.formatOnPaste": true,
-	"editor.formatOnType": true,
 	"editor.inlineSuggest.suppressSuggestions": true,
 	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
 	"editor.largeFileOptimizations": true,
@@ -140,6 +138,12 @@
 		},
 		"PowerShell": {
 			"path": "pwsh.exe"
+		},
+		"OpenCode": {
+			"path": "C:\\Users\\Veerapong\\.local\\share\\mise\\shims\\opencode.cmd",
+			"args": [
+				"."
+			]
 		}
 	},
 	"terminal.integrated.shellIntegration.enabled": false,
@@ -178,10 +182,10 @@
 	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"workbench.editor.closeEmptyGroups": true,
 	"workbench.editor.enablePreview": false,
-
+	/*
 	"workbench.editorAssociations": {
 		"*.md": "vscode.markdown.preview.editor"
-	},
+	},*/
 	"workbench.experimental.share.enabled": true,
 	"workbench.iconTheme": "symbols",
 	"workbench.list.smoothScrolling": false,
@@ -199,5 +203,6 @@
 	"workbench.sideBar.location": "left",
 	"kilo-code.new.autoApprove.enabled": true,
 	"kilo-code.new.autocomplete.enableAutoTrigger": false,
-	"kilo-code.new.fontSize": 13
+	"kilo-code.new.fontSize": 13,
+	"editor.formatOnSave": true
 }
