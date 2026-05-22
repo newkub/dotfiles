@@ -1,5 +1,8 @@
 
 
+# Use mise shims
+$env.PATH = ($env.PATH | split row (char esep) | prepend "C:/Users/Veerapong/AppData/Local/mise/shims")
+
 # starship
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
@@ -54,13 +57,8 @@ alias projects = cd C:\\Users\\Veerapong\\Projects
 alias scripts = cd C:\\Users\\Veerapong\\Documents\\PowerShell
 
 
-# IntelliShell
-$env.INTELLI_HOME = 'C:\Users\Veerapong\AppData\Roaming\IntelliShell\Intelli-Shell\data'
-# $env.INTELLI_SEARCH_HOTKEY = "control space"
-# $env.INTELLI_VARIABLE_HOTKEY = "control char_l"
-# $env.INTELLI_BOOKMARK_HOTKEY = "control char_b"
-# $env.INTELLI_FIX_HOTKEY = "control char_x"
-# alias is = intelli-shell
-mkdir ($nu.data-dir | path join "vendor/autoload")
-intelli-shell init nushell | save -f ($nu.data-dir | path join "vendor/autoload/intelli-shell.nu")
+# IntelliShell (PowerShell only, not available for nushell)
+# $env.INTELLI_HOME = 'C:\Users\Veerapong\AppData\Roaming\IntelliShell\Intelli-Shell\data'
+# mkdir ($nu.data-dir | path join "vendor/autoload")
+# intelli-shell init nushell | save -f ($nu.data-dir | path join "vendor/autoload/intelli-shell.nu")
 

@@ -144,7 +144,6 @@ kubectl = "latest"
 terraform = "latest"
 gitu = "latest"
 git-lfs = "latest"
-powershell-core = "latest"
 "npm:@ai-sdk/anthropic" = "latest"
 "npm:@ai-sdk/openai" = "latest"
 "npm:@antfu/ni" = "latest"
@@ -193,6 +192,7 @@ dotenv-linter = "latest"
 "npm:wrangler" = "latest"
 opencode = "latest"
 ast-grep = "latest"
+powershell-core = "latest"
 
 
 [settings]

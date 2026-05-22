@@ -72,6 +72,12 @@ Remove-Item Alias:cd
 
 Set-Alias -Name c -Value cls
 Remove-Item -Path Alias:dir -Force
+
+# Make `powershell` command point to pwsh (PowerShell 7)
+if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+    Remove-Item -Path Alias:powershell -Force -ErrorAction SilentlyContinue
+    Set-Alias -Name powershell -Value pwsh
+}
 Set-Alias -Name qoder-workflows -Value cdqoderworkflows
 Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe

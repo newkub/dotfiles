@@ -13,8 +13,8 @@ local config = wezterm.config_builder()
 -- Default working directory when opening new tab/window
 config.default_cwd = 'D:\\'
 
--- Default shell program (PowerShell 7+)
-config.default_prog = { 'C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe' }
+-- Default shell program (PowerShell 7 from mise)
+config.default_prog = { 'C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\powershell-core\\7.6.2\\pwsh.exe' }
 
 -- Cursor style: SteadyBar | BlinkingBar | SteadyBlock | BlinkingBlock | SteadyUnderline | BlinkingUnderline
 config.default_cursor_style = 'SteadyBar'
@@ -42,40 +42,30 @@ config.scrollback_lines = 10000
 -- Font Configuration
 -- =============================================
 
--- Primary font with fallback for Thai characters
+-- Use Sarabun for Thai text
 config.font = wezterm.font_with_fallback({
   'JetBrains Mono',    -- Primary monospace font (programming)
-  'Sarabun',           -- Thai font (primary fallback)
-  'Prompt',            -- Thai font (secondary fallback)
-  'Noto Sans Thai',    -- Thai font (tertiary fallback)
-  'Segoe UI',          -- Windows system font
+  'Sarabun',           -- Thai font
 })
 
--- Enable ligatures for Thai text (important for correct Thai rendering)
--- Thai requires ligatures for proper character composition
-config.harfbuzz_features = { 'calt', 'clig', 'liga' }
+-- Let WezTerm handle font rendering
+config.harfbuzz_features = nil
 
--- Don't let wide characters (like emoji) overflow their cell width
-config.allow_square_glyphs_to_overflow_width = "Never"
-
--- Suppress warnings when a glyph is not found in any font
-config.warn_about_missing_glyphs = false
-
--- Fix character width calculation (prevents overlapping text in Helix on Windows)
+-- Fix character width calculation
 config.unicode_version = 14
 -- =============================================
 -- Rendering Backend
 -- =============================================
 
--- Available front_end options:
---   "Software"  - CPU rendering, most stable but slowest
---   "OpenGL"    - GPU accelerated, balanced performance
---   "WebGpu"    - Modern GPU API, fastest but may have driver issues
--- NOTE: WebGpu causes double rendering on some Windows GPUs, using Software for stability
-config.front_end = "WebGpu"
+-- Software rendering - most compatible with Thai text
+-- Thai characters work better with CPU-based rendering
+config.front_end = "Software"
 
--- Use dedicated GPU for rendering (if available)
-config.webgpu_power_preference = "HighPerformance"
+-- Fix character width calculation for Thai
+config.unicode_version = 14
+
+-- Don't let wide characters overflow their cell width
+config.allow_square_glyphs_to_overflow_width = "Never"
 
 -- =============================================
 -- Tab Bar & UI
