@@ -1,8 +1,13 @@
 
 
+# --- mise ---
+# https://mise.jdx.dev/
+mise activate pwsh | Out-String | Invoke-Expression
+
 # --- Starship Prompt ---
 # https://starship.rs/
 Invoke-Expression (&starship init powershell)
+
 
 
 # --- Zoxide Navigation ---
@@ -19,19 +24,19 @@ if (Get-Command winget -ErrorAction SilentlyContinue) {
 
 # --- x-cmd ---
 # https://github.com/x-cmd/x
-if (Test-Path "$Home\.x-cmd.root\local\data\pwsh\_index.ps1") { Set-ExecutionPolicy Bypass -Scope Process; . "$Home\.x-cmd.root\local\data\pwsh\_index.ps1" };  # boot up x-cmd.
+# Temporarily disabled due to atuin GetHistoryItems error
+# if (Test-Path "$Home\.x-cmd.root\local\data\pwsh\_index.ps1") { Set-ExecutionPolicy Bypass -Scope Process; . "$Home\.x-cmd.root\local\data\pwsh\_index.ps1" };  # boot up x-cmd.
 
 # --- IntelliShell ---
 # https://intellishell.app/
-$env:INTELLI_HOME = "C:\Users\Veerapong\AppData\Roaming\IntelliShell\Intelli-Shell\data"
-if (Get-Command intelli-shell.exe -ErrorAction SilentlyContinue) {
-    intelli-shell.exe init powershell | Out-String | Invoke-Expression
+if (Test-Path "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1") {
+    . "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1"
 }
 
+# --- Atuin ---
+# https://atuin.sh/
+Invoke-Expression (& { (atuin init powershell) | Out-String })
 
-# --- mise ---
-# https://mise.jdx.dev/
-mise activate pwsh | Out-String | Invoke-Expression
 
 # ==============================================================================
 # >> ENVIRONMENT VARIABLES
@@ -72,8 +77,35 @@ Set-Alias -Name new -Value New-Item
 Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
 Set-Alias -Name y -Value yazi
 Set-Alias -Name n -Value nvim
-Set-Alias -Name ai -Value stakpak
+function ai {
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$Prompt
+    )
+
+    if ($Prompt) {
+        $promptString = $Prompt -join ' '
+        driod run "`"$promptString`""
+    } else {
+        driod
+    }
+}
 Set-Alias -Name v -Value bat
+Set-Alias -Name o -Value helix
+
+function cpc {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$File
+    )
+
+    if (Test-Path $File) {
+        Get-Content $File -Raw | Set-Clipboard
+        Write-Host "Content copied from: $File" -ForegroundColor Green
+    } else {
+        Write-Host "File not found: $File" -ForegroundColor Red
+    }
+}
 
 
 
@@ -229,7 +261,20 @@ function mc {
     ni && moon run :typecheck
 }
 
-function h {
+function o {
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]
+        [string[]]$Files
+    )
+
+    if ($Files) {
+        & hx.exe $Files
+    } else {
+        & hx.exe .
+    }
+}
+
+function o {
     param(
         [Parameter(ValueFromRemainingArguments=$true)]
         [string[]]$Files
