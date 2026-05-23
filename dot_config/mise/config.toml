@@ -195,7 +195,6 @@ cowsay = "latest"
 "npm:wrangler" = "latest"
 "npm:@schpet/linear-cli" = "latest"
 "npm:droid" = "latest"
-opencode = "latest"
 usage = "latest"
 
 

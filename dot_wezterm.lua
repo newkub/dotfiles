@@ -7,6 +7,17 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 -- =============================================
+-- Load Plugins
+-- =============================================
+
+-- Add plugins directory to package path
+package.path = package.path .. ';' .. os.getenv('USERPROFILE') .. '/.wezterm/plugins/?.lua'
+
+-- Load plugins
+local tab_icons = require 'tab_icons'
+require 'right_status_bar'
+
+-- =============================================
 -- General Settings
 -- =============================================
 
@@ -15,6 +26,33 @@ config.default_cwd = 'D:\\'
 
 -- Default shell program (PowerShell 7 from mise)
 config.default_prog = { 'C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\powershell-core\\7.6.2\\pwsh.exe' }
+
+-- =============================================
+-- Launch Menu Profiles
+-- =============================================
+
+config.launch_menu = {
+  {
+    label = 'PowerShell 7',
+    args = { 'C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\powershell-core\\7.6.2\\pwsh.exe' },
+    cwd = 'D:\\',
+  },
+  {
+    label = 'Nushell',
+    args = { 'C:\\Users\\Veerapong\\scoop\\shims\\nu.exe' },
+    cwd = 'D:\\',
+  },
+  {
+    label = 'CMD',
+    args = { 'cmd.exe' },
+    cwd = 'D:\\',
+  },
+  {
+    label = 'WSL',
+    args = { 'wsl.exe' },
+    cwd = 'D:\\',
+  },
+}
 
 -- Cursor style: SteadyBar | BlinkingBar | SteadyBlock | BlinkingBlock | SteadyUnderline | BlinkingUnderline
 config.default_cursor_style = 'SteadyBar'
@@ -57,9 +95,9 @@ config.unicode_version = 14
 -- Rendering Backend
 -- =============================================
 
--- Software rendering - most compatible with Thai text
--- Thai characters work better with CPU-based rendering
-config.front_end = "Software"
+-- wgpu rendering - GPU-accelerated for better performance
+-- If Thai text rendering issues occur, change back to "Software"
+config.front_end = "WebGpu"
 
 -- Fix character width calculation for Thai
 config.unicode_version = 14
@@ -90,11 +128,31 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- Custom color overrides
 config.colors = {
-  -- Tab bar styling (RoyalBlue active tab)
+  -- Tab bar styling (Modern gradient)
   tab_bar = {
+    background = '#1e1e2e',
     active_tab = {
-      bg_color = '#4169E1',  -- RoyalBlue background
-      fg_color = '#FFFFFF',  -- White text
+      bg_color = '#89b4fa',  -- Blue accent
+      fg_color = '#1e1e2e',  -- Dark text
+      intensity = 'Normal',
+      italic = false,
+      underline = 'None',
+    },
+    inactive_tab = {
+      bg_color = '#181825',
+      fg_color = '#a6adc8',
+    },
+    inactive_tab_hover = {
+      bg_color = '#313244',
+      fg_color = '#cdd6f4',
+    },
+    new_tab = {
+      bg_color = '#181825',
+      fg_color = '#a6adc8',
+    },
+    new_tab_hover = {
+      bg_color = '#313244',
+      fg_color = '#cdd6f4',
     },
   },
 }
@@ -105,6 +163,9 @@ config.colors = {
 
 -- Custom keyboard shortcuts
 config.keys = {
+  -- Command Palette: F1
+  { key = 'F1', mods = 'NONE', action = wezterm.action.ActivateCommandPalette },
+
   -- Search: Ctrl+F (case-insensitive)
   { key = 'f', mods = 'CTRL', action = wezterm.action.Search { CaseInSensitiveString = '' } },
 
@@ -117,6 +178,7 @@ config.keys = {
 
   -- Tab Management
   { key = 't', mods = 'CTRL', action = wezterm.action.SpawnTab 'CurrentPaneDomain' },
+  { key = 't', mods = 'CTRL|SHIFT', action = wezterm.action.ShowLauncher },
   { key = 'w', mods = 'CTRL', action = wezterm.action.CloseCurrentTab { confirm = true } },
   { key = 'Tab', mods = 'CTRL', action = wezterm.action.ActivateTabRelative(1) },
   { key = 'Tab', mods = 'CTRL|SHIFT', action = wezterm.action.ActivateTabRelative(-1) },
@@ -172,14 +234,27 @@ config.key_tables = {
 }
 
 -- =============================================
--- Right Status Bar (Beautiful UX/UI)
+-- Tab Title with Icon (from plugin)
 -- =============================================
 
-wezterm.on('update-right-status', function(window, pane)
-  -- Build status line elements
-  local elements = {}
+wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
+  local pane = tab.active_pane
+  local icon = tab_icons.get_tab_icon(pane)
 
-  window:set_right_status(wezterm.format(elements))
+  -- Get current working directory name
+  local cwd = pane:get_current_working_dir()
+  local title = ''
+  if cwd then
+    local path = cwd.file_path
+    title = path:match('[^\\/]+$') or 'Terminal'
+  else
+    title = 'Terminal'
+  end
+
+  -- Format with icon
+  return {
+    { Text = icon .. ' ' .. title },
+  }
 end)
 
 -- =============================================
