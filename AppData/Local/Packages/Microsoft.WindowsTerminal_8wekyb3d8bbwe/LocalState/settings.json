@@ -24,18 +24,29 @@
             "id": "User.tabSearch"
         }
     ],
+    "centerOnLaunch": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "defaultProfile": "{a3146190-2d94-41ba-a279-904c44dd83f7}",
+    "firstWindowPreference": "persistedWindowLayout",
+    "initialPosition": ",",
     "keybindings": 
     [
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
         {
             "id": "Terminal.OpenNewTab",
             "keys": "ctrl+t"
         },
         {
-            "id": "Terminal.CopyToClipboard",
-            "keys": "ctrl+c"
+            "id": null,
+            "keys": "ctrl+shift+w"
+        },
+        {
+            "id": "Terminal.FindText",
+            "keys": "ctrl+f"
         },
         {
             "id": null,
@@ -50,20 +61,12 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "id": "Terminal.FindText",
-            "keys": "ctrl+f"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+shift+w"
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "alt+shift+d"
         },
         {
             "id": "Terminal.SelectAll",
             "keys": "ctrl+a"
-        },
-        {
-            "id": "Terminal.DuplicatePaneAuto",
-            "keys": "alt+shift+d"
         },
         {
             "id": "Terminal.ClosePane",
@@ -94,6 +97,7 @@
             "keys": "ctrl+shift+b"
         }
     ],
+    "launchMode": "maximizedFocus",
     "newTabMenu": 
     [
         {
@@ -115,12 +119,7 @@
         "list": 
         [
             {
-                "commandline": "%SystemRoot%\\System32\\cmd.exe",
-                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "hidden": false,
-                "name": "Command Prompt"
-            },
-            {
+                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
@@ -133,30 +132,32 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "guid": "{0022853a-6348-5ddb-864a-dde8fa68cd98}",
-                "hidden": false,
-                "name": "Developer Command Prompt for VS 18",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 18",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "commandline": "\"D:\\\"",
-                "guid": "{488789be-d7f2-4fa1-bb56-f17b62361f55}",
-                "hidden": false,
-                "icon": "ms-appx:///ProfileIcons/pwsh.png",
-                "name": "Dev"
-            },
-            {
-                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\opencode\\1.15.6\\opencode.exe",
+                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\opencode.exe",
                 "guid": "{d793574f-2e48-4207-8f70-52cbb29c9f73}",
                 "hidden": false,
-                "name": "booking-platform",
-                "startingDirectory": "D:\\saas\\booking-platform"
+                "name": "rust-packages",
+                "startingDirectory": "D:\\newkub\\wpackages\\rust-packages"
+            },
+            {
+                "altGrAliasing": true,
+                "antialiasingMode": "grayscale",
+                "closeOnExit": "automatic",
+                "commandline": "C:\\Users\\Veerapong\\scoop\\shims\\nu.exe",
+                "cursorShape": "bar",
+                "guid": "{a3146190-2d94-41ba-a279-904c44dd83f7}",
+                "hidden": false,
+                "historySize": 9001,
+                "name": "Nushell",
+                "padding": "8, 8, 8, 8",
+                "snapOnInput": true,
+                "useAcrylic": false
+            },
+            {
+                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\opencode.exe",
+                "guid": "{84c57b80-a855-44bf-9e8c-776313d3704c}",
+                "hidden": false,
+                "name": "bun-packages",
+                "startingDirectory": "D:\\newkub\\wpackages\\bun-packages"
             },
             {
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -166,5 +167,6 @@
         ]
     },
     "schemes": [],
-    "themes": []
+    "themes": [],
+    "windowingBehavior": "useAnyExisting"
 }
