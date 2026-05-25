@@ -68,10 +68,6 @@
             "keys": "alt+shift+d"
         },
         {
-            "id": "Terminal.SelectAll",
-            "keys": "ctrl+a"
-        },
-        {
             "id": "Terminal.ClosePane",
             "keys": "ctrl+w"
         },
@@ -141,7 +137,7 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\claude.exe",
+                "commandline": "stakpak --profile byok",
                 "guid": "{d793574f-2e48-4207-8f70-52cbb29c9f73}",
                 "hidden": false,
                 "name": "rust-packages",
@@ -162,7 +158,7 @@
                 "useAcrylic": false
             },
             {
-                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\opencode.exe",
+                "commandline": "ai",
                 "guid": "{84c57b80-a855-44bf-9e8c-776313d3704c}",
                 "hidden": false,
                 "name": "bun-packages",
@@ -174,11 +170,25 @@
                 "name": "Windows PowerShell"
             },
             {
-                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\claude.exe",
+                "commandline": "ai",
                 "guid": "{a7048aea-aa7c-412d-9544-3bf036a0f85d}",
                 "hidden": false,
-                "name": "bun-packages",
-                "startingDirectory": "D:\\newkub\\wpackages\\rust-packages"
+                "name": "agent-tui",
+                "startingDirectory": "D:\\newkub\\wpackages\\rust-packages\\apps\\agent-tui"
+            },
+            {
+                "commandline": "ai",
+                "guid": "{8465fdd2-3768-47e8-8542-a96c7c72b60e}",
+                "hidden": false,
+                "name": "Stakpak",
+                "startingDirectory": "D:\\"
+            },
+            {
+                "commandline": "opencode",
+                "guid": "{9681ce38-580c-4c57-8357-456ba7e2bb8b}",
+                "hidden": false,
+                "name": "Opencode",
+                "startingDirectory": "D:\\"
             }
         ]
     },

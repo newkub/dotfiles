@@ -1,11 +1,1 @@
-refactor: rename every-* to each-* and reorganize workflows
-
-- Rename every-file.md, every-folder.md, every-workspace.md to each-* variants
-- Rename follow-write-skills.md to follow-skills-creator.md
-- Rename follow-write-workflows.md to follow-workflows-creator.md
-- Rename follow-create-nuxt-modules.md to follow-nuxt-modules.md
-- Rename code-review.md to review-code-and-fix.md
-- Rename fix-vulnerability.md to check-vulnerability.md
-- Add new workflow files for improved coverage
-- Update and consolidate existing workflow files
-- Remove obsolete and redundant files
+docs(workflows): add responsive design standards to update-readme-singlerepo

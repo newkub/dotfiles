@@ -6,18 +6,19 @@ auto_execution_mode: 3
 
 ## Goal
 
-กำหนดกฎและแนวทางการพัฒนาโปรเจกต์ที่ใช้กับทุก workspace เพื่อให้การทำงานสม่ำเสมอ
+ทำตามกฎเหล่านี้ในทุก workspace เพื่อให้การทำงานสม่ำเสมอ
 
 ## Execute
 
 ### 1. Prepare
 
-1. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
-2. ใช้ `/use-import-alias` เสมอ
-3. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
-4. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
-5. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
-6. `"."` หมายถึงให้ทำ `/continue`
+1. ทำตาม `/follow-agents-md` เสมอ
+2. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
+3. ใช้ `/use-import-alias` เสมอ
+4. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
+5. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
+6. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+7. `"."` หมายถึงให้ทำ `/continue`
 
 ### 2. Analyze
 
@@ -35,13 +36,10 @@ auto_execution_mode: 3
 1. อ่าน `/do-not` ก่อนเขียน code ทุกครั้ง
 2. เมื่อ execute ต้องเปิด web ให้รัน `/watch-browser`
 3. ทำ `/update-reference` เสมอสำหรับ file operations
-4. เมื่อเขียน code ทำตาม `/write-test` เสมอ
+4. เมื่อเขียน code ทำตาม `/ship-code` เสมอ
 5. ถ้า mock ให้ comment `// MOCK` ชัดเจน ถ้ายังทำไม่เสร็จต้อง comment `// TODO`
-6. mock data ห้ามเขียนในไฟล์เดียวกัน ต้องแยกไฟล์ไปในโฟลเดอร์ `mock/` แล้วนำไปใช้
+6. mock data ต้องแยกไฟล์ไปในโฟลเดอร์ `mock/` แล้วนำไปใช้
 7. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
-8. ทุก global workflows ที่ขึ้นต้นด้วย `run-` ให้ใช้ `/loop-until-complete` เสมอ
-9. ห้ามใช้ `npx` ให้ใช้ `bunx` แทนเสมอ
-10. README.md ให้ทำตาม `/update-readme` เสมอ
 
 ### 5. Reflex
 
@@ -55,4 +53,31 @@ auto_execution_mode: 3
 3. คุยกับผู้ใช้เป็นภาษาไทยเสมอในทุกการสื่อสาร
 4. ให้คำตอบกระชับ ตรงประเด็น
 5. หลีกเลี่ยงการใช้คำยืนยันที่ไม่จำเป็น
+
+## Rules
+
+### 1. Execution Order
+
+ทำตามลำดับ Execute ตั้งแต่ Prepare ถึง Report โดยไม่ข้ามขั้นตอน
+
+### 2. Deterministic Behavior
+
+- Execute ต้องให้ผลลัพธ์เหมือนกันทุกครั้ง
+- ไม่ใช้คำสั่ง subjective หรือ ambiguous
+- ระบุลำดับการทำงานชัดเจน
+
+### 3. Automation Standards
+
+- ใช้ Bun shell สำหรับ automation เสมอ
+- ใช้ `bunx` แทน `npx` เสมอ
+- ทุก workspace ต้องมี scripts มาตรฐานจาก `/setup-tasks`
+
+## Expected Outcome
+
+- การทำงานสม่ำเสมอทุก workspace
+- Code quality สูงและเป็นไปตามมาตรฐาน
+- ไม่มี mock หรือ TODO ที่ไม่จำเป็น
+- Workflows ทำงานได้อย่างมีประสิทธิภาพ
+- การสื่อสารชัดเจนและกระชับ
+
 

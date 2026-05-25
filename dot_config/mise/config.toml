@@ -117,7 +117,7 @@ edit = "latest"
 neovim = "latest"
 task = "latest"
 television = "latest"
-claude = { version = "latest", bin = "claude", platforms = { windows-x64 = { bin = "claude.exe", url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/win32-x64/claude.exe" } }, url = 'https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/{{ os(macos="darwin") }}-{{ arch() }}/claude', version_list_url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest" }
+claude = { version = "latest", bin = "claude", platforms = { windows-x64 = { bin = "claude.exe", url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/win32-x64/claude.exe" } }, url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/windows-x64/claude", version_list_url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest" }
 ripgrep = "latest"
 zig = "latest"
 rust = "latest"
@@ -196,11 +196,18 @@ cowsay = "latest"
 "npm:@schpet/linear-cli" = "latest"
 "npm:droid" = "latest"
 usage = "latest"
+opencode = "latest"
+codex = "latest"
+"npm:crw-mcp" = "latest"
+"npm:nuxt" = "latest"
+"cargo:crw-server" = "latest"
+"npm:aicommits" = "latest"
 
 
 [settings]
 env_shell_expand = false
 windows_shim_mode = "hardlink"
+experimental = true
 
 [settings.npm]
 bun = true

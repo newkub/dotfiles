@@ -6,9 +6,16 @@
       ],
       "command": "bunx"
     },
+    "crw": {
+      "command": "crw-server"
+    },
     "deepwiki": {
       "registry": "io.windsurf/deepwiki",
       "serverUrl": "https://mcp.deepwiki.com/mcp"
+    },
+    "github-mcp-server": {
+      "registry": "github-mcp-server",
+      "url": "https://api.githubcopilot.com/mcp"
     },
     "grep": {
       "url": "https://mcp.grep.app"
@@ -25,12 +32,6 @@
       "registry": "io.windsurf/github-mcp-server",
       "url": "https://api.githubcopilot.com/mcp"
     },
-    /*
-    "io.windsurf/vercel": {
-      "disabled": true,
-      "registry": "io.windsurf/vercel",
-      "url": "https://mcp.vercel.com"
-    },*/
     "linear": {
       "args": [
         "-y",
@@ -39,22 +40,19 @@
       ],
       "command": "bunx"
     },
-    /*
-    "mcpmarket": {
-      "disabled": true,
-      "serverUrl": "https://link.mcpmarket.com/newkubise/toolkits/mcpmarket/mcp"
-    },*/
     "mise": {
       "args": [
         "-y"
       ],
       "command": "mise",
+      "disabled": true,
       "env": {
         "MISE_EXPERIMENTAL": "1"
       }
     },
     "moon": {
       "command": "moon",
+      "disabled": false,
       "env": {
         "MOON_WORKSPACE_ROOT": "/"
       }
@@ -67,14 +65,10 @@
       "command": "bunx"
     },
     "nuxt": {
-      "command": "bunx"
-    },
-    "nuxt-docs": {
-      "serverUrl": "https://nuxt.com/mcp"
-    },
-    "raindrop": {
-      "disabled": false,
-      "serverUrl": "https://api.raindrop.io/rest/v2/ai/mcp"
+      "args": [
+        "mcp"
+      ],
+      "command": "nuxt"
     },
     "sequential-thinking": {
       "args": [
@@ -86,8 +80,17 @@
     "stripe": {
       "url": "https://mcp.stripe.com/mcp"
     },
-    "wezterm-mcp": {
-      "command": "bunx",
+    "vueuse": {
+      "args": [
+        "vueuse-mcp"
+      ],
+      "command": "bunx"
+    },
+    "wezterm": {
+      "args": [
+        "mcp-server-wezterm-rs"
+      ],
+      "command": "uvx",
       "disabled": true
     }
   }

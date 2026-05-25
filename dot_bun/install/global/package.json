@@ -1,5 +1,8 @@
 {
   "scripts": {
     "node-modules-inspector": "bunx node-modules-inspector"
+  },
+  "dependencies": {
+    "tuistory": "^0.8.0"
   }
 }

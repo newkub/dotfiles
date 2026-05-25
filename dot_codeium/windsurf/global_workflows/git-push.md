@@ -47,7 +47,9 @@ Push commits จาก local repository และ git submodules ไปยัง
 
 ### 6. Check GitHub Actions
 
-1. ทำตาม `/run-github-actions` เพื่อตรวจสอบและรัน GitHub Actions จนกว่าจะผ่าน
+1. ทำตาม `gh workflow list` เพื่อตรวจสอบว่ามี GitHub Actions ใน repository ไหม
+2. ถ้ามี GitHub Actions ให้ทำตาม `/watch-github-actions` เพื่อตรวจสอบและรันจนกว่าจะผ่าน
+3. ถ้าไม่มี GitHub Actions ให้ข้าม step นี้
 
 ## Rules
 

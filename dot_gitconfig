@@ -1,6 +1,6 @@
 [user]
 	email = newkubise@gmail.com
-	name = Veerapong
+	name = newkub
 
 [core]
 autocrlf = false
@@ -59,7 +59,7 @@ trustExitCode = true
 diff = diff -- . ':(exclude)*lock*' ':(exclude)package-lock.json' ':(exclude)pnpm-lock.yaml'
 opencommit = "!f() { git add . && opencommit; }; f"
 czgai = "!f() { git add . && czg ai; }; f"
-up = "!f() { git add . && git commit -m \"$1\"; }; f"
+commit = "aicommits -a"
 upp = "!f() { git add . && git commit -m \"$1\" && git push; }; f"
 log = "git log --oneline --graph --decorate"
 status = "status -s"

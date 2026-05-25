@@ -1,6 +1,6 @@
 {
 	"[css]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[dockercompose]": {
 		"editor.autoIndent": "advanced",
@@ -12,19 +12,19 @@
 		"editor.defaultFormatter": "redhat.vscode-yaml"
 	},
 	"[html]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[javascript]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[json]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "vscode.json-language-features"
 	},
 	"[jsx, tsx]": {
-		"editor.defaultFormatter": "dprint.dprint"
+		"editor.defaultFormatter": "biomejs.biome"
 	},
 	"[markdown]": {
 		"editor.defaultFormatter": "vscode.markdown-language-features"
@@ -192,21 +192,16 @@
 	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"workbench.editor.closeEmptyGroups": true,
 	"workbench.editor.enablePreview": false,
-	/*
 	"workbench.editorAssociations": {
-		"*.md": "vscode.markdown.preview.editor"
-	},*/
+		"README.md": "vscode.markdown.preview.editor",
+		"**/.agent/task/**/*.md": "vscode.markdown.preview.editor"
+	},
 	"workbench.experimental.share.enabled": true,
-	"workbench.iconTheme": "material-icon-theme",
 	"workbench.list.smoothScrolling": false,
 	"security.workspace.trust.untrustedFiles": "open",
 	"codeCounter.debug": "none",
 	"scm.repositories.selectionMode": "single",
 	"js/ts.updateImportsOnFileMove.enabled": "always",
-	"editor.codeActionsOnSave": {
-		"source.organizeImports.biome": "explicit",
-		"source.fixAll.biome": "explicit"
-	},
 	"files.autoSaveDelay": 1,
 	"js/ts.experimental.useTsgo": true,
 	"workbench.activityBar.location": "bottom",

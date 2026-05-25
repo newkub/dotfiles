@@ -11,7 +11,6 @@ mise activate pwsh | Out-String | Invoke-Expression
 
 
 
-
 # --- Starship Prompt ---
 
 # https://starship.rs/
@@ -168,11 +167,7 @@ if (Get-Command pwsh -ErrorAction SilentlyContinue) {
 
 function code-insiders { & "C:\Users\Veerapong\AppData\Local\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
 
-Set-Alias -Name o -Value code-insiders
-
-Set-Alias -Name ot -Value hx
-
-Set-Alias -Name qoder-workflows -Value cdqoderworkflows
+Set-Alias -Name o -Value hx
 
 Set-Alias -Name new -Value New-Item
 
@@ -188,9 +183,9 @@ Set-Alias -Name ot -Value hx
 
 
 
-# --- AI Alias (droid wrapper) ---
+# --- AI Alias (claude wrapper) ---
 
-function ai { droid $args }
+function ai { claude $args }
 
 
 
