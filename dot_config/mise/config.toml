@@ -196,12 +196,12 @@ cowsay = "latest"
 "npm:@schpet/linear-cli" = "latest"
 "npm:droid" = "latest"
 usage = "latest"
-opencode = "latest"
 codex = "latest"
 "npm:crw-mcp" = "latest"
 "npm:nuxt" = "latest"
 "cargo:crw-server" = "latest"
 "npm:aicommits" = "latest"
+opencode = "latest"
 
 
 [settings]

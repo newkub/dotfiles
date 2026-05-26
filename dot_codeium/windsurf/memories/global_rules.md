@@ -14,37 +14,29 @@ auto_execution_mode: 3
 
 1. ทำตาม `/follow-agents-md` เสมอ
 2. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
-3. ใช้ `/use-import-alias` เสมอ
-4. รัน `/watch-browser` ทันทีเมื่อได้รับ URL
-5. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
-6. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
-7. `"."` หมายถึงให้ทำ `/continue`
+3. แต่ละ workspace ต้องทำตาม `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
+4. เวลาจะ setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
+5. `"."` หมายถึงให้ทำ `/continue`
 
 ### 2. Analyze
 
-1. ทำ `/analyze-project` ด้วย `/use-bun-shell` เพื่อดูภาพรวมโปรเจกต์
-2. เมื่อได้รับ error ทำตาม `/fix-error`
+1. ทำ `/analyze-project` ด้วย `/use-bun-shell` หรือ `/use-bun-scripts` เพื่อดูภาพรวมโปรเจกต์
+2. เมื่อได้รับ error ทำตาม `/error`
 
 ### 3. Planning
 
-1. ใช้ `/plan` สำหรับการวางแผนงานครอบคล้ว
-2. เมื่อแก้ไขไฟล์ workflows ทำตาม `/follow-write-workflows`
-3. เมื่อแก้ไขไฟล์ skills ทำตาม `/follow-write-skills`
+1. เมื่อแก้ไขไฟล์ workflows ทำตาม `/follow-write-workflows`
+2. เมื่อแก้ไขไฟล์ skills ทำตาม `/follow-write-skills`
 
 ### 4. Write
 
-1. อ่าน `/do-not` ก่อนเขียน code ทุกครั้ง
-2. เมื่อ execute ต้องเปิด web ให้รัน `/watch-browser`
-3. ทำ `/update-reference` เสมอสำหรับ file operations
-4. เมื่อเขียน code ทำตาม `/ship-code` เสมอ
-5. ถ้า mock ให้ comment `// MOCK` ชัดเจน ถ้ายังทำไม่เสร็จต้อง comment `// TODO`
-6. mock data ต้องแยกไฟล์ไปในโฟลเดอร์ `mock/` แล้วนำไปใช้
-7. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
+1. ถ้า mock ให้ comment `// MOCK` ชัดเจน ถ้ายังทำไม่เสร็จต้อง comment `// TODO`
+2. mock data ต้องแยกไฟล์ไปในโฟลเดอร์ `mock/` แล้วนำไปใช้
+3. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
 
 ### 5. Reflex
 
-1. ใช้ `/loop-until-complete` เพื่อทำซ้ำจนกว่าจะผ่าน
-2. กลับไป check planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมดแล้ว
+1. กลับไป check planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมดแล้ว
 
 ### 6. Report
 

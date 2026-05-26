@@ -6,7 +6,7 @@ auto_execution_mode: 3
 
 ## Goal
 
-เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง พร้อมจัดการ errors อัตโนมัติด้วย /fix-error
+เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง พร้อมจัดการ errors อัตโนมัติด้วย /resolve-errors
 
 ## Execute
 
@@ -60,7 +60,7 @@ auto_execution_mode: 3
 
 ### 3. Error Handling
 
-- เมื่อเจอ error ต้องเรียก /fix-error ทันที
+- เมื่อเจอ error ต้องเรียก /resolve-errors ทันที
 - ถ้า daemon error ให้ใช้ browser-preview แทน
 
 ## Expected Outcome

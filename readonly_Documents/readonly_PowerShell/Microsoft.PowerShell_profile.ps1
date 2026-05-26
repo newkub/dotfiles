@@ -185,7 +185,7 @@ Set-Alias -Name ot -Value hx
 
 # --- AI Alias (claude wrapper) ---
 
-function ai { claude $args }
+function ai { gh copilot $args }
 
 
 

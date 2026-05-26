@@ -22,6 +22,14 @@
         {
             "command": "tabSearch",
             "id": "User.tabSearch"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b\r"
+            },
+            "id": "User.sendInput.8F63D3A9"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -35,6 +43,10 @@
     "initialPosition": ",",
     "keybindings": 
     [
+        {
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
         {
             "id": "Terminal.OpenNewTab",
             "keys": "ctrl+t"
@@ -189,6 +201,12 @@
                 "hidden": false,
                 "name": "Opencode",
                 "startingDirectory": "D:\\"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
             }
         ]
     },

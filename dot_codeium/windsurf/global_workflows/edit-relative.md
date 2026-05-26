@@ -6,7 +6,7 @@ auto_execution_mode: 3
 
 ## Goal
 
-แก้ไขไฟล์ที่เกี่ยวข้องกับ context ปัจจุบันและอัพเดท references ทั้งหมดในโปรเจกต์
+แก้ไขไฟล์ที่เกี่ยวข้องและอัพเดท references ทั้งหมดในโปรเจกต์
 
 ## Execute
 
@@ -36,6 +36,8 @@ auto_execution_mode: 3
 - อัพเดท references หลังจากแก้ไขไฟล์
 - ตรวจสอบว่าไม่มี circular dependencies เกิดขึ้น
 - ใช้ git สำหรับ file operations ถ้าเป็นไปได้
+- สำหรับ TODO ใน code comments ใช้ `/implement-comment-todo`
+- สำหรับ TODO ในไฟล์ Markdown ใช้ `/implement-todo-md`
 
 ## Expected Outcome
 

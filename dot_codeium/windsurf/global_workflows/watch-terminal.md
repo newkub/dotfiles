@@ -3,7 +3,7 @@ title: Watch Terminal Workflow
 description: เปิดเบราว์เซอร์และ watch ต่อเรื่อยๆ ทุก 5 วินาที พร้อมจัดการ error อัตโนมัติ
 auto_execution_mode: 3
 - "/run-dev"
-- "/fix-error"
+- "/resolve-errors"
 ---
 
 ## Prompt
@@ -35,7 +35,7 @@ auto_execution_mode: 3
 
 3. action : ดำเนินการตามขั้นตอน
    - รัน development server ด้วย /run-dev
-   - แก้ไข errors ที่พบด้วย /fix-error
+   - แก้ไข errors ที่พบด้วย /resolve-errors
    - เปิดเบราว์เซอร์เพื่อดูผลลัพธ์
    - เริ่มการ watch terminal ทุก 5 วินาที
 

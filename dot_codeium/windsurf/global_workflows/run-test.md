@@ -1,12 +1,15 @@
 ---
 title: Run Test
-description: รัน test suite อย่างเป็นระบบ พร้อมแก้ไข errors จนผ่านทั้งหมด
+description: รัน test suite อย่างเป็นระบบ เขียน test ด้วย /write-test และตรวจสอบ coverage 100%
 auto_execution_mode: 3
+related_workflows:
+  - /write-test
+  - /run-test-coverage
 ---
 
 ## Goal
 
-รัน test suite อย่างเป็นระบบ พร้อมแก้ไข errors และ failures จนผ่านทั้งหมด
+รัน test suite อย่างเป็นระบบ เขียน test ด้วย /write-test และตรวจสอบ coverage 100% พร้อมแก้ไข errors จนผ่านทั้งหมด
 
 ## Execute
 
@@ -35,7 +38,14 @@ test/
 4. ตรวจสอบ test configuration
 5. ยืนยันว่ามี test config files ถ้าจำเป็น
 
-### 2. Run Tests
+### 2. Write Tests
+
+1. ทำ `/write-test` เพื่อเขียน tests ที่ขาดหายไป
+2. ตรวจสอบว่า test files ครบถ้วนตาม SPEC.md
+3. ตรวจสอบว่า test cases ครอบคลุมทุกกรณีใช้งาน
+4. ตรวจสอบว่า tests อยู่ใน location ที่ถูกต้อง
+
+### 3. Run Tests
 
 1. รัน `bun run test` หรือ `bun test`
 2. บันทึกผลลัพธ์ทั้งหมด
@@ -43,11 +53,19 @@ test/
 4. ติดตาม progress ของ tests
 5. บันทึก duration ของแต่ละ test
 
-### 3. Review Test Results
+### 4. Review Test Results
 
 ทำตาม `/review-test-result` เพื่อวิเคราะห์ผลลัพธ์ที่ครบถ้วน
 
-### 4. Fix Failures
+### 5. Check Coverage
+
+1. ทำ `/run-test-coverage` เพื่อตรวจสอบ coverage
+2. ตรวจสอบว่า coverage ถึง 100% ทุก category (lines, branches, functions, statements)
+3. ระบุส่วนที่ยังไม่มี coverage
+4. ทำ `/write-test` เพื่อเพิ่ม tests สำหรับส่วนที่ขาด coverage
+5. ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
+
+### 6. Fix Failures
 
 1. วิเคราะห์ cause ของ test failures
 2. แก้ไข code หรือ test
@@ -55,13 +73,14 @@ test/
 4. แก้ไข mock data ถ้าจำเป็น
 5. บันทึกสิ่งที่แก้ไข
 
-### 5. Verify
+### 7. Verify
 
 1. รัน tests อีกครั้งหลังแก้ไข
 2. ตรวจสอบว่า failures หมดไป
-3. ทำซ้ำขั้นตอน 2-4 จนกว่าจะผ่าน
+3. ทำซ้ำขั้นตอน 3-6 จนกว่าจะผ่าน
 4. รัน tests ทั้งหมดอีกครั้ง
 5. ยืนยันว่าผ่าน 100%
+6. ยืนยันว่า coverage ถึง 100% ทุก category
 
 ## Rules
 
@@ -99,6 +118,9 @@ test/
 - ต้องตรวจสอบ coverage ทั้งหมด (line, branch, function, statement)
 - ต้องระบุส่วนที่สำคัญแต่ยังไม่มี test
 - ต้องพิจารณา criticality ของส่วนที่ไม่มี coverage
+- ใช้ `/run-test-coverage` สำหรับวิเคราะห์ coverage อย่างละเอียด
+- เป้าหมาย coverage 100% ทุก category โดยไม่มีข้อยกเว้น
+- หาก coverage ไม่ถึง 100% ต้องเพิ่ม tests จนครบ
 
 ### 5. Performance
 
@@ -128,6 +150,6 @@ test/
 
 - ทุก tests ผ่านทั้งหมด
 - ไม่มี failures หรือ errors
-- Test coverage ตามที่กำหนด
+- Test coverage ถึง 100% ทุก category (lines, branches, functions, statements)
 - Code behavior ถูกต้องตาม expected
 - รายงานสรุปผลลัพธ์ test ที่ครบถ้วน
