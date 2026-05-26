@@ -64,29 +64,37 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 2. ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน: ใช้ `git add -p` เพื่อ stage เฉพาะส่วนที่เกี่ยวข้อง
 3. ตรวจสอบด้วย `git diff --cached` ว่าไฟล์ที่ stage ถูกต้อง
 
-### 8. Determine Commit Type
+### 8. Update README
+
+อัปเดต README ก่อน commit
+
+1. ทำตาม `/update-all-readme`
+2. Stage README ที่ถูกอัปเดตด้วย `git add README.md` หรือ `git add -p README.md`
+3. ตรวจสอบด้วย `git diff --cached` ว่า README ถูก stage ถูกต้อง
+
+### 9. Determine Commit Type
 
 เลือก conventional commit type ที่เหมาะสม
 
 1. ดู Rules ส่วน Commit Types
 
-### 9. Write Commit Message
+### 10. Write Commit Message
 
 เขียน commit message ตาม conventional commits format
 
 1. ดู Rules ส่วน Commit Message Format และ Body
 
-### 10. Execute Commit
+### 11. Execute Commit
 
 ดำเนินการ commit
 
 1. รัน `git commit -m "<message>"` หรือ `git commit`
 2. ตรวจสอบผลลัพธ์จาก git commit
 3. ถ้ามี error: แก้ไขแล้วลองอีกครั้ง
-4. ถ้าสำเร็จและเป็น standalone mode: ทำซ้ำขั้นตอน 5-9
-5. ถ้าสำเร็จและเป็น workflow mode: จบการทำงาน
+4. ถ้าสำเร็จและเป็น standalone mode: ทำซ้ำขั้นตอน 5-10
+5. ถ้าสำเร็จและเป็น workflow mode: จบการทำงาย
 
-### 11. Verify Commits
+### 12. Verify Commits
 
 ตรวจสอบความถูกต้องของ commits
 

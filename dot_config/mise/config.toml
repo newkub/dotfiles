@@ -1,4 +1,4 @@
-[tasks.update-all]
+[tasks.update]
 description = "update scoop, winget, bun(global), mise, rustup, gh extensions, chezmoi, proto, skills"
 run = "scoop update && winget upgrade --all && bun update -g && bun upgrade && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update && proto upgrade && skills update"
 
