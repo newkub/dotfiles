@@ -194,8 +194,10 @@
 	"workbench.editor.enablePreview": false,
 	"workbench.editorAssociations": {
 		"README.md": "vscode.markdown.preview.editor",
+		"LICENSE.md": "vscode.markdown.preview.editor",
+		"AGENTS.md": "vscode.markdown.preview.editor",
 		"TODO.md": "vscode.markdown.preview.editor",
-		"**/.agent/task/**/*.md": "vscode.markdown.preview.editor"
+		"**/spec/**/*.md": "vscode.markdown.preview.editor"
 	},
 	"workbench.experimental.share.enabled": true,
 	"workbench.list.smoothScrolling": false,

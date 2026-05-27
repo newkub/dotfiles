@@ -67,11 +67,14 @@ test/
 
 ### 6. Fix Failures
 
-1. วิเคราะห์ cause ของ test failures
-2. แก้ไข code หรือ test
-3. แก้ไข test assertions ถ้า test outdated
-4. แก้ไข mock data ถ้าจำเป็น
-5. บันทึกสิ่งที่แก้ไข
+1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ test failures
+2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
+   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
+   - ถ้าเป็น isolated errors → `/resolve-errors`
+3. แก้ไข code หรือ test
+4. แก้ไข test assertions ถ้า test outdated
+5. แก้ไข mock data ถ้าจำเป็น
+6. บันทึกสิ่งที่แก้ไข
 
 ### 7. Verify
 

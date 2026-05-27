@@ -21,7 +21,10 @@ auto_execution_mode: 3
 
 1. รัน `bun run typecheck`
 2. ตรวจสอบ TypeScript types ทั้งหมด
-3. แก้ไข type errors ถ้ามี
+3. ถ้ามี type errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
+4. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
+   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
+   - ถ้าเป็น isolated errors → `/resolve-errors`
 
 ### 3. Install Dependencies
 

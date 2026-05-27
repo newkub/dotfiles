@@ -1,114 +1,66 @@
 ---
-title: Update README
-description: Create comprehensive README.md files with actual project analysis data
+title: Update Readme
+description: สร้าง README.md ทั้งหมดใน monorepo ตามประเภทโปรเจกต์ (Single Repo, Monorepo, Workspace) และ README.html
 auto_execution_mode: 3
+related_workflows:
+  - /update-readme-singlerepo
+  - /update-readme-monorepo
+  - /update-readme-workspace
+  - /update-readme-html
 ---
 
 ## Goal
 
-สร้าง README.md ที่มีเนื้อหาครบถ้วนด้วยข้อมูลจากการวิเคราะห์โปรเจกต์จริง โดยไม่มี placeholders
+สร้าง README.md ทั้งหมดใน monorepo ตามประเภทโปรเจกต์ โดยเลือก workflow ที่เหมาะสม และสร้าง README.html
 
 ## Execute
 
-### 1. Prepare Analysis
+### 1. Identify Project Type
 
-1. ทำ `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์
-2. อ่าน `README.md` ปัจจุบันเพื่อดูสิ่งที่ต้องอัพเดท
-3. บันทึก dependencies และ file structure
+ตรวจสอบประเภทโปรเจกต์:
 
-### 2. Gather Project Information
+1. **Single Repo**: โปรเจกต์เดียว ไม่มี workspaces
+2. **Monorepo**: มีหลาย packages ใน repository เดียว
+3. **Workspace**: ส่วนหนึ่งของ monorepo ที่ต้องการ README เฉพาะสำหรับ workspace นั้น
 
-1. อ่าน manifest files: `package.json`, `Cargo.toml`, `pyproject.toml`
-2. ใช้ `list_dir` ดูโครงสร้าง `src/`, `apps/`, `packages/`
-3. อ่าน source code เพื่อเข้าใจ features
-4. อ่าน config files เพื่อดูตัวเลือกการตั้งค่า
+### 2. Select Workflow
 
-### 3. Write Core Sections
+เลือก workflow ตามประเภทโปรเจกต์:
 
-1. เขียน required sections: Title, Why, When, Key Concept ( What + Mental Model), Principle ( Why + Rules ), Features, Installation, Usage, Configuration, Reference, License
-2. เขียน optional sections ตามความเหมาะสม
+- **Single Repo**: ทำ `/update-readme-singlerepo`
+- **Monorepo**: ทำ `/update-readme-monorepo`
+- **Workspace**: ทำ `/update-readme-workspace`
 
-### 4. Write Usage Section
+### 3. Execute Selected Workflow
 
-1. เขียน usage ตาม interface หลักของโปรเจกต์ (CLI, Programmatic API, Browser Extension)
-2. ใช้ format: `Method N: Usage via [Interface]`
-3. สร้าง subsections สำหรับแต่ละ feature ภายใน method นั้นๆ
+ทำตาม workflow ที่เลือก
 
-### 5. Validate Content
+### 4. Generate README.html
 
-1. ตรวจสอบว่าใช้ข้อมูลจริงจากการวิเคราะห์
-2. ยืนยัน code examples ถูกต้องและรันได้
-3. ตรวจสอบว่าไม่มี placeholder หรือ broken links
+ทำ `/update-readme-html` เพื่อสร้าง README.html พร้อม tab system สำหรับ Features และ Dependencies
 
 ## Rules
 
-### 1. Section Formats
+### 1. Project Type Detection
 
-จัดรูปแบบ sections ตามมาตรฐาน:
+ตรวจสอบประเภทโปรเจกต์:
 
-| Section | Columns | Icons |
-|---------|---------|-------|
-| Why | 2 (Problem, Solution) | ไม่มี |
-| When | 3 (Icon, Use Case, Description) | column แรก |
-| Key Concept ( What + Mental Model) | 3 (Icon, Concept, Mental Model) | column แรก |
-| Principle ( Why + Rules ) | 3 (Icon, Principle, Rule) | column แรก |
-| Features | 4 (Icon, Feature, Description, Benefit) | column แรก |
-| License | MIT License + See LICENSE.md | ไม่มี |
+- **Single Repo**: ไม่มี `packages/`, `apps/`, หรือ workspace configuration
+- **Monorepo**: มี `packages/`, `apps/`, หรือ workspace configuration (pnpm-workspace.yaml, lerna.json, turbo.json)
+- **Workspace**: อยู่ใน monorepo และต้องการ README เฉพาะสำหรับ workspace นั้น
 
-ห้ามมี Key Points: ใน License section
+### 2. Workflow Selection
 
-### 2. Icon Standards
+เลือก workflow ตามประเภทโปรเจกต์:
 
-ใช้ Iconify API:
-
-```
-<center>![name](https://api.iconify.design/mdi:icon-name.svg?color=%23HEX_COLOR)</center>
-```
-
-- Icons อยู่ใน column แรกของตารางเท่านั้นและจัดให้อยู่ตรงกลาง
-- ใช้ `<center>` tag ครอบ icon เพื่อให้จัดวางตรงกลาง
-- ห้ามใช้ icons ใน description หรือ column อื่น
-- เลือกสีให้เหมาะสมกับเนื้อหา
-- หา icon จาก https://icon-sets.iconify.design/mdi/
-
-### 3. Content Standards
-
-รักษาคุณภาพเนื้อหา:
-- ใช้ข้อมูลจริงจาก `/analyze-project`
-- Code examples ต้องรันได้จริง
-- ไม่ใช้ placeholder
-- Code block มี comment อธิบาย
-
-### 4. Usage Naming
-
-ตั้งชื่อ Usage Methods ตาม interface:
-
-| Bad | Good |
-|-----|------|
-| Usage via Web Mode | Method 1: Usage via CLI |
-| Usage via Effect Chaining | Method 2: Usage via Programmatic API |
-| Usage via Export | (รวมใน CLI method) |
-| Usage via Theme System | (รวบรวมใน section ที่เหมาะสม) |
-
-- ใช้ชื่อ interface หลัก: CLI, Programmatic API, Terminal, Website, Browser Extension
-- ห้ามใช้ชื่อ feature, API ย่อย, หรือ options เป็น method name
-- ถ้าเป็นทางเข้าถึงเดียวกัน ให้รวมเป็น method เดียว
-
-### 5. Language Standards
-
-ใช้ภาษาที่ถูกต้อง:
-- README.md: Headers และ Lists เป็นภาษาอังกฤษ
-- Workflow: ใช้ภาษาไทย
-- ยกเว้นคำศัพท์เฉพาะทาง
+| Project Type | Workflow |
+|--------------|----------|
+| Single Repo | `/update-readme-singlerepo` |
+| Monorepo | `/update-readme-monorepo` |
+| Workspace | `/update-readme-workspace` |
 
 ## Expected Outcome
 
-- README.md ที่มีเนื้อหาครบถ้วน ไม่มี placeholder
-- โครงสร้างสม่ำเสมอตาม section formats
-- Code examples ถูกต้องและพร้อมใช้งาน
-- Links ทั้งหมดใช้งานได้
-
-## References
-
-- ทำ `/follow-workflows-creator` เพื่อดูมาตรฐานการเขียน workflow files
-- ทำ `/follow-content-quality` เพื่อดูแนวทางการสร้างเนื้อหาคุณภาพสูง
+- README.md ทั้งหมดใน monorepo ที่เหมาะสมกับประเภทโปรเจกต์
+- โครงสร้างสม่ำเสมอตามมาตรฐาน
+- ข้อมูลครบถ้วนและเป็นปัจจุบัน

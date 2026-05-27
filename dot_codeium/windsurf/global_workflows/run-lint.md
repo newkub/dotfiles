@@ -18,22 +18,27 @@ auto_execution_mode: 3
 
 ### 2. Run Lint
 
-1. ตรวจสอบว่าโปรเจกต์มีการตั้งค่า lint ใน main config
-2. ถ้าไม่มีให้ทำการตั้งค่า lint ตามภาษาที่ใช้
-3. รัน lint ตามที่กำหนดไว้ใน config:
+1. ทำ `/setup-config` เพื่อตรวจสอบ config
+2. **ห้ามแก้ไข config ใดๆ**
+3. **ห้ามใช้ ignore comments/attributes ทุกภาษา**
+4. รัน lint ตามที่กำหนดไว้ใน config:
    - สำหรับ monorepo: รัน `bun run lint` หรือ `turbo lint`
    - สำหรับโปรเจกต์ทั่วไป: รัน lint command ตาม config
 
 ### 3. Fix Errors
 
-1. รัน `/resolve-errors` เพื่อแก้ไขข้อผิดพลาดที่เกิดจาก lint
-2. ตรวจสอบว่าข้อผิดพลาดถูกแก้ไขหมดแล้ว
-3. รัน lint อีกครั้งเพื่อยืนยัน
+1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ errors ที่เกิดจาก lint
+2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
+   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
+   - ถ้าเป็น isolated errors → `/resolve-errors`
+3. ตรวจสอบว่าข้อผิดพลาดถูกแก้ไขหมดแล้ว
+4. รัน lint อีกครั้งเพื่อยืนยัน
 
 ## Rules
 
 - ต้องรัน code quality check ก่อนการรัน lint เสมอ
-- ตรวจสอบว่าโปรเจกต์มีการตั้งค่า lint ให้ดี
+- ทำ `/setup-config` เพื่อตรวจสอบ config แต่ **ห้ามแก้ไข**
+- **ห้ามใช้ ignore comments/attributes ทุกภาษา** แก้ปัญหาที่ source
 - แก้ไขข้อผิดพลาดที่เกิดขึ้นจาก lint ก่อนดำเนินการต่อ
 
 ## Expected Outcome

@@ -12,73 +12,68 @@ auto_execution_mode: 3
 
 ### 1. Analyze Naming
 
-วิเคราะห์การตั้งชื่อปัจจุบัน
+วิเคราะห์การตั้งชื่อปัจจุบันด้วย Bun scripts
 
-1. ตรวจสอบ file names ทั้งหมด
-2. ตรวจสอบ type names ทั้งหมด
-3. ตรวจสอบ constant names ทั้งหมด
-4. ตรวจสอบ function names ทั้งหมด
-5. ตรวจสอบ component names ทั้งหมด
-6. ตรวจสอบ variable names ทั้งหมด
+1. สร้าง Bun script ใน `scripts/temp/analyze-naming.ts` สำหรับ:
+   - ตรวจสอบ file names ทั้งหมด
+   - ตรวจสอบ type names ทั้งหมด
+   - ตรวจสอบ constant names ทั้งหมด
+   - ตรวจสอบ function names ทั้งหมด
+   - ตรวจสอบ component names ทั้งหมด
+   - ตรวจสอบ variable names ทั้งหมด
+2. รัน script ด้วย `bun run scripts/temp/analyze-naming.ts`
+3. สรุปผลการ analyze ทั้งหมม
+4. ลบ script หลังใช้งาน
 
 ### 2. File Naming
 
 ปรับปรุงการตั้งชื่อไฟล์
 
-1. ใช้ `kebab-case` สำหรับไฟล์ทั่วไป
-2. ใช้ `PascalCase` สำหรับ components
-3. ใช้ `kebab-case` สำหรับ utilities
-4. ใช้ `kebab-case` สำหรับ composables
-5. ใช้ `kebab-case` สำหรับ types ที่อยู่ในไฟล์แยก
-6. อัพเดท imports/exports ทั้งหมด
+1. ใช้ `snake_case.rs` สำหรับ Rust files
+2. ใช้ `kebab-case.md` สำหรับ documentation files
+3. อัพเดท imports/exports ทั้งหมด (mod declarations, use statements)
 
 ### 3. Type Naming
 
 ปรับปรุงการตั้งชื่อ types
 
-1. ใช้ `PascalCase` สำหรับ interfaces
-2. ใช้ `PascalCase` สำหรับ type aliases
-3. ใช้ `PascalCase` สำหรับ enums
-4. ใช้ `PascalCase` สำหรับ classes
-5. เพิ่ม prefix `I` สำหรับ interfaces (ถ้าจำเป็น)
-6. เพิ่ม suffix `Type` สำหรับ type aliases (ถ้าจำเป็น)
+1. ใช้ `PascalCase` สำหรับ structs
+2. ใช้ `PascalCase` สำหรับ enums
+3. ใช้ `PascalCase` สำหรับ traits
+4. ใช้ `PascalCase` สำหรับ type aliases
 
 ### 4. Constant Naming
 
 ปรับปรุงการตั้งชื่อ constants
 
-1. ใช้ `UPPER_SNAKE_CASE` สำหรับ global constants
-2. ใช้ `camelCase` สำหรับ local constants
-3. ใช้ `PascalCase` สำหรับ enum members
-4. จัดกลุ่ม constants ที่เกี่ยวข้อง
-5. แยก constants ไปไฟล์ `constants/` ถ้ามีมาก
+1. ใช้ `SCREAMING_SNAKE_CASE` สำหรับ const และ static
+2. ใช้ `PascalCase` สำหรับ enum variants
+3. จัดกลุ่ม constants ที่เกี่ยวข้อง
+4. แยก constants ไปไฟล์ `constants/` ถ้ามีมาก
 
 ### 5. Error Naming
 
 ปรับปรุงการตั้งชื่อ errors
 
 1. ใช้ `PascalCase` พร้อม suffix `Error`
-2. ใช้ `PascalCase` พร้อม suffix `Exception`
-3. ตั้งชื่อที่บอก cause ชัดเจน
-4. จัดกลุ่ม errors ตาม domain
-5. แยก error types ไปไฟล์ `errors/` ถ้ามีมาก
+2. ตั้งชื่อที่บอก cause ชัดเจน
+3. จัดกลุ่ม errors ตาม domain
+4. แยก error types ไปไฟล์ `errors/` ถ้ามีมาก
 
 ### 6. Function Naming
 
 ปรับปรุงการตั้งชื่อ functions
 
-1. ใช้ `camelCase` สำหรับ functions
+1. ใช้ `snake_case` สำหรับ functions
 2. ใช้ verb นำหน้าเสมอ (get, set, create, update, delete)
-3. ใช้ prefix `use` สำหรับ composables
-4. ใช้ prefix `handle` สำหรับ event handlers
-5. ใช้ prefix `is/has/can/should` สำหรับ booleans
-6. ใช้ prefix `on` สำหรับ callbacks
+3. ใช้ prefix `is/has/can/should` สำหรับ booleans
+4. ใช้ prefix `on` สำหรับ callbacks
 
 ### 7. Component Naming
 
-ปรับปรุงการตั้งชื่อ components
+ปรับปรุงการตั้งชื่อ components (Rust ใช้ struct/module แทน)
 
-1. ใช้ `PascalCase` สำหรับ component names
+1. ใช้ `PascalCase` สำหรับ struct/module names
 2. ใช้คำนามเดียว หรือ compound nouns
 3. ใช้ suffix `UI` สำหรับ UI components (ถ้าจำเป็น)
 4. ใช้ prefix `Base` สำหรับ base components (ถ้าจำเป็น)
@@ -89,12 +84,11 @@ auto_execution_mode: 3
 
 ปรับปรุงการตั้งชื่อ variables
 
-1. ใช้ `camelCase` สำหรับ variables
+1. ใช้ `snake_case` สำหรับ variables
 2. ตั้งชื่อที่บอก purpose ชัดเจน
 3. หลีกเลี่ยง abbreviations ยกเว้นที่รู้จักกันดี
-4. ใช้ prefix `_` สำหรับ private members
-5. ใช้ `$` สำหรับ refs ใน Vue (ถ้าจำเป็น)
-6. หลีกเลี่ยง single-letter variables ยกเว้น loops
+4. ใช้ prefix `_` สำหรับ unused variables
+5. หลีกเลี่ยง single-letter variables ยกเว้น loops
 
 ## Rules
 
@@ -122,13 +116,13 @@ auto_execution_mode: 3
 
 ใช้ conventions ที่ถูกต้องสำหรับแต่ละประเภท
 
-- File: `PascalCase.vue`, `kebab-case.ts`, `use-kebab-case.ts`
-- Type: `PascalCase`, `IPascalCase`, `PascalCaseType`
-- Constant: `UPPER_SNAKE_CASE` (global), `camelCase` (local)
-- Error: `PascalCaseError`, `PascalCaseException`, `UPPER_SNAKE_CASE`
-- Function: `camelCase` (verb), `useCamelCase`, `handleCamelCase`, `isCamelCase`, `onCamelCase`
-- Component: `PascalCase`, `BasePascalCase`, `PascalCaseUI`, `PascalCaseLayout`
-- Variable: `camelCase`, `_camelCase`, `$camelCase`, `camelCaseList`
+- File: `snake_case.rs`, `kebab-case.md`
+- Type: `PascalCase` (struct, enum, trait, type alias)
+- Constant: `SCREAMING_SNAKE_CASE` (const, static), `PascalCase` (enum variants)
+- Error: `PascalCaseError`
+- Function: `snake_case` (verb), `is_snake_case`, `on_snake_case`
+- Component: `PascalCase`, `BasePascalCase`, `PascalCaseUI`
+- Variable: `snake_case`, `_snake_case`
 
 ### 4. Consistency And Updates
 

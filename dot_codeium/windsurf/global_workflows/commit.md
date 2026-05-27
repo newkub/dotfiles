@@ -68,7 +68,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 
 อัปเดต README ก่อน commit
 
-1. ทำตาม `/update-all-readme`
+1. ทำตาม `/update-readme`
 2. Stage README ที่ถูกอัปเดตด้วย `git add README.md` หรือ `git add -p README.md`
 3. ตรวจสอบด้วย `git diff --cached` ว่า README ถูก stage ถูกต้อง
 

@@ -20,8 +20,12 @@ auto_execution_mode: 3
 ### 2. Run Dev Server
 
 1. ดำเนินการรัน dev server ด้วยคำสั่งที่เหมาะสม (bun dev, npm run dev, cargo run)
-2. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
-3. ตรวจสอบว่า dev server เริ่มต้นสำเร็จ
+2. ถ้ามี errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
+3. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
+   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
+   - ถ้าเป็น isolated errors → `/resolve-errors`
+4. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
+5. ตรวจสอบว่า dev server เริ่มต้นสำเร็จ
 
 ### 3. Open Browser (ถ้าจำเป็น)
 

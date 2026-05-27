@@ -48,24 +48,16 @@
             "keys": "shift+enter"
         },
         {
-            "id": "Terminal.OpenNewTab",
-            "keys": "ctrl+t"
-        },
-        {
             "id": "Terminal.CopyToClipboard",
             "keys": "ctrl+c"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+f"
-        },
-        {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
+            "id": "Terminal.OpenNewTab",
+            "keys": "ctrl+t"
         },
         {
             "id": null,
-            "keys": "ctrl+comma"
+            "keys": "ctrl+shift+w"
         },
         {
             "id": "Terminal.FindText",
@@ -73,7 +65,15 @@
         },
         {
             "id": null,
-            "keys": "ctrl+shift+w"
+            "keys": "ctrl+comma"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+f"
         },
         {
             "id": "Terminal.DuplicatePaneAuto",
