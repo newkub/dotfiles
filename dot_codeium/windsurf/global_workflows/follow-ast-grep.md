@@ -8,6 +8,10 @@ auto_execution_mode: 3
 
 ตั้งค่า ast-grep เป็นเครื่องมือสำหรับ code search, lint และ refactoring ด้วย AST-based patterns ที่แม่นยำกว่า regex
 
+## Scope
+
+ครอบคลุมการตั้งค่า ast-grep สำหรับ code search, linting, และ transformation ด้วย AST-based patterns
+
 ## Execute
 
 ### 1. Install Dependencies
@@ -35,8 +39,6 @@ ruleDirs:
 สร้างโครงสร้าง project ตาม best practices
 
 1. สร้าง directory `rules/` สำหรับเก็บ ast-grep rules
-2. สร้าง directory `rule-tests/` สำหรับ test cases
-3. สร้าง directory `utils/` สำหรับ utility rules (ถ้าจำเป็น)
 
 ### 4. Add Scan Script
 
@@ -47,7 +49,7 @@ ruleDirs:
 ```json
 {
   "scripts": {
-    "scan": "ast-grep scan -r"
+    "scan": "ast-grep scan"
   }
 }
 ```
@@ -65,7 +67,7 @@ ruleDirs:
 
 ### 1. Installation Rules
 
-กฎการติดตั้ง ast-grep CLI
+กฎการติดตั้ง ast-grep CLI:
 
 - ใช้ Bun เป็น package manager
 - ติดตั้งเป็น dev dependency ด้วย `-D` flag
@@ -73,7 +75,7 @@ ruleDirs:
 
 ### 2. Configuration Rules
 
-กฎการตั้งค่า sgconfig.yml
+กฎการตั้งค่า sgconfig.yml:
 
 - สร้าง `sgconfig.yml` ที่ root directory
 - ตั้งค่า `ruleDirs` เป็น `rules`
@@ -81,24 +83,22 @@ ruleDirs:
 
 ### 3. Project Structure Rules
 
-กฎการจัดโครงสร้าง project
+กฎการจัดโครงสร้าง project:
 
 - สร้าง `rules/` directory สำหรับเก็บ rules
-- สร้าง `rule-tests/` directory สำหรับ test cases
-- สร้าง `utils/` directory สำหรับ utility rules (ถ้าจำเป็น)
 
 ### 4. Script Rules
 
-กฎการเพิ่ม scan script
+กฎการเพิ่ม scan script:
 
 - มี `scan` script ใน package.json
-- ใช้คำสั่ง `ast-grep scan -r` สำหรับ scanning
+- ใช้คำสั่ง `ast-grep scan` สำหรับ scanning
 - ตรวจสอบว่า script สามารถเรียกใช้ได้
 
 ## Expected Outcome
 
 - ast-grep CLI ติดตั้งเรียบร้อย
 - sgconfig.yml ตั้งค่าเรียบร้อยด้วย ruleDirs
-- Project structure สร้างเรียบร้อย (rules/, rule-tests/, utils/)
+- Project structure สร้างเรียบร้อย (rules/)
 - Scan script เพิ่มใน package.json
 - ast-grep scan ทำงานได้ถูกต้อง

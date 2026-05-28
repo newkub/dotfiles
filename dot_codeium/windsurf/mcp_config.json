@@ -7,7 +7,8 @@
       "command": "bunx"
     },
     "crw": {
-      "command": "crw-server"
+      "command": "bunx",
+      "args": ["crw-mcp"]
     },
     "deepwiki": {
       "registry": "io.windsurf/deepwiki",

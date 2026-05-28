@@ -11,6 +11,10 @@ related_workflows:
 
 รัน ast-grep scan เพื่อตรวจสอบ codebase ด้วย AST-based patterns และแก้ไขปัญหาที่พบ
 
+## Scope
+
+ครอบคลุมการรัน ast-grep scan สำหรับตรวจสอบ codebase ด้วย AST-based patterns และแก้ไขปัญหาที่พบ
+
 ## Execute
 
 ### 1. Setup Ast-grep
@@ -23,11 +27,10 @@ related_workflows:
 
 1. ทำ `/write-ast-grep-rules` เพื่อสร้าง rules สำหรับ linting
 2. สร้าง rules ใน `rules/` directory
-3. เพิ่ม test cases ใน `rule-tests/` directory
 
 ### 3. Run Scan
 
-1. รัน `bun run scan` หรือ `ast-grep scan -r`
+1. รัน `bun run scan` หรือ `ast-grep scan`
 2. ตรวจสอบ output และระบุ issues ที่พบ
 3. แก้ไข code ตาม suggestions หรือใช้ `--interactive` mode
 
@@ -45,7 +48,7 @@ related_workflows:
 
 - ต้องมี `sgconfig.yml` ที่ root directory
 - ต้องมี `scan` script ใน `package.json`
-- รัน scan ด้วย `ast-grep scan -r` หรือ `bun run scan`
+- รัน scan ด้วย `ast-grep scan` หรือ `bun run scan`
 - ตรวจสอบ output ทุกครั้งก่อน apply fixes
 
 ### 2. Rule Management
@@ -53,7 +56,6 @@ related_workflows:
 กฎการจัดการ rules:
 
 - rules ต้องอยู่ใน `rules/` directory
-- ทุก rule ต้องมี test cases
 - ใช้ severity ตามความสำคัญ (error, warning, info)
 - ตรวจสอบ rules ด้วย `ast-grep test` ก่อนใช้
 
@@ -77,8 +79,8 @@ related_workflows:
 
 ## Expected Outcome
 
-- [ ] ast-grep CLI ติดตั้งและตั้งค่าเรียบร้อย
-- [ ] Rules สร้างใน `rules/` directory
-- [ ] Scan รันได้และระบุ issues ที่ถูกต้อง
-- [ ] Issues แก้ไขและ verify เรียบร้อย
-- [ ] Codebase ผ่าน ast-grep scan โดยไม่มี errors
+- ast-grep CLI ติดตั้งและตั้งค่าเรียบร้อย
+- Rules สร้างใน `rules/` directory
+- Scan รันได้และระบุ issues ที่ถูกต้อง
+- Issues แก้ไขและ verify เรียบร้อย
+- Codebase ผ่าน ast-grep scan โดยไม่มี errors

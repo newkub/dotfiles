@@ -3,6 +3,7 @@
     "node-modules-inspector": "bunx node-modules-inspector"
   },
   "dependencies": {
+    "@ast-grep/cli": "^0.43.0",
     "tuistory": "^0.8.0"
   }
 }
