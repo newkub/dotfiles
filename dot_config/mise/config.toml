@@ -203,6 +203,7 @@ codex = "latest"
 "npm:aicommits" = "latest"
 opencode = "latest"
 "github:us/crw" = "latest"
+"npm:gleanup" = "latest"
 
 
 [settings]

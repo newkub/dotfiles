@@ -217,5 +217,6 @@
 	"chat.tips.enabled": false,
 	"github.copilot.chat.agent.currentEditorContext.enabled": false,
 	"chat.editing.confirmEditRequestRemoval": false,
-	"workbench.panel.showLabels": false
+	"workbench.panel.showLabels": false,
+	"package-manager-enhancer.enablePackageJsonDependenciesCodeLens": false
 }

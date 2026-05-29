@@ -10,14 +10,20 @@ auto_execution_mode: 3
 
 ## Execute
 
-### 1. Check Configuration
+### 1. Run Format
+
+1. ทำ `/run-format` เพื่อ format code ก่อน
+2. รอให้ format เสร็จสิ้นก่อนดำเนินการต่อ
+3. ถ้ามีข้อผิดพลาดจาก format ให้แก้ไขก่อน
+
+### 2. Check Configuration
 
 1. ตรวจสอบ main config และ dev script ว่ามีการกำหนดไว้หรือไม่
 2. ถ้าไม่มี dev script ใน main config ต้องกำหนดให้
 3. ตรวจสอบว่า dependencies ที่จำเป็นถูกติดตั้งแล้ว
 4. ตรวจสอบว่า environment variables ที่จำเป็นถูกกำหนดแล้ว
 
-### 2. Run Dev Server
+### 3. Run Dev Server
 
 1. ดำเนินการรัน dev server ด้วยคำสั่งที่เหมาะสม (bun dev, npm run dev, cargo run)
 2. ถ้ามี errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
@@ -27,13 +33,13 @@ auto_execution_mode: 3
 4. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
 5. ตรวจสอบว่า dev server เริ่มต้นสำเร็จ
 
-### 3. Open Browser (ถ้าจำเป็น)
+### 4. Open Browser (ถ้าจำเป็น)
 
 1. ถ้า run dev ที่ต้องเปิด URL ให้รัน `/watch-browser` เพื่อตรวจสอบผ่าน browser
 2. ตรวจสอบว่า dev server ทำงานได้จริงผ่าน browser
 3. ทดสอบเข้าถึง dev server และตรวจสอบว่า features หลักทำงานได้
 
-### 4. Verify
+### 5. Verify
 
 1. ยืนยันว่าไม่มี critical errors ที่ขัดขวางการทำงาน
 2. ตรวจสอบว่า services ที่เกี่ยวข้องทำงานปกติ

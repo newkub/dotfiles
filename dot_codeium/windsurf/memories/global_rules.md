@@ -31,24 +31,34 @@ auto_execution_mode: 3
 1. ทำ `/analyze-project` ด้วย `/use-scripts` เพื่อดูภาพรวมโปรเจกต์
 2. เมื่อได้รับ error ทำตาม `/error`
 
-### 3. Planning
+### 3. Read Reference
+
+1. เมื่อได้รับ user prompt ให้อ่าน reference ก่อนเสมอ:
+   - อ่าน workflows ที่เกี่ยวข้องกับ task
+   - อ่าน skills ที่เกี่ยวข้องกับ task
+   - อ่าน global rules ที่เกี่ยวข้อง
+2. วิเคราะห์และ planning ทำตามสิ่งที่ควรทำก่อนหลังจาก reference
+3. ลดเวลาการทำงานโดยไม่ต้องค้นหาข้อมูลซ้ำ
+
+### 4. Planning
 
 1. เมื่อแก้ไขไฟล์ workflows ทำตาม `/follow-write-workflows`
 2. เมื่อแก้ไขไฟล์ skills ทำตาม `/follow-write-skills`
 
-### 4. Write
+### 5. Write
 
-1. ถ้าต้องทำ file operation จำนวนมาก ให้ใช้ `/use-scripts`
-2. ถ้า mock ให้ comment `// MOCK` ชัดเจน และแยกไฟล์ไปในโฟลเดอร์ `mock/`
-3. ถ้ายังทำไม่เสร็จต้อง comment `// TODO` ชัดเจน
-4. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
+1. เวลาแก้ไขอะไร ให้ทำ `/follow-architecture` เพื่อเลือก architecture pattern ที่เหมาะสม
+2. ถ้าต้องทำ file operation จำนวนมาก ให้ใช้ `/use-scripts`
+3. ถ้า mock ให้ comment `// MOCK` ชัดเจน และแยกไฟล์ไปในโฟลเดอร์ `mock/`
+4. ถ้ายังทำไม่เสร็จต้อง comment `// TODO` ชัดเจน
+5. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ ต้อง comment ชัดเจน
 
-### 5. Reflex
+### 6. Reflex
 
 1. ทำ `/loop-until-complete` ทำซ้ำจน implement เสร็จทั้งหมด
 2. กลับไป check planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมดแล้ว
 
-### 6. Report
+### 7. Report
 
 1. ทำตาม `/report`
 2. เมื่อจบ task ให้รัน `/suggest-next-action` เสมอ

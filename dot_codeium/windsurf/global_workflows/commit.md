@@ -30,16 +30,24 @@ auto_execution_mode: 3
 
 1. ทำตาม `/setup-lefthook`
 
-### 4. Workflow Mode
+### 4. Pull Latest Changes
+
+ดึง changes ล่าสุดจาก remote
+
+1. รัน `git pull` เพื่อดึง changes ล่าสุดจาก remote
+2. ตรวจสอบว่าไม่มี conflicts
+3. ถ้ามี conflicts: แก้ไข conflicts ก่อนดำเนินการต่อ
+
+### 5. Workflow Mode
 
 Commit เฉพาะบรรทัดที่ workflow แก้ไป
 
 1. ระบุไฟล์และบรรทัดที่ workflow แก้ไปจาก context
 2. ใช้ `git add -p` เพื่อ stage เฉพาะบรรทัดที่ workflow แก้ไป
 3. ตรวจสอบด้วย `git diff --cached` ว่าเฉพาะส่วนที่ workflow แก้ไปถูก stage
-4. ข้ามไปขั้นตอนที่ 10 Execute Commit
+4. ข้ามไปขั้นตอนที่ 11 Execute Commit
 
-### 5. Standalone Mode
+### 6. Standalone Mode
 
 Commit all ทั้งหมดจนไม่มีเหลือ
 
@@ -47,7 +55,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 2. จัดกลุ่มไฟล์ตามประเภทการเปลี่ยนแปลง
 3. ตรวจสอบว่าไม่มีไฟล์ที่ไม่ควร commit
 
-### 6. Group Files by Scope
+### 7. Group Files by Scope
 
 จัดกลุ่มไฟล์ตาม conventional commit scope
 
@@ -56,7 +64,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 3. ใช้ `git diff --stat` เพื่อดู overview ของการเปลี่ยนแปลง
 4. Split commits ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วนหรือหลาย scopes
 
-### 7. Stage Files
+### 8. Stage Files
 
 จัดเตรียมไฟล์สำหรับ commit
 
@@ -64,7 +72,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 2. ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน: ใช้ `git add -p` เพื่อ stage เฉพาะส่วนที่เกี่ยวข้อง
 3. ตรวจสอบด้วย `git diff --cached` ว่าไฟล์ที่ stage ถูกต้อง
 
-### 8. Update README
+### 9. Update README
 
 อัปเดต README ก่อน commit
 
@@ -72,29 +80,29 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 2. Stage README ที่ถูกอัปเดตด้วย `git add README.md` หรือ `git add -p README.md`
 3. ตรวจสอบด้วย `git diff --cached` ว่า README ถูก stage ถูกต้อง
 
-### 9. Determine Commit Type
+### 10. Determine Commit Type
 
 เลือก conventional commit type ที่เหมาะสม
 
 1. ดู Rules ส่วน Commit Types
 
-### 10. Write Commit Message
+### 11. Write Commit Message
 
 เขียน commit message ตาม conventional commits format
 
 1. ดู Rules ส่วน Commit Message Format และ Body
 
-### 11. Execute Commit
+### 12. Execute Commit
 
 ดำเนินการ commit
 
 1. รัน `git commit -m "<message>"` หรือ `git commit`
 2. ตรวจสอบผลลัพธ์จาก git commit
 3. ถ้ามี error: แก้ไขแล้วลองอีกครั้ง
-4. ถ้าสำเร็จและเป็น standalone mode: ทำซ้ำขั้นตอน 5-10
+4. ถ้าสำเร็จและเป็น standalone mode: ทำซ้ำขั้นตอน 6-11
 5. ถ้าสำเร็จและเป็น workflow mode: จบการทำงาย
 
-### 12. Verify Commits
+### 13. Verify Commits
 
 ตรวจสอบความถูกต้องของ commits
 

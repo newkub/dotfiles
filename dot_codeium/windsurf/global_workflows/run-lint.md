@@ -10,13 +10,19 @@ auto_execution_mode: 3
 
 ## Execute
 
-### 1. Run Code Quality Check
+### 1. Run Format
+
+1. ทำ `/run-format` เพื่อ format code ก่อน
+2. รอให้ format เสร็จสิ้นก่อนดำเนินการต่อ
+3. ถ้ามีข้อผิดพลาดจาก format ให้แก้ไขก่อน
+
+### 2. Run Code Quality Check
 
 1. รัน `bun run lint` หรือ script ที่เทียบเท่าสำหรับตรวจสอบคุณภาพโค้ด
 2. รอให้การตรวจสอบเสร็จสิ้นก่อนดำเนินการต่อ
 3. ถ้ามีข้อผิดพลาดจาก code quality check ให้แก้ไขก่อน
 
-### 2. Run Lint
+### 3. Run Lint
 
 1. ทำ `/setup-config` เพื่อตรวจสอบ config
 2. **ห้ามแก้ไข config ใดๆ**
@@ -25,7 +31,7 @@ auto_execution_mode: 3
    - สำหรับ monorepo: รัน `bun run lint` หรือ `turbo lint`
    - สำหรับโปรเจกต์ทั่วไป: รัน lint command ตาม config
 
-### 3. Fix Errors
+### 4. Fix Errors
 
 1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ errors ที่เกิดจาก lint
 2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:

@@ -13,7 +13,13 @@ related_workflows:
 
 ## Execute
 
-### 1. Setup Test Structure
+### 1. Run Format
+
+1. ทำ `/run-format` เพื่อ format code ก่อน
+2. รอให้ format เสร็จสิ้นก่อนดำเนินการต่อ
+3. ถ้ามีข้อผิดพลาดจาก format ให้แก้ไขก่อน
+
+### 2. Setup Test Structure
 
 1. ตรวจสอบ test structure ตามมาตรฐาน:
 
@@ -38,14 +44,14 @@ test/
 4. ตรวจสอบ test configuration
 5. ยืนยันว่ามี test config files ถ้าจำเป็น
 
-### 2. Write Tests
+### 3. Write Tests
 
 1. ทำ `/write-test` เพื่อเขียน tests ที่ขาดหายไป
 2. ตรวจสอบว่า test files ครบถ้วนตาม SPEC.md
 3. ตรวจสอบว่า test cases ครอบคลุมทุกกรณีใช้งาน
 4. ตรวจสอบว่า tests อยู่ใน location ที่ถูกต้อง
 
-### 3. Run Tests
+### 4. Run Tests
 
 1. รัน `bun run test` หรือ `bun test`
 2. บันทึกผลลัพธ์ทั้งหมด
@@ -53,11 +59,11 @@ test/
 4. ติดตาม progress ของ tests
 5. บันทึก duration ของแต่ละ test
 
-### 4. Review Test Results
+### 5. Review Test Results
 
 ทำตาม `/review-test-result` เพื่อวิเคราะห์ผลลัพธ์ที่ครบถ้วน
 
-### 5. Check Coverage
+### 6. Check Coverage
 
 1. ทำ `/run-test-coverage` เพื่อตรวจสอบ coverage
 2. ตรวจสอบว่า coverage ถึง 100% ทุก category (lines, branches, functions, statements)
@@ -65,7 +71,7 @@ test/
 4. ทำ `/write-test` เพื่อเพิ่ม tests สำหรับส่วนที่ขาด coverage
 5. ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
 
-### 6. Fix Failures
+### 7. Fix Failures
 
 1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ test failures
 2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
@@ -76,7 +82,7 @@ test/
 5. แก้ไข mock data ถ้าจำเป็น
 6. บันทึกสิ่งที่แก้ไข
 
-### 7. Verify
+### 8. Verify
 
 1. รัน tests อีกครั้งหลังแก้ไข
 2. ตรวจสอบว่า failures หมดไป
