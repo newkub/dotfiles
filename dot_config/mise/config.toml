@@ -1,5 +1,5 @@
 [tasks.update] 
-description = "update scoop, winget, bun(global), mise, rustup, gh extensions, chezmoi, proto, skills" 
+description = "update all" 
 run = "scoop update && winget upgrade --all && bun update -g && bun upgrade && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update && proto upgrade && skills update"
 
 [tasks.cleanup]
@@ -203,6 +203,8 @@ codex = "latest"
 opencode = "latest"
 "github:us/crw" = "latest"
 "npm:gleanup" = "latest"
+aube = "latest"
+"npm:foam-cli" = "latest"
 
 
 [settings]

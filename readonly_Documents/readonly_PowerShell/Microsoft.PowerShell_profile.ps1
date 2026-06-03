@@ -1347,3 +1347,4 @@ $env:Path = @(
 
 function code-insiders { & "C:\Users\Veerapong\AppData\Local\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
 
+(&mise activate pwsh) | Out-String | Invoke-Expression
