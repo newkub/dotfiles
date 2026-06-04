@@ -1,67 +1,78 @@
-[tasks.update] 
-description = "update all" 
-run = "scoop update && winget upgrade --all && bun update -g && bun upgrade && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update && proto upgrade && skills update"
+[tasks.update]
+description = "update all tools"
+shell = "pwsh -Command"
+run = "winget source update && scoop update && winget upgrade --all && bun update -g && bun upgrade && uv self update && uv tool upgrade --all && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update && skills update"
 
 [tasks.cleanup]
-description = "cleanup scoop, mise, podman, git gc"
-run = "scoop cleanup * && scoop cache rm * && cargo-clean-all && mise prune"
+description = "cleanup caches"
+shell = "pwsh -Command"
+run = "scoop cleanup * && scoop cache rm * && bun pm cache rm && mise prune && cargo sweep --installed && git gc --auto"
 
+[tasks.deep-clean]
+description = "aggressive cleanup"
+shell = "pwsh -Command"
+run = "node_module-nuke && cargo-clean-all && bun pm cache rm && podman system prune -af && mise prune"
+
+[tasks.audit]
+description = "security audit"
+shell = "pwsh -Command"
+run = "bun audit && cargo audit && gitleaks detect"
+
+[tasks.doctor]
+description = "check toolchain health"
+shell = "pwsh -Command"
+run = "mise doctor && git --version && bun --version && rustc --version && cargo --version && node --version && podman --version"
 
 [tasks.commit]
-description = "git add all && commit with czg ai"
-run = "git add . && czg ai"
-
+description = "git add and commit"
+shell = "pwsh -Command"
+run = "git add . && aicommits"
 
 
 # chezmoi tasks
 [tasks.chezmoi-update]
-description = "chezmoi re-add (sync local changes)"
+description = "sync local dotfiles"
 dir = "C:/Users/Veerapong/.local/share/chezmoi"
+shell = "pwsh -Command"
 run = "chezmoi re-add"
 
 [tasks.start-podman]
 description = "start podman machine"
+shell = "pwsh -Command"
 run = "podman machine start"
 
 [tasks.stop-podman]
 description = "stop podman machine"
+shell = "pwsh -Command"
 run = "podman machine stop"
-
-
 
 
 [tasks.cargo-clean-all]
 description = "Clean all Rust projects recursively"
-run_windows = """
-powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter Cargo.toml | ForEach-Object { `$dir = `$_.DirectoryName; Write-Host \\"Cleaning `$dir\\"; Push-Location `$dir; cargo clean; Pop-Location }"
-"""
-
-
-[tasks.git-submodule-update-remote]
-description = "git submodule update with init and recursive"
-run = "git submodule update --init --recursive"
+shell = "pwsh -Command"
+run_windows = "powershell -NoProfile -Command \"Get-ChildItem -Recurse -Filter Cargo.toml | ForEach-Object { `$dir = `$_.DirectoryName; Write-Host \\\\\"Cleaning `$dir\\\\\"; Push-Location `$dir; cargo clean; Pop-Location }\""
 
 
 
 [tasks.create-nuxt]
 description = "nuxt minimal"
+shell = "pwsh -Command"
 run = "bun create nuxt --template minimal --packageManager bun --force --gitInit"
 
 [tasks.update-node-deps]
-description = "bunx taze -r -w"
-run = "bunx taze -r -w"
+description = "update project dependencies"
+shell = "pwsh -Command"
+run = "bunx taze -r -w && bun install"
 
 [tasks.remove-node-modules]
 description = "remove node_modules recursive"
+shell = "pwsh -Command"
 run = "Get-ChildItem -Directory -Recurse -Filter node_modules | Remove-Item -Recurse -Force"
-
 
 [tasks.remove-target]
 description = "remove target recursive"
+shell = "pwsh -Command"
 run = "Get-ChildItem -Directory -Recurse -Filter target | Remove-Item -Recurse -Force"
-
-
-
 
 
 [env]
@@ -205,6 +216,7 @@ opencode = "latest"
 "npm:gleanup" = "latest"
 aube = "latest"
 "npm:foam-cli" = "latest"
+"cargo:bacon" = "latest"
 
 
 [settings]
