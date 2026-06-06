@@ -168,7 +168,6 @@ cowsay = "latest"
 "npm:@modelcontextprotocol/sdk" = "latest"
 "npm:@moonrepo/cli" = "latest"
 "npm:@openai/codex" = "latest"
-"npm:@qoder-ai/qodercli" = "latest"
 "npm:@shikijs/cli" = "latest"
 "npm:@tanstack/intent" = "latest"
 "npm:@typescript/native-preview" = "latest"
@@ -217,6 +216,8 @@ opencode = "latest"
 aube = "latest"
 "npm:foam-cli" = "latest"
 "cargo:bacon" = "latest"
+"cargo:slumber" = "latest"
+"cargo:rainfrog" = "latest"
 
 
 [settings]

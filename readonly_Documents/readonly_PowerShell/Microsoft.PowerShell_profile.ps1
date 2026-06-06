@@ -1,27 +1,9 @@
 
-
-
-
 # --- mise ---
-
-# https://mise.jdx.dev/
-
 mise activate pwsh | Out-String | Invoke-Expression
 
-
-
-
 # --- Starship Prompt ---
-
-# https://starship.rs/
-
 Invoke-Expression (&starship init powershell)
-
-
-
-
-
-
 
 # --- Zoxide Navigation ---
 
@@ -29,36 +11,18 @@ Invoke-Expression (&starship init powershell)
 
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
-
-
-
-
-
-
 # --- PowerToys CommandNotFound ---
-
 # Shows suggestions from WinGet if a command is not found.
-
 if (Get-Command winget -ErrorAction SilentlyContinue) {
-
     Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
-
 }
 
-
-
 # --- x-cmd ---
-
-# https://github.com/x-cmd/x
-
 # Temporarily disabled due to atuin GetHistoryItems error
 
 # if (Test-Path "$Home\.x-cmd.root\local\data\pwsh\_index.ps1") { Set-ExecutionPolicy Bypass -Scope Process; . "$Home\.x-cmd.root\local\data\pwsh\_index.ps1" };  # boot up x-cmd.
 
-
-
 # --- IntelliShell ---
-
 # https://intellishell.app/
 
 if (Test-Path "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1") {
@@ -67,10 +31,7 @@ if (Test-Path "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1") 
 
 }
 
-
-
 # --- Atuin ---
-
 # https://atuin.sh/
 
 # Temporarily disabled
@@ -105,8 +66,6 @@ if (Test-Path "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1") 
 
 # ==============================================================================
 
-
-
 # --- ni (npm/yarn/pnpm/bun) ---
 
 # https://github.com/antfu-collective/ni
@@ -129,22 +88,13 @@ if ($profileContent -notcontains $profileEntry) {
 
 Remove-Item Alias:ni -Force -ErrorAction Ignore
 
-
-
 Remove-Item Alias:rd
 
 Remove-Item Alias:h
 
 Remove-Item Alias:cd
 
-
-
-
-
 # --- General Aliases ---
-
-
-
 Set-Alias -Name c -Value cls
 
 Remove-Item -Path Alias:dir -Force
@@ -161,13 +111,9 @@ if (Get-Command pwsh -ErrorAction SilentlyContinue) {
 
 }
 
-
-
 # --- VS Code Insiders ---
 
 function code-insiders { & "C:\Users\Veerapong\AppData\Local\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
-
-Set-Alias -Name o -Value hx
 
 Set-Alias -Name new -Value New-Item
 
@@ -229,8 +175,6 @@ function cpc {
 
 # ==============================================================================
 
-
-
 $locationMap = @{
 
     "home" = "$HOME"
@@ -271,15 +215,11 @@ $locationMap = @{
 
 }
 
-
-
 foreach ($key in $locationMap.Keys) {
 
     Set-Item -Path "Function:$key" -Value ([ScriptBlock]::Create("Set-Location '$($locationMap[$key])'"))
 
 }
-
-
 
 function dd {
 
@@ -299,19 +239,11 @@ function ep {
 
 }
 
-
-
-
-
 function b {
 
     broot
 
 }
-
-
-
-
 
 function cc {
 
@@ -390,16 +322,9 @@ function dir {
 
 
 # --- mise task run ---
-
 function t {
-
    mise task run
-
 }
-
-
-
-
 
 # --- Bun Script Runners ---
 
@@ -426,9 +351,7 @@ function rb {
 }
 
 function rl {
-
     ni && bun run lint
-
 }
 
 function rt {
@@ -438,12 +361,8 @@ function rt {
 }
 
 function rr {
-
     ni && bun run review
-
 }
-
-
 
 function rf {
 
@@ -452,12 +371,8 @@ function rf {
 }
 
 function rc {
-
     ni && bun run typecheck
-
 }
-
-
 
 # --- Moon Script Runners ---
 
@@ -518,12 +433,8 @@ function mf {
 
 
 function mc {
-
     ni && moon run :typecheck
-
 }
-
-
 
 function o {
 
@@ -539,37 +450,11 @@ function o {
 
     if ($Files) {
 
-        & hx.exe $Files
+        code $Files
 
     } else {
 
-        & hx.exe .
-
-    }
-
-}
-
-
-
-function o {
-
-    param(
-
-        [Parameter(ValueFromRemainingArguments=$true)]
-
-        [string[]]$Files
-
-    )
-
-
-
-    if ($Files) {
-
-        & hx.exe $Files
-
-    } else {
-
-        & hx.exe .
+        code .
 
     }
 
@@ -622,10 +507,7 @@ function owindsurfrules {
 
 
     windsurf $path
-
 }
-
-
 
 function opowershellprofile {
 
@@ -724,8 +606,6 @@ function cd {
     }
 
 }
-
-
 
 function cdd {
 
@@ -1191,8 +1071,6 @@ function g {
 
 }
 
-
-
 function op {
 
     param([int]$port)
@@ -1202,10 +1080,6 @@ function op {
 }
 
 # source ~/.wezterm.sh  # Unix command, disabled for PowerShell
-
-
-
-
 
 function cpo {
 
@@ -1242,8 +1116,6 @@ function cpo {
     Write-Host "Last command output copied as plain text."
 
 }
-
-
 
 # --- Long Files Check ---
 
@@ -1321,11 +1193,7 @@ function loc {
 
 Remove-Item Alias:ni -Force -ErrorAction Ignore
 
-
-
-Remove-Item Alias:ni -Force -ErrorAction Ignore
-
-
+# --- Proto Configuration ---
 
 # proto
 
