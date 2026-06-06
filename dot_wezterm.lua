@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 config.default_cwd = "D:\\"
 
 config.default_prog = {
-  "C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\powershell-core\\7.6.2\\pwsh.exe",
+  "C://Users//Veerapong//scoop//shims//nu.exe",
 }
 
 config.launch_menu = {
@@ -210,15 +210,20 @@ end
 -- =====================================
 
 wezterm.on("gui-startup", function(cmd)
-  local tab, _, window = wezterm.mux.spawn_window(cmd or {})
-
-  window:spawn_tab({
+  local tab, _, window = wezterm.mux.spawn_window(cmd or {
     cwd = "D:\\",
   })
 
-  tab:activate()
-
+  -- tab แรก (ถูกสร้างมาแล้ว)
   window:gui_window():maximize()
+
+  -- สร้างเพิ่มอีก 3 tabs = รวมเป็น 4
+  window:spawn_tab({ cwd = "D:\\" })
+  window:spawn_tab({ cwd = "D:\\" })
+  window:spawn_tab({ cwd = "D:\\" })
+
+  -- focus กลับไป tab แรก
+  tab:activate()
 end)
 
 return config
