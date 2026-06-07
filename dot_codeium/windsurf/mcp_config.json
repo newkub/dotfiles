@@ -14,10 +14,6 @@
       "registry": "io.windsurf/deepwiki",
       "serverUrl": "https://mcp.deepwiki.com/mcp"
     },
-    "github-mcp-server": {
-      "registry": "github-mcp-server",
-      "url": "https://api.githubcopilot.com/mcp"
-    },
     "grep": {
       "url": "https://mcp.grep.app"
     },
@@ -91,8 +87,7 @@
       "args": [
         "mcp-server-wezterm-rs"
       ],
-      "command": "uvx",
-      "disabled": true
+      "command": "uvx"
     }
   }
 }
