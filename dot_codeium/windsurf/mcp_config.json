@@ -67,6 +67,9 @@
       ],
       "command": "nuxt"
     },
+     "clickup": {
+      "serverUrl": "https://mcp.clickup.com/mcp"
+    },
     "sequential-thinking": {
       "args": [
         "-y",

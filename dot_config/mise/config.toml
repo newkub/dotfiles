@@ -216,6 +216,7 @@ aube = "latest"
 opencode = "latest"
 "npm:taze" = "latest"
 "npm:pake-cli" = "latest"
+"cargo:elio" = "latest"
 
 
 [settings]
