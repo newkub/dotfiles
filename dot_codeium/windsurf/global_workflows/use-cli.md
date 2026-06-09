@@ -32,3 +32,4 @@ trigger: manual
 
 - [Command Line Interface Guidelines](https://clig.dev/) - Best practices สำหรับ CLI design และ usage
 - [GNU Coding Standards - Command-Line Interfaces](https://www.gnu.org/prep/standards/html_node/Command_002dLine-Interfaces.html) - Standards สำหรับ POSIX-style CLI
+

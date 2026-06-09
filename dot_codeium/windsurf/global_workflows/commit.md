@@ -14,7 +14,7 @@ auto_execution_mode: 3
 
 ตรวจสอบว่า `/commit` ถูกเรียกจาก workflow อื่นหรือรันโดยตรง
 
-1. ตรวจสอบ context ว่าถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship-verify`, `/enhance-codebase`)
+1. ตรวจสอบ context ว่าถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/implement-to-production`, `/ship-verify`, `/improve-codebase`)
 2. ถ้าถูกเรียกจาก workflow: ใช้ workflow mode
 3. ถ้ารันโดยตรง: ใช้ standalone mode
 
@@ -22,13 +22,13 @@ auto_execution_mode: 3
 
 ตรวจสอบและตั้งค่า .gitignore ให้ครอบคลุม
 
-1. ทำตาม `/setup-gitignore`
+1. ทำตาม `/gitignore`
 
 ### 3. Setup Lefthook
 
 ตั้งค่า Lefthook สำหรับ Git hooks automation
 
-1. ทำตาม `/setup-lefthook`
+1. ทำตาม `/lefthook`
 
 ### 4. Pull Latest Changes
 
@@ -111,6 +111,12 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 3. ตรวจสอบว่าไม่มีไฟล์ที่ยังไม่ commit เหลืออยู่
 4. รัน `git status` เพื่อยืนยันว่า working directory สะอาด
 
+### 14. Update References
+
+อัปเดท references ทั้งหมดที่เกี่ยวข้อง
+
+1. ทำตาม `@[/edit-relative]`
+
 ## Rules
 
 ### Commit Message Format
@@ -164,7 +170,7 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 
 ใช้เมื่อถูกเรียกจาก workflow อื่น
 
-- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/make-real`, `/ship-verify`, `/enhance-codebase`)
+- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/implement-to-production`, `/ship-verify`, `/improve-codebase`)
 - Commit เฉพาะบรรทัดที่ workflow แก้ไป (ใช้ `git add -p`)
 - ไม่ commit ไฟล์อื่นๆ ที่ไม่ได้ถูกแก้ไปโดย workflow
 
@@ -183,3 +189,4 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 2. Git history ที่อ่านง่ายและติดตามง่าย
 3. Commit แยกตาม scope อย่างเหมาะสม
 4. ไม่มีไฟล์ที่ยังไม่ commit เหลืออยู่
+

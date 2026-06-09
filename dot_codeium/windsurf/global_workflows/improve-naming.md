@@ -12,18 +12,15 @@ auto_execution_mode: 3
 
 ### 1. Analyze Naming
 
-วิเคราะห์การตั้งชื่อปัจจุบันด้วย Bun scripts
+วิเคราะห์การตั้งชื่อปัจจุบัน
 
-1. สร้าง Bun script ใน `scripts/temp/analyze-naming.ts` สำหรับ:
-   - ตรวจสอบ file names ทั้งหมด
-   - ตรวจสอบ type names ทั้งหมด
-   - ตรวจสอบ constant names ทั้งหมด
-   - ตรวจสอบ function names ทั้งหมด
-   - ตรวจสอบ component names ทั้งหมด
-   - ตรวจสอบ variable names ทั้งหมด
-2. รัน script ด้วย `bun run scripts/temp/analyze-naming.ts`
-3. สรุปผลการ analyze ทั้งหมม
-4. ลบ script หลังใช้งาน
+1. ทำ `/search-code` เพื่อค้นหา file names ทั้งหมด
+2. ทำ `/search-code` เพื่อค้นหา type names ทั้งหมด
+3. ทำ `/search-code` เพื่อค้นหา constant names ทั้งหมด
+4. ทำ `/search-code` เพื่อค้นหา function names ทั้งหมด
+5. ทำ `/search-code` เพื่อค้นหา component names ทั้งหมด
+6. ทำ `/search-code` เพื่อค้นหา variable names ทั้งหมด
+7. สรุปผลการ analyze ทั้งหมม
 
 ### 2. File Naming
 
@@ -144,3 +141,4 @@ auto_execution_mode: 3
 - Variable names สอดคล้องกับ conventions
 - Consistency สูงทั่วทั้ง codebase
 - Code อ่านง่ายและ maintainable
+

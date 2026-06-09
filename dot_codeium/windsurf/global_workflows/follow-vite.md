@@ -67,3 +67,4 @@ auto_execution_mode: 3
 - Production builds ที่ optimized
 - Configuration ที่เหมาะสมกับ project
 - Performance ที่ดีขึ้น
+

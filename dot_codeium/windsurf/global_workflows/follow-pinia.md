@@ -89,3 +89,4 @@ auto_execution_mode: 3
 - Type-safe store usage
 - Tested store logic
 - Documentation สำหรับ store patterns
+

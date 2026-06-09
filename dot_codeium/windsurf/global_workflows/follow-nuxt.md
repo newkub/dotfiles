@@ -188,3 +188,4 @@ auto_execution_mode: 3
 - Error handling ที่ดี
 - Assets management ที่ถูกต้อง
 
+

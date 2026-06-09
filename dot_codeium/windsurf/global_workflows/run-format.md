@@ -19,3 +19,4 @@ auto_execution_mode: 3
 - prettier: "prettier --write"
 
 2. run format แล้วแก้ให้หมดจนไม่มีเหลือ
+

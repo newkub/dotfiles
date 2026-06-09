@@ -121,3 +121,4 @@ jobs:
 3. Bindings ที่เชื่อมต่อกับ KV, D1, R2, Durable Objects
 4. CI/CD pipeline ที่ deploy อัตโนมัติ
 5. Multiple environments สำหรับ dev/staging/prod
+

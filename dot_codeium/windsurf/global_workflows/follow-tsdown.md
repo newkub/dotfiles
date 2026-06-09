@@ -69,3 +69,4 @@ auto_execution_mode: 3
 - package.json มี build scripts ครบถ้วน
 - dist/ มี bundled files (ESM + CJS)
 - dist/*.d.ts มี type declarations ครบถ้วน
+

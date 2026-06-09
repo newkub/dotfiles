@@ -8,6 +8,10 @@ auto_execution_mode: 3
 
 สร้าง .gitignore ที่ครอบคลุมตามประเภทโปรเจกต์เพื่อป้องกันการ commit ไฟล์ที่ไม่จำเป็น
 
+## Scope
+
+สร้าง .gitignore สำหรับ projects และ monorepos
+
 ## Execute
 
 ### 1. Analyze Project
@@ -65,7 +69,7 @@ Thumbs.db
 
 ### 3. Validate
 
-1. ทำ `/follow-content-quality` เพื่อตรวจสอบคุณภาพเนื้อหา
+1. ทำ `/content-quality` เพื่อตรวจสอบคุณภาพเนื้อหา
 2. ทดสอบด้วย `git check-ignore <file>`
 3. ทำ `/update-reference` หากมี file operations
 
@@ -112,3 +116,4 @@ Thumbs.db
 - ไม่มีไฟล์ที่ไม่ควร commit ถูกติดตามโดย Git
 - โปรเจกต์สามารถทำงานได้ตามปกติหลังจาก ignore ไฟล์ที่ไม่จำเป็น
 - Monorepo มี .gitignore เดียวที่ root ที่ครอบคลุมทุก sub-workspaces
+

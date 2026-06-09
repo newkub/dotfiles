@@ -66,3 +66,4 @@ auto_execution_mode: 3
 - Scripts สำหรับ Knip พร้อมใช้งาน
 - Detect unused files, dependencies และ exports ได้
 - Monorepo รองรับการตรวจสอบ
+

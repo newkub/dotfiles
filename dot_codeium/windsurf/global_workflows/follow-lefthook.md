@@ -8,6 +8,10 @@ auto_execution_mode: 3
 
 ตั้งค่า Lefthook เป็นเครื่องมือจัดการ Git hooks ที่เร็วและทรงพลัง รองรับ parallel execution และ monorepo
 
+## Scope
+
+ตั้งค่า Lefthook สำหรับ projects และ monorepos
+
 ## Execute
 
 ### 1. Install Lefthook

@@ -30,7 +30,12 @@ auto_execution_mode: 3
 		"useIgnoreFile": true
 	},
 	"linter": {
-		"enabled": true
+		"enabled": true,
+		"rules": {
+			"correctness": {
+				"noNodejsModules": "off"
+			}
+		}
 	},
 	"formatter": {
 		"enabled": true
@@ -157,3 +162,4 @@ jobs:
 - มี scripts `lint`, `lint:fix` และ `format` พร้อมใช้
 - Config รองรับ git ignore
 - Monorepo workspaces extends จาก root config ถูกต้อง
+

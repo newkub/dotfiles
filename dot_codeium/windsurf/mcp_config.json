@@ -8,7 +8,9 @@
     },
     "crw": {
       "command": "bunx",
-      "args": ["crw-mcp"]
+      "args": [
+        "crw-mcp"
+      ]
     },
     "deepwiki": {
       "registry": "io.windsurf/deepwiki",
@@ -16,6 +18,14 @@
     },
     "grep": {
       "url": "https://mcp.grep.app"
+    },
+    "better-fullstack": {
+      "command": "bunx",
+      "args": [
+        "-y",
+        "create-better-fullstack",
+        "mcp"
+      ]
     },
     "io.windsurf/cloudflare-docs": {
       "registry": "io.windsurf/cloudflare-docs",
@@ -67,7 +77,7 @@
       ],
       "command": "nuxt"
     },
-     "clickup": {
+    "clickup": {
       "serverUrl": "https://mcp.clickup.com/mcp"
     },
     "sequential-thinking": {
@@ -91,6 +101,9 @@
         "mcp-server-wezterm-rs"
       ],
       "command": "uvx"
+    },
+    "raindrop": {
+      "serverUrl": "https://api.raindrop.io/rest/v2/ai/mcp"
     }
   }
 }

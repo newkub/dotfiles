@@ -3,7 +3,7 @@ title: Use Scripts
 description: สร้าง scripts สำหรับ automate งานด้วย Bun native APIs, pwsh, หรือ ast-grep
 auto_execution_mode: 3
 related_workflows:
-  - /follow-bun-native
+  - /bun-native
   - /use-ast-grep
 ---
 
@@ -15,11 +15,11 @@ related_workflows:
 
 ### 1. Prepare
 
-1. ทำตาม `/follow-write-workflows` เมื่อสร้างหรือแก้ไข workflow
+1. ทำตาม `/write-windsurf-global-workflows` เมื่อสร้างหรือแก้ไข workflow
 
 ### 2. Choose Script Type
 
-1. ใช้ Bun native APIs ถ้าต้องการ performance และ cross-platform: ดูจาก `/follow-bun-native`
+1. ใช้ Bun native APIs ถ้าต้องการ performance และ cross-platform: ดูจาก `/bun-native`
 2. ใช้ pwsh ถ้าต้องการ Windows-specific commands หรือ system administration
 3. ใช้ ast-grep ถ้าต้องการ AST-based code search และ transformation: ดูจาก `/use-ast-grep`
 
@@ -44,7 +44,7 @@ related_workflows:
 2. รัน script ด้วย `pwsh <script>.ps1` สำหรับ PowerShell scripts
 3. รัน script ด้วย `ast-grep scan` สำหรับ ast-grep rules
 4. ลบ scripts จาก `scripts/temp/` หลังใช้งาน
-5. ลบ scripts ที่สร้างด้วย `/follow-write-workflows` หลังใช้งาน
+5. ลบ scripts ที่สร้างด้วย `/write-windsurf-global-workflows` หลังใช้งาน
 
 ## Rules
 
@@ -72,7 +72,7 @@ scripts/temp/    # Global scripts ที่ root workspace เท่านั้
 
 ### Bun Native APIs
 
-ดูรายละเอียดจาก `/follow-bun-native`:
+ดูรายละเอียดจาก `/bun-native`:
 
 ```typescript
 // File operations
@@ -191,3 +191,4 @@ await script.run()
 - Scripts ใน `scripts/temp/` ที่ root workspace เท่านั้น
 - Scripts ที่ใช้แล้วลบออก
 - Dry run mode สำหรับทดสอบก่อน execute จริง
+

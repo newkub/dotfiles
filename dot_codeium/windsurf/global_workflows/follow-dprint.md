@@ -98,3 +98,4 @@ auto_execution_mode: 3
 - ต้องใช้ lineWidth: 100 สำหรับ TypeScript
 - ต้องใช้ quoteStyle: alwaysSingle สำหรับ TypeScript
 - ต้องใช้ semiColons: asi สำหรับ TypeScript
+

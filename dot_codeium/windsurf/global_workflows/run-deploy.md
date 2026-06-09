@@ -84,3 +84,4 @@ Deploy application ไปยัง platform ที่กำหนดตามม
 - URL สามารถเข้าถึงได้
 - Application ทำงานได้ปกติ
 - ไม่มี error ที่เกิดขึ้น
+

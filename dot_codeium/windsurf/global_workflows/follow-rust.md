@@ -37,8 +37,8 @@ auto_execution_mode: 3
 
 ### 4. Quality Enforcement
 
-1. รัน `/follow-cargo` เพื่อตั้งค่า Cargo lint rules
-2. รัน `/follow-clippy` เพื่อตั้งค่า Clippy lint rules
+1. รัน `/cargo` เพื่อตั้งค่า Cargo lint rules
+2. รัน `/clippy` เพื่อตั้งค่า Clippy lint rules
 3. ตั้งค่า `forbid unsafe_code` ใน workspace
 4. ตั้งค่า `cargo-deny` สำหรับ security advisories
 5. ตั้งค่า rustdoc warnings เป็น errors

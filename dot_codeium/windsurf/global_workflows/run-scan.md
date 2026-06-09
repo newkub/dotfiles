@@ -3,7 +3,7 @@ title: Run Scan
 description: รัน ast-grep scan เพื่อตรวจสอบ codebase ด้วย AST-based patterns
 auto_execution_mode: 3
 related_workflows:
-  - /follow-ast-grep
+  - /ast-grep
   - /write-ast-grep-rules
 ---
 
@@ -11,30 +11,22 @@ related_workflows:
 
 รัน ast-grep scan เพื่อตรวจสอบ codebase ด้วย AST-based patterns และแก้ไขปัญหาที่พบ
 
-## Scope
-
-ครอบคลุมการรัน ast-grep scan สำหรับตรวจสอบ codebase ด้วย AST-based patterns และแก้ไขปัญหาที่พบ
-
 ## Execute
 
-### 1. Setup Ast-grep
+### 1. Setup And Write Rules
 
-1. ทำ `/follow-ast-grep` เพื่อติดตั้งและตั้งค่า ast-grep
-2. ตรวจสอบว่า `sgconfig.yml` มี `ruleDirs: rules`
-3. ตรวจสอบว่ามี `scan` script ใน `package.json`
+1. ทำ `/ast-grep` เพื่อติดตั้งและตั้งค่า ast-grep
+2. ตรวจสอบ `sgconfig.yml` มี `ruleDirs: rules` และมี `scan` script ใน `package.json`
+3. ทำ `/write-ast-grep-rules` เพื่อสร้าง rules ใน `rules/` directory
 
-### 2. Write Rules
-
-1. ทำ `/write-ast-grep-rules` เพื่อสร้าง rules สำหรับ linting
-2. สร้าง rules ใน `rules/` directory
-
-### 3. Run Scan
+### 2. Run Scan
 
 1. รัน `bun run scan` หรือ `ast-grep scan`
-2. ตรวจสอบ output และระบุ issues ที่พบ
-3. แก้ไข code ตาม suggestions หรือใช้ `--interactive` mode
+2. ตรวจสอบ output และระบุ issues
+3. พิจารณา rules ที่ไม่เหมาะสม ว่าถูกต้องไหมเหมาะสมไหม และจัดการอย่างไร
+4. แก้ไข code ตาม suggestions ที่เหมาะสม หรือใช้ `--interactive` mode
 
-### 4. Verify And Fix
+### 3. Verify
 
 1. รัน scan ซ้ำจนกว่าจะไม่มี issues
 2. ตรวจสอบว่า fixes ไม่ทำให้ code เสีย
@@ -42,33 +34,26 @@ related_workflows:
 
 ## Rules
 
-### 1. Scan Execution
+### 1. Scan Configuration
 
-กฎการรัน ast-grep scan:
+ตั้งค่าการรัน scan:
 
 - ต้องมี `sgconfig.yml` ที่ root directory
 - ต้องมี `scan` script ใน `package.json`
-- รัน scan ด้วย `ast-grep scan` หรือ `bun run scan`
-- ตรวจสอบ output ทุกครั้งก่อน apply fixes
-
-### 2. Rule Management
-
-กฎการจัดการ rules:
-
 - rules ต้องอยู่ใน `rules/` directory
 - ใช้ severity ตามความสำคัญ (error, warning, info)
-- ตรวจสอบ rules ด้วย `ast-grep test` ก่อนใช้
 
-### 3. Fix Application
+### 2. Fix Application
 
 กฎการ apply fixes:
 
+- ตรวจสอบ output ทุกครั้งก่อน apply fixes
 - ใช้ `--interactive` mode สำหรับ selective apply
 - ตรวจสอบ fixes ก่อน commit
 - รัน scan ซ้ำหลังจาก apply fixes
 - ตรวจสอบว่า code ยังทำงานได้หลังจาก fixes
 
-### 4. Continuous Scanning
+### 3. Continuous Integration
 
 กฎการ scan อย่างต่อเนื่อง:
 
@@ -84,3 +69,4 @@ related_workflows:
 - Scan รันได้และระบุ issues ที่ถูกต้อง
 - Issues แก้ไขและ verify เรียบร้อย
 - Codebase ผ่าน ast-grep scan โดยไม่มี errors
+

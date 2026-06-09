@@ -177,3 +177,4 @@ auto_execution_mode: 3
 4. Transformers ทำงานได้ (variant groups, directives, compile class)
 5. Dev server รันได้โดยไม่มี error
 6. Utilities ใช้งานได้ทันที (e.g., `flex`, `bg-blue-500`)
+

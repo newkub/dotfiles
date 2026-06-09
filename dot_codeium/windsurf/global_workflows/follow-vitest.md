@@ -65,3 +65,4 @@ auto_execution_mode: 3
 - Config รองรับ globals และ monorepo
 - Tests รันได้ทั้งหมด
 - เป็นไปตาม best practices จาก official documentation
+

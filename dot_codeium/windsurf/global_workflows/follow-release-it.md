@@ -4,11 +4,13 @@ description: ตั้งค่า release-it สำหรับ automated relea
 auto_execution_mode: 3
 ---
 
-ตั้งค่า release-it สำหรับ automated releases
-
 ## Goal
 
 ตั้งค่า release-it สำหรับ automated releases ไปยัง npm
+
+## Scope
+
+ตั้งค่า release-it สำหรับ packages ที่ต้องการ automated releases
 
 ## Execute
 
@@ -99,3 +101,4 @@ jobs:
 - release-it ติดตั้งและตั้งค่าเรียบร้อย
 - GitHub workflow สร้างอัตโนมัติเมื่อ push ไป main branch
 - Package release ไปยัง npm อัตโนมัติ
+

@@ -76,3 +76,4 @@ related_workflows:
 - Verification ผ่านทั้งหมด
 - Check report ถูกสร้าง
 - Code พร้อมสำหรับ commit/deploy
+

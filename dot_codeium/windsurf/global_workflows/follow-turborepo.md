@@ -28,7 +28,7 @@ auto_execution_mode: 3
 6. ตั้งค่า `cache` เป็น true สำหรับ tasks ที่สามารถ cache
 7. ตั้งค่า `persistent: true` สำหรับ long-running tasks
 8. ตั้งค่า `env` สำหรับ environment variables
-9. ทำ `/follow-verify`
+9. ทำ `/verify`
 
 ### 3. Usage
 
@@ -119,4 +119,5 @@ auto_execution_mode: 3
 - Monorepo ที่มีประสิทธิภาพสูงด้วย Turborepo
 - Caching ที่ทำงานได้อย่างมีประสิทธิภาพ
 - Build times ที่ลดลงอย่างมีนัยสำคัญ
+
 

@@ -102,3 +102,4 @@ ruleDirs:
 - Project structure สร้างเรียบร้อย (rules/)
 - Scan script เพิ่มใน package.json
 - ast-grep scan ทำงานได้ถูกต้อง
+

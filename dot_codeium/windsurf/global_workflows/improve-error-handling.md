@@ -130,3 +130,4 @@ auto_execution_mode: 3
 - Error propagation ที่ correct
 - Error messages ที่ user-friendly
 - Error tests ที่ครอบคลุม
+

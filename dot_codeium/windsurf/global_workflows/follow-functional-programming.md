@@ -22,7 +22,7 @@ auto_execution_mode: 3
 
 ### 2. Enforce Immutability
 
-ทำตาม `/follow-declarative-programming` เพื่อใช้ immutability
+ทำตาม `/declarative-programming` เพื่อใช้ immutability
 
 1. ใช้ `const` แทน `let/var` เสมอ
 2. ใช้ `Readonly<>` type สำหรับ objects/arrays
@@ -32,7 +32,7 @@ auto_execution_mode: 3
 
 ### 3. Function Composition
 
-ทำตาม `/follow-declarative-programming` เพื่อใช้ composition
+ทำตาม `/declarative-programming` เพื่อใช้ composition
 
 1. เขียนฟังก์ชันขนาดเล็กที่ทำหน้าที่เดียว
 2. ใช้ `higher-order functions`: `map`, `filter`, `reduce`
@@ -42,7 +42,7 @@ auto_execution_mode: 3
 
 ### 4. Type Safety
 
-ทำตาม `/follow-typescript` เพื่อเพิ่มความปลอดภัย
+ทำตาม `/typescript` เพื่อเพิ่มความปลอดภัย
 
 1. ใช้ `function types` อย่างชัดเจน
 2. ใช้ `generics` สำหรับ reusable functions
@@ -104,7 +104,7 @@ auto_execution_mode: 3
 
 ### Immutability
 
-ทำตาม `/follow-declarative-programming` เพื่อใช้ immutability
+ทำตาม `/declarative-programming` เพื่อใช้ immutability
 
 - ใช้ `const` แทน `let/var`
 - ใช้ `Readonly<>` type
@@ -114,7 +114,7 @@ auto_execution_mode: 3
 
 ### Function Composition
 
-ทำตาม `/follow-declarative-programming` เพื่อใช้ composition
+ทำตาม `/declarative-programming` เพื่อใช้ composition
 
 - ฟังก์ชันขนาดเล็ก single responsibility
 - ใช้ `higher-order functions`
@@ -124,7 +124,7 @@ auto_execution_mode: 3
 
 ### Type Safety
 
-ทำตาม `/follow-typescript` เพื่อความปลอดภัย
+ทำตาม `/typescript` เพื่อความปลอดภัย
 
 - Explicit `function types`
 - `Generics` สำหรับ reusability
@@ -172,3 +172,4 @@ auto_execution_mode: 3
 - State management ที่ predictable
 - Tests ที่เขียนง่าย
 - Code ที่ maintain ได้ง่าย
+
