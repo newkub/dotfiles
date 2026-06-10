@@ -1,1 +1,2 @@
 0000000000000000000000000000000000000000 ba459781cf7cd3cde4bb06645939ce895bbf4ed5 newkub <newkubise@gmail.com> 1780886636 +0700	commit (initial): chore: initial commit
+ba459781cf7cd3cde4bb06645939ce895bbf4ed5 701e7f636ba85e945bebbaa211dac5689979743f newkub <newkubise@gmail.com> 1781070501 +0700	commit: refactor(workflows): rename optimize workflows remove follow- prefix

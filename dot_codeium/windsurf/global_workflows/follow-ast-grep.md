@@ -14,12 +14,12 @@ auto_execution_mode: 3
 
 ## Execute
 
-### 1. Install Dependencies
+### 1. Use ast-grep
 
-ติดตั้ง ast-grep CLI ด้วย Bun
+ใช้ ast-grep ผ่าน bunx โดยไม่ต้องติดตั้ง
 
-1. รัน `bun add -D @ast-grep/cli`
-2. ตรวจสอบ installation สำเร็จ
+1. รัน `bunx ast-grep` สำหรับคำสั่งทั้งหมด
+2. ไม่ต้องติดตั้ง @ast-grep/cli ใน package.json
 
 ### 2. Configure sgconfig.yml
 
@@ -49,7 +49,7 @@ ruleDirs:
 ```json
 {
   "scripts": {
-    "scan": "ast-grep scan"
+    "scan": "bunx ast-grep scan"
   }
 }
 ```
@@ -65,13 +65,12 @@ ruleDirs:
 
 ## Rules
 
-### 1. Installation Rules
+### 1. Usage Rules
 
-กฎการติดตั้ง ast-grep CLI:
+กฎการใช้ ast-grep:
 
-- ใช้ Bun เป็น package manager
-- ติดตั้งเป็น dev dependency ด้วย `-D` flag
-- ตรวจสอบ installation สำเร็จก่อนดำเนินการต่อ
+- ใช้ `bunx ast-grep` สำหรับคำสั่งทั้งหมด
+- ไม่ต้องติดตั้ง @ast-grep/cli ใน package.json
 
 ### 2. Configuration Rules
 
@@ -92,12 +91,12 @@ ruleDirs:
 กฎการเพิ่ม scan script:
 
 - มี `scan` script ใน package.json
-- ใช้คำสั่ง `ast-grep scan` สำหรับ scanning
+- ใช้คำสั่ง `bunx ast-grep scan` สำหรับ scanning
 - ตรวจสอบว่า script สามารถเรียกใช้ได้
 
 ## Expected Outcome
 
-- ast-grep CLI ติดตั้งเรียบร้อย
+- ast-grep ใช้งานผ่าน bunx สำเร็จ
 - sgconfig.yml ตั้งค่าเรียบร้อยด้วย ruleDirs
 - Project structure สร้างเรียบร้อย (rules/)
 - Scan script เพิ่มใน package.json

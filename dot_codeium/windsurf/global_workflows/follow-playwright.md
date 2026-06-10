@@ -1,203 +1,135 @@
 ---
-trigger: always_on
-description: แนวทางการตั้งค่าและเขียน E2E tests ด้วย Playwright
-instruction:
-  - ตั้งค่า Playwright config ตาม best practices
-  - ใช้ Page Object Model (POM) สำหรับ maintainability
-  - เขียน tests ที่ reliable และ maintainable
+title: Playwright Configuration
+description: ติดตั้งและตั้งค่า Playwright สำหรับ E2E testing
+auto_execution_mode: 3
+related_workflows:
+  - /follow-vitest
+  - /follow-typescript
+  - /write-test
 ---
 
-## 1. Installation (ใช้เสมอ)
+## Goal
 
-1.1. ติดตั้ง Playwright dependencies
-1.2. ตั้งค่า scripts สำหรับ E2E testing
+ตั้งค่า Playwright เป็น E2E testing framework หลักสำหรับโปรเจกต์ web
 
-```bash
-bun add -D @playwright/test
-```
+## Scope
 
-```json [package.json]
-{
-  "scripts": {
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:debug": "playwright test --debug",
-    "test:e2e:headed": "playwright test --headed",
-    "test:e2e:report": "playwright show-report"
-  }
-}
-```
+ติดตั้งและตั้งค่า Playwright สำหรับ end-to-end testing ในโปรเจกต์เดี่ยวและ monorepo
 
----
+## Execute
 
-## 2. Configuration (ใช้เสมอ)
+### 1. Installation
 
-2.1. สร้าง `playwright.config.ts` ใน root ของ project
-2.2. ตั้งค่า test directory และ parallel execution
-2.3. ตั้งค่า reporters สำหรับ test results
-2.4. ตั้งค่า browsers และ devices สำหรับ testing
-2.5. ตั้งค่า web server สำหรับ development
+1. ติดตั้ง Playwright ด้วย `bun add -D @playwright/test`
+2. รัน `bunx playwright install` เพื่อติดตั้ง browsers
+3. ติดตั้ง VS Code extension สำหรับ IDE integration
+4. เพิ่ม test script ใน `package.json`
+5. ตรวจสอบ Node.js version (>= v14.0.0)
 
-```ts [playwright.config.ts]
-import { defineConfig, devices } from '@playwright/test'
+### 2. Configuration
 
-export default defineConfig({
-  testDir: './tests',
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['html'],
-    ['json', { outputFile: 'test-results/results.json' }],
-    ['junit', { outputFile: 'test-results/junit.xml' }],
-  ],
-  use: {
-    baseURL: 'http://localhost:3000',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-  },
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
-    },
-    {
-      name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
-    },
-  ],
-  webServer: {
-    command: 'bun run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
-})
-```
+1. สร้าง `playwright.config.ts` ที่ root
+2. ตั้งค่า browsers (chromium, firefox, webkit)
+3. ตั้งค่า testDir สำหรับ test files location
+4. ตั้งค่า timeout สำหรับ test execution
+5. ตั้งค่า retries สำหรับ flaky tests
+6. ตั้งค่า reporter (html, json, junit)
 
----
+### 3. Monorepo Setup
 
-## 3. Folder Rules (ใช้เสมอ)
+1. ตั้งค่า testDir สำหรับแต่ละ workspace
+2. ใช้ workspace protocol สำหรับ internal dependencies
+3. ตั้งค่า `--project` เพื่อรัน tests บน workspace เฉพาะ
+4. ใช้ shared fixtures ข้าม workspaces
+5. ตั้งค่า config extends จาก root config
 
-3.1. `tests/e2e/` : เขียน E2E tests -> แยก test ตาม feature/page
-3.2. `tests/pages/` : สร้าง Page Objects -> encapsulate selectors และ actions
-3.3. `tests/fixtures/` : สร้าง test data -> ใช้สำหรับ mock data และ test data
-3.4. `tests/utils/` : สร้าง test helpers -> ใช้สำหรับ reusable helper functions
+### 4. Writing Tests
 
-```plaintext
-tests/
-├── e2e/
-│   ├── auth.spec.ts
-│   ├── cart.spec.ts
-│   └── checkout.spec.ts
-├── pages/
-│   ├── login.page.ts
-│   ├── home.page.ts
-│   └── product.page.ts
-├── fixtures/
-│   ├── test-data.ts
-│   └── mock-api.ts
-└── utils/
-    └── test-helpers.ts
-```
+1. ใช้ `test` จาก `@playwright/test`
+2. ใช้ `page` fixture สำหรับ browser automation
+3. ใช้ `expect` สำหรับ assertions
+4. จัดระเบียบ test files ตาม features หรือ pages
+5. ใช้ `test.describe` สำหรับ grouping related tests
+6. ใช้ `test.beforeEach`, `test.afterEach` สำหรับ setup/teardown
 
----
+### 5. Page Object Model
 
-## 4. Page Object Model (ใช้เสมอ)
+1. สร้าง Page Object classes สำหรับแต่ละ page
+2. แยก selectors และ actions ออกจาก test files
+3. ใช้ locators แทน selectors เดิม
+4. ใช้ `page.locator()` สำหรับ element selection
+5. ใช้ `waitFor()` สำหรับ waiting strategies
 
-4.1. `Page Class` : สร้าง Page Object -> encapsulate selectors และ actions
-4.2. `Selectors` : ใช้ selectors -> ใช้ `data-testid` attributes
-4.3. `Actions` : สร้าง actions -> สร้าง methods สำหรับ user interactions
+### 6. Assertions And Matchers
 
-```ts [tests/pages/login.page.ts]
-import type { Page } from '@playwright/test'
+1. ใช้ `expect(page).toHaveURL()` สำหรับ URL assertions
+2. ใช้ `expect(locator).toBeVisible()` สำหรับ visibility
+3. ใช้ `expect(locator).toHaveText()` สำหรับ text content
+4. ใช้ `expect(locator).toHaveCount()` สำหรับ element count
+5. ใช้ `expect(apiResponse).toBeOK()` สำหรับ API assertions
 
-export class LoginPage {
-  constructor(private page: Page) {}
+### 7. Running Tests
 
-  async goto() {
-    await this.page.goto('/login')
-  }
+1. รัน tests ด้วย `bunx playwright test`
+2. รัน tests ใน headed mode ด้วย `--headed`
+3. รัน tests ใน debug mode ด้วย `--debug`
+4. รัน tests บน browser เฉพาะด้วย `--project`
+5. รัน tests ใน watch mode ด้วย VS Code extension
 
-  async login(email: string, password: string) {
-    await this.page.fill('[data-testid="email"]', email)
-    await this.page.fill('[data-testid="password"]', password)
-    await this.page.click('[data-testid="login-button"]')
-  }
+### 8. CI/CD Integration
 
-  getErrorMessage() {
-    return this.page.locator('[data-testid="error-message"]')
-  }
-}
-```
+1. ติดตั้ง browsers ใน CI pipeline
+2. ใช้ `--shard` สำหรับ parallel execution
+3. ตั้งค่า retries สำหรับ CI environment
+4. อัพโหลด test reports สำหรับ CI artifacts
+5. ใช้ GitHub Actions หรือ GitLab CI
 
----
+## Rules
 
-## 5. Test Rules (ใช้เสมอ)
+### 1. Configuration Requirements
 
-5.1. `test.describe` : จัดกลุ่ม tests -> ใช้ test.describe สำหรับ grouping
-5.2. `Test Names` : ตั้งชื่อ tests -> เขียน test name ที่ชัดเจนและ descriptive
-5.3. `Lifecycle Hooks` : setup/teardown -> ใช้ test.beforeEach และ test.afterEach
-5.4. `Assertions` : assert results -> ใช้ expect อย่างชัดเจน
+ต้องมี config file ที่ root:
 
-```ts [tests/e2e/auth.spec.ts]
-import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/login.page'
+- ต้องมี `playwright.config.ts` ที่ root
+- ใช้ `bun add -D @playwright/test` สำหรับ installation
+- รัน `bunx playwright install` เพื่อติดตั้ง browsers
+- ตั้งค่า testDir ให้ชัดเจน
+- ตั้งค่า timeout และ retries อย่างเหมาะสม
+- ใช้ reporter ที่เหมาะสมกับ CI/CD
 
-test.describe('Login Flow', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/login')
-  })
+### 2. Test Organization
 
-  test('should login successfully with valid credentials', async ({ page }) => {
-    const loginPage = new LoginPage(page)
-    await loginPage.login('user@example.com', 'password123')
+จัดระเบียบ test files:
 
-    await expect(page).toHaveURL('/dashboard')
-    await expect(page.locator('[data-testid="welcome-message"]')).toBeVisible()
-  })
-})
-```
+- จัด test files ตาม features หรือ pages
+- ใช้ `test.describe` สำหรับ grouping related tests
+- ใช้ test names ที่ชัดเจนและ descriptive
+- ใช้ `test.beforeEach`, `test.afterEach` สำหรับ isolated tests
+- ใช้ Page Object Model สำหรับ reusable code
 
----
+### 3. Selectors Strategy
 
-## 6. Best Practices (ใช้เสมอ)
+ใช้ selectors อย่างเหมาะสม:
 
-6.1. `Selectors` : ใช้ selectors -> ใช้ `data-testid` attributes แทน CSS selectors
+- ใช้ locators แทน selectors เดิม (`page.locator()`)
+- ใช้ role-based selectors (`getByRole()`)
+- ใช้ text-based selectors (`getByText()`)
+- ใช้ test IDs (`getByTestId()`)
+- หลีกเลี่ยง CSS selectors ที่ fragile
 
-6.2. `Mocking` : mock external APIs -> ใช้ `page.route()` เมื่อจำเป็น
+### 4. Best Practices
 
-6.3. `Debugging` : debugging tests -> เปิด `trace`, `screenshot`, `video` สำหรับ debugging
+ทำตาม best practices:
 
-6.4. `Performance` : รัน tests -> รันแบบ parallel และใช้ retries ใน CI
+- ใช้ auto-waiting ของ Playwright
+- ใช้ `waitFor()` สำหรับ dynamic content
+- ใช้ Page Object Model สำหรับ maintainability
+- ใช้ fixtures สำหรับ shared setup
+- ใช้ parallel execution สำหรับ performance
 
-6.5. `Reliability` : เขียน reliable tests -> หลีกเลี่ยง hardcoded waits และใช้ auto-waiting
+## Expected Outcome
 
----
-
-## 7. Import Rules (ใช้เสมอ)
-
-7.1. `tests/e2e` : import dependencies -> import จาก tests/pages, tests/fixtures, tests/utils
-
-7.2. `tests/pages` : import dependencies -> import จาก tests/utils
-
-7.3. `tests/fixtures` : import dependencies -> ไม่มี internal dependencies
-
-```plaintext
-tests/e2e  <-- tests/pages, tests/fixtures, tests/utils
-tests/pages <-- tests/utils
-tests/fixtures <-- (no internal dependencies)
-```
+- Playwright ติดตั้งและทำงานได้
+- Config รองรับ browsers และ monorepo
+- E2E tests รันได้ทั้งหมด
+- เป็นไปตาม best practices จาก official documentation

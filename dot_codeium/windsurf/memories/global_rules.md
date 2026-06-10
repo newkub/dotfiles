@@ -12,73 +12,85 @@ auto_execution_mode: 3
 
 ทำตามกฎเหล่านี้ในทุก workspace เพื่อให้การทำงานสม่ำเสมอ
 
+## Scope
+
+ใช้สำหรับทุก workspace ในการพัฒนาโปรเจกต์
+
 ## Execute
 
 ### 1. Prepare
 
 1. ทำ `/follow-agents-md` เสมอ
 2. ทำ `/ship-code` เพื่อ ship code ครบวงจร
-3. ใช้ `git` สำหรับ file operations ถ้าใช้ไม่ได้ให้ใช้ `pwsh`
-4. แต่ละ workspace ต้องทำ `/setup-tasks` เพื่อตั้งค่า scripts มาตรฐาน
-5. Setup อะไรให้ดู `/follow-windsurf-global-workflows` ก่อน
-6. เปลี่ยน config หรือใช้ workflows `run-` ให้ทำ `/follow-config` ก่อน
-7. File operation ใดๆ ต้องทำ `/edit-relative` เพื่อแก้ไขไฟล์ที่เกี่ยวข้องทั้งหมด
-8. `"."` = `/continue`, `"s."` = `/use-scripts`
+3. ตั้งค่า workspace ด้วย `/setup-tasks`
+4. ดู reference ก่อน setup ด้วย `/follow-windsurf-global-workflows`
+5. เปลี่ยน config หรือใช้ workflows `run-` ด้วย `/follow-config`
+6. File operation ใดๆ ต้องทำ `/edit-relative`
+7. `"."` = `/continue` หรือ `/try-again`
 
 ### 2. Analyze
 
-1. ทำ `/analyze-project` ด้วย `/use-scripts` เพื่อดูภาพรวมโปรเจกต์
+1. ทำ `/analyze-project` ด้วย `/use-scripts`
 2. เมื่อได้รับ error ทำตาม `/error`
-3. ถ้า error มาจากคำสั่งที่ผู้ใช้รันเอง:
-   - แก้ไข error นั้นเท่านั้น
-   - ไม่ต้อง run task หรือ command อื่น
+3. ถ้า error มาจากคำสั่งที่ผู้ใช้รันเอง แก้ไขเฉพาะ error นั้น
+4. ถ้าแค่ส่ง errors โดยไม่บอกอะไรเพิ่มเติม หรือไม่ได้เกิดจากการรัน workflows ให้ทำ `/only-fix-errors` เท่านั้น
 
 ### 3. Read Reference
 
-1. เมื่อได้รับ user prompt ให้อ่าน reference ก่อนเสมอ:
-   - Workflows ที่เกี่ยวข้อง
-   - Skills ที่เกี่ยวข้อง
-   - Global rules ที่เกี่ยวข้อง
+1. เมื่อได้รับ user prompt อ่าน reference ก่อนเสมอ (workflows, skills, global rules)
 2. วิเคราะห์และ planning ตาม reference
 3. ลดเวลาโดยไม่ต้องค้นหาข้อมูลซ้ำ
 
-### 4. Planning
+### 4. Search Code
 
-1. แก้ไข workflows ทำตาม `/follow-write-workflows`
-2. แก้ไข skills ทำตาม `/follow-write-skills`
+1. เมื่อต้องค้นหา code patterns, symbols, หรือ references ทำ `/search-code`
+2. ใช้ `Grep` สำหรับ text search และ `find_by_name` สำหรับ file search
+3. กำหนด scope ด้วย `type`, `glob`, หรือ `path`
+4. วิเคราะห์และ verify ผลลัพธ์
 
-### 5. Write
+### 5. Planning
+
+1. แก้ไข workflows ด้วย `/follow-write-workflows`
+2. แก้ไข skills ด้วย `/follow-write-skills`
+
+### 6. Write
 
 1. ก่อนเขียน code ทำ `/follow-principles-engineering`
-2. แก้ไขอะไร ทำ `/follow-architecture` เพื่อเลือก pattern ที่เหมาะสม
-3. ถ้าต้องแก้ไขไฟล์จำนวนมาก ให้ทำ `/plan` ก่อน
-4. File operation จำนวนมาก ใช้ `/use-scripts`
-5. Mock ให้ comment `// MOCK` ชัดเจน และแยกไฟล์ไป `mock/`
-6. ยังทำไม่เสร็จ comment `// TODO` ชัดเจน
-7. ไม่ mock หรือ TODO โดย default ยกเว้นจำเป็นจริงๆ
+2. แก้ไขอะไร ทำ `/follow-architecture`
+3. แก้ไขไฟล์จำนวนมาก ทำ `/plan` ก่อน
+4. Mock ให้ comment `// MOCK` และแยกไฟล์ไป `mock/`
+5. ยังทำไม่เสร็จ comment `// TODO`
+6. ไม่ mock หรือ TODO โดย default
 
-### 6. Reflex
+### 7. Reflex
 
-1. ทำ `/loop-until-complete` ทำซ้ำจน implement เสร็จทั้งหมด
-2. กลับไป check planning เรื่อยๆ จนมั่นใจว่า implement เสร็จทั้งหมด
+1. ทำ `/loop-until-complete` ทำซ้ำจน implement เสร็จ
+2. กลับไป check planning เรื่อยๆ
 
-### 7. Report
+### 8. Report
 
 1. ทำตาม `/report`
-2. เมื่อจบ task รัน `/suggest-next-action` เสมอ
-3. คุยกับผู้ใช้เป็นภาษาไทยเสมอ
+2. เมื่อจบ task รัน `/suggest-next-action`
+3. คุยกับผู้ใช้เป็นภาษาไทย
 4. คำตอบกระชับ ตรงประเด็น
-5. หลีกเลี่ยงคำยืนยันที่ไม่จำเป็น
 
 ## Rules
 
-- ใช้ Bun shell สำหรับ automation เสมอ
+### 1. Tool Selection
+
+เลือก tools ที่เหมาะสมสำหรับ automation
+
+- ใช้ `Bun shell` สำหรับ automation เสมอ
 - ใช้ `bunx` แทน `npx` เสมอ
-- ทุก workspace ต้องมี scripts มาตรฐานจาก `/follow-tasks`
-- File operation จำนวนมาก ใช้ `/use-scripts`
+
+### 2. Workspace Standards
+
+รักษามาตรฐานในทุก workspace
+
+- ทุก workspace ต้องมี scripts มาตรฐาน
 - Execute ต้องให้ผลลัพธ์เหมือนกันทุกครั้ง
-- ไม่ใช้คำสั่ง subjective หรือ ambiguous
 - ระบุลำดับการทำงานชัดเจน
+- ไม่ใช้คำสั่ง subjective หรือ ambiguous
 
 ## Expected Outcome
 

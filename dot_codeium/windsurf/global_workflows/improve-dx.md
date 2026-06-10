@@ -1,153 +1,139 @@
 ---
-title: Improve Developer Experience
-description: Enhance developer productivity with tooling, documentation และ development workflows
+title: Improve DX
+description: ปรับปรุง developer experience ด้วย tooling, documentation, และ onboarding ที่ดี
 auto_execution_mode: 3
+related_workflows:
+  - /follow-config
+  - /write-docs
+  - /setup-tasks
 ---
-
-สร้าง development environment ที่ productive ด้วย tooling, documentation และ workflows ที่ดี
 
 ## Goal
 
-เพิ่ม developer productivity และ happiness ด้วย tooling, documentation และ processes ที่ดี
+ปรับปรุง developer experience ให้ทำงานได้มีประสิทธิภาพ สะดวก และเพลิดเพลินมากขึ้น
+
+## Scope
+
+ปรับปรุง DX สำหรับทุกส่วนของ development lifecycle ครอบคลุม tooling, documentation, onboarding, และ workflows ทั้งหมด
 
 ## Execute
 
-### 1. Prepare
+### 1. Tooling Setup
 
-1. รัน `/follow-principles` เพื่อดู principles มาตรฐาน
-2. สำรวจ current developer pain points
-3. กำหนด DX goals และ metrics
-4. รวบรวม feedback จากทีม
-5. ระบุ priority areas สำหรับ improvement
+ตั้งค่า tooling สำหรับ development
 
-### 2. Development Environment
+1. ติดตั้ง `IDE extensions` และ plugins
+2. ตั้งค่า `linting` และ `formatting` tools
+3. ตั้งค่า `git hooks` สำหรับ automation
+4. ตั้งค่า `scripts` สำหรับ common tasks
+5. ตั้งค่า `debugging` tools
 
-1. รัน `/follow-vite` หรือ framework setup ที่เหมาะสม
-2. Fast hot reloading - HMR ที่ reliable
-3. Consistent local development setup
-4. Docker compose สำหรับ services
-5. Environment variable management
-6. Debugging tools ที่ setup ง่าย
-7. IDE configuration - VSCode settings, extensions
-8. Pre-configured linting และ formatting
+### 2. Documentation
 
-### 3. Documentation
+สร้าง documentation ที่ครบถ้วน
 
-1. Architecture Decision Records (ADRs)
-2. Development setup guide - ขั้นตอนการติดตั้ง
-3. Coding standards และ conventions
-4. API documentation ที่ up-to-date
-5. Component documentation - Storybook หรือ similar
-6. Troubleshooting guides
-7. FAQ สำหรับ common issues
-8. Onboarding guide สำหรับ new developers
+1. สร้าง `README` พร้อม setup instructions
+2. สร้าง `API documentation` สำหรับ endpoints
+3. สร้าง `component documentation` สำหรับ UI components
+4. สร้าง `architecture documentation`
+5. สร้าง `contributing guidelines`
 
-### 4. Tooling & Automation
+### 3. Onboarding
 
-1. รัน `/follow-lefthook` สำหรับ Git hooks
-2. Automated linting และ formatting
-3. Pre-commit hooks สำหรับ quality checks
-4. CI/CD pipelines ที่ fast และ reliable
-5. Automated testing ใน CI
-6. Dependency updates automation - Renovate
-7. Security scanning ใน pipeline
-8. Automated deployments
+ปรับปรุง onboarding process
 
-### 5. Code Quality Tools
+1. สร้าง `onboarding guide` สำหรับ developers ใหม่
+2. สร้าง `setup scripts` สำหรับ environment
+3. สร้าง `tutorial` สำหรับ common tasks
+4. สร้าง `FAQ` สำหรับ common questions
+5. สร้าง `video tutorials` สำหรับ complex workflows
 
-1. รัน `/follow-code-quality` สำหรับ standards
-2. Linting - ESLint, oxlint ที่ strict
-3. Formatting - Prettier, dprint
-4. Type checking - TypeScript strict mode
-5. Static analysis - หา potential bugs
-6. Complexity analysis - Cyclomatic complexity
-7. Test coverage reporting
-8. Code review automation
+### 4. Developer Workflows
 
-### 6. Maintainability Practices
+ปรับปรุง development workflows
 
-1. Small functions - ไม่เกิน 20-30 บรรทัด
-2. Descriptive names - บอกว่าทำอะไร
-3. Consistent style ทั้งทีม
-4. Refactoring อย่างต่อเนื่อง
-5. Boy scout rule - ทิ้งให้สะอาดกว่าเจอ
-6. Technical debt tracking
-7. Architecture fitness functions
-8. Knowledge sharing - brown bags, docs
+1. ตั้งค่า `branching strategy`
+2. ตั้งค่า `PR templates` และ checklists
+3. ตั้งค่า `CI/CD pipelines`
+4. ตั้งค่า `code review process`
+5. ตั้งค่า `release process`
 
-### 7. Collaboration & Communication
+### 5. Performance And Debugging
 
-1. Clear PR templates
-2. Code review guidelines
-3. Pair programming sessions
-4. Team documentation
-5. Decision records
-6. Meeting notes
-7. Async communication ที่ effective
-8. Feedback loops ที่รวดเร็ว
+ปรับปรุง performance และ debugging
+
+1. ตั้งค่า `hot reload` และ `fast refresh`
+2. ตั้งค่า `performance monitoring`
+3. ตั้งค่า `error tracking`
+4. ตั้งค่า `logging` ที่ structured
+5. ตั้งค่า `profiling tools`
+
+### 6. Collaboration
+
+ปรับปรุง collaboration tools
+
+1. ตั้งค่า `code review` automation
+2. ตั้งค่า `pair programming` tools
+3. ตั้งค่า `communication channels`
+4. ตั้งค่า `knowledge sharing` sessions
+5. ตั้งค่า `documentation sync`
 
 ## Rules
 
-1. Local Development
+### 1. Tooling Automation
 
-- One-command setup - `bun install && bun dev`
-- Hot reload ที่ reliable
-- Same environment ทุกคน
-- Mock data สำหรับ external services
-- Local SSL ถ้าจำเป็น
-- Debugging ที่ easy
+ใช้ automation สำหรับ repetitive tasks
 
-2. Documentation Standards
+- ใช้ `git hooks` สำหรับ pre-commit checks
+- ใช้ `scripts` สำหรับ common workflows
+- ใช้ `IDE extensions` สำหรับ productivity
+- ใช้ `formatters` และ `linters` อัตโนมัติ
+- ใช้ `CI/CD` สำหรับ automation
 
-- ADR สำหรับทุก significant decisions
-- README ที่ครบถ้วนในทุก project
-- Inline docs สำหรับ complex logic
-- Living documentation - อัพเดทตาม code
-- Diagrams สำหรับ architecture
-- API docs ที่ auto-generated
+### 2. Documentation Quality
 
-3. Code Quality
+สร้าง documentation ที่ชัดเจนและอัพเดท
 
-- Pre-commit hooks บังคับ
-- CI ที่ block ถ้า fail
-- No warnings ใน production build
-- 100% TypeScript coverage
-- Strict lint rules
-- Automated formatting
+- ใช้ `markdown` ที่ consistent
+- อัพเดท documentation พร้อม code changes
+- ใช้ `examples` และ `code snippets`
+- ใช้ `diagrams` สำหรับ complex concepts
+- ใช้ `searchable documentation`
 
-4. Testing
+### 3. Onboarding Speed
 
-- Tests รันใน CI ทุก PR
-- Coverage reporting
-- Fast test suite
-- Local test ที่ง่าย
-- Test data factories
-- Mocking ที่ consistent
+ทำให้ onboarding เร็วและง่าย
 
-5. Onboarding
+- ใช้ `one-command setup`
+- ใช้ `automated environment setup`
+- ใช้ `interactive tutorials`
+- ใช้ `video walkthroughs`
+- ใช้ `mentorship program`
 
-- Setup ที่ finish ภายในวันแรก
-- Onboarding buddy ระบบ
-- Step-by-step guide
-- Common issues และ solutions
-- Codebase tour
-- Architecture overview
+### 4. Feedback Loops
 
-6. Tooling
+สร้าง feedback loops ที่รวดเร็ว
 
-- IDE support ที่ดี
-- CLI tools สำหรับ common tasks
-- Scripts ใน package.json
-- Automation ที่ลด manual work
-- Monitoring ที่ actionable
+- ใช้ `code review` ที่มี guidelines
+- ใช้ `automated checks` สำหรับ quality
+- ใช้ `performance metrics` สำหรับ DX
+- ใช้ `surveys` สำหรับ developer satisfaction
+- ใช้ `retrospectives` สำหรับ continuous improvement
+
+### 5. Consistency
+
+รักษาความสม่ำเสมอใน workflows
+
+- ใช้ `templates` สำหรับ common tasks
+- ใช้ `checklists` สำหรับ processes
+- ใช้ `standards` สำหรับ code style
+- ใช้ `guidelines` สำหรับ decisions
+- ใช้ `conventions` สำหรับ naming
 
 ## Expected Outcome
 
-1. New developer onboarding ภายในวันแรก
-2. Fast feedback loops
-3. High code quality โดย default
-4. Comprehensive documentation
-5. Automated workflows
-6. Happy developers
-7. Reduced context switching
-8. Consistent experiences
+- `Developer onboarding` เร็วขึ้น
+- `Documentation` ครบถ้วนและอัพเดท
+- `Tooling` ที่ automate repetitive tasks
+- `Collaboration` ที่ดีขึ้น
+- `Developer satisfaction` เพิ่มขึ้น

@@ -2,54 +2,45 @@
 title: Git Push
 description: Push commits ทั้ง root และ git submodules ไปยัง remote
 auto_execution_mode: 3
+related_workflows:
+  - /watch-github-actions
 ---
 
 ## Goal
 
 Push commits จาก local repository และ git submodules ไปยัง remote repository อย่างปลอดภัย
 
+## Scope
+
+ใช้สำหรับ push commits ไปยัง remote repository ทั้ง root และ git submodules
+
 ## Execute
 
 ### 1. Check Status
 
-1. ทำตาม `git status` เพื่อดูสถานะ local repository
-2. ทำตาม `git submodule status` เพื่อดูสถานะ submodules
-3. ทำตาม `git log --oneline origin/HEAD..HEAD` เพื่อดู commits ที่จะ push
-4. ตรวจสอบว่ามี commits ที่ต้องการ push หรือไม่
+1. ทำ `git status` และ `git submodule status` เพื่อดูสถานะ
+2. ทำ `git log --oneline origin/HEAD..HEAD` เพื่อดู commits ที่จะ push
 
-### 2. Analyze Situation
+### 2. Pull Changes
 
-1. ทำตาม `git fetch origin` เพื่ออัพเดทข้อมูล remote
-2. ทำตาม `git submodule foreach --recursive git fetch origin` เพื่ออัพเดท submodules
-3. วิเคราะห์ว่ามี commits บน remote ที่ local ไม่มีหรือไม่
-4. ประเมินว่าจะมี conflicts หรือไม่
-
-### 3. Pull Changes
-
-1. ทำตาม `git pull --rebase` ก่อน push เสมอ (ถ้ามี commits บน remote)
-2. ทำตาม `git submodule foreach --recursive git pull --rebase origin` สำหรับ submodules
+1. ทำ `git fetch origin` และ `git submodule foreach --recursive git fetch origin`
+2. ทำ `git pull --rebase` และ `git submodule foreach --recursive git pull --rebase origin`
 3. แก้ไข conflicts ถ้ามี (rebase ใหม่จนกว่าจะผ่าน)
-4. ตรวจสอบว่าไม่มี conflicts เหลืออยู่
 
-### 4. Push Commits
+### 3. Push Commits
 
-1. ทำตาม `git push origin <branch>` เพื่อ push root repository
-2. ทำตาม `git submodule foreach --recursive git push origin` เพื่อ push submodules
-3. รอให้ push เสร็จสมบูรณ์
-4. ตรวจสอบว่าไม่มี error messages จาก git
+1. ทำ `git push origin <branch>` และ `git submodule foreach --recursive git push origin`
+2. ตรวจสอบว่าไม่มี error messages จาก git
 
-### 5. Validate Push
+### 4. Validate Push
 
-1. ทำตาม `git log --oneline origin/HEAD -5` เพื่อตรวจสอบ commits บน remote
-2. ทำตาม `git submodule foreach --recursive git log --oneline origin/HEAD -5` สำหรับ submodules
-3. ทำตาม `git status` เพื่อยืนยันว่า local และ remote sync กัน
-4. ตรวจสอบว่า commits ที่ push ถูกต้องครบถ้วน
+1. ทำ `git log --oneline origin/HEAD -5` และ `git submodule foreach --recursive git log --oneline origin/HEAD -5`
+2. ทำ `git status` เพื่อยืนยันว่า local และ remote sync กัน
 
-### 6. Check GitHub Actions
+### 5. Check GitHub Actions
 
-1. ทำตาม `gh workflow list` เพื่อตรวจสอบว่ามี GitHub Actions ใน repository ไหม
-2. ถ้ามี GitHub Actions ให้ทำตาม `/watch-github-actions` เพื่อตรวจสอบและรันจนกว่าจะผ่าน
-3. ถ้าไม่มี GitHub Actions ให้ข้าม step นี้
+1. ทำ `gh workflow list` เพื่อตรวจสอบว่ามี GitHub Actions ใน repository ไหม
+2. ถ้ามี GitHub Actions ให้ทำ `/watch-github-actions` เพื่อตรวจสอบและรันจนกว่าจะผ่าน
 
 ## Rules
 
@@ -81,3 +72,4 @@ Push commits จาก local repository และ git submodules ไปยัง
 - ไม่มี conflicts เหลืออยู่
 - ทีมสามารถดู commits ใหม่บน remote ได้
 - GitHub Actions ผ่านทั้งหมด
+

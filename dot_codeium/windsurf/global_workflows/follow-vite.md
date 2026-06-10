@@ -1,12 +1,19 @@
 ---
-description: แนวทางการพัฒนาด้วย Vite build tool สำหรับ modern web projects
 title: Vite Best Practices
+description: แนวทางการพัฒนาด้วย Vite build tool สำหรับ modern web projects
 auto_execution_mode: 3
+related_workflows:
+  - /follow-typescript
+  - /follow-tsdown
 ---
 
 ## Goal
 
 กำหนดแนวทางการพัฒนาด้วย Vite ให้มีประสิทธิภาพสูงสุด
+
+## Scope
+
+ติดตั้งและตั้งค่า Vite สำหรับ modern web projects ทั้ง single project และ monorepo
 
 ## Execute
 
@@ -52,13 +59,35 @@ auto_execution_mode: 3
 
 ## Rules
 
+### 1. Configuration Requirements
+
+ต้องมี config file ที่ root:
+
 - ต้องมี `vite.config.ts` หรือใช้ default configuration
 - ใช้ `bun add -D vite` สำหรับ installation
 - ตรวจสอบ Node.js version compatibility
-- ใช้ HMR สำหรับ development experience
 - ตั้งค่า proper build targets
 - ใช้ plugins สำหรับ framework integration
+
+### 2. Development Experience
+
+ตั้งค่าสำหรับ development:
+
+- ใช้ HMR สำหรับ development experience
+- ตั้งค่า proxy สำหรับ API requests
+- ใช้ environment variables ด้วย `.env` files
+- ตั้งค่า source maps สำหรับ debugging
+- ใช้ path aliases สำหรับ clean imports
+
+### 3. Build Optimization
+
+ตั้งค่าสำหรับ production:
+
 - ตรวจสอบ browser support สำหรับ production
+- ใช้ code splitting สำหรับ performance
+- ตั้งค่า proper caching headers
+- ใช้ lazy loading สำหรับ large bundles
+- ตรวจสอบ bundle size ด้วย build analyzer
 
 ## Expected Outcome
 

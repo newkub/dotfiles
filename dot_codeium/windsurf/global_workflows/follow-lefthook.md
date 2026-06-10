@@ -14,20 +14,19 @@ auto_execution_mode: 3
 
 ## Execute
 
-### 1. Install Lefthook
+### 1. Use Lefthook
 
-ติดตั้ง Lefthook ตาม platform ที่ใช้
+ใช้ Lefthook ผ่าน bunx โดยไม่ต้องติดตั้ง
 
-1. Node.js: รัน `bun add -D lefthook`
-2. Homebrew: รัน `brew install lefthook`
-3. Winget: รัน `winget install lefthook`
-4. Linux: ดูวิธีติดตั้งจาก official docs
+1. รัน `bunx lefthook install` เพื่อติดตั้ง git hooks
+2. ใช้ `bunx lefthook` สำหรับคำสั่งทั้งหมด
+3. ไม่ต้องติดตั้ง lefthook ใน package.json
 
 ### 2. Create Configuration
 
 สร้าง lefthook.yml config file
 
-1. รัน `lefthook install` เพื่อสร้าง config file
+1. รัน `bunx lefthook install` เพื่อสร้าง config file
 2. สร้าง `lefthook.yml` ที่ root directory
 3. ตั้งค่า hooks พื้นฐาน เช่น pre-commit, pre-push, pre-merge
 4. ใช้ `parallel: true` สำหรับ performance
@@ -115,10 +114,10 @@ pre-commit:
 
 รัน hooks ด้วยคำสั่ง Lefthook
 
-1. รัน `lefthook run pre-commit` เพื่อทดสอบ pre-commit hook
-2. รัน `lefthook run pre-push` เพื่อทดสอบ pre-push hook
-3. รัน `lefthook run pre-merge` เพื่อทดสอบ pre-merge hook
-4. รัน `lefthook run` เพื่อรัน hooks group
+1. รัน `bunx lefthook run pre-commit` เพื่อทดสอบ pre-commit hook
+2. รัน `bunx lefthook run pre-push` เพื่อทดสอบ pre-push hook
+3. รัน `bunx lefthook run pre-merge` เพื่อทดสอบ pre-merge hook
+4. รัน `bunx lefthook run` เพื่อรัน hooks group
 5. ใช้ `LEFTHOOK=0 git commit` เพื่อ skip hooks
 6. ตั้งค่า `output` option เพื่อ control output
 
@@ -135,7 +134,7 @@ pre-commit:
 
 ## Expected Outcome
 
-- Lefthook ติดตั้งและ config สำเร็จ
+- Lefthook ใช้งานผ่าน bunx สำเร็จ
 - Git hooks ทำงานอัตโนมัติ
 - Code quality checks ทำงานก่อน commit
 - Validation ทำงานก่อน push

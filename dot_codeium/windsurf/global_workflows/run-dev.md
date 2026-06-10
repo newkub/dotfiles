@@ -8,6 +8,10 @@ auto_execution_mode: 3
 
 รัน development server และแก้ไขข้อผิดพลาดที่เกิดขึ้น
 
+## Scope
+
+ครอบคลุมการตรวจสอบ configuration รัน development server และแก้ไข runtime errors
+
 ## Execute
 
 ### 1. Run Format
@@ -26,8 +30,8 @@ auto_execution_mode: 3
 ### 3. Run Dev Server
 
 1. ดำเนินการรัน dev server ด้วยคำสั่งที่เหมาะสม (bun dev, npm run dev, cargo run)
-2. ถ้ามี errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
-3. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
+2. ถ้ามี errors ให้รัน `/follow-analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
+3. `/follow-analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
    - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
    - ถ้าเป็น isolated errors → `/resolve-errors`
 4. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
