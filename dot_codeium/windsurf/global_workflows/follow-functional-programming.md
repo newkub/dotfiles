@@ -97,9 +97,9 @@ auto_execution_mode: 3
 ฟังก์ชันต้องเป็น pure เมื่อเป็นไปได้
 
 - ไม่มี `side effects`
-- Return ค่าเดิมเสมอเมื่อ input เดิม
+- Return ค่าเดิมเสมอเมื่อ `input` เดิม
 - ไม่ access `external state`
-- ไม่ mutate input parameters
+- ไม่ mutate `input parameters`
 - แยก pure logic จาก `I/O`
 
 ### Immutability
@@ -110,17 +110,17 @@ auto_execution_mode: 3
 - ใช้ `Readonly<>` type
 - ใช้ `spread operator`
 - ใช้ `array methods` ที่ไม่ mutate
-- ไม่ mutate objects/arrays โดยตรง
+- ไม่ mutate `objects/arrays` โดยตรง
 
 ### Function Composition
 
 ทำตาม `/declarative-programming` เพื่อใช้ composition
 
-- ฟังก์ชันขนาดเล็ก single responsibility
+- ฟังก์ชันขนาดเล็ก `single responsibility`
 - ใช้ `higher-order functions`
 - ใช้ `pipeline pattern`
-- Type-safe composition
-- Reusable generic functions
+- `Type-safe` composition
+- `Reusable generic functions`
 
 ### Type Safety
 
@@ -130,7 +130,7 @@ auto_execution_mode: 3
 - `Generics` สำหรับ reusability
 - `Type guards` สำหรับ narrowing
 - `Discriminated unions`
-- Strict TypeScript config
+- `Strict TypeScript config`
 
 ### Core and Shell
 
@@ -140,7 +140,7 @@ auto_execution_mode: 3
 - `Side effects` ใน outer layer
 - `Dependency injection`
 - `I/O` เฉพาะใน shell
-- Validation ใน pure functions
+- Validation ใน `pure functions`
 
 ### State Management
 
@@ -149,7 +149,7 @@ auto_execution_mode: 3
 - `Immutable state`
 - `Reducers` สำหรับ updates
 - `State machines`
-- No shared state
+- No `shared state`
 - `Message passing`
 
 ### Error Handling
@@ -159,8 +159,8 @@ auto_execution_mode: 3
 - `Result/Either types`
 - `Option/Maybe types`
 - `Typed error classes`
-- Explicit error propagation
-- No try/catch ใน pure functions
+- Explicit `error propagation`
+- No `try/catch` ใน pure functions
 
 ## Expected Outcome
 

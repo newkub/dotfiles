@@ -1,39 +1,65 @@
 ---
 title: Grouping
-description: จัดกลุ่ม folder ให้เหมาะสม
+description: จัดกลุ่ม items ตามหมวดหมู่หรือคุณลักษณะ
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-จัดกลุ่ม folder ให้เหมาะสมเมื่อมีเยอะเกินไป
+จัดกลุ่ม items ตามหมวดหมู่หรือคุณลักษณะที่เกี่ยวข้อง
+
+## Scope
+
+ใช้สำหรับจัดกลุ่ม code, files, หรือ data structures ใน project
 
 ## Execute
 
-### 1. Analyze Structure
+### 1. Identify Groups
 
-วิเคราะห์โครงสร้าง folder ปัจจุบัน
+ระบุหมวดหมู่ที่เหมาะสม
 
-1. ตรวจสอบจำนวน folder ในแต่ละ directory
-2. ระบุ folder ที่มีจำนวนเยอะเกินไป
-3. วิเคราะห์ความสัมพันธ์ระหว่าง folders
+1. วิเคราะห์ items ที่มี
+2. ระบุคุณลักษณะที่เหมือนกัน
+3. กำหนด criteria สำหรับการจัดกลุ่ม
 
-### 2. Group Folders
+### 2. Create Groups
 
-จัดกลุ่ม folder ให้เหมาะสม
+สร้าง groups ตาม criteria
 
-1. จัดกลุ่ม folder ที่เกี่ยวข้องกัน
-2. สร้าง folder หลักสำหรับ grouping
-3. ย้าย folder ไปยังกลุ่มที่เหมาะสม
+1. จัดกลุ่ม items ตาม criteria
+2. ตั้งชื่อ groups ให้ชัดเจน
+3. จัดเรียง items ภายในแต่ละ group
+
+### 3. Organize Structure
+
+จัดโครงสร้างตาม groups
+
+1. สร้าง directories หรือ modules สำหรับแต่ละ group
+2. ย้าย items ไปยัง groups ที่เหมาะสม
+3. ตรวจสอบ structure ถูกต้อง
 
 ## Rules
 
-- จัดกลุ่ม folder ตามความสัมพันธ์
-- ใช้ชื่อ folder ที่ชัดเจน
-- หลีกเลี่ยง folder ที่มีจำนวนเยอะเกินไปใน directory เดียว
+### 1. Grouping Principles
+
+หลักการจัดกลุ่ม
+
+- จัดกลุ่มตามความสัมพันธ์
+- ใช้ criteria ที่ชัดเจน
+- หลีกเลี่ยง groups ที่ซ้อนทับ
+- รักษา consistency ทั่วทั้ง project
+
+### 2. Common Patterns
+
+รูปแบบการจัดกลุ่มทั่วไป
+
+- จัดกลุ่มตาม domain หรือ feature
+- จัดกลุ่มตาม layer (ui, logic, data)
+- จัดกลุ่มตาม type (components, utils, types)
+- ใช้ barrel exports สำหรับ groups
 
 ## Expected Outcome
 
-- Folder structure ที่เป็นระเบียบ
-- Grouping ที่เหมาะสม
-- จำนวน folder ในแต่ละ directory ไม่เยอะเกินไป
+- Items ถูกจัดกลุ่มอย่างเหมาะสม
+- Structure ที่ชัดเจนและ maintainable
+- ง่ายต่อการค้นหาและ navigate

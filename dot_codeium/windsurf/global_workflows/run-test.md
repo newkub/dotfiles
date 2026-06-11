@@ -47,9 +47,10 @@ test/
 ### 3. Write Tests
 
 1. ทำ `/write-test` เพื่อเขียน tests ที่ขาดหายไป
-2. ตรวจสอบว่า test files ครบถ้วนตาม SPEC.md
-3. ตรวจสอบว่า test cases ครอบคลุมทุกกรณีใช้งาน
-4. ตรวจสอบว่า tests อยู่ใน location ที่ถูกต้อง
+2. รอให้ `/write-test` เสร็จสิ้นก่อนดำเนินการต่อ
+3. ตรวจสอบว่า test files ครบถ้วนตาม SPEC.md
+4. ตรวจสอบว่า test cases ครอบคลุมทุกกรณีใช้งาน
+5. ตรวจสอบว่า tests อยู่ใน location ที่ถูกต้อง
 
 ### 4. Run Tests
 
@@ -65,11 +66,13 @@ test/
 
 ### 6. Check Coverage
 
-1. ทำ `/run-test-coverage` เพื่อตรวจสอบ coverage
+1. ทำ `/run-test-coverage` เพื่อวิเคราะห์ coverage
 2. ตรวจสอบว่า coverage ถึง 100% ทุก category (lines, branches, functions, statements)
-3. ระบุส่วนที่ยังไม่มี coverage
-4. ทำ `/write-test` เพื่อเพิ่ม tests สำหรับส่วนที่ขาด coverage
-5. ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
+3. ระบุส่วนที่ยังไม่มี coverage จาก report
+4. ถ้า coverage ไม่ถึง 100%:
+   - ทำ `/write-test` เพื่อเพิ่ม tests สำหรับส่วนที่ขาด coverage
+   - ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
+5. ถ้า coverage ถึง 100% แล้ว ดำเนินการต่อ
 
 ### 7. Fix Failures
 

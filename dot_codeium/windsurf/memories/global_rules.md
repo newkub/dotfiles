@@ -24,9 +24,10 @@ auto_execution_mode: 3
 2. ทำ `/ship-code` เพื่อ ship code ครบวงจร
 3. ตั้งค่า workspace ด้วย `/setup-tasks`
 4. ดู reference ก่อน setup ด้วย `/follow-windsurf-global-workflows`
-5. เปลี่ยน config หรือใช้ workflows `run-` ด้วย `/follow-config`
-6. File operation ใดๆ ต้องทำ `/edit-relative`
-7. `"."` = `/continue` หรือ `/try-again`
+5. ดู tech stack ด้วย `/follow-my-tech-stack`
+6. เปลี่ยน config หรือใช้ workflows `run-` ด้วย `/follow-config`
+7. File operation ใดๆ ต้องทำ `/edit-relative`
+8. `"."` = `/continue` หรือ `/try-again`
 
 ### 2. Analyze
 
@@ -38,8 +39,9 @@ auto_execution_mode: 3
 ### 3. Read Reference
 
 1. เมื่อได้รับ user prompt อ่าน reference ก่อนเสมอ (workflows, skills, global rules)
-2. วิเคราะห์และ planning ตาม reference
-3. ลดเวลาโดยไม่ต้องค้นหาข้อมูลซ้ำ
+2. ทำ `/read-related-workflows` เพื่ออ่านและสรุป workflows ที่เกี่ยวข้องแบบ recursive
+3. วิเคราะห์และ planning ตาม reference
+4. ลดเวลาโดยไม่ต้องค้นหาข้อมูลซ้ำ
 
 ### 4. Search Code
 

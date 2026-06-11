@@ -8,10 +8,6 @@ auto_execution_mode: 3
 
 รัน development server และแก้ไขข้อผิดพลาดที่เกิดขึ้น
 
-## Scope
-
-ครอบคลุมการตรวจสอบ configuration รัน development server และแก้ไข runtime errors
-
 ## Execute
 
 ### 1. Run Format
@@ -30,8 +26,8 @@ auto_execution_mode: 3
 ### 3. Run Dev Server
 
 1. ดำเนินการรัน dev server ด้วยคำสั่งที่เหมาะสม (bun dev, npm run dev, cargo run)
-2. ถ้ามี errors ให้รัน `/follow-analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
-3. `/follow-analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
+2. ถ้ามี errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
+3. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
    - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
    - ถ้าเป็น isolated errors → `/resolve-errors`
 4. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
@@ -39,7 +35,9 @@ auto_execution_mode: 3
 
 ### 4. Open Browser (ถ้าจำเป็น)
 
-1. ถ้า run dev ที่ต้องเปิด URL ให้รัน `/watch-browser` เพื่อตรวจสอบผ่าน browser
+1. ถ้า run dev ที่ต้องเปิด URL ให้เลือก:
+   - ถ้าต้องการตรวจสอบผ่าน browser automation → รัน `/watch-browser`
+   - ถ้าต้องการเปิดใน browser เท่านั้น → รัน `/open-web`
 2. ตรวจสอบว่า dev server ทำงานได้จริงผ่าน browser
 3. ทดสอบเข้าถึง dev server และตรวจสอบว่า features หลักทำงานได้
 
@@ -52,18 +50,9 @@ auto_execution_mode: 3
 
 ## Rules
 
-### 1. Pre-run Checks
-
-- ต้องตรวจสอบ main config ก่อนรัน dev server
-- ต้องแก้ไขข้อผิดพลาดทั้งหมดจนกว่าจะผ่าน
-
-### 2. Error Handling
-
-- ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันที
-
-### 3. Browser Testing
-
-- ถ้า run dev ที่ต้องเปิด URL ให้รัน `/watch-browser` เสมอ
+- ใช้คำสั่งที่เหมาะสมกับ runtime (bun dev, npm run dev, cargo run)
+- ติดตามและแก้ไขข้อผิดพลาดทันทีจนกว่าจะผ่าน
+- ตรวจสอบว่า dev server เริ่มต้นสำเร็จก่อนเปิด browser
 
 ## Expected Outcome
 
