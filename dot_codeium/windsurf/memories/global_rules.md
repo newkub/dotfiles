@@ -20,7 +20,7 @@ auto_execution_mode: 3
 
 ### 1. Prepare
 
-1. ทำ `/follow-agents-md` เสมอ
+1. ทำ `/update-agents` เสมอ
 2. ทำ `/ship-code` เพื่อ ship code ครบวงจร
 3. ตั้งค่า workspace ด้วย `/setup-tasks`
 4. ดู reference ก่อน setup ด้วย `/follow-windsurf-global-workflows`

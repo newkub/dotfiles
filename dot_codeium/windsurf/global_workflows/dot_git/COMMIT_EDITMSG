@@ -1,8 +1,1 @@
-refactor(workflows): rename optimize workflows remove follow- prefix
-
-- Rename follow-optimize-bundle.md to optimize-bundle.md
-- Rename follow-optimize-config.md to optimize-config.md
-- Rename follow-optimize-perf.md to optimize-perf.md
-- Rename follow-optimize-ram-usage.md to optimize-ram-usage.md
-- Rename follow-optimize-rendering.md to optimize-rendering.md
-- Remove follow- prefix from optimize workflows for consistency
+docs: update hook paths from windspeed to devin

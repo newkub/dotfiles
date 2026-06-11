@@ -1,116 +1,70 @@
 ---
 title: Run Release
-description: ทำการ release package ไปยัง npm, crates, vscode, webstore, docker
+description: Auto-detect platforms จาก project และ release ไปยัง external platforms
 auto_execution_mode: 3
 ---
 
-ทำการ release package ไปยัง npm, crates, vscode, webstore, docker
+Auto-detect platforms จาก project และ release ไปยัง external platforms
 
 ## Goal
 
-Release package ไปยัง npm, crates, vscode, webstore, docker ด้วยการตั้งค่าที่ถูกต้อง
+Auto-detect platforms ที่ project รองรับจาก configuration files และ release ไปยัง external platforms อัตโนมัติ
+
+## Scope
+
+High-level workflow สำหรับ auto-detect และ release ไปยัง npm, crates, vscode, webstore, docker
 
 ## Execute
 
-### 1. Check Package Configuration
+### 1. Detect Platforms
 
-1. สำหรับ npm: ตรวจสอบ package.json มีข้อมูลครบถ้วน
-2. สำหรับ crates: ตรวจสอบ Cargo.toml มีข้อมูลครบถ้วน
-3. สำหรับ vscode: ตรวจสอบ package.json มี publisher
-4. สำหรับ webstore: ตรวจสอบ manifest.json มีข้อมูลครบถ้วน
-5. สำหรับ docker: ตรวจสอบ Dockerfile มีข้อมูลครบถ้วน
-6. ตรวจสอบ version และ license
-7. ตรวจสอบ repository และ homepage
+ตรวจสอบ platforms ที่ project รองรับจาก configuration files
 
-### 2. Setup Authentication with CLI
+1. ตรวจสอบ `package.json` มีอยู่ → รองรับ `npm` และ `vscode`
+2. ตรวจสอบ `Cargo.toml` มีอยู่ → รองรับ `crates`
+3. ตรวจสอบ `manifest.json` มีอยู่ → รองรับ `webstore`
+4. ตรวจสอบ `Dockerfile` มีอยู่ → รองรับ `docker`
+5. ตรวจสอบ `package.json` มี `publisher` field → รองรับ `vscode`
+6. ตรวจสอบ `package.json` มี `private: false` → รองรับ `npm`
 
-1. สำหรับ npm: รับ token จาก https://www.npmjs.com/settings/newkubise/tokens (Automation token)
-2. สำหรับ npm: ตั้งค่า NPM_TOKEN ใน GitHub Secrets ด้วย (ต้องทำครั้งเดียว):
-   ```bash
-   gh secret set NPM_TOKEN
-   # วาง npm token แล้วกด Enter
-   ```
-   **Note:** GitHub Actions ต้องมี NPM_TOKEN ใน Secrets เพื่อ publish ได้ ไม่สามารถใช้ token จาก local โดยตรงได้
-   **Alternative:** ใช้ npm Trusted Publishers (OIDC) แทน token โดยตั้งค่าใน npm organization settings
-3. สำหรับ npm scoped package: ตรวจสอบว่า scope มีใน npm หรือไม่
-   - ถ้าไม่มี scope: publish ครั้งแรกใน local ด้วย `bun publish --access public`
-   - ถ้า scope มีแล้ว: ตรวจสอบ NPM_TOKEN มีสิทธิ์ publish ไปที่ scope นั้น
-4. สำหรับ crates: รับ token จาก https://crates.io/settings/tokens
-5. สำหรับ crates: ตั้งค่า CARGO_REGISTRY_TOKEN ด้วย:
-   ```bash
-   gh secret set CARGO_REGISTRY_TOKEN
-   ```
-6. สำหรับ vscode: รับ token จาก https://dev.azure.com/
-7. สำหรับ vscode: ตั้งค่า VSCE_PAT ด้วย:
-   ```bash
-   gh secret set VSCE_PAT
-   ```
-8. สำหรับ webstore: รับ credentials จาก Google Cloud Console
-9. สำหรับ webstore: ตั้งค่า CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN ด้วย:
-   ```bash
-   gh secret set CLIENT_ID
-   gh secret set CLIENT_SECRET
-   gh secret set REFRESH_TOKEN
-   ```
-10. สำหรับ docker: รับ credentials จาก Docker Hub
-11. สำหรับ docker: ตั้งค่า DOCKER_USERNAME, DOCKER_PASSWORD ด้วย:
-    ```bash
-    gh secret set DOCKER_USERNAME
-    gh secret set DOCKER_PASSWORD
-    ```
+### 2. Run Platform-Specific Release
 
-### 3. Setup Release Tool
+รัน release ตาม platforms ที่ detect ได้
 
-1. สำหรับ npm: ทำ `/release-npm`
-2. สำหรับ crates: ทำ `/release-crates`
-3. สำหรับ vscode: ทำ `/release-vscode`
-4. สำหรับ webstore: ทำ `/release-webstore`
-5. สำหรับ docker: ทำ `/release-docker`
-6. ตรวจสอบ installation สำเร็จ
-
-### 4. Run Release
-
-1. สำหรับ npm: รัน `bun run release`
-2. สำหรับ crates: รัน `cargo release` หรือ `release-plz release`
-3. สำหรับ vscode: รัน `vsce publish`
-4. สำหรับ webstore: รัน `chrome-webstore-upload`
-5. สำหรับ docker: รัน `docker build` และ `docker push`
-6. ถ้า release ไม่สำเร็จ ให้ทำข้อ 1 ใหม่จนกว่าจะผ่าน
+1. ถ้า detect `npm`: ทำ `/run-release-npm`
+2. ถ้า detect `crates`: ทำ `/run-release-crates`
+3. ถ้า detect `vscode`: ทำ `/run-release-vscode`
+4. ถ้า detect `webstore`: ทำ `/run-release-webstore`
+5. ถ้า detect `docker`: ทำ `/run-release-docker`
 
 ## Rules
 
-### 1. Package Configuration
+### 1. Auto-Detection
 
-- ตรวจสอบ configuration ครบถ้วนก่อน release
-- ต้องมี name, version, description, license
-- ต้องมี repository และ homepage
-- สำหรับ npm: private ต้องเป็น false
-- สำหรับ vscode: ต้องมี publisher
-- สำหรับ webstore: ต้องมี manifest_version
-- สำหรับ docker: ต้องมี Dockerfile
+ตรวจสอบ platforms จาก configuration files อัตโนมัติ
 
-### 2. Authentication
+- ตรวจสอบ `package.json` สำหรับ npm และ vscode
+- ตรวจสอบ `Cargo.toml` สำหรับ crates
+- ตรวจสอบ `manifest.json` สำหรับ webstore
+- ตรวจสอบ `Dockerfile` สำหรับ docker
+- ตรวจสอบ `publisher` field สำหรับ vscode
+- ตรวจสอบ `private: false` สำหรับ npm
 
-- ตรวจสอบว่ามีสิทธิ์ publish
-- สำหรับ npm: ต้องมี NODE_AUTH_TOKEN
-- สำหรับ crates: ต้องมี CARGO_REGISTRY_TOKEN
-- สำหรับ vscode: ต้องมี VSCE_PAT
-- สำหรับ webstore: ต้องมี CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN
-- สำหรับ docker: ต้องมี DOCKER_USERNAME, DOCKER_PASSWORD
-- ต้องมี permissions ใน workflow
+### 2. Workflow Delegation
 
-### 3. Tool Usage
+ใช้ platform-specific workflows ตามที่ detect ได้
 
-- สำหรับ npm: ใช้ `/release-npm`
-- สำหรับ crates: ใช้ `/release-crates`
-- สำหรับ vscode: ใช้ `/release-vscode`
-- สำหรับ webstore: ใช้ `/release-webstore`
-- สำหรับ docker: ใช้ `/release-docker`
-- รัน prerelease script ก่อน release
+- ใช้ `/run-release-npm` สำหรับ npm
+- ใช้ `/run-release-crates` สำหรับ crates
+- ใช้ `/run-release-vscode` สำหรับ vscode
+- ใช้ `/run-release-webstore` สำหรับ webstore
+- ใช้ `/run-release-docker` สำหรับ docker
+- รันเฉพาะ workflows ที่ detect ได้เท่านั้น
 
 ## Expected Outcome
 
-- Package ถูก release สำเร็จ
+- Platforms ถูก detect อัตโนมัติจาก project configuration
+- Packages ถูก release สำเร็จไปยัง platforms ที่ detect ได้
 - Version ถูก bump อัตโนมัติ
 - Changelog ถูกสร้างอัตโนมัติ
 - Git tags ถูกสร้างอัตโนมัติ
