@@ -1,16 +1,31 @@
 {
   "mcpServers": {
+    "better-fullstack": {
+      "args": [
+        "-y",
+        "create-better-fullstack",
+        "mcp"
+      ],
+      "command": "bunx"
+    },
     "chrome-devtools": {
       "args": [
         "chrome-devtools-mcp@latest"
       ],
       "command": "bunx"
     },
+    "clickup": {
+      "serverUrl": "https://mcp.clickup.com/mcp"
+    },
     "crw": {
-      "command": "bunx",
       "args": [
         "crw-mcp"
-      ]
+      ],
+      "command": "bunx",
+      "disabled": false,
+      "env": {
+        "CRW_BROWSER_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      }
     },
     "deepwiki": {
       "registry": "io.windsurf/deepwiki",
@@ -18,14 +33,6 @@
     },
     "grep": {
       "url": "https://mcp.grep.app"
-    },
-    "better-fullstack": {
-      "command": "bunx",
-      "args": [
-        "-y",
-        "create-better-fullstack",
-        "mcp"
-      ]
     },
     "io.windsurf/cloudflare-docs": {
       "registry": "io.windsurf/cloudflare-docs",
@@ -77,8 +84,8 @@
       ],
       "command": "nuxt"
     },
-    "clickup": {
-      "serverUrl": "https://mcp.clickup.com/mcp"
+    "raindrop": {
+      "serverUrl": "https://api.raindrop.io/rest/v2/ai/mcp"
     },
     "sequential-thinking": {
       "args": [
@@ -101,9 +108,6 @@
         "mcp-server-wezterm-rs"
       ],
       "command": "uvx"
-    },
-    "raindrop": {
-      "serverUrl": "https://api.raindrop.io/rest/v2/ai/mcp"
     }
   }
 }
