@@ -8,6 +8,10 @@ auto_execution_mode: 3
 
 กำหนดแนวทางการพัฒนา monorepo ด้วย Turborepo ให้มีประสิทธิภาพสูงสุด
 
+## Scope
+
+ใช้สำหรับ monorepo ที่ใช้ Turborepo สำหรับ task orchestration และ build orchestration
+
 ## Execute
 
 ### 1. Repository Structure
@@ -110,6 +114,7 @@ auto_execution_mode: 3
 
 ### 3. Performance
 
+ใช้ optimization techniques เพื่อเพิ่มประสิทธิภาพ
 - ใช้ `--filter` เพื่อ skip tasks บน unaffected packages
 - ตั้งค่า Remote Cache สำหรับ production builds
 - ตรวจสอบ task dependencies ด้วย `turbo run build --dry=json`

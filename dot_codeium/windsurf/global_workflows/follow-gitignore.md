@@ -37,6 +37,8 @@ dist/
 build/
 .next/
 .nuxt/
+.output/
+nitro/
 
 # TypeScript
 *.tsbuildinfo
@@ -45,12 +47,22 @@ build/
 .turbo/
 .vite/
 .swc/
+.vinxi/
+.solid/
+.svelte-kit/
+.moon/
 
 # Linter Cache
 .eslintcache
 .prettiercache
 .biome/
 .oxlint/
+node_modules/.cache/
+node_modules/.moon/
+
+# Testing
+coverage/
+vitest.config.ts.timestamp-*
 
 # Environment
 .env*

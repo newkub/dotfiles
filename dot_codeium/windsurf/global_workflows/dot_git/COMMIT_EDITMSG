@@ -1,1 +1,7 @@
-docs: update hook paths from windspeed to devin
+refactor: restructure and expand global workflows
+
+- Add new workflows for deployment, release, and project management
+- Refactor existing workflows for consistency and clarity
+- Remove outdated workflow files
+- Rename workflows to better reflect their purpose
+- Improve workflow documentation and structure

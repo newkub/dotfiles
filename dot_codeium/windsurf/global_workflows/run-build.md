@@ -50,6 +50,12 @@ auto_execution_mode: 3
 2. ตรวจสอบ file size ที่เหมาะสม
 3. verify production readiness
 
+### 7. Report
+
+1. รัน `/report-format-progress` เพื่อแสดงความคืบหน้า build
+2. รัน `/report-format-metrics` เพื่อแสดง build metrics (time, size)
+3. รัน `/report-format-summary` เพื่อสรุปผลลัพธ์ build
+
 ## Rules
 
 ### 1. Build Order

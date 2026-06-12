@@ -94,6 +94,12 @@ test/
 5. ยืนยันว่าผ่าน 100%
 6. ยืนยันว่า coverage ถึง 100% ทุก category
 
+### 9. Report
+
+1. รัน `/report-format-metrics` เพื่อแสดง test coverage metrics
+2. รัน `/report-format-table` เพื่อจัดรูปแบบ test results
+3. รัน `/report-format-summary` เพื่อสรุปผลลัพธ์ test
+
 ## Rules
 
 ### 1. Test Execution

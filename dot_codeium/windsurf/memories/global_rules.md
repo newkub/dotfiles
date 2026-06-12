@@ -20,14 +20,13 @@ auto_execution_mode: 3
 
 ### 1. Prepare
 
-1. ทำ `/update-agents` เสมอ
-2. ทำ `/ship-code` เพื่อ ship code ครบวงจร
-3. ตั้งค่า workspace ด้วย `/setup-tasks`
-4. ดู reference ก่อน setup ด้วย `/follow-windsurf-global-workflows`
-5. ดู tech stack ด้วย `/follow-my-tech-stack`
-6. เปลี่ยน config หรือใช้ workflows `run-` ด้วย `/follow-config`
-7. File operation ใดๆ ต้องทำ `/edit-relative`
-8. `"."` = `/continue` หรือ `/try-again`
+1. ทำ `/ship-run` เพื่อ ship code ครบวงจร ทดสอบคุณภาพ และรัน development server
+2. ตั้งค่า workspace ด้วย `/setup-tasks`
+3. ดู reference ก่อน setup ด้วย `/follow-windsurf-global-workflows`
+4. ดู tech stack ด้วย `/follow-my-tech-stack`
+5. เปลี่ยน config หรือใช้ workflows `run-` ด้วย `/follow-config`
+6. File operation ใดๆ ต้องทำ `/edit-relative`
+7. `"."` = `/continue` หรือ `/try-again`
 
 ### 2. Analyze
 

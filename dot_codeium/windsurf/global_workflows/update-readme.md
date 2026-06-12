@@ -45,15 +45,17 @@ related_workflows:
 
 จัดรูปแบบ sections ตามมาตรฐานสำหรับ README:
 
-- `Status Callout`: ด้านบนสุด (หลัง title) - ใช้ `> [!WARNING]` ถ้ายังไม่พร้อม, ใช้ `> [!SUCCESS]` ถ้าพร้อมใช้งาน
+- `Status Callout`: ด้านบนสุด (หลัง title) - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, รวม License MIT badge)
-- `Key Concepts`: `<details>`/`<summary>` accordion (Key Concepts, Principles, FAQs, Best Practices, Information)
 - `Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม icon จาก iconify - เขียน business features จากการวิเคราะห์
 - `Quick Start`: Installation ด้วย numbered steps
 - `Usage`: Markdown format พร้อม code blocks
-- `Reference`: ใช้ `<details>`/`<summary>` accordion สำหรับ subsections (Scripts, Workspaces, Configuration) พร้อม Markdown table 3 columns - เขียนเมื่อมี
-- `License`: Section แยกด้านล่าง Notes พร้อม MIT badge
-- `History`: Star history widget (เฉพาะเมื่อมี tag release)
+- `Key Concepts`: `<details>`/`<summary>` accordion
+- `Development`: `<details>`/`<summary>` accordion พร้อม subsections (Environment Setup, Local Development, Testing, Building, Deployment, Debugging, Contributing)
+- `Best Practices`: Callout `[!TIP]` พร้อม bullet points
+- `Reference`: `<details>`/`<summary>` accordion สำหรับ subsections (Scripts, Workspaces, Configuration)
+- `Information`: Callout หลายอัน (TIP, IMPORTANT, WARNING, CAUTION, FAQ)
+- `License`: Section แยกด้านล่างสุด พร้อม MIT badge
 
 ### 2. Content And Language Standards
 
@@ -89,7 +91,7 @@ related_workflows:
 ```markdown
 ## License
 
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
+This project is licensed under the <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noopener noreferrer">MIT License</a>.
 
 - ✓ Commercial use, Distribution, Modification, Private use
 - ⓘ License and copyright notice

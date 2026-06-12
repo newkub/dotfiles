@@ -48,6 +48,12 @@ auto_execution_mode: 3
 3. ยืนยันว่าไม่มี runtime errors ใน console
 4. ตรวจสอบว่า development environment พร้อมใช้งาน
 
+### 6. Report
+
+1. รัน `/report-format-terminal` เพื่อวาด terminal output ด้วย ANSI codes
+2. รัน `/report-format-table` เพื่อจัดรูปแบบตาราง
+3. แสดงผลลัพธ์ที่จัดรูปแบบแล้ว
+
 ## Rules
 
 - ใช้คำสั่งที่เหมาะสมกับ runtime (bun dev, npm run dev, cargo run)
