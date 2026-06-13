@@ -10,7 +10,7 @@ auto_execution_mode: 3
 
 ## Scope
 
-ใช้สำหรับจัดกลุ่ม code, files, หรือ data structures ใน project
+ใช้สำหรับจัดกลุ่ม code, files, workflows, หรือ data structures ใน project
 
 ## Execute
 
@@ -40,19 +40,10 @@ auto_execution_mode: 3
 
 ## Rules
 
-### 1. Grouping Principles
-
-หลักการจัดกลุ่ม
-
 - จัดกลุ่มตามความสัมพันธ์
 - ใช้ criteria ที่ชัดเจน
 - หลีกเลี่ยง groups ที่ซ้อนทับ
 - รักษา consistency ทั่วทั้ง project
-
-### 2. Common Patterns
-
-รูปแบบการจัดกลุ่มทั่วไป
-
 - จัดกลุ่มตาม domain หรือ feature
 - จัดกลุ่มตาม layer (ui, logic, data)
 - จัดกลุ่มตาม type (components, utils, types)

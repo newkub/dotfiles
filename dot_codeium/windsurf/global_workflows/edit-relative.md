@@ -3,12 +3,16 @@ title: Edit Relative
 description: แก้ไขไฟล์ที่เกี่ยวข้องทั้งหมดเมื่อทำ file operation
 auto_execution_mode: 3
 related_workflows:
-  - /update-reference
+  - /update-references
 ---
 
 ## Goal
 
 เมื่อทำ file operation ใดๆ ให้แก้ไขไฟล์ที่เกี่ยวข้องทั้งหมด
+
+## Scope
+
+ครอบคลุมการอัปเดตไฟล์ที่เกี่ยวข้องเมื่อทำ file operations (edit, create, delete, move, rename)
 
 ## Execute
 
@@ -17,7 +21,7 @@ related_workflows:
 ระบุ file operation ที่ทำ
 
 1. ระบุไฟล์ที่ถูกแก้ไข/สร้าง/ลบ
-2. ระบุประเภท operation (edit, create, delete, move)
+2. ระบุประเภท operation (`edit`, `create`, `delete`, `move`, `rename`)
 3. ระบุเนื้อหาที่เปลี่ยนแปลง
 
 ### 2. Find Related Files
@@ -29,6 +33,8 @@ related_workflows:
 3. ค้นหา references ใน config files
 4. ค้นหา references ใน documentation
 5. ค้นหา references ใน test files
+6. ค้นหา references ใน global workflows
+7. ค้นหา references ใน skills
 
 ### 3. Update Related Files
 
@@ -92,36 +98,12 @@ related_workflows:
 
 ## Expected Outcome
 
-- [ ] ไฟล์ที่เกี่ยวข้องทั้งหมดถูกอัปเดต
-- [ ] ไม่มี broken imports
-- [ ] ไม่มี broken exports
-- [ ] Config files ถูกอัปเดต
-- [ ] Documentation ถูกอัปเดต
-- [ ] Test files ถูกอัปเดต
-- [ ] Typecheck ผ่าน
-- [ ] Lint ผ่าน
-- [ ] Tests ผ่าน
-
-## Common Mistakes
-
-ข้อผิดพลาดที่พบบ่อย:
-
-- ไม่ค้นหาไฟล์ที่เกี่ยวข้องทั้งหมด
-- ไม่อัปเดต imports
-- ไม่อัปเดต exports
-- ไม่อัปเดต config files
-- ไม่อัปเดต documentation
-- ไม่อัปเดต test files
-- ไม่ตรวจสอบด้วย typecheck
-- ไม่ตรวจสอบด้วย lint
-
-## Anti-Patterns
-
-รูปแบบที่ควรหลีกเลี่ยง:
-
-- ❌ แก้ไขไฟล์เดียวโดยไม่อัปเดตไฟล์ที่เกี่ยวข้อง
-- ❌ ไม่ค้นหา references ทั้งหมด
-- ❌ ไม่ตรวจสอบด้วย typecheck
-- ❌ ไม่ตรวจสอบด้วย lint
-- ❌ ไม่อัปเดต documentation
-
+- ไฟล์ที่เกี่ยวข้องทั้งหมดถูกอัปเดต
+- ไม่มี broken imports
+- ไม่มี broken exports
+- Config files ถูกอัปเดต
+- Documentation ถูกอัปเดต
+- Test files ถูกอัปเดต
+- Typecheck ผ่าน
+- Lint ผ่าน
+- Tests ผ่าน

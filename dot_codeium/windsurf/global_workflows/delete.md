@@ -2,32 +2,43 @@
 title: Delete
 description: ลบไฟล์หรือ folder และอัพเดท references ทั้งหมด
 auto_execution_mode: 3
+related_workflows:
+  - /edit-relative
+  - /update-references
 ---
 
 ## Goal
 
 ลบไฟล์หรือ folder และอัพเดท references ทั้งหมดในโปรเจกต์
 
+## Scope
+
+ใช้สำหรับการลบไฟล์หรือ folder พร้อมอัพเดท references ทั้งหมดในโปรเจกต์
+
 ## Execute
 
 ### 1. Analyze References
 
-1. ค้นหาทุก references ที่ใช้ไฟล์หรือ folder
-2. ตรวจสอบ dependencies ที่เกี่ยวข้อง
-3. บันทึก locations ทั้งหมดที่ต้องอัพเดท
+ค้นหาและวิเคราะห์ references ทั้งหมด
+
+- ค้นหาทุก references ที่ใช้ไฟล์หรือ folder (imports, exports, links)
+- ตรวจสอบ dependencies ที่เกี่ยวข้อง (parent workflows, dependent files)
+- บันทึก locations ทั้งหมดที่ต้องอัพเดท
 
 ### 2. Delete
 
-1. ลบไฟล์หรือ folder
-2. อัพเดททุก references ใน codebase
-3. อัพเดท imports ทั้งหมด
-4. อัพเดท barrel exports ถ้าจำเป็น
+ดำเนินการลบและอัพเดท
+
+- ลบไฟล์หรือ folder
+- อัพเดททุก references ใน codebase
+- อัพเดท imports ทั้งหมด
+- อัพเดท barrel exports ถ้าจำเป็น
 
 ## Rules
 
-1. ตรวจสอบ references ทั้งหมดก่อน delete
-2. อัพเดต references ทั้งหมดหลัง delete
-3. ตรวจสอบว่าไม่มี circular dependencies เกิดขึ้น
+- ตรวจสอบ references ทั้งหมดก่อน delete
+- อัพเดต references ทั้งหมดหลัง delete
+- ตรวจสอบว่าไม่มี circular dependencies เกิดขึ้น
 
 ## Expected Outcome
 
