@@ -25,14 +25,15 @@ auto_execution_mode: 3
 ### 2. Configuration
 
 1. ติดตั้ง Turborepo ด้วย `bun add -D turbo`
-2. สร้าง `turbo.json` ด้วย $schema และ tasks configuration
+2. สร้าง `turbo.json` ด้วย $schema versioned และ tasks configuration
 3. กำหนด `inputs` สำหรับ cache invalidation
 4. กำหนด `outputs` สำหรับ caching artifacts
 5. ตั้งค่า `dependsOn` สำหรับ task dependencies
 6. ตั้งค่า `cache` เป็น true สำหรับ tasks ที่สามารถ cache
 7. ตั้งค่า `persistent: true` สำหรับ long-running tasks
-8. ตั้งค่า `env` สำหรับ environment variables
-9. ทำ `/verify`
+8. ตั้งค่า `env` สำหรับ environment variables (ไม่ต้องใช้ $ prefix)
+9. ตั้งค่า `globalDependencies` สำหรับ files ที่มีผลต่อทุก tasks
+10. ทำ `/verify`
 
 ### 3. Usage
 
@@ -47,10 +48,12 @@ auto_execution_mode: 3
 
 ### 4. Remote Caching
 
-1. ตั้งค่า Remote Cache ด้วย Vercel
+1. ตั้งค่า Remote Cache ด้วย Vercel หรือ self-hosted
 2. รัน `bunx turbo link --yes` เพื่อเชื่อมต่อกับ Vercel Remote Cache
 3. ใช้ `TURBO_TOKEN` และ `TURBO_TEAM` สำหรับ authentication
 4. ตรวจสอบ cache hit/miss ด้วย `turbo run build --dry=json`
+5. ใช้ cache sharding สำหรับ large-scale monorepos เพื่อลด cache bloat
+6. ตั้งค่า cache environment variables สำหรับ self-hosted solutions
 
 ## Rules
 
@@ -69,7 +72,7 @@ auto_execution_mode: 3
 
 ```json
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://v2.turborepo.dev/schema.json",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -90,7 +93,8 @@ auto_execution_mode: 3
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalDependencies": ["tsconfig.json", ".env"]
 }
 ```
 

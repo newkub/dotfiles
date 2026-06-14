@@ -19,7 +19,19 @@ related_workflows:
 2. รอให้ format เสร็จสิ้นก่อนดำเนินการต่อ
 3. ถ้ามีข้อผิดพลาดจาก format ให้แก้ไขก่อน
 
-### 2. Setup Test Structure
+### 2. Run Lint
+
+1. ทำ `/run-lint` เพื่อตรวจสอบ code quality
+2. รอให้ lint เสร็จสิ้นก่อนดำเนินการต่อ
+3. ถ้ามีข้อผิดพลาดจาก lint ให้แก้ไขก่อน
+
+### 3. Run Typecheck
+
+1. ทำ `/run-typecheck` เพื่อตรวจสอบ type safety
+2. รอให้ typecheck เสร็จสิ้นก่อนดำเนินการต่อ
+3. ถ้ามีข้อผิดพลาดจาก typecheck ให้แก้ไขก่อน
+
+### 4. Setup Test Structure
 
 1. ตรวจสอบ test structure ตามมาตรฐาน:
 
@@ -64,7 +76,7 @@ test/
 
 ทำตาม `/review-test-result` เพื่อวิเคราะห์ผลลัพธ์ที่ครบถ้วน
 
-### 6. Check Coverage
+### 8. Check Coverage
 
 1. ทำ `/run-test-coverage` เพื่อวิเคราะห์ coverage
 2. ตรวจสอบว่า coverage ถึง 100% ทุก category (lines, branches, functions, statements)
@@ -74,7 +86,7 @@ test/
    - ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
 5. ถ้า coverage ถึง 100% แล้ว ดำเนินการต่อ
 
-### 7. Fix Failures
+### 9. Fix Failures
 
 1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ test failures
 2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
@@ -85,7 +97,7 @@ test/
 5. แก้ไข mock data ถ้าจำเป็น
 6. บันทึกสิ่งที่แก้ไข
 
-### 8. Verify
+### 10. Verify
 
 1. รัน tests อีกครั้งหลังแก้ไข
 2. ตรวจสอบว่า failures หมดไป
@@ -94,7 +106,7 @@ test/
 5. ยืนยันว่าผ่าน 100%
 6. ยืนยันว่า coverage ถึง 100% ทุก category
 
-### 9. Report
+### 11. Report
 
 1. รัน `/report-format-metrics` เพื่อแสดง test coverage metrics
 2. รัน `/report-format-table` เพื่อจัดรูปแบบ test results

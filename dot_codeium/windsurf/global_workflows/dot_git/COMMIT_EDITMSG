@@ -1,7 +1,8 @@
-refactor: restructure and expand global workflows
+chore: update Moonrepo and Turborepo workflows with latest best practices
 
-- Add new workflows for deployment, release, and project management
-- Refactor existing workflows for consistency and clarity
-- Remove outdated workflow files
-- Rename workflows to better reflect their purpose
-- Improve workflow documentation and structure
+- Add cache lifetime and layering for Moonrepo
+- Add polyglot support and affected code execution
+- Update Turborepo schema to versioned v2 URL
+- Add globalDependencies configuration
+- Add cache sharding for large-scale monorepos
+- Add self-hosted remote cache support
