@@ -1,18 +1,18 @@
 ---
-title: Commit and Push
-description: Commit และ push changes ไปยัง remote repository
+title: Commit And Push
+description: Commit ไฟล์และ push ไปยัง remote repository
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-Commit และ push changes ไปยัง remote repository
+Commit ไฟล์และ push ไปยัง remote repository
 
 ## Execute
 
 ### 1. Commit Changes
 
-สร้าง commit ตามมาตรฐาน conventional commits
+สร้าง commit สำหรับไฟล์ที่มีการเปลี่ยนแปลง
 
 1. ทำตาม `/commit`
 
@@ -33,4 +33,3 @@ Push commits ไปยัง remote repository
 1. Changes ถูก commit ตาม conventional commits
 2. Changes ถูก push ไปยัง remote repository
 3. Git history สะอาดและติดตามง่าย
-

@@ -1,6 +1,6 @@
 ---
 title: Vite Best Practices
-description: แนวทางการพัฒนาด้วย Vite build tool สำหรับ modern web projects
+description: แนวทางการพัฒนาด้วย Vite build tool สำหรับ modern web applications
 auto_execution_mode: 3
 related_workflows:
   - /follow-typescript
@@ -14,17 +14,17 @@ related_workflows:
 
 ## Scope
 
-ติดตั้งและตั้งค่า Vite สำหรับ modern web projects ทั้ง single project และ monorepo
+ติดตั้งและตั้งค่า Vite สำหรับ modern web applications ทั้ง single project และ monorepo
+
+**หมายเหตุ:** สำหรับ TypeScript library build ให้ใช้ `/follow-tsdown` แทน
 
 ## Execute
 
 ### 1. Installation
 
-1. ติดตั้ง Vite ด้วย `bun add -D vite` หรือใช้ `bun create vite` สำหรับ scaffolding
+1. ติดตั้ง Vite ด้วย `bun add -D vite`
 2. ตรวจสอบ Node.js version >= 20.19+ หรือ 22.12+
-3. เลือก template ที่ต้องการ: vanilla, vue, react, preact, lit, svelte, solid, qwik
-4. สร้าง project ด้วย `bun create vite my-app --template <template>`
-5. รัน dev server ด้วย `bunx vite`
+3. รัน dev server ด้วย `bunx vite`
 
 ### 2. Configuration
 
@@ -33,8 +33,36 @@ related_workflows:
 3. กำหนด build options สำหรับ production
 4. ตั้งค่า server options สำหรับ development
 5. ใช้ path aliases สำหรับ clean imports
+6. เปิดใช้ `resolve.tsconfigPaths: true` สำหรับ auto-resolve tsconfig paths
 
-### 3. Development
+### 3. Default Plugins
+
+ติดตั้ง plugins ตาม use cases
+
+Framework Plugins:
+- Vue: `@vitejs/plugin-vue`, `@vitejs/plugin-vue-jsx`
+- React: `@vitejs/plugin-react`
+- Solid: `vite-plugin-solid`
+- Svelte: `@sveltejs/vite-plugin-svelte`
+
+Build Optimization:
+- `@vitejs/plugin-legacy` - สำหรับ legacy browser support
+- `vite-plugin-pwa` - PWA support
+- `rollup-plugin-visualizer` - bundle analysis
+
+Development Experience:
+- `vite-plugin-checker` - TypeScript/ESLint checking
+- `vite-plugin-inspect` - plugin inspection
+- `unplugin-auto-import` - auto import APIs
+
+CSS/Styling:
+- `unocss/vite` - UnoCSS integration
+
+Utility:
+- `unplugin-vue-components` - auto component registration
+- `unplugin-icons` - icon auto import
+
+### 4. Development
 
 1. รัน dev server ด้วย `bunx vite` หรือ `bun run dev`
 2. ใช้ Hot Module Replacement (HMR) สำหรับ fast refresh
@@ -42,7 +70,7 @@ related_workflows:
 4. ใช้ environment variables ด้วย `.env` files
 5. ตั้งค่า source maps สำหรับ debugging
 
-### 4. Build
+### 5. Build
 
 1. รัน build ด้วย `bunx vite build`
 2. ตั้งค่า target browsers สำหรับ production
@@ -50,7 +78,7 @@ related_workflows:
 4. ตั้งค่า code splitting สำหรับ performance
 5. กำหนด assets naming และ output directory
 
-### 5. Best Practices
+### 6. Best Practices
 
 1. ใช้ ES modules แทน CommonJS
 2. ใช้ plugins สำหรับ framework-specific features

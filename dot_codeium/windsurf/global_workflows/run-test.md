@@ -4,6 +4,7 @@ description: รัน test suite อย่างเป็นระบบ เข
 auto_execution_mode: 3
 related_workflows:
   - /write-test
+  - /check-correctness-test-case
   - /run-test-coverage
 ---
 
@@ -86,7 +87,16 @@ test/
    - ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
 5. ถ้า coverage ถึง 100% แล้ว ดำเนินการต่อ
 
-### 9. Fix Failures
+### 9. Check Correctness
+
+1. ทำ `/check-correctness-test-case` เพื่อตรวจสอบความถูกต้องของ test cases
+2. ตรวจสอบว่า test cases ครอบคลุม requirements ที่กำหนด
+3. ตรวจสอบว่า test logic ถูกต้อง
+4. ตรวจสอบว่า naming conventions ถูกต้อง
+5. รายงานผลการตรวจสอบ
+6. ถ้ามีปัญหาให้แก้ไขก่อนดำเนินการต่อ
+
+### 10. Fix Failures
 
 1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ test failures
 2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
@@ -97,7 +107,7 @@ test/
 5. แก้ไข mock data ถ้าจำเป็น
 6. บันทึกสิ่งที่แก้ไข
 
-### 10. Verify
+### 11. Verify
 
 1. รัน tests อีกครั้งหลังแก้ไข
 2. ตรวจสอบว่า failures หมดไป
@@ -106,7 +116,7 @@ test/
 5. ยืนยันว่าผ่าน 100%
 6. ยืนยันว่า coverage ถึง 100% ทุก category
 
-### 11. Report
+### 12. Report
 
 1. รัน `/report-format-metrics` เพื่อแสดง test coverage metrics
 2. รัน `/report-format-table` เพื่อจัดรูปแบบ test results

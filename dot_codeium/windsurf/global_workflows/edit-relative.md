@@ -1,109 +1,106 @@
 ---
 title: Edit Relative
-description: แก้ไขไฟล์ที่เกี่ยวข้องทั้งหมดเมื่อทำ file operation
+description: อัปเดท references ทั้งหมดที่เกี่ยวข้องเมื่อมีการแก้ไขไฟล์
 auto_execution_mode: 3
-related_workflows:
-  - /update-references
 ---
 
 ## Goal
 
-เมื่อทำ file operation ใดๆ ให้แก้ไขไฟล์ที่เกี่ยวข้องทั้งหมด
+อัปเดท references ทั้งหมดที่เกี่ยวข้องเมื่อมีการแก้ไข ย้าย หรือลบไฟล์
 
 ## Scope
 
-ครอบคลุมการอัปเดตไฟล์ที่เกี่ยวข้องเมื่อทำ file operations (edit, create, delete, move, rename)
+ใช้สำหรับอัปเดท references เมื่อ:
+- แก้ไขไฟล์ที่ถูกอ้างอิงจากไฟล์อื่น
+- ย้ายไฟล์ไปยังตำแหน่งใหม่
+- เปลี่ยนชื่อไฟล์
+- ลบไฟล์ที่ถูกอ้างอิง
+- เปลี่ยนชื่อ workflow หรือ skill
 
 ## Execute
 
-### 1. Identify File Operation
+### 1. Identify Changed Files
 
-ระบุ file operation ที่ทำ
+ระบุไฟล์ที่มีการเปลี่ยนแปลง
 
-1. ระบุไฟล์ที่ถูกแก้ไข/สร้าง/ลบ
-2. ระบุประเภท operation (`edit`, `create`, `delete`, `move`, `rename`)
-3. ระบุเนื้อหาที่เปลี่ยนแปลง
+1. ระบุไฟล์ที่ถูกแก้ไข ย้าย เปลี่ยนชื่อ หรือลบจาก task ปัจจุบัน
+2. รัน `git status --porcelain` เพื่อดูไฟล์ที่มีการเปลี่ยนแปลงทั้งหมด
 
-### 2. Find Related Files
+### 2. Search For References
 
-ค้นหาไฟล์ที่เกี่ยวข้อง
+ค้นหา references ทั้งหมดที่เกี่ยวข้อง
 
-1. ค้นหา imports ที่อ้างอิงถึงไฟล์ที่เปลี่ยนแปลง
-2. ค้นหา exports ที่ถูกอ้างอิงจากไฟล์อื่น
-3. ค้นหา references ใน config files
-4. ค้นหา references ใน documentation
-5. ค้นหา references ใน test files
-6. ค้นหา references ใน global workflows
-7. ค้นหา references ใน skills
+1. ค้นหา references ด้วย `Grep` หรือ `search-code` ใน codebase
+2. ค้นหาชื่อไฟล์เก่าในทุกไฟล์
+3. ค้นหา path เก่าในทุกไฟล์
+4. ค้นหา import statements ที่อ้างถึงไฟล์เก่า
+5. ค้นหา workflow references ที่อ้างถึง workflow เก่า
 
-### 3. Update Related Files
+### 3. Update References
 
-แก้ไขไฟล์ที่เกี่ยวข้อง
+อัปเดท references ทั้งหมดที่พบ
 
-1. อัปเดต import paths ในไฟล์ที่อ้างอิง
-2. อัปเดต export paths ในไฟล์ที่ export
-3. อัปเดต config files ที่เกี่ยวข้อง
-4. อัปเดต documentation ที่เกี่ยวข้อง
-5. อัปเดต test files ที่เกี่ยวข้อง
+**สำหรับการย้ายไฟล์:**
+1. อัปเดท import paths ทั้งหมด
+2. อัปเดท file path references ทั้งหมด
+3. อัปเดท workflow references ทั้งหมด
 
-### 4. Validate Changes
+**สำหรับการเปลี่ยนชื่อไฟล์:**
+1. อัปเดท import statements ทั้งหมด
+2. อัปเดท file name references ทั้งหมด
+3. อัปเดท workflow references ทั้งหมด
 
-ตรวจสอบการเปลี่ยนแปลง
+**สำหรับการลบไฟล์:**
+1. ลบ import statements ที่อ้างถึงไฟล์ที่ถูกลบ
+2. ลบ references ที่อ้างถึงไฟล์ที่ถูกลบ
+3. แก้ไข code ที่ใช้ไฟล์ที่ถูกลบ
 
-1. ตรวจสอบว่า imports ถูกต้อง
-2. ตรวจสอบว่า exports ถูกต้อง
-3. ตรวจสอบว่า config files ถูกต้อง
-4. รัน typecheck เพื่อตรวจสอบ
-5. รัน lint เพื่อตรวจสอบ
+**สำหรับการเปลี่ยนชื่อ workflow:**
+1. อัปเดท workflow references ทั้งหมดใน codebase
+2. อัปเดท workflow references ใน global workflows
+3. อัปเดท workflow references ใน workspace workflows
+
+### 4. Verify Updates
+
+ตรวจสอบว่า references ถูกอัปเดทครบถ้วน
+
+1. ค้นหา references เก่าอีกครั้งเพื่อยืนยันว่าไม่มีเหลือ
+2. รัน linting เพื่อตรวจสอบว่าไม่มี errors
+3. รัน typecheck เพื่อตรวจสอบว่าไม่มี type errors
+4. รัน test เพื่อตรวจสอบว่าไม่มี test failures
 
 ## Rules
 
-### 1. File Operation Types
+### Search Strategy
 
-ประเภท file operation:
+ค้นหา references อย่างครอบคลุม
 
-- **Edit**: แก้ไขเนื้อหาไฟล์
-- **Create**: สร้างไฟล์ใหม่
-- **Delete**: ลบไฟล์
-- **Move**: ย้ายไฟล์ไปที่อื่น
-- **Rename**: เปลี่ยนชื่อไฟล์
+- ค้นหาทั้ง absolute paths และ relative paths
+- ค้นหาทั้งชื่อไฟล์และ extension
+- ค้นหาทั้ง import statements และ string references
+- ค้นหาในทุก file types (.ts, .js, .md, .json, etc.)
 
-### 2. Related File Types
+### Update Strategy
 
-ประเภทไฟล์ที่ต้องตรวจสอบ:
+อัปเดท references อย่างถูกต้อง
 
-- **Import files**: ไฟล์ที่ import จากไฟล์ที่เปลี่ยนแปลง
-- **Export files**: ไฟล์ที่ export จากไฟล์ที่เปลี่ยนแปลง
-- **Config files**: config files ที่อ้างอิงถึงไฟล์
-- **Documentation**: README, docs ที่อ้างอิงถึงไฟล์
-- **Test files**: test files ที่ทดสอบไฟล์ที่เปลี่ยนแปลง
+- อัปเดททุก references ที่พบ ไม่เว้นแม้แต่ reference เดียว
+- รักษาความสม่ำเสมอของ import style
+- รักษาความสม่ำเสมอของ path format
+- ตรวจสอบว่า updates ไม่ทำให้เกิด syntax errors
 
-### 3. Update Strategies
+### Verification
 
-กลยุทธ์การอัปเดต:
+ตรวจสอบความถูกต้องของ updates
 
-- ใช้ search tools สำหรับค้นหา references
-- ใช้ absolute paths สำหรับความชัดเจน
-- อัปเดตทุก references ที่พบ
-- ตรวจสอบทุกไฟล์ที่เปลี่ยนแปลง
-
-### 4. Validation
-
-ตรวจสอบการเปลี่ยนแปลง:
-
-- รัน typecheck หลังจากอัปเดต
-- รัน lint หลังจากอัปเดต
-- รัน tests หลังจากอัปเดต
-- ตรวจสอบว่าไม่มี broken references
+- ตรวจสอบว่า references เก่าไม่มีเหลือ
+- ตรวจสอบว่า references ใหม่ถูกต้อง
+- ตรวจสอบว่า code ยังทำงานได้หลังจาก updates
+- ตรวจสอบว่าไม่มี broken imports
 
 ## Expected Outcome
 
-- ไฟล์ที่เกี่ยวข้องทั้งหมดถูกอัปเดต
-- ไม่มี broken imports
-- ไม่มี broken exports
-- Config files ถูกอัปเดต
-- Documentation ถูกอัปเดต
-- Test files ถูกอัปเดต
-- Typecheck ผ่าน
-- Lint ผ่าน
-- Tests ผ่าน
+1. References ทั้งหมดถูกอัปเดทครบถ้วน
+2. ไม่มี references เก่าเหลืออยู่
+3. Code ยังทำงานได้หลังจาก updates
+4. ไม่มี linting หรือ type errors

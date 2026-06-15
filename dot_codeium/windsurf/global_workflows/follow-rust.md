@@ -2,6 +2,9 @@
 title: Follow Rust
 description: สร้างหรือปรับปรุง Rust project ด้วย Clean Architecture และ Workspace
 auto_execution_mode: 3
+related_workflows:
+  - /follow-mutants-rs
+  - /follow-nextest
 ---
 
 ## Goal

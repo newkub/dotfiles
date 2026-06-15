@@ -3,7 +3,7 @@ title: Write Readme
 description: สร้าง README.md ที่มีเนื้อหาครบถ้วนด้วยข้อมูลจากการวิเคราะห์โปรเจกต์จริง
 auto_execution_mode: 3
 related_workflows:
-  - /analyze-project
+  - /deep-analyze
   - /all-workspaces
   - /content-quality
   - /write-docs
@@ -29,7 +29,7 @@ related_workflows:
 
 ### 2. Analyze And Write Root README
 
-1. ทำ `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์ root
+1. ทำ `/deep-analyze` เพื่อเก็บข้อมูลโปรเจกต์ root
 2. อ่าน `manifest files`, `source code`, และ `config files`
 3. เขียน `required sections`, `usage`, และ `hero section` ตามมาตรฐาน
 4. `Configuration` ให้อยู่ใน `Reference section`
@@ -54,29 +54,25 @@ related_workflows:
 
 - `Status Callout`: ด้านบนสุด (หลัง title) - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, รวม License MIT badge)
-- `Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม icon จาก iconify - เขียน business features จากการวิเคราะห์
+- `Features`: Markdown table 4 columns (Icon, Feature, Description, Benefit) พร้อม iconify icons - เขียน business features จากการวิเคราะห์
 - `Quick Start`: Installation ด้วย numbered steps
 - `Usage`: Markdown format พร้อม code blocks
-- `Key Concepts`: `<details>`/`<summary>` accordion
-- `Development`: `<details>`/`<summary>` accordion พร้อม subsections (Environment Setup, Local Development, Testing, Building, Deployment, Debugging, Contributing)
-- `Best Practices`: Callout `[!TIP]` พร้อม bullet points
-- `Reference`: `<details>`/`<summary>` accordion สำหรับ subsections (Scripts, Workspaces, Configuration)
-- `Information`: Callout หลายอัน (TIP, IMPORTANT, WARNING, CAUTION, FAQ)
-- `License`: Section แยกด้านล่างสุด พร้อม MIT badge
+- `License` (required): Regular section at bottom, not in accordion format, with MIT badge
 
 ### 2. Content And Language Standards
 
 รักษาคุณภาพเนื้อหาตามมาตรฐาน:
 
-- ใช้ข้อมูลจริงจาก `/analyze-project`
-- `Code examples` ต้องรันได้จริง, มี comment อธิบาย
+- ใช้ข้อมูลจริงจาก `/analyze-project` เพื่อวิเคราะห์โปรเจกต์
+- `Code examples` ต้องรันได้จริง และมี comment อธิบายการทำงาน
 - ไม่ใช้ placeholder ยกเว้น banner image
-- ตั้งชื่อ `Usage Methods` ตาม interface หลัก
-- แต่ละ `## heading` ต้องมี description ใต้
+- ตั้งชื่อ `Usage Methods` ตาม interface หลักของ project
+- แต่ละ `## heading` ต้องมี description อธิบายใต้หัวข้อ
 - `Callouts` อยู่ใน section ที่เกี่ยวข้องกับเนื้อหานั้นๆ
 - โดยเริ่มต้นไม่ต้องมี license/history ถ้าไม่มี tag release
 - `README.md`: Headers และ Lists เป็นภาษาอังกฤษ
-- Workflow: ใช้ภาษาไทย, ยกเว้นคำศัพท์เฉพาะทาง
+- Workflow: ใช้ภาษาไทย ยกเว้นคำศัพท์เฉพาะทาง
+- ห้ามใช้คำว่า "comprehensive" ในเนื้อหา
 
 ### 3. Features Writing Standards
 
@@ -93,16 +89,21 @@ related_workflows:
 
 ### 4. License Template
 
-ใช้ template มาตรฐานสำหรับ License section:
+ใช้ template มาตรฐานสำหรับ License section (accordion format):
 
 ```markdown
-## License
+<details>
+<summary>License</summary>
+
+This project is licensed under the MIT License, allowing for commercial use, distribution, modification, and private use with proper attribution.
 
 This project is licensed under the <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noopener noreferrer">MIT License</a>.
 
 - ✓ Commercial use, Distribution, Modification, Private use
 - ⓘ License and copyright notice
 - ✕ Liability, Warranty
+
+</details>
 ```
 
 ## Expected Outcome

@@ -1,36 +1,46 @@
 ---
-title: Commit Guidelines
-description: แนวทางการสร้าง commit ตามมาตรฐาน conventional commits
+title: Commit
+description: Commit ไฟล์ที่มีการเปลี่ยนแปลงตามมาตรฐาน conventional commits
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-สร้าง commit message ตามมาตรฐาน conventional commits
+Commit ไฟล์ที่มีการเปลี่ยนแปลงตามมาตรฐาน conventional commits โดยรองรับทั้ง commit ทั้งหมดและ commit เฉพาะไฟล์ที่แก้ไปจาก task
+
+## Scope
+
+ใช้สำหรับ commit ไฟล์ที่มีการเปลี่ยนแปลง โดย:
+- ถ้าต้องการ commit ทุกไฟล์: ใช้ `git add .`
+- ถ้าต้องการ commit เฉพาะไฟล์ที่ task แก้ไป: ใช้ `git add <files>` หรือ `git add -p`
 
 ## Execute
 
-### 1. Determine Commit Mode
-
-ตรวจสอบว่า `/commit` ถูกเรียกจาก workflow อื่นหรือรันโดยตรง
-
-1. ตรวจสอบ context ว่าถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/implement-to-production`, `/ship-verify`, `/improve-codebase`)
-2. ถ้าถูกเรียกจาก workflow: ใช้ workflow mode
-3. ถ้ารันโดยตรง: ใช้ standalone mode
-
-### 2. Setup Gitignore
+### 1. Setup Gitignore
 
 ตรวจสอบและตั้งค่า .gitignore ให้ครอบคลุม
 
-1. ทำตาม `/gitignore`
+1. ทำตาม `/follow-gitignore`
 
-### 3. Setup Lefthook
+### 2. Setup Lefthook
 
 ตั้งค่า Lefthook สำหรับ Git hooks automation
 
-1. ทำตาม `/lefthook`
+1. ทำตาม `/follow-lefthook`
 
-### 4. Pull Latest Changes
+### 3. Setup Tasks
+
+ตั้งค่า scripts ใน package.json หรือ Cargo.toml ตามมาตรฐาน
+
+1. ทำตาม `/follow-tasks`
+
+### 4. Setup Config
+
+ตั้งค่า configuration ตาม dependencies ที่มีใน project
+
+1. ทำตาม `/follow-config`
+
+### 5. Pull Latest Changes
 
 ดึง changes ล่าสุดจาก remote
 
@@ -38,84 +48,59 @@ auto_execution_mode: 3
 2. ตรวจสอบว่าไม่มี conflicts
 3. ถ้ามี conflicts: แก้ไข conflicts ก่อนดำเนินการต่อ
 
-### 5. Workflow Mode
+### 6. Stage Changes
 
-Commit เฉพาะบรรทัดที่ workflow แก้ไป
+Stage ไฟล์ที่มีการเปลี่ยนแปลง
 
-1. ระบุไฟล์และบรรทัดที่ workflow แก้ไปจาก context
-2. ใช้ `git add -p` เพื่อ stage เฉพาะบรรทัดที่ workflow แก้ไป
-3. ตรวจสอบด้วย `git diff --cached` ว่าเฉพาะส่วนที่ workflow แก้ไปถูก stage
-4. ข้ามไปขั้นตอนที่ 11 Execute Commit
-
-### 6. Standalone Mode
-
-Commit all ทั้งหมดจนไม่มีเหลือ
-
+**สำหรับ commit ทั้งหมด:**
 1. รัน `git status --porcelain` เพื่อดูไฟล์ที่มีการแก้ไขทั้งหมด
-2. จัดกลุ่มไฟล์ตามประเภทการเปลี่ยนแปลง
-3. ตรวจสอบว่าไม่มีไฟล์ที่ไม่ควร commit
-
-### 7. Group Files by Scope
-
-จัดกลุ่มไฟล์ตาม conventional commit scope
-
-1. แยกไฟล์ตาม directory และ module
-2. จัดกลุ่มไฟล์ที่เกี่ยวข้องกันให้อยู่ใน commit เดียวกัน
-3. ใช้ `git diff --stat` เพื่อดู overview ของการเปลี่ยนแปลง
-4. Split commits ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วนหรือหลาย scopes
-
-### 8. Stage Files
-
-จัดเตรียมไฟล์สำหรับ commit
-
-1. ใช้ `git add <files>` หรือ `git add -p` เพื่อ stage ไฟล์ตาม scope
-2. ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน: ใช้ `git add -p` เพื่อ stage เฉพาะส่วนที่เกี่ยวข้อง
+2. รัน `git add .` เพื่อ stage ทุกไฟล์
 3. ตรวจสอบด้วย `git diff --cached` ว่าไฟล์ที่ stage ถูกต้อง
 
-### 9. Update README
+**สำหรับ commit เฉพาะไฟล์ที่ task แก้ไป:**
+1. ระบุไฟล์และบรรทัดที่ task แก้ไปจาก context
+2. รัน `git status --porcelain` เพื่อดูไฟล์ที่มีการแก้ไขทั้งหมด
+3. เปรียบเทียบกับ context เพื่อระบุไฟล์ที่ task แก้ไป
+4. ใช้ `git add <files>` เพื่อ stage เฉพาะไฟล์ที่ task แก้ไป
+5. ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน: ใช้ `git add -p` เพื่อ stage เฉพาะส่วนที่ task แก้ไป
+6. ตรวจสอบด้วย `git diff --cached` ว่าเฉพาะส่วนที่ task แก้ไปถูก stage
 
-อัปเดต README ก่อน commit
+### 7. Update README
+
+อัปเดต README ก่อน commit (ถ้า commit ทั้งหมด)
 
 1. ทำตาม `/update-readme`
-2. Stage README ที่ถูกอัปเดตด้วย `git add README.md` หรือ `git add -p README.md`
+2. Stage README ที่ถูกอัปเดตด้วย `git add README.md`
 3. ตรวจสอบด้วย `git diff --cached` ว่า README ถูก stage ถูกต้อง
 
-### 10. Determine Commit Type
+### 8. Determine Commit Type
 
 เลือก conventional commit type ที่เหมาะสม
 
 1. ดู Rules ส่วน Commit Types
 
-### 11. Write Commit Message
+### 9. Write Commit Message
 
 เขียน commit message ตาม conventional commits format
 
 1. ดู Rules ส่วน Commit Message Format และ Body
 
-### 12. Execute Commit
+### 10. Execute Commit
 
 ดำเนินการ commit
 
 1. รัน `git commit -m "<message>"` หรือ `git commit`
 2. ตรวจสอบผลลัพธ์จาก git commit
 3. ถ้ามี error: แก้ไขแล้วลองอีกครั้ง
-4. ถ้าสำเร็จและเป็น standalone mode: ทำซ้ำขั้นตอน 6-11
-5. ถ้าสำเร็จและเป็น workflow mode: จบการทำงาย
 
-### 13. Verify Commits
+### 11. Verify Commits
 
 ตรวจสอบความถูกต้องของ commits
 
 1. รัน `git log --oneline -5` เพื่อดู commits ล่าสุด
 2. ตรวจสอบว่า commit messages สอดคล้องกับ conventional commits
-3. ตรวจสอบว่าไม่มีไฟล์ที่ยังไม่ commit เหลืออยู่
-4. รัน `git status` เพื่อยืนยันว่า working directory สะอาด
-
-### 14. Update References
-
-อัปเดท references ทั้งหมดที่เกี่ยวข้อง
-
-1. ทำตาม `@[/edit-relative]`
+3. ตรวจสอบว่าไม่มีไฟล์ที่ยังไม่ commit เหลืออยู่ (สำหรับ commit ทั้งหมด)
+4. รัน `git status` เพื่อยืนยันว่า working directory สะอาด (สำหรับ commit ทั้งหมด)
 
 ## Rules
 
@@ -149,15 +134,6 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 - ระบุส่วนของโปรเจกต์ที่ถูกแก้ไข
 - เช่น: api, ui, db, config, deps, auth, test, docs, ci
 
-### Split Commits
-
-แยก commit สำหรับการเปลี่ยนแปลงหลายส่วน
-
-- แยก commit สำหรับการเปลี่ยนแปลงหลายส่วนในไฟล์เดียว
-- commit ทีละส่วนจนกว่าจะหมด
-- แต่ละ commit ควบคุม scope เดียว
-- ใช้ `git add -p` หรือ `git add <file>` เพื่อเลือกเฉพาะส่วนที่ต้องการ
-
 ### Body
 
 อธิบายเหตุผลและ context เพิ่มเติม
@@ -166,27 +142,17 @@ Commit all ทั้งหมดจนไม่มีเหลือ
 - แยกจาก subject ด้วยบรรทัดว่าง
 - ใช้ bullet points สำหรับหลายรายการ
 
-### Workflow Mode
+### Selective Staging
 
-ใช้เมื่อถูกเรียกจาก workflow อื่น
+Stage เฉพาะไฟล์ที่ task แก้ไป (สำหรับ commit เฉพาะไฟล์)
 
-- ใช้เมื่อถูกเรียกจาก workflow อื่น (เช่น `/refactor`, `/implement-to-production`, `/ship-verify`, `/improve-codebase`)
-- Commit เฉพาะบรรทัดที่ workflow แก้ไป (ใช้ `git add -p`)
-- ไม่ commit ไฟล์อื่นๆ ที่ไม่ได้ถูกแก้ไปโดย workflow
-
-### Standalone Mode
-
-ใช้เมื่อรัน `/commit` เดียวๆ
-
-- ใช้เมื่อรัน `/commit` เดียวๆ
-- Commit all ทั้งหมดจนไม่มีเหลือ
-- Split commits ได้ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วนหรือหลาย scopes
-- ใช้ `git add -p` เพื่อ stage เฉพาะส่วนที่ต้องการในแต่ละ commit
+- ใช้ `git add <files>` เพื่อ stage เฉพาะไฟล์ที่ task แก้ไป
+- ใช้ `git add -p` เพื่อ stage เฉพาะบรรทัดที่ task แก้ไป
+- ไม่ stage ไฟล์อื่นๆ ที่ไม่ได้ถูกแก้ไปโดย task
 
 ## Expected Outcome
 
 1. Commit messages ที่สอดคล้องกับ conventional commits
 2. Git history ที่อ่านง่ายและติดตามง่าย
-3. Commit แยกตาม scope อย่างเหมาะสม
-4. ไม่มีไฟล์ที่ยังไม่ commit เหลืออยู่
-
+3. ไฟล์ที่มีการเปลี่ยนแปลงถูก commit ตามที่ต้องการ
+4. Working directory สะอาด (สำหรับ commit ทั้งหมด)

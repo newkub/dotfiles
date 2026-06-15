@@ -33,11 +33,12 @@ auto_execution_mode: 3
 4. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
 5. ตรวจสอบว่า dev server เริ่มต้นสำเร็จ
 
-### 4. Open Browser (ถ้าจำเป็น)
+### 4. Open Browser and Watch (ถ้าจำเป็น)
 
 1. ถ้า run dev ที่ต้องเปิด URL ให้เลือก:
    - ถ้าต้องการตรวจสอบผ่าน browser automation → รัน `/watch-browser`
    - ถ้าต้องการเปิดใน browser เท่านั้น → รัน `/open-web`
+   - ถ้าต้องการ watch terminal ทุก 5 วินาที → รัน `/watch-terminal`
 2. ตรวจสอบว่า dev server ทำงานได้จริงผ่าน browser
 3. ทดสอบเข้าถึง dev server และตรวจสอบว่า features หลักทำงานได้
 

@@ -3,13 +3,17 @@ title: Use Scripts
 description: สร้าง scripts สำหรับ automate งานด้วย Bun native APIs, pwsh, หรือ ast-grep
 auto_execution_mode: 3
 related_workflows:
-  - /bun-native
+  - /use-bun-shell
   - /use-ast-grep
 ---
 
 ## Goal
 
 สร้าง scripts เพื่อ automate งานและประมวลผลไฟล์ ด้วย Bun native APIs, pwsh, หรือ ast-grep ตามความเหมาะสม
+
+## Scope
+
+ใช้สำหรับสร้าง scripts ใน `.devin/scripts` ที่ root workspace เท่านั้น
 
 ## Execute
 
@@ -19,18 +23,16 @@ related_workflows:
 
 ### 2. Choose Script Type
 
-1. ใช้ Bun native APIs ถ้าต้องการ performance และ cross-platform: ดูจาก `/bun-native`
+1. ใช้ Bun native APIs ถ้าต้องการ performance และ cross-platform: ดูจาก `/use-bun-shell`
 2. ใช้ pwsh ถ้าต้องการ Windows-specific commands หรือ system administration
 3. ใช้ ast-grep ถ้าต้องการ AST-based code search และ transformation: ดูจาก `/use-ast-grep`
 
 ### 3. Create Script
 
-1. สร้างไฟล์ `.ts` ใน `scripts/temp/` ที่ root workspace เท่านั้น
-2. ไม่ต้องสร้าง scripts ในแต่ละ workspace
-3. เขียนแบบ composable: `createScript()` return state + actions
-4. สำหรับ Bun: ใช้ Bun native APIs และ CDN imports
-5. สำหรับ pwsh: ใช้ PowerShell commands
-6. สำหรับ ast-grep: ใช้ ast-grep CLI commands
+1. สร้างไฟล์ script ตาม Rules ในหมวด File Location
+2. เขียนแบบ composable: `createScript()` return state + actions
+3. ดูรายละเอียด Bun APIs จาก `/use-bun-shell`
+4. ดูรายละเอียด ast-grep จาก `/use-ast-grep`
 
 ### 4. Dry Run
 
@@ -43,8 +45,8 @@ related_workflows:
 1. รัน script ด้วย `bun run <script>.ts` สำหรับ Bun scripts
 2. รัน script ด้วย `pwsh <script>.ps1` สำหรับ PowerShell scripts
 3. รัน script ด้วย `ast-grep scan` สำหรับ ast-grep rules
-4. ลบ scripts จาก `scripts/temp/` หลังใช้งาน
-5. ลบ scripts ที่สร้างด้วย `/write-windsurf-global-workflows` หลังใช้งาน
+4. ลบ scripts จาก `.devin/scripts` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
+5. ลบ scripts ที่สร้างด้วย `/write-windsurf-global-workflows` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
 
 ## Rules
 
@@ -53,10 +55,10 @@ related_workflows:
 ตำแหน่งไฟล์สำหรับเก็บ scripts
 
 ```
-scripts/temp/    # Global scripts ที่ root workspace เท่านั้น (ลบหลังใช้)
+.devin/scripts/    # Global scripts ที่ root workspace เท่านั้น (ลบหลังใช้)
 ```
 
-- สร้าง scripts เฉพาะใน `scripts/temp/` ที่ root workspace
+- สร้าง scripts เฉพาะใน `.devin/scripts` ที่ root workspace
 - ไม่สร้าง scripts ใน sub-workspaces หรือแต่ละ workspace
 - ใช้ `.ts` สำหรับ Bun scripts
 - ใช้ `.ps1` สำหรับ PowerShell scripts
@@ -72,7 +74,7 @@ scripts/temp/    # Global scripts ที่ root workspace เท่านั้
 
 ### Bun Native APIs
 
-ดูรายละเอียดจาก `/bun-native`:
+ดูรายละเอียดจาก `/use-bun-shell`:
 
 ```typescript
 // File operations
@@ -188,7 +190,7 @@ await script.run()
 
 - Scripts ที่ใช้งานได้จริง ด้วย Bun native APIs, pwsh, หรือ ast-grep
 - ไม่ต้อง install dependencies สำหรับ Bun scripts
-- Scripts ใน `scripts/temp/` ที่ root workspace เท่านั้น
+- Scripts ใน `.devin/scripts` ที่ root workspace เท่านั้น
 - Scripts ที่ใช้แล้วลบออก
 - Dry run mode สำหรับทดสอบก่อน execute จริง
 

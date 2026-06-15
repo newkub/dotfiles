@@ -1,8 +1,1 @@
-chore: update Moonrepo and Turborepo workflows with latest best practices
-
-- Add cache lifetime and layering for Moonrepo
-- Add polyglot support and affected code execution
-- Update Turborepo schema to versioned v2 URL
-- Add globalDependencies configuration
-- Add cache sharding for large-scale monorepos
-- Add self-hosted remote cache support
+refactor(workflows): remove update references step from commit workflow

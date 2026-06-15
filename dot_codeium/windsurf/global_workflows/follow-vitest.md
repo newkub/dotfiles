@@ -6,6 +6,7 @@ related_workflows:
   - /follow-vite
   - /follow-typescript
   - /write-test
+  - /follow-stryker-mutator
 ---
 
 ## Goal
@@ -35,6 +36,12 @@ related_workflows:
 4. กำหนด environment เป็น `node` หรือ `jsdom` ตามความต้องการ
 5. ตั้งค่า coverage ด้วย `@vitest/coverage-v8`
 6. ตั้งค่า `test.include` และ `test.exclude` สำหรับ glob patterns
+7. เปิดใช้งาน type-checking ด้วย `typecheck.enabled: true`
+8. ตั้งค่า `includeSource` สำหรับ in-source testing
+9. เพิ่ม `vitest/globals` ใน `tsconfig.json` types
+10. ตั้งค่า `retry` สำหรับ flaky tests
+11. ตั้งค่า `maxConcurrency` สำหรับ performance
+12. เพิ่ม `lcov` reporter สำหรับ CI/CD
 
 ### 3. Monorepo Setup
 
@@ -53,8 +60,33 @@ related_workflows:
 4. จัดระเบียบ test files ตามโครงสร้าง source code
 5. ใช้ `describe` สำหรับ grouping related tests
 6. ใช้ `beforeEach`, `afterEach`, `beforeAll`, `afterAll` สำหรับ setup/teardown
+7. ใช้ `test.for` สำหรับ parameterized tests
+8. ใช้ test tags สำหรับ categorize tests และ apply specific options
 
-### 5. Mocking And Stubbing
+### 5. Type-Checking
+
+1. เปิดใช้งาน type-checking ด้วย `typecheck.enabled: true`
+2. ใช้ไฟล์ `.test-d.ts` สำหรับ type tests
+3. ตั้งค่า `typecheck.include` และ `typecheck.exclude`
+4. ตั้งค่า `typecheck.tsconfig` สำหรับ custom tsconfig
+5. ใช้ `typecheck.only` สำหรับ run เฉพาะ type tests
+6. ตั้งค่า `typecheck.allowJs` สำหรับ JavaScript files
+7. ตั้งค่า `typecheck.ignoreSourceErrors` สำหรับ ignore errors นอก test files
+
+### 6. Fixtures And Test Context
+
+1. ใช้ `test.extend()` สำหรับ create reusable fixtures
+2. ใช้ scopes: `test`, `file`, `worker` สำหรับ lifecycle management
+3. ใช้ `$worker`, `$file`, `$test` keys สำหรับ type-safe scope access
+4. ใช้ fixtures สำหรับ dependency injection ใน tests และ hooks
+
+### 7. In-Source Testing
+
+1. เปิดใช้งาน `includeSource` ใน config
+2. เขียน tests ใน source code ด้วย `if (import.meta.vitest)` block
+3. ใช้สำหรับ test utilities ที่อยู่ใกล้กับ implementation
+
+### 8. Mocking And Stubbing
 
 1. ใช้ `vi.mock` สำหรับ mocking modules
 2. ใช้ `vi.fn` สำหรับ creating mock functions
@@ -62,7 +94,7 @@ related_workflows:
 4. ใช้ snapshots สำหรับ testing UI components
 5. ใช้ `vi.clearAllMocks` สำหรับ cleanup ระหว่าง tests
 
-### 6. Watch Mode And CI
+### 9. Watch Mode And CI
 
 1. ตั้งค่า watch mode สำหรับ development
 2. ใช้ `vitest run` สำหรับ CI/CD
@@ -72,46 +104,7 @@ related_workflows:
 
 ## Rules
 
-### 1. Configuration Requirements
-
-ต้องมี config file ที่ root:
-
-- ต้องมี `vitest.config.ts` หรือ `vite.config.ts` ที่ root
-- ใช้ `bun add -D vitest` สำหรับ installation
-- เปิดใช้งาน globals เพื่อลด boilerplate
-- ใช้ test patterns `.test.ts` หรือ `.spec.ts`
-- ตรวจสอบ compatibility ของ Node.js และ Bun version
-- ใช้ `bun run test` แทน `bun test`
-
-### 2. Monorepo Configuration
-
-ตั้งค่าสำหรับ monorepo:
-
-- ใช้ Vitest Projects สำหรับหลาย packages
-- กำหนด glob patterns สำหรับแต่ละ project
-- ตั้งค่า extends จาก root config
-- ใช้ workspace protocol สำหรับ internal dependencies
-- ตั้งค่า `--filter` สำหรับ selective testing
-
-### 3. Test Organization
-
-จัดระเบียบ test files:
-
-- จัด test files ตามโครงสร้าง source code
-- ใช้ `describe` สำหรับ grouping related tests
-- ใช้ test names ที่ชัดเจนและ descriptive
-- ใช้ `beforeEach`, `afterEach` สำหรับ isolated tests
-- ใช้ `beforeAll`, `afterAll` สำหรับ shared setup
-
-### 4. Mocking Best Practices
-
-ใช้ mocking อย่างเหมาะสม:
-
-- ใช้ `vi.mock` สำหรับ mocking modules
-- ใช้ `vi.fn` สำหรับ creating mock functions
-- ใช้ `vi.spyOn` สำหรับ spying on methods
-- ใช้ snapshots สำหรับ testing UI components
-- ใช้ `vi.clearAllMocks` สำหรับ cleanup
+ทำตาม Execute ทั้งหมด
 
 ## Expected Outcome
 
@@ -119,4 +112,5 @@ related_workflows:
 - Config รองรับ globals และ monorepo
 - Tests รันได้ทั้งหมด
 - เป็นไปตาม best practices จาก official documentation
+
 

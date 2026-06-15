@@ -5,3 +5,5 @@ ba459781cf7cd3cde4bb06645939ce895bbf4ed5 701e7f636ba85e945bebbaa211dac5689979743
 1e7073a0f7995a4308e392ee64c65f16e15d0e9c 6bb629599802cd9858ce757db4229cf62796a16a newkub <newkubise@gmail.com> 1781193061 +0700	commit: feat: add framework-specific templates to follow-gitignore workflow
 6bb629599802cd9858ce757db4229cf62796a16a f4d8f3759be3baef93d9fff75f838fb44b0e5156 newkub <newkubise@gmail.com> 1781193553 +0700	commit: refactor: restructure and expand global workflows
 f4d8f3759be3baef93d9fff75f838fb44b0e5156 9762463414c1cc1fb4ff8791aa60ee7cd9db6c56 newkub <newkubise@gmail.com> 1781365309 +0700	commit: chore: update Moonrepo and Turborepo workflows with latest best practices
+9762463414c1cc1fb4ff8791aa60ee7cd9db6c56 4e8cee21e09bfd6e2edac9606df5a8c229fda456 newkub <newkubise@gmail.com> 1781492888 +0700	commit: refactor(workflows): merge and rename commit workflows
+4e8cee21e09bfd6e2edac9606df5a8c229fda456 4d6bcc3de383932f0579ec271cd67f49020f88c6 newkub <newkubise@gmail.com> 1781492963 +0700	commit: refactor(workflows): remove update references step from commit workflow
