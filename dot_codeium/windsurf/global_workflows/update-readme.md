@@ -1,12 +1,11 @@
 ---
-title: Write Readme
-description: สร้าง README.md ที่มีเนื้อหาครบถ้วนด้วยข้อมูลจากการวิเคราะห์โปรเจกต์จริง
+title: Update Readme
+description: สร้าง README.md ครบถ้วนจากการวิเคราะห์โปรเจกต์จริง
 auto_execution_mode: 3
 related_workflows:
   - /deep-analyze
   - /all-workspaces
-  - /content-quality
-  - /write-docs
+  - /follow-content-quality
   - /example-readme
 ---
 
@@ -29,22 +28,22 @@ related_workflows:
 
 ### 2. Analyze And Write Root README
 
-1. ทำ `/deep-analyze` เพื่อเก็บข้อมูลโปรเจกต์ root
+1. ทำ `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์ root
 2. อ่าน `manifest files`, `source code`, และ `config files`
 3. เขียน `required sections`, `usage`, และ `hero section` ตามมาตรฐาน
 4. `Configuration` ให้อยู่ใน `Reference section`
 
-### 2. Update Workspaces READMEs
+### 3. Update Workspaces READMEs
 
 1. ทำ `/all-workspaces` เพื่อ update `README` ทุก workspaces
 2. `Configuration` อยู่ใน `Reference section`
 3. ไม่ต้องมี `License` และ `History sections` (ใช้ของ root)
 
-### 3. Validate And Finalize
+### 4. Validate And Finalize
 
-1. ใช้ `/content-quality` เพื่อตรวจสอบคุณภาพ
+1. ทำ `/follow-content-quality` เพื่อตรวจสอบคุณภาพ
 2. ตรวจสอบ `workflows` ที่อ้างอิงมีอยู่จริง
-3. ใช้ `/update-references` หากมี `file changes`
+3. ทำ `/update-reference` หากมี `file changes`
 
 ## Rules
 
@@ -78,32 +77,27 @@ related_workflows:
 
 เขียน features ให้ละเอียดและครอบคลุมตามมาตรฐาน:
 
-- **Business-Focused**: เขียน features ที่เป็น business value ไม่ใช่ technical details (เช่น "Online Booking System" ไม่ใช่ "Solid.js Framework")
-- **Description**: อธิบาย feature อย่างชัดเจนว่าทำอะไร และทำงานอย่างไร
-- **Benefit**: ระบุประโยชน์ที่เป็นคุณค่าต่อผู้ใช้จริงๆ (ไม่ใช่แค่ feature list)
-- **Usage**: ให้ตัวอย่างการใช้งานที่เป็นรูปธรรม และใช้งานได้จริง
-- **Coverage**: ครอบคลุมทุก features หลักของ project จากการวิเคราะห์ source code
-- **Icons**: ใช้ icon จาก iconify ที่เหมาะสมกับแต่ละ feature
-- **No Generic**: หลีกเลี่ยงคำอธิบายที่ generic หรือไม่ชัดเจน
-- **User-Centric**: เน้นประโยชน์ต่อผู้ใช้ ไม่ใช่แค่ technical details
+- Business-Focused: เขียน features ที่เป็น business value ไม่ใช่ technical details (เช่น "Online Booking System" ไม่ใช่ "Solid.js Framework")
+- Description: อธิบาย feature อย่างชัดเจนว่าทำอะไร และทำงานอย่างไร
+- Benefit: ระบุประโยชน์ที่เป็นคุณค่าต่อผู้ใช้จริงๆ (ไม่ใช่แค่ feature list)
+- Usage: ให้ตัวอย่างการใช้งานที่เป็นรูปธรรม และใช้งานได้จริง
+- Coverage: ครอบคลุมทุก features หลักของ project จากการวิเคราะห์ source code
+- Icons: ใช้ icon จาก iconify CDN พร้อม color parameter: `<img src="https://api.iconify.design/lucide:icon-name.svg?color=%23HEX" width="20" height="20" />` (ใช้ lucide icon set และกำหนดสีที่เหมาะสม)
+- No Generic: หลีกเลี่ยงคำอธิบายที่ generic หรือไม่ชัดเจน
+- User-Centric: เน้นประโยชน์ต่อผู้ใช้ ไม่ใช่แค่ technical details
 
 ### 4. License Template
 
-ใช้ template มาตรฐานสำหรับ License section (accordion format):
+ใช้ template มาตรฐานสำหรับ License section (regular section at bottom):
 
 ```markdown
-<details>
-<summary>License</summary>
-
-This project is licensed under the MIT License, allowing for commercial use, distribution, modification, and private use with proper attribution.
+## License
 
 This project is licensed under the <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noopener noreferrer">MIT License</a>.
 
 - ✓ Commercial use, Distribution, Modification, Private use
 - ⓘ License and copyright notice
 - ✕ Liability, Warranty
-
-</details>
 ```
 
 ## Expected Outcome
