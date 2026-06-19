@@ -1,128 +1,68 @@
 ---
 title: Improve Performance
-description: Optimize application performance with caching, lazy loading และ scalability patterns
+description: ปรับปรุง performance ของ application ทั้ง bundle แล runtime
 auto_execution_mode: 3
+related_workflows:
+  - /improve-bundle-size
+  - /improve-web-performance
 ---
-
-ปรับปรุง performance และ scalability ของ application ให้รองรับ load สูงและตอบสนองเร็ว
 
 ## Goal
 
-เพิ่ม performance ของ application ด้วย optimization techniques และรองรับการขยายตัวของระบบ
+ปรับปรุง performance ของ application ทั้ง bundle size และ runtime performance
+
+## Scope
+
+ใช้สำหรับปรับปรุง performance ทั้ง build time และ runtime
 
 ## Execute
 
-### 1. Prepare
+### 1. Improve Bundle Size
 
-1. รัน `/follow-principles` เพื่อดู principles มาตรฐาน
-2. ตั้งค่า performance monitoring tools - ใช้ `web-vitals` library หรือ `@nuxtjs/web-vitals`
-3. สร้าง performance baselines ปัจจุบัน - ใช้ `lighthouse`, `PageSpeed Insights API`
-4. ระบุ critical user journeys ที่ต้อง optimize - ใช้ `playwright` หรือ `cypress` record flows
-5. กำหนด performance budgets (LCP, FID/INP, CLS) - ใช้ `lighthouse-ci`, `bundlewatch`
+ปรับปรุงขนาด bundle
 
-### 2. Frontend Optimization
+- ทำ `/improve-bundle-size` เพื่อปรับปรุงขนาด bundle
 
-1. Code splitting - ใช้ `Vite` dynamic imports `import()` หรือ `@loadable/component`
-2. Lazy loading - ใช้ `vue-lazyload`, `react-lazyload` หรือ native `loading="lazy"`
-3. Tree shaking - ใช้ `Vite`/`Rollup` built-in, `babel-plugin-lodash` สำหรับ libraries
-4. Asset optimization - ใช้ `sharp`, `squoosh` สำหรับ images; `subset-font` สำหรับ fonts
-5. Caching strategy - ใช้ `workbox` สำหรับ service workers; `stale-while-revalidate` pattern
-6. Preloading - ใช้ `vite-plugin-preload` หรือ native `<link rel="preload">`
-7. Virtualization - ใช้ `vue-virtual-scroller`, `react-window` หรือ `react-virtualized`
-8. Debouncing/Throttling - ใช้ `lodash-es/debounce`, `use-debounce`, `vueuse/useThrottleFn`
-9. Memoization - ใช้ native `useMemo`, `computed` หรือ `reselect` สำหรับ complex selectors
-10. Third-party script management - ใช้ `partytown` สำหรับ offload scripts, `defer`/`async`
+### 2. Improve Web Performance
 
-### 3. Backend Optimization
+ปรับปรุง web performance ครบวงจร
 
-1. Database query optimization - ใช้ `drizzle-orm` กับ indexes; `dataloader` สำหรับ N+1 prevention
-2. Caching layers - ใช้ `ioredis` สำหรับ Redis; `cloudflare` หรือ `aws-cloudfront` สำหรับ CDN
-3. Connection pooling - ใช้ `pg-pool` สำหรับ PostgreSQL; `mysql2/promise` สำหรับ MySQL
-4. Async processing - ใช้ `bullmq` หรือ `bull` สำหรับ job queues
-5. Read replicas - ใช้ `prisma` read replicas หรือ `knex` replica configurations
-6. API response optimization - ใช้ `cursor-pagination` หรือ `offset-pagination` libraries
-7. Compression - ใช้ `compression` middleware หรือ `brotli` ใน nginx
-8. Keep-alive connections - ใช้ `http-agent` หรือ `undici` pool settings
-
-### 4. Scalability Implementation
-
-1. Stateless services - ไม่เก็บ state บน server ใช้ `jwt` หรือ `redis` สำหรับ sessions
-2. Horizontal scaling - ใช้ `docker swarm`, `kubernetes` หรือ `railway` auto-scaling
-3. Load balancing - ใช้ `nginx`, `traefik` หรือ cloud load balancers (`aws-alb`, `cloudflare`)
-4. Auto-scaling - ใช้ `kubernetes HPA`, `aws auto scaling groups`, `railway` native
-5. Circuit breakers - ใช้ `opossum` หรือ `cockatiel` สำหรับ circuit breaker pattern
-6. Bulkheads - ใช้ `worker threads` หรือ `piscina` สำหรับ isolate workloads
-7. Graceful degradation - ใช้ `fallback` patterns กับ `zod` validate responses
-8. Database partitioning - ใช้ `pg_partman` สำหรับ PostgreSQL หรือ `mysql partitions`
-9. Throttling - ใช้ `express-rate-limit`, `fastify-rate-limit` หรือ `nestjs-throttler`
-10. Regional deployment - ใช้ `fly.io`, `vercel edge`, `cloudflare workers` สำหรับ edge deployment
-
-### 5. Monitoring & Validation
-
-1. ติดตาม Core Web Vitals (LCP, INP, CLS) - ใช้ `web-vitals` library ส่งไป `Sentry` หรือ `Datadog`
-2. ตั้งค่า performance alerts - ใช้ `lighthouse-ci` กับ GitHub Actions หรือ `sentry performance`
-3. Load testing สำหรับ validate scalability - ใช้ `k6`, `artillery` หรือ `autocannon`
-4. Bundle analysis ตรวจสอบขนาด - ใช้ `vite-plugin-inspect`, `sonda`, `webpack-bundle-analyzer`
-5. ทดสอบบน slow networks (3G) - ใช้ `playwright` network throttling หรือ Chrome DevTools
-6. สร้าง performance dashboards - ใช้ `grafana`, `datadog`, `newrelic` หรือ `plausible`
+- ทำ `/improve-web-performance` เพื่อปรับปรุง web performance ครบวงจร
 
 ## Rules
 
-1. Performance Budgets
+### 1. Performance Budgets
 
-- LCP (Largest Contentful Paint) < 2.5s
-- INP (Interaction to Next Paint) < 200ms
-- CLS (Cumulative Layout Shift) < 0.1
-- Time to First Byte (TTFB) < 600ms
-- First Contentful Paint (FCP) < 1.8s
-- Total Blocking Time (TBT) < 200ms
+ตั้งค่าและรักษา performance budgets
 
-2. Optimization Priority
+- ตั้งค่า performance budgets สำหรับ bundle size
+- ตั้งค่า performance budgets สำหรับ Core Web Vitals
+- ตรวจสอบว่า budgets ผ่านเสมอ
+- แจ้งเตือนเมื่อเกิน budgets
 
-- Optimize สำหรับ user experience ไม่ใช่ metrics อย่างเดียว
-- Progressive enhancement - ทำงานได้พื้นฐานโดยไม่มี JS
-- Mobile-first optimization
-- Connection adaptive - ปรับตาม network speed
+### 2. Measure Before And After
 
-3. Caching Strategy
+วัด performance ก่อนและหลังปรับปรุง
 
-- Cache static assets นาน (1 year)
-- API responses cache ตาม freshness requirements
-- Stale-while-revalidate สำหรับ semi-static content
-- ETag และ Last-Modified สำหรับ conditional requests
-- Cache busting ด้วย content hashing
+- วัด performance metrics ก่อนปรับปรุง
+- วัด performance metrics หลังปรับปรุง
+- เปรียบเทียบผลลัพธ์
+- ตรวจสอบว่ามีการปรับปรุงจริง
 
-4. Database Optimization
+### 3. Optimize Critical Path
 
-- Indexes บน frequently queried columns
-- Covering indexes สำหรับ common queries
-- Query batching ลด round trips
-- Connection pooling จำกัด connections
-- N+1 query prevention ด้วย eager loading
+ปรับปรุง critical path ก่อน
 
-5. Scalability Patterns
-
-- Stateless services เท่านั้น
-- Shared nothing architecture
-- Queue-based load leveling
-- Event-driven architecture สำหรับ decoupling
-- CQRS ถ้า read/write patterns ต่างกันมาก
-
-6. Bundle Optimization
-
-- Code splitting ตาม routes
-- Dynamic imports สำหรับ heavy components
-- Tree shaking ลบ unused code
-- Analyze bundle ด้วย `vite-plugin-inspect` หรือ `Sonda`
-- Duplicate dependency detection
+- ปรับปรุย rendering performance ก่อน
+- ปรับปรุย JavaScript execution ก่อน
+- ปรับปรุย network requests ก่อน
+- ปรับปรุย memory usage ก่อน
 
 ## Expected Outcome
 
-1. Core Web Vitals ที่ผ่านเกณฑ์ทุกตัว
-2. Load time ที่ลดลงอย่างน้อย 30%
-3. Bundle size ที่ optimized
-4. API response time ที่ลดลง
-5. System ที่รองรับ traffic spikes
-6. Auto-scaling ที่ทำงานได้ดี
-7. Graceful degradation ที่ผู้ใช้ไม่รู้สึก
-8. Performance monitoring ที่ครบถ้วน
+- Bundle size ลดลง
+- Runtime performance ดีขึ้น
+- Rendering performance ดีขึ้น
+- Memory usage ลดลง
+- Core Web Vitals ดีขึ้น
+- Performance budgets ผ่าน

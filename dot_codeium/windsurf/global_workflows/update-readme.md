@@ -53,6 +53,7 @@ related_workflows:
 
 - `Status Callout`: ด้านบนสุด (หลัง title) - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, รวม License MIT badge)
+  - Badges ที่แนะนำ: npm version, Ask DeepWiki (`<a href="https://deepwiki.com/owner/repo"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>`)
 - `Features`: Markdown table 4 columns (Icon, Feature, Description, Benefit) พร้อม iconify icons - เขียน business features จากการวิเคราะห์
 - `Quick Start`: Installation ด้วย numbered steps
 - `Usage`: Markdown format พร้อม code blocks

@@ -1,144 +1,93 @@
 ---
 title: Improve Naming
-description: ปรับปรุงการตั้งชื่อให้สอดคล้องกับ conventions
+description: ปรับปรุง naming ตาม context และความหมายที่ชัดเจน ไม่ใช่เพียง conventions
 auto_execution_mode: 3
+related_workflows:
+  - /follow-code-quality
+  - /follow-rename
 ---
 
 ## Goal
 
-ปรับปรุงการตั้งชื่อให้ชัดเจน สอดคล้อง และตาม conventions
+ปรับปรุง naming ให้สื่อความหมายตาม context และ domain ที่เหมาะสม ไม่ใช่เพียงตาม conventions
+
+## Scope
+
+ใช้สำหรับปรับปรุง naming ของ files, functions, variables, types, components ทั้งหมด
 
 ## Execute
 
-### 1. Analyze Naming
+### 1. Analyze Context And Domain
 
-วิเคราะห์การตั้งชื่อปัจจุบัน
+วิเคราะห์ context และ domain ของ naming
 
-1. ทำ `/search-code` เพื่อค้นหา file names ทั้งหมด
-2. ทำ `/search-code` เพื่อค้นหา type names ทั้งหมด
-3. ทำ `/search-code` เพื่อค้นหา constant names ทั้งหมด
-4. ทำ `/search-code` เพื่อค้นหา function names ทั้งหมด
-5. ทำ `/search-code` เพื่อค้นหา component names ทั้งหมด
-6. ทำ `/search-code` เพื่อค้นหา variable names ทั้งหมด
-7. สรุปผลการ analyze ทั้งหมม
+1. สำรวจ naming patterns ทั่ว codebase
+2. ระบุ domain-specific terms และ business logic
+3. ตรวจสอบว่าชื่อสื่อความหมายตาม context หรือไม่
+4. ค้นหาชื่อที่ generic แต่ควรเป็น domain-specific
+5. ตรวจสอบชื่อที่ไม่สื่อความหมายใน context ปัจจุบัน
 
-### 2. File Naming
+### 2. Apply Context-Aware Naming
 
-ปรับปรุงการตั้งชื่อไฟล์
+ใช้ naming ตาม context และ domain
 
-1. ใช้ `snake_case.rs` สำหรับ Rust files
-2. ใช้ `kebab-case.md` สำหรับ documentation files
-3. อัพเดท imports/exports ทั้งหมด (mod declarations, use statements)
+1. Files: ทำ `/follow-rename` สำหรับ rename ไฟล์
+   - Vue components: `PascalCase.vue` (domain-specific)
+   - TypeScript files: `kebab-case.ts` (domain-specific)
+   - TSX files: `PascalCase.tsx` (domain-specific)
+   - Composables: `camelCase.ts` (action-specific)
+2. Types: `PascalCase`, `IPascalCase`, `PascalCaseType` (domain-specific)
+3. Constants: `UPPER_SNAKE_CASE` (global), `camelCase` (local context)
+4. Errors: `PascalCaseError`, `PascalCaseException` (context-specific)
+5. Functions: `camelCase` (verb + context), `useCamelCase`, `handleCamelCase`, `isCamelCase`, `onCamelCase`
+6. Components: `PascalCase`, `BasePascalCase`, `PascalCaseUI`, `PascalCaseLayout` (domain-specific)
+7. Variables: `camelCase`, `_camelCase`, `$camelCase`, `camelCaseList` (context-specific)
 
-### 3. Type Naming
+### 3. Validate Changes
 
-ปรับปรุงการตั้งชื่อ types
+ตรวจสอบการเปลี่ยนแปลง
 
-1. ใช้ `PascalCase` สำหรับ structs
-2. ใช้ `PascalCase` สำหรับ enums
-3. ใช้ `PascalCase` สำหรับ traits
-4. ใช้ `PascalCase` สำหรับ type aliases
-
-### 4. Constant Naming
-
-ปรับปรุงการตั้งชื่อ constants
-
-1. ใช้ `SCREAMING_SNAKE_CASE` สำหรับ const และ static
-2. ใช้ `PascalCase` สำหรับ enum variants
-3. จัดกลุ่ม constants ที่เกี่ยวข้อง
-4. แยก constants ไปไฟล์ `constants/` ถ้ามีมาก
-
-### 5. Error Naming
-
-ปรับปรุงการตั้งชื่อ errors
-
-1. ใช้ `PascalCase` พร้อม suffix `Error`
-2. ตั้งชื่อที่บอก cause ชัดเจน
-3. จัดกลุ่ม errors ตาม domain
-4. แยก error types ไปไฟล์ `errors/` ถ้ามีมาก
-
-### 6. Function Naming
-
-ปรับปรุงการตั้งชื่อ functions
-
-1. ใช้ `snake_case` สำหรับ functions
-2. ใช้ verb นำหน้าเสมอ (get, set, create, update, delete)
-3. ใช้ prefix `is/has/can/should` สำหรับ booleans
-4. ใช้ prefix `on` สำหรับ callbacks
-
-### 7. Component Naming
-
-ปรับปรุงการตั้งชื่อ components (Rust ใช้ struct/module แทน)
-
-1. ใช้ `PascalCase` สำหรับ struct/module names
-2. ใช้คำนามเดียว หรือ compound nouns
-3. ใช้ suffix `UI` สำหรับ UI components (ถ้าจำเป็น)
-4. ใช้ prefix `Base` สำหรับ base components (ถ้าจำเป็น)
-5. ตั้งชื่อตาม function ไม่ใช่ implementation
-6. ใช้ descriptive names ไม่ใช้ generic
-
-### 8. Variable Naming
-
-ปรับปรุงการตั้งชื่อ variables
-
-1. ใช้ `snake_case` สำหรับ variables
-2. ตั้งชื่อที่บอก purpose ชัดเจน
-3. หลีกเลี่ยง abbreviations ยกเว้นที่รู้จักกันดี
-4. ใช้ prefix `_` สำหรับ unused variables
-5. หลีกเลี่ยง single-letter variables ยกเว้น loops
+1. รัน typecheck เพื่อตรวจสอบ
+2. รัน lint เพื่อตรวจสอบ
+3. รัน tests เพื่อตรวจสอบ
+4. ตรวจสอบว่าชื่อสื่อความหมายตาม context
 
 ## Rules
 
-### 1. Universal Naming Principles
+### 1. Use Existing Workflows
 
-หลักการทั่วไปที่ใช้ได้กับทุกภาษา
+ใช้ workflows ที่มีอยู่ก่อนเขียนใหม่
 
-- ชื่อบอก purpose ชัดเจน (what it does, not how)
-- ใช้ domain language ที่ถูกต้อง
-- หลีกเลี่ยง abbreviations ยกเว้นที่รู้จักกันดี
-- ตั้งชื่อตาม business concepts
-- รักษา consistency ทั้ง codebase
-- ชื่อสั้นแต่ชัดเจน
-- ใช้คำเชิงบวก (is_valid) ไม่ใช่เชิงลบ
+- ทำ `/follow-code-quality` สำหรับ clear naming principles
+- ทำ `/follow-rename` สำหรับ rename ไฟล์และอัปเดท references
 
-### 2. Language-Specific Conventions
+### 2. Context-Aware Naming
 
-ใช้ conventions ตามภาษาที่ใช้
+เน้น context และ domain มากกว่า conventions
 
-- ทำตาม style guide ของภาษา
-- ทำตาม conventions ของ community
-- ใช้ linter ที่เหมาะสม
+- ใช้ domain-specific terms แทน generic names
+- ชื่อต้องสื่อความหมายใน context ที่ใช้
+- หลีกเลี่ยง abbreviations ที่ไม่ชัดเจนใน domain
+- ใช้ conventions เป็น baseline แต่ปรับตาม context
+- ตรวจสอบว่าชื่อเข้าใจได้โดยไม่ต้องดู implementation
 
 ### 3. Naming Conventions
 
-ใช้ conventions ที่ถูกต้องสำหรับแต่ละประเภท
+รวม naming conventions ทั้งหมด
 
-- File: `snake_case.rs`, `kebab-case.md`
-- Type: `PascalCase` (struct, enum, trait, type alias)
-- Constant: `SCREAMING_SNAKE_CASE` (const, static), `PascalCase` (enum variants)
-- Error: `PascalCaseError`
-- Function: `snake_case` (verb), `is_snake_case`, `on_snake_case`
-- Component: `PascalCase`, `BasePascalCase`, `PascalCaseUI`
-- Variable: `snake_case`, `_snake_case`
-
-### 4. Consistency And Updates
-
-รักษา consistency และอัพเดท references
-
-- ใช้ conventions เดียวกันทั้ง project
-- อัพเดท references ทั้งหมดเมื่อเปลี่ยนชื่อ
-- ตรวจสอบ imports/exports ทั้งหมด
-- รัน linting และ type checking หลังเปลี่ยนชื่อ
+- File: `PascalCase.vue`, `kebab-case.ts`, `PascalCase.tsx`, `camelCase.ts`
+- Type: `PascalCase`, `IPascalCase`, `PascalCaseType`
+- Constant: `UPPER_SNAKE_CASE` (global), `camelCase` (local)
+- Error: `PascalCaseError`, `PascalCaseException`, `UPPER_SNAKE_CASE`
+- Function: `camelCase` (verb), `useCamelCase`, `handleCamelCase`, `isCamelCase`, `onCamelCase`
+- Component: `PascalCase`, `BasePascalCase`, `PascalCaseUI`, `PascalCaseLayout`
+- Variable: `camelCase`, `_camelCase`, `$camelCase`, `camelCaseList`
 
 ## Expected Outcome
 
-- File names สอดคล้องกับ conventions
-- Type names สอดคล้องกับ conventions
-- Constant names สอดคล้องกับ conventions
-- Error names สอดคล้องกับ conventions
-- Function names สอดคล้องกับ conventions
-- Component names สอดคล้องกับ conventions
-- Variable names สอดคล้องกับ conventions
-- Consistency สูงทั่วทั้ง codebase
-- Code อ่านง่ายและ maintainable
-
+- Naming สื่อความหมายตาม context และ domain
+- ชื่อที่เข้าใจได้โดยไม่ต้องดู implementation
+- Consistency ตาม conventions แต่ปรับตาม context
+- Typecheck ผ่าน
+- Lint ผ่าน
+- Tests ผ่าน

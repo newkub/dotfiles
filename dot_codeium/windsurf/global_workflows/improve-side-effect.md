@@ -14,7 +14,7 @@ related_workflows:
 
 ## Scope
 
-ใช้สำหรับปรับปรุงการจัดการ side effects ทั้ง I/O operations, async operations, และ state mutations
+ใช้สำหรับปรับปรุงการจัดการ side effects ทั้ง `I/O operations`, `async operations`, และ `state mutations`
 
 ## Execute
 
@@ -23,60 +23,70 @@ related_workflows:
 ระบุ side effects ทั้งหมดใน codebase
 
 - ทำ `/analyze-codebase` เพื่อหา side effects
-- ค้นหา I/O operations (API calls, database, file system)
-- ค้นหา async operations ที่ไม่มี error handling
-- ค้นหา state mutations ที่ไม่ชัดเจน
-- ค้นหา global state และ singletons
+- ค้นหา `I/O operations` (`API calls`, `database`, `file system`)
+- ค้นหา `async operations` ที่ไม่มี error handling
+- ค้นหา `state mutations` ที่ไม่ชัดเจน
+- ค้นหา `global state` และ `singletons`
 
 ### 2. Separate Side Effects
 
 แยก side effects จาก pure logic
 
 - ทำ `/follow-clean-architecture`
-- ย้าย I/O operations ไปยัง shell layer
-- แยก async operations จาก sync logic
-- แยก state mutations จาก pure functions
+- ย้าย `I/O operations` ไปยัง shell layer
+- แยก `async operations` จาก sync logic
+- แยก `state mutations` จาก pure functions
 - ทำให้ core layer ไม่มี side effects
 
 ### 3. Improve Error Handling
 
 ปรับปรุง error handling สำหรับ side effects
 
-- เพิ่ม try-catch สำหรับ async operations
-- ใช้ Result types หรือ error boundaries
-- จัดการ network errors อย่างเหมาะสม
-- จัดการ timeout และ retry logic
+- เพิ่ม `try-catch` สำหรับ async operations
+- ใช้ `Result types` หรือ error boundaries
+- จัดการ `network errors` อย่างเหมาะสม
+- จัดการ `timeout` และ `retry logic`
 - ใช้ proper error types และ messages
 
 ### 4. Manage Async Operations
 
 จัดการ async operations อย่างเป็นระบบ
 
-- ใช้ async/await อย่างถูกต้อง
-- จัดการ race conditions
-- ใช้ cancellation tokens สำหรับ long-running operations
-- จัดการ concurrent operations
+- ใช้ `async/await` อย่างถูกต้อง
+- จัดการ `race conditions`
+- ใช้ `cancellation tokens` สำหรับ long-running operations
+- จัดการ `concurrent operations`
 - ใช้ proper loading states
 
 ### 5. Isolate State Mutations
 
 แยก state mutations ออกจาก pure logic
 
-- ใช้ immutable data structures
+- ใช้ `immutable data structures`
 - ทำ state updates อย่างชัดเจนและ predictable
-- ใช้ state management patterns (Redux, Zustand, signals)
-- จัดการ side effects ใน effect hooks หรือ middlewares
+- ใช้ state management patterns ตามภาษาที่ใช้
+- จัดการ side effects ใน `effect hooks` หรือ `middlewares`
 - ทำให้ state changes traceable ได้
 
 ### 6. Add Logging And Observability
 
 เพิ่ม logging สำหรับ side effects
 
-- Log I/O operations ทั้งหมด
+- Log `I/O operations` ทั้งหมด
 - Log errors และ exceptions
 - Log state changes
 - Log async operation lifecycles
-- ใช้ structured logging
+- ใช้ `structured logging`
+
+### 7. Verify Side Effect Management
+
+ตรวจสอบว่า side effects จัดการถูกต้อง
+
+- ทดสอบว่า pure functions ไม่มี side effects
+- ทดสอบ error handling ครอบคลุม
+- ทดสอบ async operations จัดการถูกต้อง
+- ทดสอบ state mutations predictable
+- ทำ `/run-test` สำหรับ side effect tests
 
 ## Rules
 
@@ -93,8 +103,8 @@ related_workflows:
 
 จัดการ errors สำหรับ side effects ทั้งหมด
 
-- Async operations ต้องมี error handling
-- I/O operations ต้องมี error handling
+- `Async operations` ต้องมี error handling
+- `I/O operations` ต้องมี error handling
 - ใช้ proper error types
 - จัดการ edge cases ทั้งหมด
 - ให้ feedback ที่ชัดเจนแก่ users
@@ -116,7 +126,37 @@ related_workflows:
 - Track async operation states
 - Monitor error rates
 - Track performance metrics
-- ใช้ distributed tracing ถ้าจำเป็น
+- ใช้ `distributed tracing` ถ้าจำเป็น
+
+### 5. Testing Strategies
+
+ทดสอบ side effects อย่างเป็นระบบ
+
+- ทดสอบ side effects ด้วย mocking
+- ทดสอบ error scenarios
+- ทดสอบ race conditions
+- ทดสอบ timeout และ retry logic
+- ทำ `/write-test` สำหรับ side effect tests
+
+### 6. Performance Considerations
+
+พิจารณา performance สำหรับ side effects
+
+- Batch `I/O operations`
+- Debounce/throttle side effects
+- Cache results สำหรับ expensive operations
+- Optimize concurrent operations
+- ทำ `/improve-performance` สำหรับ optimization
+
+### 7. Security Considerations
+
+พิจารณา security สำหรับ side effects
+
+- Validate inputs ก่อน `I/O operations`
+- Sanitize data ก่อน state mutations
+- Handle sensitive data อย่างปลอดภัย
+- Rate limiting สำหรับ external calls
+- ทำ `/improve-security` สำหรับ security hardening
 
 ## Expected Outcome
 

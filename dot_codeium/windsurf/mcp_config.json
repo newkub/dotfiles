@@ -6,15 +6,18 @@
         "create-better-fullstack",
         "mcp"
       ],
-      "command": "bunx"
+      "command": "bunx",
+      "disabled": true
     },
     "chrome-devtools": {
       "args": [
         "chrome-devtools-mcp@latest"
       ],
-      "command": "bunx"
+      "command": "bunx",
+      "disabled": true
     },
     "clickup": {
+      "disabled": true,
       "serverUrl": "https://mcp.clickup.com/mcp"
     },
     "crw": {
@@ -22,7 +25,7 @@
         "crw-mcp"
       ],
       "command": "bunx",
-      "disabled": false,
+      "disabled": true,
       "env": {
         "CRW_BROWSER_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
       }
@@ -32,6 +35,7 @@
       "serverUrl": "https://mcp.deepwiki.com/mcp"
     },
     "grep": {
+      "disabled": true,
       "url": "https://mcp.grep.app"
     },
     "io.windsurf/cloudflare-docs": {
@@ -52,7 +56,8 @@
         "mcp-remote",
         "https://mcp.linear.app/mcp"
       ],
-      "command": "bunx"
+      "command": "bunx",
+      "disabled": true
     },
     "mise": {
       "args": [
@@ -66,7 +71,7 @@
     },
     "moon": {
       "command": "moon",
-      "disabled": false,
+      "disabled": true,
       "env": {
         "MOON_WORKSPACE_ROOT": "/"
       }
@@ -76,15 +81,18 @@
         "-y",
         "next-devtools-mcp@latest"
       ],
-      "command": "bunx"
+      "command": "bunx",
+      "disabled": true
     },
     "nuxt": {
       "args": [
         "mcp"
       ],
-      "command": "nuxt"
+      "command": "nuxt",
+      "disabled": true
     },
     "raindrop": {
+      "disabled": true,
       "serverUrl": "https://api.raindrop.io/rest/v2/ai/mcp"
     },
     "sequential-thinking": {
@@ -92,9 +100,11 @@
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "command": "bunx"
+      "command": "bunx",
+      "disabled": true
     },
     "stripe": {
+      "disabled": true,
       "url": "https://mcp.stripe.com/mcp"
     },
     "vueuse": {
@@ -107,7 +117,8 @@
       "args": [
         "mcp-server-wezterm-rs"
       ],
-      "command": "uvx"
+      "command": "uvx",
+      "disabled": true
     }
   }
 }

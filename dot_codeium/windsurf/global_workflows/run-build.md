@@ -19,12 +19,9 @@ auto_execution_mode: 3
 
 ### 2. Typecheck
 
-1. รัน `bun run typecheck`
-2. ตรวจสอบ TypeScript types ทั้งหมด
-3. ถ้ามี type errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
-4. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
-   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
-   - ถ้าเป็น isolated errors → `/resolve-errors`
+1. ทำ `/run-typecheck` เพื่อตรวจสอบ types อย่างเป็นระบบ
+2. รอให้ typecheck เสร็จสิ้นก่อนดำเนินการต่อ
+3. ถ้ามีข้อผิดพลาดจาก typecheck ให้แก้ไขก่อน
 
 ### 3. Install Dependencies
 
