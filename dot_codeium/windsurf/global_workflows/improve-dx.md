@@ -1,139 +1,168 @@
 ---
 title: Improve DX
-description: ปรับปรุง developer experience ด้วย tooling, documentation, และ onboarding ที่ดี
+description: ปรับปรุง Developer Experience ครบวงจร
 auto_execution_mode: 3
 related_workflows:
-  - /follow-config
-  - /write-docs
-  - /setup-tasks
+  - /improve-documentation
+  - /improve-config
+  - /improve-type-safety
+  - /improve-readability
+  - /improve-error-handling
+  - /follow-examples
 ---
 
 ## Goal
 
-ปรับปรุง developer experience ให้ทำงานได้มีประสิทธิภาพ สะดวก และเพลิดเพลินมากขึ้น
+ปรับปรุง Developer Experience ให้นักพัฒนาใช้งานง่าย มีประสิทธิภาพ และเข้าใจได้เร็ว
 
 ## Scope
 
-ปรับปรุง DX สำหรับทุกส่วนของ development lifecycle ครอบคลุม tooling, documentation, onboarding, และ workflows ทั้งหมด
+ใช้สำหรับปรับปรุง DX ของ libraries, frameworks, และ tools ทั้งใน monorepo และ single workspace
 
 ## Execute
 
-### 1. Tooling Setup
+### 1. Analyze Current DX
 
-ตั้งค่า tooling สำหรับ development
+วิเคราะห์ DX ปัจจุบัน
 
-1. ติดตั้ง `IDE extensions` และ plugins
-2. ตั้งค่า `linting` และ `formatting` tools
-3. ตั้งค่า `git hooks` สำหรับ automation
-4. ตั้งค่า `scripts` สำหรับ common tasks
-5. ตั้งค่า `debugging` tools
+1. ทำ `/analyze-project` เพื่อดูโครงสร้างและ quality
+2. อ่าน `README.md` และ documentation ทั้งหมด
+3. ทดลองใช้งาน API หรือ features หลัก
+4. ตรวจสอบ error messages และ TypeScript types
+5. ดู examples และ templates ที่มี
 
-### 2. Documentation
+### 2. Improve Documentation
 
-สร้าง documentation ที่ครบถ้วน
+ปรับปรุง documentation
 
-1. สร้าง `README` พร้อม setup instructions
-2. สร้าง `API documentation` สำหรับ endpoints
-3. สร้าง `component documentation` สำหรับ UI components
-4. สร้าง `architecture documentation`
-5. สร้าง `contributing guidelines`
+- ทำ `/improve-documentation` ครบวงจร
+- เพิ่ม quick start guide ที่ชัดเจน
+- เพิ่ม API reference ที่ครบถ้วน
+- เพิ่ม examples สำหรับ use cases ทั่วไป
+- เพิ่ม troubleshooting guide
 
-### 3. Onboarding
+### 3. Improve Configuration
 
-ปรับปรุง onboarding process
+ปรับปรุง configuration
 
-1. สร้าง `onboarding guide` สำหรับ developers ใหม่
-2. สร้าง `setup scripts` สำหรับ environment
-3. สร้าง `tutorial` สำหรับ common tasks
-4. สร้าง `FAQ` สำหรับ common questions
-5. สร้าง `video tutorials` สำหรับ complex workflows
+- ทำ `/improve-config` ครบวงจร
+- ทำให้ configuration มี default values ที่ดี
+- ทำให้ configuration มี validation ที่ชัดเจน
+- เพิ่ม configuration examples
+- เพิ่ม environment variable documentation
 
-### 4. Developer Workflows
+### 4. Improve Type Safety
 
-ปรับปรุง development workflows
+ปรับปรุง TypeScript support
 
-1. ตั้งค่า `branching strategy`
-2. ตั้งค่า `PR templates` และ checklists
-3. ตั้งค่า `CI/CD pipelines`
-4. ตั้งค่า `code review process`
-5. ตั้งค่า `release process`
+- ทำ `/improve-type-safety` ครบวงจร
+- เพิ่ม type definitions ที่ครบถ้วน
+- เพิ่ม JSDoc comments สำหรับ public APIs
+- ทำให้ types มี inference ที่ดี
+- เพิ่ม type examples ใน documentation
 
-### 5. Performance And Debugging
+### 5. Improve Error Messages
 
-ปรับปรุง performance และ debugging
+ปรับปรุง error messages
 
-1. ตั้งค่า `hot reload` และ `fast refresh`
-2. ตั้งค่า `performance monitoring`
-3. ตั้งค่า `error tracking`
-4. ตั้งค่า `logging` ที่ structured
-5. ตั้งค่า `profiling tools`
+- ทำให้ error messages ชัดเจนและ actionable
+- เพิ่ม suggestions สำหรับการแก้ไข
+- เพิ่ม links ไปยัง documentation ที่เกี่ยวข้อง
+- เพิ่ม error codes สำหรับ debugging
+- เพิ่ม error handling examples
 
-### 6. Collaboration
+### 6. Improve Examples
 
-ปรับปรุง collaboration tools
+ปรับปรุง examples
 
-1. ตั้งค่า `code review` automation
-2. ตั้งค่า `pair programming` tools
-3. ตั้งค่า `communication channels`
-4. ตั้งค่า `knowledge sharing` sessions
-5. ตั้งค่า `documentation sync`
+- ทำ `/follow-examples` เพื่อเขียน examples ครอบคลุม
+- เพิ่ม examples สำหรับ use cases ทั่วไป
+- เพิ่ม examples สำหรับ edge cases
+- ทำให้ examples สามารถ copy-paste ได้
+- เพิ่ม examples ใน documentation
+
+### 7. Improve Tooling
+
+ปรับปรุง tooling
+
+- ตรวจสอบ scripts ใน `package.json` ครบถ้วน
+- เพิ่ม scripts สำหรับ common tasks
+- ทำให้ dev server รันเร็ว
+- ทำให้ build process ชัดเจน
+- เพิ่ม CLI help ที่ดี
+
+### 8. Improve Readability
+
+ปรับปรุง readability
+
+- ทำ `/improve-readability` ครบวงจร
+- ทำให้ code อ่านง่าย
+- เพิ่ม comments สำหรับ logic ที่ซับซ้อน
+- ใช้ naming ที่ชัดเจน
+- ทำให้ structure สมเหตุสมผล
 
 ## Rules
 
-### 1. Tooling Automation
+### 1. Developer Centric
 
-ใช้ automation สำหรับ repetitive tasks
+เน้นประสบการณ์ของนักพัฒนา
 
-- ใช้ `git hooks` สำหรับ pre-commit checks
-- ใช้ `scripts` สำหรับ common workflows
-- ใช้ `IDE extensions` สำหรับ productivity
-- ใช้ `formatters` และ `linters` อัตโนมัติ
-- ใช้ `CI/CD` สำหรับ automation
+- คิดจาก perspective ของนักพัฒนา
+- ทำให้งานง่ายที่สุด
+- ลด friction ในการใช้งาน
+- ทำให้ learning curve ต่ำ
 
-### 2. Documentation Quality
+### 2. Documentation First
 
-สร้าง documentation ที่ชัดเจนและอัพเดท
+เน้น documentation ก่อน
 
-- ใช้ `markdown` ที่ consistent
-- อัพเดท documentation พร้อม code changes
-- ใช้ `examples` และ `code snippets`
-- ใช้ `diagrams` สำหรับ complex concepts
-- ใช้ `searchable documentation`
+- Document ก่อน implement
+- Document ทุก public API
+- Document ทุก configuration option
+- Document ทุก error ที่เป็นไปได้
 
-### 3. Onboarding Speed
+### 3. Type Safety
 
-ทำให้ onboarding เร็วและง่าย
+เน้น TypeScript support
 
-- ใช้ `one-command setup`
-- ใช้ `automated environment setup`
-- ใช้ `interactive tutorials`
-- ใช้ `video walkthroughs`
-- ใช้ `mentorship program`
+- ทำให้ types ครบถ้วน
+- ทำให้ types มี inference ที่ดี
+- ทำให้ types มี documentation
+- ทำให้ types มี examples
 
-### 4. Feedback Loops
+### 4. Error Clarity
 
-สร้าง feedback loops ที่รวดเร็ว
+เน้น error messages ที่ชัดเจน
 
-- ใช้ `code review` ที่มี guidelines
-- ใช้ `automated checks` สำหรับ quality
-- ใช้ `performance metrics` สำหรับ DX
-- ใช้ `surveys` สำหรับ developer satisfaction
-- ใช้ `retrospectives` สำหรับ continuous improvement
+- Error messages ต้องบอกสาเหตุ
+- Error messages ต้องบอกวิธีแก้
+- Error messages ต้องมี examples
+- Error messages ต้องมี links
 
-### 5. Consistency
+### 5. Examples Coverage
 
-รักษาความสม่ำเสมอใน workflows
+เน้น examples ที่ครอบคลุม
 
-- ใช้ `templates` สำหรับ common tasks
-- ใช้ `checklists` สำหรับ processes
-- ใช้ `standards` สำหรับ code style
-- ใช้ `guidelines` สำหรับ decisions
-- ใช้ `conventions` สำหรับ naming
+- Examples สำหรับ use cases ทั่วไป
+- Examples สำหรับ edge cases
+- Examples ที่ copy-paste ได้
+- Examples ใน documentation
+
+### 6. Tooling Quality
+
+เน้น tooling ที่ดี
+
+- Scripts ครบถ้วน
+- Dev server รันเร็ว
+- Build process ชัดเจน
+- CLI help ดี
 
 ## Expected Outcome
 
-- `Developer onboarding` เร็วขึ้น
-- `Documentation` ครบถ้วนและอัพเดท
-- `Tooling` ที่ automate repetitive tasks
-- `Collaboration` ที่ดีขึ้น
-- `Developer satisfaction` เพิ่มขึ้น
+- Documentation ครบถ้วนและอ่านง่าย
+- Configuration ง่ายและมี defaults ที่ดี
+- TypeScript support ครบถ้วน
+- Error messages ชัดเจนและ actionable
+- Examples ครอบคลุม use cases
+- Tooling ที่ดีและใช้งานง่าย
+- Developer experience ดีขึ้นอย่างเห็นได้ชัด

@@ -64,7 +64,7 @@ auto_execution_mode: 3
 
 ### 1. Search Strategy
 
-ใช้ search patterns ที่เหมาะสม
+ใช้ search patterns ที่เหมาะสมเพื่อค้นหา references ทั้งหมด
 
 - ค้นหาด้วย exact matches ก่อน (เช่น `import { MyFunction } from`)
 - ค้นหาด้วย partial matches ถ้า exact ไม่พบ
@@ -73,7 +73,7 @@ auto_execution_mode: 3
 
 ### 2. Edit Order
 
-แก้ไขตามลำดับที่ปลอดภัย
+แก้ไขตามลำดับที่ปลอดภัยเพื่อป้องกัน circular dependencies
 
 - แก้ไข source file ก่อน (ไฟล์ที่ export)
 - แก้ไข consumer files หลังจากนั้น
@@ -81,7 +81,7 @@ auto_execution_mode: 3
 
 ### 3. Quality Assurance
 
-รักษาคุณภาพโค้ด
+รักษาคุณภาพโค้ดหลังจากการแก้ไข
 
 - รักษา consistency กับ codebase
 - อัพเดท comments ถ้าจำเป็น
@@ -90,7 +90,7 @@ auto_execution_mode: 3
 
 ### 4. Execution Mode
 
-ใช้ edit-only mode
+ใช้ edit-only mode เพื่อป้องกันการรัน commands โดยไม่ได้ตั้งใจ
 
 - ห้ามรัน `run_command` ใดๆ
 - ห้ามรัน background process

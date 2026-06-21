@@ -16,10 +16,11 @@
       "command": "bunx",
       "disabled": true
     },
+    /*
     "clickup": {
       "disabled": true,
       "serverUrl": "https://mcp.clickup.com/mcp"
-    },
+    },*/
     "crw": {
       "args": [
         "crw-mcp"

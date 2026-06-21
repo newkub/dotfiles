@@ -69,7 +69,7 @@ Stage ไฟล์ที่มีการเปลี่ยนแปลง
 
 อัปเดต README ก่อน commit (ถ้า commit ทั้งหมด)
 
-1. ทำตาม `/update-readme`
+1. ทำตาม `/write-readme`
 2. Stage README ที่ถูกอัปเดตด้วย `git add README.md`
 3. ตรวจสอบด้วย `git diff --cached` ว่า README ถูก stage ถูกต้อง
 

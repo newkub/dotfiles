@@ -1,24 +1,28 @@
 ---
-description: แนวทางการพัฒนา monorepo ด้วย Turborepo
+description: แนวทางการพัฒนา monorepo ด้วย Turborepo v2
 title: Turborepo Best Practices
 auto_execution_mode: 3
+related_workflows:
+  - /follow-workspace
+  - /follow-monorepo
+  - /deep-research
 ---
 
 ## Goal
 
-กำหนดแนวทางการพัฒนา monorepo ด้วย Turborepo ให้มีประสิทธิภาพสูงสุด
+กำหนดแนวทางการพัฒนา monorepo ด้วย Turborepo v2 ให้มีประสิทธิภาพสูงสุด
 
 ## Scope
 
-ใช้สำหรับ monorepo ที่ใช้ Turborepo สำหรับ task orchestration และ build orchestration
+ใช้สำหรับ monorepo ที่ใช้ Turborepo v2 สำหรับ task orchestration และ build orchestration
 
 ## Execute
 
 ### 1. Repository Structure
 
-1. ใช้ workspace configuration ด้วย pnpm หรือ npm/yarn/bun
+1. ใช้ workspace configuration ด้วย pnpm (recommended) หรือ npm/yarn/bun
 2. ตั้งค่า root `package.json` ให้มี private, packageManager, workspaces
-3. ใช้ package tasks แทน root tasks
+3. ใช้ package tasks แทน root tasks (เฉพาะกรณีที่จำเป็นจริงๆ เท่านั้น)
 4. สร้าง `turbo.json` ที่ root
 5. จัดโครงสร้าง directory ด้วย apps/*, packages/*, modules/*
 
@@ -31,9 +35,13 @@ auto_execution_mode: 3
 5. ตั้งค่า `dependsOn` สำหรับ task dependencies
 6. ตั้งค่า `cache` เป็น true สำหรับ tasks ที่สามารถ cache
 7. ตั้งค่า `persistent: true` สำหรับ long-running tasks
-8. ตั้งค่า `env` สำหรับ environment variables (ไม่ต้องใช้ $ prefix)
-9. ตั้งค่า `globalDependencies` สำหรับ files ที่มีผลต่อทุก tasks
-10. ทำ `/verify`
+8. ตั้งค่า `env` สำหรับ environment variables ที่มีผลต่อ cache hash
+9. ตั้งค่า `passThroughEnv` สำหรับ environment variables ที่ไม่มีผลต่อ cache
+10. ตั้งค่า `globalEnv` สำหรับ environment variables ที่มีผลต่อทุก tasks
+11. ตั้งค่า `globalPassThroughEnv` สำหรับ environment variables ที่ใช้ทุก tasks แต่ไม่มีผลต่อ cache
+12. ตั้งค่า `globalDependencies` สำหรับ files ที่มีผลต่อทุก tasks
+13. ใช้ `futureFlags.globalConfiguration` สำหรับ global settings ใน Turborepo v2
+14. ทำ `/verify`
 
 ### 3. Usage
 
@@ -62,27 +70,39 @@ auto_execution_mode: 3
 ตั้งค่า turbo.json ให้ถูกต้องตาม Turborepo v2
 
 - ต้องมี `turbo.json` ที่ root
-- ใช้ `$schema` สำหรับ type safety
-- `turbo.json` ต้องกำหนด tasks ตาม scripts
+- ใช้ `$schema` สำหรับ type safety ด้วย versioned URL
+- `turbo.json` ต้องกำหนด tasks ตาม scripts (ใช้ `tasks` key ไม่ใช่ `pipeline`)
 - กำหนด `inputs` ด้วย pattern ที่ครอบคลุม source files
 - กำหนด `outputs` ด้วย pattern ที่ระบุ build artifacts
 - ใช้ `dependsOn: ["^task"]` สำหรับ dependencies จาก upstream packages
 - ใช้ workspace protocol สำหรับ internal dependencies
 - ตั้งค่า `persistent: true` สำหรับ dev servers
+- ใช้ `futureFlags.globalConfiguration` สำหรับ global settings ใน Turborepo v2
+- Turborepo v2 ใช้ Strict Environment Mode โดย default
+- ใช้ Framework Inference สำหรับ environment variables ที่ framework-specific
 
 ```json
 {
   "$schema": "https://v2.turborepo.dev/schema.json",
+  "futureFlags": {
+    "globalConfiguration": true
+  },
+  "global": {
+    "dependencies": ["tsconfig.json", ".env"],
+    "env": ["NODE_ENV"],
+    "passThroughEnv": ["CI", "GITHUB_TOKEN"]
+  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["src/**", "package.json"],
-      "outputs": ["dist/**", ".next/**"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "cache": true
     },
     "test": {
       "dependsOn": ["build"],
       "inputs": ["src/**", "test/**", "package.json"],
+      "outputs": ["coverage/**"],
       "cache": true
     },
     "lint": {
@@ -93,8 +113,7 @@ auto_execution_mode: 3
       "cache": false,
       "persistent": true
     }
-  },
-  "globalDependencies": ["tsconfig.json", ".env"]
+  }
 }
 ```
 
@@ -105,6 +124,7 @@ auto_execution_mode: 3
 - ทุก workspace ต้องมี scripts ที่ตรงกับ turbo tasks ใน root `package.json`
 - ถ้า workspace มี scripts เพิ่มเติมซ้ำกับ root scripts มากกว่า 2 อัน ให้กำหนดใน root `package.json` ว่าใช้ turbo
 - ใช้ `turbo run <task>` สำหรับรัน scripts ผ่าน Turborepo
+- Root scripts ต้อง delegate ไปยัง `turbo run` เท่านั้น ไม่มี build logic จริง
 - ตัวอย่าง root scripts:
   ```json
   {
