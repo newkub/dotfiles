@@ -6,6 +6,7 @@ related_workflows:
   - /run-format
   - /analyze-errors
   - /resolve-errors
+  - /no-use-ignore
 ---
 
 ## Goal
@@ -32,12 +33,10 @@ related_workflows:
 
 ### 3. Analyze And Fix Errors
 
-1. ทำ `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ errors จาก lint
-2. ทำ `/resolve-errors` เพื่อแก้ errors ตามลำดับความสำคัญ
-3. สำหรับ unused variables:
-   - ตัดสินใจว่าควรลบ หรือ implement ให้ครบ
-   - ถ้าเป็น mock/placeholder ให้ implement ให้เสร็จ
-   - ถ้าไม่จำเป็นจริงๆ ให้ลบ
+1. ทำ `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ errors และ warnings จาก lint
+2. ทำ `/resolve-errors` เพื่อแก้ errors และ warnings ตามลำดับความสำคัญ
+3. สำหรับ unused variables: ตัดสินใจว่าควรลบ หรือ implement ให้ครบ
+4. สำหรับ `any` types: ใส่ type จริงๆ ให้เฉพาะเจาะจง หรือใช้ type inference/generic types แทน `any` ห้ามเปลี่ยนเป็น `unknown` หากไม่จำเป็น
 
 ### 4. Verify
 
@@ -47,28 +46,10 @@ related_workflows:
 
 ## Rules
 
-### 1. No Config Modifications
-
-ห้ามแก้ไข config files ทุกประเภท
-
-- ไม่แก้ linter config
-- ไม่ปรับ rules ใดๆ
-- ไม่ปิด rules โดยไม่จำเป็น
-- แก้ code ให้ผ่าน config ที่มีอยู่
-
-### 2. No Ignore Patterns
-
-ห้ามใช้ ignore patterns ทุกประเภท
-
-- ทำตาม `/no-use-ignore`
-- แก้ปัญหาที่ source
-
-### 3. Error Resolution
-
-แก้ปัญหาที่ source แทนการ suppress
-
-- ทำตาม `/resolve-errors` สำหรับการแก้ errors
+- ห้ามแก้ไข config files ทุกประเภท ทำตาม `/no-use-ignore`
+- แก้ปัญหาที่ source แทนการ suppress ทำตาม `/resolve-errors`
 - ไม่ปรับ config ให้เหมาะสมกับ codebase
+- รายงานผลลัพธ์ตาม `/report-format-terminal`
 
 ## Expected Outcome
 
