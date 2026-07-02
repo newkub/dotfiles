@@ -4,7 +4,7 @@ description: สร้าง scripts สำหรับ automate งานด้
 auto_execution_mode: 3
 related_workflows:
   - /use-bun-shell
-  - /use-ast-grep
+  - /analyze-with-ast-grep
 ---
 
 ## Goal
@@ -25,14 +25,14 @@ related_workflows:
 
 1. ใช้ Bun native APIs ถ้าต้องการ performance และ cross-platform: ดูจาก `/use-bun-shell`
 2. ใช้ pwsh ถ้าต้องการ Windows-specific commands หรือ system administration
-3. ใช้ ast-grep ถ้าต้องการ AST-based code search และ transformation: ดูจาก `/use-ast-grep`
+3. ใช้ ast-grep ถ้าต้องการ AST-based code search และ transformation: ดูจาก `/analyze-with-ast-grep`
 
 ### 3. Create Script
 
 1. สร้างไฟล์ script ตาม Rules ในหมวด File Location
 2. เขียนแบบ composable: `createScript()` return state + actions
 3. ดูรายละเอียด Bun APIs จาก `/use-bun-shell`
-4. ดูรายละเอียด ast-grep จาก `/use-ast-grep`
+4. ดูรายละเอียด ast-grep จาก `/analyze-with-ast-grep`
 
 ### 4. Dry Run
 
@@ -77,17 +77,10 @@ related_workflows:
 ดูรายละเอียดจาก `/use-bun-shell`:
 
 ```typescript
-// File operations
 const content = await Bun.file(path).text()
 await Bun.write(outputPath, content)
-
-// Shell commands
 await $`git status`.text()
-
-// File patterns
-for await (const file of new Bun.Glob("**/*.ts").scan()) {
-  // process file
-}
+for await (const file of new Bun.Glob("**/*.ts").scan()) { /* process */ }
 ```
 
 ### PowerShell Commands
@@ -95,26 +88,33 @@ for await (const file of new Bun.Glob("**/*.ts").scan()) {
 ใช้ PowerShell สำหรับ Windows-specific tasks:
 
 ```powershell
-# File operations
-Get-ChildItem -Path "." -Filter "*.ts" | ForEach-Object {
-  # process file
-}
-
-# System commands
+Get-ChildItem -Path "." -Filter "*.ts" | ForEach-Object { /* process */ }
 Get-Process | Where-Object { $_.Name -eq "node" }
 ```
 
 ### Ast-grep Commands
 
-ดูรายละเอียดจาก `/use-ast-grep`:
+ดูรายละเอียดเพิ่มเติมจาก `/analyze-with-ast-grep`
 
 ```bash
-# Search pattern
-ast-grep run -p 'console.log($ARG)'
+# Outline: สำรวจ structure ก่อน analysis
+ast-grep outline src --json=compact
+ast-grep outline src/parser.ts --items imports
 
-# Scan with rules
+# Search pattern โดยไม่สร้าง file
+bun -e "await $`ast-grep run -p 'console.log($ARG)' -l ts`"
+
+# Inline rule โดยไม่สร้าง YAML file
+bun -e "await $`ast-grep run --inline-rules 'id: test-rule language: ts rule: pattern: test($X)'`"
+
+# Rewrite โดยไม่สร้าง fix template
+bun -e "await $`ast-grep run -p 'console.log($X)' -r 'console.warn($X)' -l ts`"
+
+# Scan with production rules
 ast-grep scan --config sgconfig.yml
 ```
+
+Pattern matching และ rule configuration ดูจาก `/analyze-with-ast-grep`
 
 ### CDN Imports
 
@@ -131,38 +131,54 @@ import { glob } from "https://esm.sh/glob"
 
 ### Script Template
 
-ตัวอย่าง script แบบ composable (Bun)
+ตัวอย่าง Bun script template ดูจาก `/use-bun-shell`
+
+ตัวอย่าง script ที่ใช้ ast-grep ร่วมกับ Bun shell:
 
 ```typescript
 #!/usr/bin/env bun
 
-import { z } from "https://esm.sh/zod"
+import { $ } from "bun"
 
-interface ScriptOptions {
+interface AstGrepOptions {
   pattern: string
+  rewrite?: string
+  lang?: string
   dryRun?: boolean
 }
 
-function createScript(options: ScriptOptions) {
-  const errors: Error[] = []
-  let processed = 0
+function createAstGrepScript(options: AstGrepOptions) {
+  const matches: string[] = []
+  let rewritten = 0
 
   async function run() {
-    const files = new Bun.Glob(options.pattern).scan()
-    for await (const file of files) {
-      if (options.dryRun) {
-        console.log(`[DRY RUN] Would process: ${file}`)
-      } else {
-        // Process logic
-        processed++
-      }
+    const cmd = options.rewrite
+      ? $`ast-grep run -p ${options.pattern} -r ${options.rewrite} -l ${options.lang ?? "ts"}`
+      : $`ast-grep run -p ${options.pattern} -l ${options.lang ?? "ts"}`
+    if (options.dryRun) {
+      const output = await cmd.text()
+      matches.push(...output.split("\n").filter(Boolean))
+      console.log(`[DRY RUN] Found ${matches.length} matches`)
+    } else {
+      await cmd
+      rewritten++
     }
   }
 
-  return { run, errors, processed }
+  async function outline(path: string) {
+    const output = await $`ast-grep outline ${path} --json=compact`.text()
+    return JSON.parse(output)
+  }
+
+  return { run, outline, matches, rewritten }
 }
 
-const script = createScript({ pattern: "**/*.ts", dryRun: true })
+const script = createAstGrepScript({
+  pattern: "console.log($ARG)",
+  rewrite: "console.warn($ARG)",
+  lang: "ts",
+  dryRun: true,
+})
 await script.run()
 ```
 

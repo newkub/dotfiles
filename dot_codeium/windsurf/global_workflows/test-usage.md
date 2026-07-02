@@ -1,12 +1,18 @@
 ---
 title: Test Usage
-description: ทดสอบว่าใช้งานได้จริงๆ
+description: ทดสอบว่าใช้งานได้จริงๆ ตามที่คาดหวัง
 auto_execution_mode: 3
+related_workflows:
+  - /write-test
 ---
 
 ## Goal
 
 ทดสอบว่า feature หรือ application ใช้งานได้จริงๆ ตามที่คาดหวัง
+
+## Scope
+
+ใช้สำหรับทดสอบ usage scenarios ที่ realistic ในทุก feature และ application
 
 ## Execute
 

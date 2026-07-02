@@ -5,6 +5,10 @@ auto_execution_mode: 3
 related_workflows:
   - /improve-bundle-size
   - /improve-web-performance
+  - /improve-scalability
+  - /improve-caching
+  - /improve-offline
+  - /improve-cost
 ---
 
 ## Goal
@@ -28,6 +32,42 @@ related_workflows:
 ปรับปรุง web performance ครบวงจร
 
 - ทำ `/improve-web-performance` เพื่อปรับปรุง web performance ครบวงจร
+- ปรับปรุง Core Web Vitals (LCP, INP, CLS)
+- ปรับปรุง FCP, TBT, Speed Index
+
+### 3. Improve Scalability
+
+ปรับปรุง scalability
+
+- ทำ `/improve-scalability` เพื่อปรับปรุง scalability
+- ระบุ bottlenecks
+- ปรับปรุง horizontal และ vertical scaling
+
+### 4. Improve Caching
+
+ปรับปรุง caching strategy ครบวงจร
+
+- ทำ `/improve-caching` เพื่อปรับปรุง caching strategy
+- เพิ่ม cache layers ที่เหมาะสม
+- ตั้งค่า cache invalidation
+- ใช้ stale-while-revalidate
+
+### 5. Improve Offline
+
+ปรับปรุง offline support และ PWA
+
+- ทำ `/improve-offline` เพื่อปรับปรุง offline support
+- เพิ่ม PWA support
+- ตั้งค่า background sync
+- จัดการ conflict resolution
+
+### 6. Improve Cost
+
+ปรับปรุง cost optimization
+
+- ทำ `/improve-cost` เพื่อปรับปรุง cost ของ infrastructure และ resources
+- ปรับขนาด instances ให้เหมาะสม
+- ลด underutilized resources
 
 ## Rules
 
@@ -65,4 +105,7 @@ related_workflows:
 - Rendering performance ดีขึ้น
 - Memory usage ลดลง
 - Core Web Vitals ดีขึ้น
+- Scalability ดีขึ้น
+- Caching ครอบคลุมทุก layers
+- Offline support พร้อม PWA
 - Performance budgets ผ่าน

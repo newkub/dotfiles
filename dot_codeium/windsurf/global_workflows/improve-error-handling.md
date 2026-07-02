@@ -1,133 +1,192 @@
 ---
 title: Improve Error Handling
-description: ปรับปรุง error handling ให้ consistent และมีประสิทธิภาพ
+description: ปรับปรุง error handling ด้วย error types, error boundaries, recovery strategies, และ user-friendly messages
 auto_execution_mode: 3
+related_workflows:
+  - /improve-side-effect
+  - /improve-logging
+  - /improve-resilience
+  - /follow-code-quality
+  - /follow-software-engineering
 ---
 
 ## Goal
 
-ปรับปรุง error handling ให้ consistent และมีประสิทธิภาพตาม best practices
+ปรับปรุง error handling ให้มี proper error types, recovery strategies, และ user-friendly messages ตาม best practices
+
+## Scope
+
+ใช้สำหรับปรับปรุง error handling ทั้ง server-side, client-side, และ CLI applications
 
 ## Execute
 
-### 1. Analyze Error Handling
+### 1. Audit Current Error Handling
 
-วิเคราะห์ error handling ปัจจุบัน
+ตรวจสอบ error handling ปัจจุบัน
 
-1. ค้นหา try-catch blocks
-2. วิเคราะห์ error propagation
-3. ตรวจสอบ error logging
-4. ระบุ unhandled errors
-5. วิเคราะห์ error messages
+- ค้นหา `try-catch` blocks ที่มี empty catch
+- ค้นหา `catch (e)` ที่ไม่ใช้ `e`
+- ค้นหา unhandled promise rejections
+- ค้นหา error swallowing (catch โดยไม่ log หรือ rethrow)
+- ค้นหา generic `catch (error)` โดยไม่มี type narrowing
+- บันทึกผลเป็น baseline
 
-### 2. Standardize Error Types
+### 2. Define Error Types
 
-สร้าง error types ที่ standard
+สร้าง error type hierarchy ที่ชัดเจน
 
-1. สร้าง custom error classes
-2. สร้าง error codes ที่ consistent
-3. สร้าง error types ตาม domains
-4. สร้าง error factory functions
-5. สร้าง error enums
+- สร้าง base error class สำหรับ application
+- สร้าง specific error types: `ValidationError`, `AuthError`, `NotFoundError`, `ConflictError`, `RateLimitError`, `ExternalServiceError`
+- ใช้ error codes สำหรับ programmatic handling
+- ใส่ context fields ใน error objects (requestId, userId, metadata)
+- ใช้ discriminated unions สำหรับ error types
 
-### 3. Improve Error Logging
+### 3. Implement Error Boundaries
 
-ปรับปรุง error logging
+เพิ่ม error boundaries สำหรับ graceful degradation
 
-1. ใช้ structured logging
-2. เพิ่ม error context
-3. เพิ่ม stack traces
-4. เพิ่ม request IDs
-5. ใช้ error tracking service
+- สร้าง error boundaries สำหรับ UI components
+- สร้าง error boundaries สำหรับ API routes
+- สร้าง error boundaries สำหรับ background jobs
+- แยก recoverable จาก non-recoverable errors
+- แสดง fallback UI สำหรับ component errors
+- ส่ง structured error response สำหรับ API errors
 
-### 4. Improve Error Propagation
+### 4. Add Recovery Strategies
 
-ปรับปรุง error propagation
+เพิ่ม recovery strategies สำหรับ common errors
 
-1. ใช้ async/await อย่างถูกต้อง
-2. ใช้ error boundaries สำหรับ UI
-3. ใช้ global error handlers
-4. ใช้ middleware สำหรับ API errors
-5. ใช้ circuit breakers สำหรับ external calls
+- ใช้ retry สำหรับ transient failures (network, timeout)
+- ใช้ fallback สำหรับ degraded service
+- ใช้ circuit breaker สำหรับ external services
+- ใช้ graceful degradation สำหรับ non-critical features
+- ใช้ queue สำหรับ failed operations ที่ต้อง retry ภายหลัง
+- ทำ `/improve-resilience` สำหรับ resilience patterns
 
 ### 5. Improve Error Messages
 
-ปรับปรุง error messages
+ปรับปรุง error messages ให้ user-friendly
 
-1. ใช้ messages ที่ user-friendly
-2. เพิ่ม error codes สำหรับ debugging
-3. เพิ่ม suggestions สำหรับการแก้ไข
-4. แปล error messages สำหรับ i18n
-5. ซ่อน sensitive information
+- แยก technical errors จาก user-facing messages
+- ใช้ clear, actionable language สำหรับ user messages
+- ไม่ leak technical details ไปยัง users
+- ใช้ i18n สำหรับ error messages ถ้ารองรับหลายภาษา
+- ให้ guidance สำหรับ recovery (เช่น "กรุณาลองอีกครั้ง")
+- ทำ `/improve-i18n` สำหรับ multi-language errors
 
-### 6. Add Error Tests
+### 6. Centralize Error Handling
 
-เพิ่ม tests สำหรับ error handling
+รวม error handling ให้เป็นระบบ
 
-1. เขียน tests สำหรับ error cases
-2. เขียน tests สำหรับ error boundaries
-3. เขียน tests สำหรับ error logging
-4. เขียน tests สำหรับ error recovery
-5. เขียน tests สำหรับ error messages
+- สร้าง global error handler สำหรับ unhandled errors
+- สร้าง error middleware สำหรับ API
+- สร้าง error boundary component สำหรับ UI
+- สร้าง error reporting service integration
+- ไม่ duplicate error handling ในหลาย layers
+- ทำ `/improve-logging` สำหรับ error logging
+
+### 7. Validate Error Handling
+
+ตรวจสอบ error handling หลังปรับปรุง
+
+- ทดสอบ error scenarios ทั้งหมด
+- ทดสอบ recovery strategies
+- ทดสอบ error boundaries
+- ทดสอบ user-facing error messages
+- รัน `/run-test` สำหรับ error handling tests
+- ทำ `/report-format-table` สำหรับ before-after comparison
 
 ## Rules
 
-### Error Types
+### 1. Error Type Hierarchy
 
-ใช้ error types ที่ consistent
+ใช้ error type hierarchy ที่ชัดเจน
 
-- สร้าง custom error classes
-- ใช้ error codes ที่ meaningful
-- จัดกลุ่ม errors ตาม domains
-- ใช้ inheritance สำหรับ error hierarchies
-- ใช้ error factory functions
+- สร้าง base `AppError` class
+- สร้าง specific error types ที่ inherit จาก base
+- ใส่ `code`, `message`, `statusCode`, `context` ในทุก errors
+- ใช้ `instanceof` สำหรับ type narrowing
+- ไม่ throw generic `Error` ใน application code
 
-### Error Logging
+### 2. No Error Swallowing
 
-บันทึก errors อย่างเหมาะสม
+ไม่ swallow errors
 
-- ใช้ structured logging
-- เพิ่ม context ที่ relevant
-- ไม่บันทึก sensitive data
-- ใช้ log levels ที่ถูกต้อง
-- ใช้ error tracking services
+- ไม่ catch โดยไม่ log หรือ rethrow
+- ไม่ catch โดยไม่ใช้ error variable
+- ถ้า catch เพื่อ recovery ต้อง log ด้วย
+- ใช้ `catch` เฉพาะเมื่อสามารถ handle ได้
+- ไม่ใช้ `try-catch` แทน proper validation
 
-### Error Propagation
+### 3. User-Friendly Messages
+
+แยก technical จาก user-facing messages
+
+- User messages: clear, actionable, non-technical
+- Technical details: log ไว้สำหรับ debugging
+- ไม่ leak stack traces ไปยัง users
+- ไม่ leak internal paths หรือ variable names
+- ใช้ i18n keys สำหรับ user messages
+
+### 4. Recovery First
+
+พยายาม recover ก่อน fail
+
+- Retry transient failures
+- Fallback สำหรับ degraded service
+- Graceful degradation สำหรับ non-critical features
+- Queue สำหรับ delayed retry
+- Fail fast สำหรับ non-recoverable errors
+
+### 5. Error Propagation
 
 ส่ง errors อย่างถูกต้อง
 
-- ไม่ swallow errors โดยไม่จำเป็น
-- ใช้ error boundaries สำหรับ UI
-- ใช้ global error handlers
-- ใช้ proper async error handling
-- ใช้ circuit breakers สำหรับ external services
-
-### Error Messages
-
-ใช้ error messages ที่ชัดเจน
-
-- ใช้ messages ที่ user-friendly
-- ใช้ error codes สำหรับ debugging
-- เพิ่ม suggestions สำหรับการแก้ไข
-- แปล messages สำหรับ i18n
-- ซ่อน sensitive information
-
-### Error Testing
-
-ทดสอบ error handling
-
-- เขียน tests สำหรับ error cases
-- เขียน tests สำหรับ error boundaries
-- เขียน tests สำหรับ error recovery
-- ใช้ mock errors ใน tests
-- ทดสอบ error messages
+- ไม่ rethrow โดยไม่มี context เพิ่ม
+- ใช้ `cause` field สำหรับ error chaining
+- ไม่ wrap errors หลายชั้น
+- ส่ง error type ที่เหมาะสมขึ้นไป
+- Log ที่ catch point สูงสุดเท่านั้น
 
 ## Expected Outcome
 
-- Error handling ที่ consistent ทั่ว codebase
-- Custom error types ที่ structured
-- Error logging ที่ comprehensive
-- Error propagation ที่ correct
-- Error messages ที่ user-friendly
-- Error tests ที่ครอบคลุม
+- Error type hierarchy ชัดเจน
+- Error boundaries ครอบคลุมทุก layers
+- Recovery strategies สำหรับ common errors
+- User-friendly error messages
+- Error handling centralized และ consistent
+- Error swallowing กำจัดหมด
+- Error logging มี context เพียงพอ
+- Before-after comparison report
 
+## Common Mistakes
+
+- Catch โดยไม่ log หรือ rethrow
+- Throw generic `Error` แทน specific types
+- Leak technical details ไปยัง users
+- ไม่มี recovery strategy
+- Duplicate error handling ในหลาย layers
+- ไม่ใช้ `cause` สำหรับ error chaining
+
+## Anti-Patterns
+
+- `catch (e) {}` — empty catch block
+- `catch (e) { console.log(e) }` — log โดยไม่ recover
+- Throw `new Error("something")` แทน specific type
+- แสดง stack trace ให้ user เห็น
+- Nested try-catch หลายชั้นโดยไม่จำเป็น
+
+## Tools
+
+- `bun run scan` - ast-grep scan for error handling patterns
+- `grep` - Search for empty catch blocks
+- `bun run typecheck` - Type check error types
+- `bun run test` - Run error handling tests
+
+## References
+
+- ทำ `/improve-side-effect` สำหรับ side effect isolation
+- ทำ `/improve-logging` สำหรับ error logging
+- ทำ `/improve-resilience` สำหรับ resilience patterns
+- ทำ `/follow-code-quality` สำหรับ code quality
+- ทำ `/follow-software-engineering` สำหรับ engineering principles
