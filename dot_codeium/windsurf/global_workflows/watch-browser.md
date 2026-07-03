@@ -2,10 +2,6 @@
 title: Watch Browser
 description: เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง
 auto_execution_mode: 3
-related_workflows:
-  - /follow-agent-browser
-  - /run-verify
-  - /resolve-errors
 ---
 
 ## Goal
@@ -14,7 +10,7 @@ related_workflows:
 
 ## Scope
 
-ใช้สำหรับ watch และ monitor หน้าเว็บต่อเนื่องด้วย `agent-browser` CLI หลังจาก verify ผ่าน
+ใช้สำหรับ browser automation และ web testing ด้วย `agent-browser` CLI
 
 ## Execute
 
@@ -27,41 +23,40 @@ related_workflows:
 
 ### 2. Open Browser
 
-1. ทำ `/follow-agent-browser` สำหรับ installation และ usage guidelines
-2. เปิดเบราว์เซอร์ด้วย `agent-browser --headed open <url>`
-3. ใช้ `command chaining` && สำหรับ operations ต่อเนื่อง
-4. ถ้า `daemon` error ให้ `agent-browser close --all` แล้วเปิดใหม่ หรือใช้ `browser-preview` แทน
+1. เปิดเบราว์เซอร์ด้วย `agent-browser --headed open <url>`
+2. ใช้ `command chaining` && สำหรับ operations ต่อเนื่อง
+3. ถ้า `daemon` error ให้ใช้ `browser-preview` แทน
 
 ### 3. Watch And Monitor
 
-1. ใช้ `agent-browser snapshot -i` เพื่อดู interactive elements และ `@eN` refs
-2. ใช้ `agent-browser network requests` เพื่อ monitor network requests
-3. ใช้ `agent-browser screenshot --annotate` เพื่อ capture annotated screenshot
-4. Re-snapshot ทุกครั้งหลัง page change เพราะ refs เปลี่ยนทุกครั้ง
-5. จัดการ errors ที่เกิดขึ้นด้วย `/resolve-errors`
+1. ใช้ `snapshot` เพื่อดู accessibility tree และ element references
+2. Monitor console messages และ network requests
+3. จัดการ errors ที่เกิดขึ้นด้วย `/resolve-errors`
 
 ## Rules
 
 ### 1. Browser Configuration
 
-ทำตาม `/follow-agent-browser`
+ตั้งค่า browser configuration อย่างถูกต้อง
 
 - ใช้ `agent-browser` เท่านั้นในการจัดการเบราว์เซอร์
 - ใช้ `--headed` เพื่อเปิด browser แบบมองเห็นหน้าต่าง
+- ใช้ environment variables สำหรับ configuration ที่ซ้ำซ้อน
+
+### 2. Performance
+
+ปรับปรุง performance สำหรับ operations ต่อเนื่อง
+
+- ใช้ `command chaining` && สำหรับ operations ต่อเนื่อง
 - ใช้ `--session` สำหรับ isolated sessions
-
-### 2. Watch Strategy
-
-- ใช้ `snapshot -i` แทน `snapshot` เต็มเพื่อลด token
-- Re-snapshot ทุกครั้งหลัง page change
-- ใช้ `network requests` เพื่อ monitor API calls
-- ใช้ `screenshot --annotate` เพื่อ capture พร้อม numbered labels
+- ใช้ `--profile` สำหรับ persistent data
 
 ### 3. Error Handling
 
+จัดการ errors ที่เกิดขึ้นอย่างถูกต้อง
+
 - เมื่อเจอ error ต้องเรียก `/resolve-errors` ทันที
-- ถ้า `daemon` error ให้ `agent-browser close --all` แล้วเปิดใหม่
-- ถ้ายังไม่ได้ ให้ใช้ `browser-preview` แทน
+- ถ้า `daemon` error ให้ใช้ `browser-preview` แทน
 
 ## Expected Outcome
 

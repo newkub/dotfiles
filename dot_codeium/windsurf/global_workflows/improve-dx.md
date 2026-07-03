@@ -1,168 +1,136 @@
 ---
-title: Improve DX
-description: ปรับปรุง Developer Experience ครบวงจร
+title: Improve Developer Experience
+description: ปรับปรุง developer experience ครบวงจร
 auto_execution_mode: 3
 related_workflows:
-  - /improve-documentation
-  - /improve-config
-  - /improve-type-safety
-  - /improve-readability
-  - /improve-error-handling
-  - /follow-examples
+  - improve-codebase
+  - follow-config
 ---
 
 ## Goal
 
-ปรับปรุง Developer Experience ให้นักพัฒนาใช้งานง่าย มีประสิทธิภาพ และเข้าใจได้เร็ว
+ปรับปรุง developer experience ครบวงจรเพื่อให้ทีมพัฒนาทำงานได้รวดเร็วและมีประสิทธิภาพ
 
 ## Scope
 
-ใช้สำหรับปรับปรุง DX ของ libraries, frameworks, และ tools ทั้งใน monorepo และ single workspace
+ใช้สำหรับการปรับปรุง build times, error messages, development tools, และ onboarding
 
 ## Execute
 
-### 1. Analyze Current DX
+### 1. Build Performance
 
-วิเคราะห์ DX ปัจจุบัน
+ปรับปรุง build performance
 
-1. ทำ `/analyze-project` เพื่อดูโครงสร้างและ quality
-2. อ่าน `README.md` และ documentation ทั้งหมด
-3. ทดลองใช้งาน API หรือ features หลัก
-4. ตรวจสอบ error messages และ TypeScript types
-5. ดู examples และ templates ที่มี
+- Optimize build configuration
+- ใช้ incremental builds
+- ใช้ cache สำหรับ dependencies
+- Parallelize build tasks
+- Reduce bundle size
+- Monitor build times
 
-### 2. Improve Documentation
+### 2. Error Messages
 
-ปรับปรุง documentation
+ปรับปรุง error messages ให้ชัดเจน
 
-- ทำ `/improve-documentation` ครบวงจร
-- เพิ่ม quick start guide ที่ชัดเจน
-- เพิ่ม API reference ที่ครบถ้วน
-- เพิ่ม examples สำหรับ use cases ทั่วไป
-- เพิ่ม troubleshooting guide
+- ใช้ custom error messages ที่เป็นประโยชน์
+- แสดง suggestions สำหรับ fix errors
+- Link errors ไปยัง documentation
+- ใช้ error codes สำหรับ easy reference
+- แสดง stack traces ที่ readable
+- ใช้ pretty error formats
 
-### 3. Improve Configuration
+### 3. Development Tools
 
-ปรับปรุง configuration
+ตั้งค่า development tools ที่ดี
 
-- ทำ `/improve-config` ครบวงจร
-- ทำให้ configuration มี default values ที่ดี
-- ทำให้ configuration มี validation ที่ชัดเจน
-- เพิ่ม configuration examples
-- เพิ่ม environment variable documentation
+- ใช้ IDE integrations (VS Code extensions)
+- ตั้งค่า linting และ formatting อัตโนมัติ
+- ใช้ pre-commit hooks
+- ตั้งค่า auto-completion
+- ใช้ debug tools ที่ powerful
+- ตั้งค่า snippets สำหรับ common patterns
 
-### 4. Improve Type Safety
+### 4. Hot Module Replacement
 
-ปรับปรุง TypeScript support
+ตั้งค่า HMR สำหรับ fast development
 
-- ทำ `/improve-type-safety` ครบวงจร
-- เพิ่ม type definitions ที่ครบถ้วน
-- เพิ่ม JSDoc comments สำหรับ public APIs
-- ทำให้ types มี inference ที่ดี
-- เพิ่ม type examples ใน documentation
+- ตั้งค่า HMR สำหรับ frontend
+- ตั้งค่า HMR สำหรับ styles
+- Preserve state ระหว่าง HMR
+- ตั้งค่า fast refresh
+- Monitor HMR performance
+- Fix HMR issues
 
-### 5. Improve Error Messages
+### 5. Onboarding Documentation
 
-ปรับปรุง error messages
+สร้าง onboarding documentation ที่ชัดเจน
 
-- ทำให้ error messages ชัดเจนและ actionable
-- เพิ่ม suggestions สำหรับการแก้ไข
-- เพิ่ม links ไปยัง documentation ที่เกี่ยวข้อง
-- เพิ่ม error codes สำหรับ debugging
-- เพิ่ม error handling examples
+- สร้าง README ที่ครบถ้วน
+- สร้าง setup guide ที่ step-by-step
+- สร้าง development guide
+- สร้าง contribution guide
+- สร้าง architecture documentation
+- สร้าง troubleshooting guide
 
-### 6. Improve Examples
+### 6. Local Development
 
-ปรับปรุง examples
+ปรับปรุง local development experience
 
-- ทำ `/follow-examples` เพื่อเขียน examples ครอบคลุม
-- เพิ่ม examples สำหรับ use cases ทั่วไป
-- เพิ่ม examples สำหรับ edge cases
-- ทำให้ examples สามารถ copy-paste ได้
-- เพิ่ม examples ใน documentation
-
-### 7. Improve Tooling
-
-ปรับปรุง tooling
-
-- ตรวจสอบ scripts ใน `package.json` ครบถ้วน
-- เพิ่ม scripts สำหรับ common tasks
-- ทำให้ dev server รันเร็ว
-- ทำให้ build process ชัดเจน
-- เพิ่ม CLI help ที่ดี
-
-### 8. Improve Readability
-
-ปรับปรุง readability
-
-- ทำ `/improve-readability` ครบวงจร
-- ทำให้ code อ่านง่าย
-- เพิ่ม comments สำหรับ logic ที่ซับซ้อน
-- ใช้ naming ที่ชัดเจน
-- ทำให้ structure สมเหตุสมผล
+- ตั้งค่า local environment อัตโนมัติ
+- ใช้ Docker สำหรับ consistency
+- ตั้งค่า mock data สำหรับ development
+- ตั้งค่า seed data สำหรับ database
+- ใช้ hot reload สำหรับ backend
+- ตั้งค่า environment variables อัตโนมัติ
 
 ## Rules
 
-### 1. Developer Centric
+### 1. Fast Feedback Loops
 
-เน้นประสบการณ์ของนักพัฒนา
+ทำให้ feedback loops เร็วที่สุด
 
-- คิดจาก perspective ของนักพัฒนา
-- ทำให้งานง่ายที่สุด
-- ลด friction ในการใช้งาน
-- ทำให้ learning curve ต่ำ
+- Build ควรใช้เวลา < 1 นาที
+- Tests ควรรันเร็ว
+- Linting ควรเร็ว
+- HMR ควร instant
+- ไม่ block developers ด้วย slow processes
 
-### 2. Documentation First
+### 2. Clear Error Messages
 
-เน้น documentation ก่อน
+Error messages ต้อง actionable
+
+- บอกสิ่งที่ผิด
+- บอกวิธีแก้
+- บอกที่มาของ error
+- ใช้ภาษาที่เข้าใจง่าย
+- ไม่ใช้ technical jargon ที่ไม่จำเป็น
+
+### 3. Consistent Environment
+
+ทำให้ environment สม่ำเสมอ
+
+- ใช้ Docker สำหรับ consistency
+- ตั้งค่า version pinning
+- ใช้ same tools ข้าม team
+- Document environment setup
+- ใช้ CI/CD สำหรับ validation
+
+### 4. Documentation First
+
+เขียน documentation ก่อน
 
 - Document ก่อน implement
-- Document ทุก public API
-- Document ทุก configuration option
-- Document ทุก error ที่เป็นไปได้
-
-### 3. Type Safety
-
-เน้น TypeScript support
-
-- ทำให้ types ครบถ้วน
-- ทำให้ types มี inference ที่ดี
-- ทำให้ types มี documentation
-- ทำให้ types มี examples
-
-### 4. Error Clarity
-
-เน้น error messages ที่ชัดเจน
-
-- Error messages ต้องบอกสาเหตุ
-- Error messages ต้องบอกวิธีแก้
-- Error messages ต้องมี examples
-- Error messages ต้องมี links
-
-### 5. Examples Coverage
-
-เน้น examples ที่ครอบคลุม
-
-- Examples สำหรับ use cases ทั่วไป
-- Examples สำหรับ edge cases
-- Examples ที่ copy-paste ได้
-- Examples ใน documentation
-
-### 6. Tooling Quality
-
-เน้น tooling ที่ดี
-
-- Scripts ครบถ้วน
-- Dev server รันเร็ว
-- Build process ชัดเจน
-- CLI help ดี
+- Keep documentation updated
+- Use examples ใน documentation
+- Document edge cases
+- Document common tasks
 
 ## Expected Outcome
 
-- Documentation ครบถ้วนและอ่านง่าย
-- Configuration ง่ายและมี defaults ที่ดี
-- TypeScript support ครบถ้วน
+- Build times ลดลงอย่างมีนัยสำคัญ
 - Error messages ชัดเจนและ actionable
-- Examples ครอบคลุม use cases
-- Tooling ที่ดีและใช้งานง่าย
-- Developer experience ดีขึ้นอย่างเห็นได้ชัด
+- Development tools ทำงานได้ดี
+- HMR ทำงานได้อย่างราบรื่น
+- Onboarding เร็วขึ้น
+- Local development ง่ายขึ้น
+- Developer satisfaction สูงขึ้น

@@ -1,192 +1,121 @@
 ---
 title: Improve Error Handling
-description: ปรับปรุง error handling ด้วย error types, error boundaries, recovery strategies, และ user-friendly messages
+description: ปรับปรุง error handling และ resilience ครบวงจร
 auto_execution_mode: 3
 related_workflows:
-  - /improve-side-effect
-  - /improve-logging
-  - /improve-resilience
-  - /follow-code-quality
-  - /follow-software-engineering
+  - improve-codebase
+  - improve-monitoring
 ---
 
 ## Goal
 
-ปรับปรุง error handling ให้มี proper error types, recovery strategies, และ user-friendly messages ตาม best practices
+ปรับปรุง error handling และ resilience ครบวงจรเพื่อให้ระบบทนทานต่อข้อผิดพลาด
 
 ## Scope
 
-ใช้สำหรับปรับปรุง error handling ทั้ง server-side, client-side, และ CLI applications
+ใช้สำหรับการตั้งค่า error boundaries, retry mechanisms, circuit breakers, และ graceful degradation
 
 ## Execute
 
-### 1. Audit Current Error Handling
+### 1. Error Boundaries
 
-ตรวจสอบ error handling ปัจจุบัน
+ตั้งค่า error boundaries สำหรับ catch errors
 
-- ค้นหา `try-catch` blocks ที่มี empty catch
-- ค้นหา `catch (e)` ที่ไม่ใช้ `e`
-- ค้นหา unhandled promise rejections
-- ค้นหา error swallowing (catch โดยไม่ log หรือ rethrow)
-- ค้นหา generic `catch (error)` โดยไม่มี type narrowing
-- บันทึกผลเป็น baseline
+- ตั้งค่า error boundaries ใน React/Solid components
+- ตั้งค่า global error handler ใน server
+- ตั้งค่า error boundary สำหรับ async operations
+- แสดง error UI ที่เป็นมิตรกับผู้ใช้
+- Log errors ที่ถูก catch
+- ให้ผู้ใช้ recover จาก errors
 
-### 2. Define Error Types
+### 2. Retry Mechanisms
 
-สร้าง error type hierarchy ที่ชัดเจน
+ตั้งค่า retry mechanisms สำหรับ transient failures
 
-- สร้าง base error class สำหรับ application
-- สร้าง specific error types: `ValidationError`, `AuthError`, `NotFoundError`, `ConflictError`, `RateLimitError`, `ExternalServiceError`
-- ใช้ error codes สำหรับ programmatic handling
-- ใส่ context fields ใน error objects (requestId, userId, metadata)
-- ใช้ discriminated unions สำหรับ error types
+- ใช้ exponential backoff สำหรับ retries
+- ตั้งค่า max retry attempts
+- ตั้งค่า retry delay ที่เหมาะสม
+- Retry เฉพาะ errors ที่เป็น transient
+- ไม่ retry สำหรับ errors ที่เป็น permanent
+- ใช้ jitter สำหรับ avoid thundering herd
 
-### 3. Implement Error Boundaries
+### 3. Circuit Breakers
 
-เพิ่ม error boundaries สำหรับ graceful degradation
+ตั้งค่า circuit breakers สำหรับ prevent cascading failures
 
-- สร้าง error boundaries สำหรับ UI components
-- สร้าง error boundaries สำหรับ API routes
-- สร้าง error boundaries สำหรับ background jobs
-- แยก recoverable จาก non-recoverable errors
-- แสดง fallback UI สำหรับ component errors
-- ส่ง structured error response สำหรับ API errors
+- ใช้ circuit breaker pattern สำหรับ external services
+- ตั้งค่า failure threshold
+- ตั้งค่า timeout สำหรับ open state
+- ตั้งค่า half-open state สำหรับ testing
+- Fallback ไปยัง default response เมื่อ open
+- Monitor circuit breaker state
 
-### 4. Add Recovery Strategies
+### 4. Graceful Degradation
 
-เพิ่ม recovery strategies สำหรับ common errors
+ตั้งค่า graceful degradation สำหรับ maintain functionality
 
-- ใช้ retry สำหรับ transient failures (network, timeout)
-- ใช้ fallback สำหรับ degraded service
-- ใช้ circuit breaker สำหรับ external services
-- ใช้ graceful degradation สำหรับ non-critical features
-- ใช้ queue สำหรับ failed operations ที่ต้อง retry ภายหลัง
-- ทำ `/improve-resilience` สำหรับ resilience patterns
+- ปิด features ที่ไม่ critical เมื่อ load สูง
+- ใช้ cached data เมื่อ backend ล้ม
+- แสดง degraded UI เมื่อ features ไม่ available
+- Queue requests เมื่อ overload
+- Prioritize critical paths
+- แจ้งผู้ใช้เมื่อ system degraded
 
-### 5. Improve Error Messages
+### 5. Error Tracking
 
-ปรับปรุง error messages ให้ user-friendly
+ตั้งค่า error tracking สำหรับ monitor errors
 
-- แยก technical errors จาก user-facing messages
-- ใช้ clear, actionable language สำหรับ user messages
-- ไม่ leak technical details ไปยัง users
-- ใช้ i18n สำหรับ error messages ถ้ารองรับหลายภาษา
-- ให้ guidance สำหรับ recovery (เช่น "กรุณาลองอีกครั้ง")
-- ทำ `/improve-i18n` สำหรับ multi-language errors
-
-### 6. Centralize Error Handling
-
-รวม error handling ให้เป็นระบบ
-
-- สร้าง global error handler สำหรับ unhandled errors
-- สร้าง error middleware สำหรับ API
-- สร้าง error boundary component สำหรับ UI
-- สร้าง error reporting service integration
-- ไม่ duplicate error handling ในหลาย layers
-- ทำ `/improve-logging` สำหรับ error logging
-
-### 7. Validate Error Handling
-
-ตรวจสอบ error handling หลังปรับปรุง
-
-- ทดสอบ error scenarios ทั้งหมด
-- ทดสอบ recovery strategies
-- ทดสอบ error boundaries
-- ทดสอบ user-facing error messages
-- รัน `/run-test` สำหรับ error handling tests
-- ทำ `/report-format-table` สำหรับ before-after comparison
+- ใช้ Sentry หรือ similar service
+- Track unhandled errors
+- Track error rates และ trends
+- Group similar errors
+- ตั้งค่า error alerts
+- Link errors กับ traces และ logs
 
 ## Rules
 
-### 1. Error Type Hierarchy
+### 1. Don't Swallow Errors
 
-ใช้ error type hierarchy ที่ชัดเจน
+ไม่ควร swallow errors โดยไม่จัดการ
 
-- สร้าง base `AppError` class
-- สร้าง specific error types ที่ inherit จาก base
-- ใส่ `code`, `message`, `statusCode`, `context` ในทุก errors
-- ใช้ `instanceof` สำหรับ type narrowing
-- ไม่ throw generic `Error` ใน application code
+- Log errors ที่ถูก catch
+- ไม่ใช้ empty catch blocks
+- Propagate errors ที่ไม่สามารถ handle ได้
+- ใช้ error types ที่เหมาะสม
 
-### 2. No Error Swallowing
+### 2. User-Friendly Error Messages
 
-ไม่ swallow errors
+แสดง error messages ที่เป็นมิตรกับผู้ใช้
 
-- ไม่ catch โดยไม่ log หรือ rethrow
-- ไม่ catch โดยไม่ใช้ error variable
-- ถ้า catch เพื่อ recovery ต้อง log ด้วย
-- ใช้ `catch` เฉพาะเมื่อสามารถ handle ได้
-- ไม่ใช้ `try-catch` แทน proper validation
+- ไม่แสดง technical details ให้ผู้ใช้
+- แสดง action items ที่ชัดเจน
+- ใช้ภาษาที่ผู้ใช้เข้าใจ
+- ให้ options สำหรับ recover
 
-### 3. User-Friendly Messages
+### 3. Idempotent Operations
 
-แยก technical จาก user-facing messages
+ทำให้ operations เป็น idempotent
 
-- User messages: clear, actionable, non-technical
-- Technical details: log ไว้สำหรับ debugging
-- ไม่ leak stack traces ไปยัง users
-- ไม่ leak internal paths หรือ variable names
-- ใช้ i18n keys สำหรับ user messages
+- Retry ไม่ควร cause side effects
+- ใช้ unique IDs สำหรับ detect duplicates
+- Design APIs ให้ idempotent
+- Track processed requests
 
-### 4. Recovery First
+### 4. Timeout Configuration
 
-พยายาม recover ก่อน fail
+ตั้งค่า timeouts อย่างระมัดระวัง
 
-- Retry transient failures
-- Fallback สำหรับ degraded service
-- Graceful degradation สำหรับ non-critical features
-- Queue สำหรับ delayed retry
-- Fail fast สำหรับ non-recoverable errors
-
-### 5. Error Propagation
-
-ส่ง errors อย่างถูกต้อง
-
-- ไม่ rethrow โดยไม่มี context เพิ่ม
-- ใช้ `cause` field สำหรับ error chaining
-- ไม่ wrap errors หลายชั้น
-- ส่ง error type ที่เหมาะสมขึ้นไป
-- Log ที่ catch point สูงสุดเท่านั้น
+- ตั้งค่า timeout สำหรับ external calls
+- ตั้งค่า timeout สำหรับ database queries
+- ตั้งค่า timeout สำหรับ user operations
+- ไม่ตั้ง timeout สั้นเกินไป
+- ไม่ตั้ง timeout ยาวเกินไป
 
 ## Expected Outcome
 
-- Error type hierarchy ชัดเจน
-- Error boundaries ครอบคลุมทุก layers
-- Recovery strategies สำหรับ common errors
-- User-friendly error messages
-- Error handling centralized และ consistent
-- Error swallowing กำจัดหมด
-- Error logging มี context เพียงพอ
-- Before-after comparison report
-
-## Common Mistakes
-
-- Catch โดยไม่ log หรือ rethrow
-- Throw generic `Error` แทน specific types
-- Leak technical details ไปยัง users
-- ไม่มี recovery strategy
-- Duplicate error handling ในหลาย layers
-- ไม่ใช้ `cause` สำหรับ error chaining
-
-## Anti-Patterns
-
-- `catch (e) {}` — empty catch block
-- `catch (e) { console.log(e) }` — log โดยไม่ recover
-- Throw `new Error("something")` แทน specific type
-- แสดง stack trace ให้ user เห็น
-- Nested try-catch หลายชั้นโดยไม่จำเป็น
-
-## Tools
-
-- `bun run scan` - ast-grep scan for error handling patterns
-- `grep` - Search for empty catch blocks
-- `bun run typecheck` - Type check error types
-- `bun run test` - Run error handling tests
-
-## References
-
-- ทำ `/improve-side-effect` สำหรับ side effect isolation
-- ทำ `/improve-logging` สำหรับ error logging
-- ทำ `/improve-resilience` สำหรับ resilience patterns
-- ทำ `/follow-code-quality` สำหรับ code quality
-- ทำ `/follow-software-engineering` สำหรับ engineering principles
+- Errors ถูก catch และ handle อย่างเหมาะสม
+- System ทนทานต่อ transient failures
+- Cascading failures ถูกป้องกัน
+- System ยังทำงานได้แม้ degraded
+- Errors ถูก track และ monitor
+- User experience ดีขึ้นเมื่อเกิด errors

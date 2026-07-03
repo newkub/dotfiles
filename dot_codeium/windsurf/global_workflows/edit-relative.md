@@ -1,115 +1,106 @@
 ---
 title: Edit Relative
-description: แก้ไขไฟล์ที่เกี่ยวข้องกับไฟล์ปัจจุบัน
+description: อัปเดท references ทั้งหมดที่เกี่ยวข้องเมื่อมีการแก้ไขไฟล์
 auto_execution_mode: 3
 ---
 
 ## Goal
 
-แก้ไขไฟล์ที่เกี่ยวข้องกับไฟล์ปัจจุบัน โดยค้นหาและอัพเดทไฟล์ที่ import, reference, หรืออยู่ใน directory เดียวกัน
+อัปเดท references ทั้งหมดที่เกี่ยวข้องเมื่อมีการแก้ไข ย้าย หรือลบไฟล์
 
 ## Scope
 
-ใช้ workflow นี้เมื่อต้องแก้ไขไฟล์ที่เกี่ยวข้องกับไฟล์ปัจจุบัน เช่น:
-- เปลี่ยนชื่อ function/class และต้องอัพเดททุกที่ที่ใช้
-- แก้ไข interface และต้องอัพเดท implementations
-- ย้ายไฟล์และต้องอัพเดท import paths
-- แก้ไข shared types และต้องอัพเดททุกไฟล์ที่ใช้
+ใช้สำหรับอัปเดท references เมื่อ:
+- แก้ไขไฟล์ที่ถูกอ้างอิงจากไฟล์อื่น
+- ย้ายไฟล์ไปยังตำแหน่งใหม่
+- เปลี่ยนชื่อไฟล์
+- ลบไฟล์ที่ถูกอ้างอิง
+- เปลี่ยนชื่อ workflow หรือ skill
 
 ## Execute
 
-### 1. Identify Current File Context
+### 1. Identify Changed Files
 
-อ่านไฟล์ปัจจุบันเพื่อเข้าใจ context และหาสิ่งที่ต้องแก้ไข
+ระบุไฟล์ที่มีการเปลี่ยนแปลง
 
-1. อ่านไฟล์ปัจจุบันด้วย `read_file`
-2. วิเคราะห์ exports, imports, และ dependencies
-3. ระบุสิ่งที่ต้องแก้ไข (function name, type, path, etc.)
+1. ระบุไฟล์ที่ถูกแก้ไข ย้าย เปลี่ยนชื่อ หรือลบจาก task ปัจจุบัน
+2. รัน `git status --porcelain` เพื่อดูไฟล์ที่มีการเปลี่ยนแปลงทั้งหมด
 
-### 2. Find Related Files
+### 2. Search For References
 
-ค้นหาไฟล์ที่เกี่ยวข้องทั้งหมด
+ค้นหา references ทั้งหมดที่เกี่ยวข้อง
 
-1. ใช้ `grep` เพื่อค้นหา imports ของไฟล์ปัจจุบัน
-2. ใช้ `grep` เพื่อค้นหา references ของ exports จากไฟล์ปัจจุบัน
-3. ค้นหาไฟล์ใน directory เดียวกันที่อาจมีความสัมพันธ์
-4. ค้นหาไฟล์ใน parent directories ที่อาจ import ไฟล์ปัจจุบัน
+1. ค้นหา references ด้วย `Grep` หรือ `search-code` ใน codebase
+2. ค้นหาชื่อไฟล์เก่าในทุกไฟล์
+3. ค้นหา path เก่าในทุกไฟล์
+4. ค้นหา import statements ที่อ้างถึงไฟล์เก่า
+5. ค้นหา workflow references ที่อ้างถึง workflow เก่า
 
-### 3. Prioritize Changes
+### 3. Update References
 
-จัดลำดับความสำคัญของการแก้ไข
+อัปเดท references ทั้งหมดที่พบ
 
-1. **High Priority**: ไฟล์ที่ import โดยตรงจากไฟล์ปัจจุบัน
-2. **Medium Priority**: ไฟล์ที่ import จากไฟล์ที่ import ไฟล์ปัจจุบัน
-3. **Low Priority**: ไฟล์ที่อยู่ใน directory เดียวกันแต่ไม่มี direct import
+**สำหรับการย้ายไฟล์:**
+1. อัปเดท import paths ทั้งหมด
+2. อัปเดท file path references ทั้งหมด
+3. อัปเดท workflow references ทั้งหมด
 
-### 4. Apply Changes
+**สำหรับการเปลี่ยนชื่อไฟล์:**
+1. อัปเดท import statements ทั้งหมด
+2. อัปเดท file name references ทั้งหมด
+3. อัปเดท workflow references ทั้งหมด
 
-แก้ไขไฟล์ตามลำดับความสำคัญ
+**สำหรับการลบไฟล์:**
+1. ลบ import statements ที่อ้างถึงไฟล์ที่ถูกลบ
+2. ลบ references ที่อ้างถึงไฟล์ที่ถูกลบ
+3. แก้ไข code ที่ใช้ไฟล์ที่ถูกลบ
 
-1. แก้ไขไฟล์ปัจจุบันก่อน (ถ้าจำเป็น)
-2. แก้ไขไฟล์ที่ import โดยตรง
-3. แก้ไขไฟล์ที่ import แบบ indirect
-4. ค้นหาและอัพเดท references ทั้งหมดด้วย `grep` และ `edit`
+**สำหรับการเปลี่ยนชื่อ workflow:**
+1. อัปเดท workflow references ทั้งหมดใน codebase
+2. อัปเดท workflow references ใน global workflows
+3. อัปเดท workflow references ใน workspace workflows
 
-### 5. Validation
+### 4. Verify Updates
 
-ตรวจสอบความถูกต้องของการแก้ไข
+ตรวจสอบว่า references ถูกอัปเดทครบถ้วน
 
-1. ตรวจสอบว่าทุก references ถูกอัพเดทแล้ว
-2. ตรวจสอบว่าไม่มี broken imports
-3. ตรวจสอบว่า code ยังทำงานได้ตามเดิม
+1. ค้นหา references เก่าอีกครั้งเพื่อยืนยันว่าไม่มีเหลือ
+2. รัน linting เพื่อตรวจสอบว่าไม่มี errors
+3. รัน typecheck เพื่อตรวจสอบว่าไม่มี type errors
+4. รัน test เพื่อตรวจสอบว่าไม่มี test failures
 
 ## Rules
 
-### 1. Search Strategy
+### Search Strategy
 
-ใช้ search patterns ที่เหมาะสมเพื่อค้นหา references ทั้งหมด
+ค้นหา references อย่างครอบคลุม
 
-- ค้นหาด้วย exact matches ก่อน (เช่น `import { MyFunction } from`)
-- ค้นหาด้วย partial matches ถ้า exact ไม่พบ
-- ใช้ regex patterns สำหรับ complex cases
-- ค้นหาทั้ง relative paths และ absolute paths
+- ค้นหาทั้ง absolute paths และ relative paths
+- ค้นหาทั้งชื่อไฟล์และ extension
+- ค้นหาทั้ง import statements และ string references
+- ค้นหาในทุก file types (.ts, .js, .md, .json, etc.)
 
-### 2. Edit Order
+### Update Strategy
 
-แก้ไขตามลำดับที่ปลอดภัยเพื่อป้องกัน circular dependencies
+อัปเดท references อย่างถูกต้อง
 
-- แก้ไข source file ก่อน (ไฟล์ที่ export)
-- แก้ไข consumer files หลังจากนั้น
-- หลีกเลี่ยง circular dependencies โดยการแก้ไขตาม dependency graph
+- อัปเดททุก references ที่พบ ไม่เว้นแม้แต่ reference เดียว
+- รักษาความสม่ำเสมอของ import style
+- รักษาความสม่ำเสมอของ path format
+- ตรวจสอบว่า updates ไม่ทำให้เกิด syntax errors
 
-### 3. Quality Assurance
+### Verification
 
-รักษาคุณภาพโค้ดหลังจากการแก้ไข
+ตรวจสอบความถูกต้องของ updates
 
-- รักษา consistency กับ codebase
-- อัพเดท comments ถ้าจำเป็น
-- อัพเดท type declarations ถ้ามี
-- ตรวจสอบ naming conventions และ style
-
-### 4. Execution Mode
-
-ใช้ edit-only mode เพื่อป้องกันการรัน commands โดยไม่ได้ตั้งใจ
-
-- ห้ามรัน `run_command` ใดๆ
-- ห้ามรัน background process
-- ห้ามเปิด `browser_preview`
-- ใช้เฉพาะ file editing tools (`edit`, `multi_edit`, `write_to_file`, `read_file`)
+- ตรวจสอบว่า references เก่าไม่มีเหลือ
+- ตรวจสอบว่า references ใหม่ถูกต้อง
+- ตรวจสอบว่า code ยังทำงานได้หลังจาก updates
+- ตรวจสอบว่าไม่มี broken imports
 
 ## Expected Outcome
 
-- ไฟล์ที่เกี่ยวข้องทั้งหมดถูกอัพเดทแล้ว
-- ไม่มี broken imports หรือ references
-- Code consistency ยังคงอยู่
-- ไม่มี process หรือ terminal ถูกรัน
-
-## Common Mistakes
-
-ข้อผิดพลาดที่พบบ่อย:
-
-- ลืมอัพเดทไฟล์ที่ import แบบ indirect
-- แก้ไขไฟล์ในลำดับที่ผิด ทำให้เกิด circular issues
-- ไม่ค้นหาไฟล์ใน parent directories
-- ใช้ search patterns ที่ไม่ครอบคลุมพอ
-- ลืมอัพเดท type declarations หรือ interface files
+1. References ทั้งหมดถูกอัปเดทครบถ้วน
+2. ไม่มี references เก่าเหลืออยู่
+3. Code ยังทำงานได้หลังจาก updates
+4. ไม่มี linting หรือ type errors
