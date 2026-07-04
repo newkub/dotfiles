@@ -1,1 +1,8 @@
-feat: add improve-all-skills and commit-at-global-skills workflows
+feat: add report-plan workflow and improve plan workflows
+
+- add report-plan.md for reporting plan before execution with task table and file structure
+- improve plan.md with cross-validation and quality standards
+- improve plan-task.md with detailed sub-tasks, scoring, and test strategy
+- improve plan-code.md with file pattern table and error contracts
+- remove unused workflows: follow-execution.md, only-fix-errors.md
+- update various workflows for consistency
