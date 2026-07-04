@@ -3,6 +3,8 @@ title: Git Push
 description: Push commits ทั้ง root และ git submodules ไปยัง remote
 auto_execution_mode: 3
 related_workflows:
+  - /commit-and-push
+  - /refactor-commit
   - /watch-github-actions
 ---
 
@@ -18,23 +20,29 @@ Push commits จาก local repository และ git submodules ไปยัง
 
 ### 1. Check Status
 
-1. ทำ `git status` และ `git submodule status` เพื่อดูสถานะ
-2. ทำ `git log --oneline origin/HEAD..HEAD` เพื่อดู commits ที่จะ push
+1. ทำ `git branch --show-current` เพื่อดู current branch
+2. ทำ `git status` และ `git submodule status` เพื่อดูสถานะ
+3. ทำ `git log --oneline origin/<branch>..HEAD` เพื่อดู commits ที่จะ push
 
-### 2. Pull Changes
+### 2. Check Refactor Opportunity
 
-1. ทำ `git fetch origin` และ `git submodule foreach --recursive git fetch origin`
-2. ทำ `git pull --rebase` และ `git submodule foreach --recursive git pull --rebase origin`
-3. แก้ไข conflicts ถ้ามี (rebase ใหม่จนกว่าจะผ่าน)
+ตรวจสอบว่าควร refactor commits ก่อน push ไหม
+
+1. ทำ `git log --oneline origin/<branch>..HEAD` เพื่อดู commits ที่จะ push
+2. ถ้ามี commits ที่ใหญ่เกินไปหรือหยาบเกินไป, แนะนำให้ทำ `/refactor-commit`
+3. ถ้า commits มีคุณภาพดีแล้ว, ดำเนินการต่อไป push
+4. ถ้าผู้ใช้ต้องการ refactor, ทำ `/refactor-commit` ก่อนแล้วกลับมาทำ push อีกครั้ง
 
 ### 3. Push Commits
 
-1. ทำ `git push origin <branch>` และ `git submodule foreach --recursive git push origin`
-2. ตรวจสอบว่าไม่มี error messages จาก git
+// turbo
+1. ทำ `git push origin <branch>` และ `git submodule foreach --recursive git push origin <branch>`
+2. ถ้า push ถูก reject เพราะ remote มี commits ใหม่กว่า ให้หยุดและแจ้งผู้ใช้ (ไม่ force push)
+3. ตรวจสอบว่าไม่มี error messages จาก git
 
 ### 4. Validate Push
 
-1. ทำ `git log --oneline origin/HEAD -5` และ `git submodule foreach --recursive git log --oneline origin/HEAD -5`
+1. ทำ `git log --oneline origin/<branch> -5` และ `git submodule foreach --recursive git log --oneline origin/<branch> -5`
 2. ทำ `git status` เพื่อยืนยันว่า local และ remote sync กัน
 
 ### 5. Check GitHub Actions
@@ -46,9 +54,8 @@ Push commits จาก local repository และ git submodules ไปยัง
 
 ### 1. Safety
 
-- ต้อง pull ก่อน push เสมอเพื่อตรวจสอบ conflicts
-- ถ้ามี conflicts ต้องแก้ไขก่อน push
-- ไม่ push force โดยไม่จำเป็น
+- ไม่ force push โดยไม่จำเป็น
+- ถ้า push ถูก reject ให้หยุดและแจ้งผู้ใช้ ไม่ force push
 - ต้องตรวจสอบว่า push สำเร็จจริง
 
 ### 2. Submodules
@@ -62,14 +69,12 @@ Push commits จาก local repository และ git submodules ไปยัง
 
 - ตรวจสอบว่าไม่มี error messages จาก git
 - ยืนยันว่า commits ปรากฏบน remote repository
-- ตรวจสอบว่าไม่มี conflicts เหลืออยู่
 - ตรวจสอบว่า local และ remote sync กัน
 
 ## Expected Outcome
 
 - Commits ถูก push ไปยัง remote repository สำเร็จ (ทั้ง root และ submodules)
 - Local repository และ remote อยู่ในสถานะ sync กัน
-- ไม่มี conflicts เหลืออยู่
 - ทีมสามารถดู commits ใหม่บน remote ได้
 - GitHub Actions ผ่านทั้งหมด
 

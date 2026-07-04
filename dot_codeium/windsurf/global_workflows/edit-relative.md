@@ -2,6 +2,8 @@
 title: Edit Relative
 description: อัปเดท references ทั้งหมดที่เกี่ยวข้องเมื่อมีการแก้ไขไฟล์
 auto_execution_mode: 3
+related_workflows:
+  - /follow-content-quality
 ---
 
 ## Goal
@@ -30,7 +32,7 @@ auto_execution_mode: 3
 
 ค้นหา references ทั้งหมดที่เกี่ยวข้อง
 
-1. ค้นหา references ด้วย `Grep` หรือ `search-code` ใน codebase
+1. ค้นหา references ด้วย `Grep` ใน codebase
 2. ค้นหาชื่อไฟล์เก่าในทุกไฟล์
 3. ค้นหา path เก่าในทุกไฟล์
 4. ค้นหา import statements ที่อ้างถึงไฟล์เก่า

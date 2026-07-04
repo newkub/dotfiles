@@ -1,12 +1,16 @@
 ---
 title: Test Usage
-description: ทดสอบว่าใช้งานได้จริงๆ
+description: ทดสอบว่าใช้งานได้จริงๆ ตามที่คาดหวัง
 auto_execution_mode: 3
 ---
 
 ## Goal
 
 ทดสอบว่า feature หรือ application ใช้งานได้จริงๆ ตามที่คาดหวัง
+
+## Scope
+
+ใช้สำหรับทดสอบ usage scenarios แบบ manual หรือ real-world testing ที่ต้องการ validate user experience และ actual usage ไม่ใช่ automated testing
 
 ## Execute
 
@@ -33,10 +37,11 @@ auto_execution_mode: 3
 
 ## Rules
 
-1. ทดสอบ usage scenarios ที่ realistic
-2. ครอบคลุม common user workflows
-3. บันทึก findings ทั้งหมด
-4. รายงาน issues อย่างชัดเจน
+- ทดสอบ usage scenarios ที่ realistic
+- ครอบคลุม common user workflows
+- บันทึก findings ทั้งหมด
+- รายงาน issues อย่างชัดเจน
+- สำหรับ automated testing ใช้ `/test-function`, `/test-app`, หรือ `/test-e2e` แทน
 
 ## Expected Outcome
 

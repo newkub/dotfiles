@@ -27,7 +27,7 @@ auto_execution_mode: 3
 
 รัน formatter command ตามที่ตั้งค่าไว้
 
-1. ถ้าใช้ Biome: รัน `biome format --write`
+1. ถ้าใช้ Biome: รัน `biome format --write` (ห้ามใช้ `--unsafe` flag)
 2. ถ้าใช้ dprint: รัน `dprint fmt`
 3. ถ้าใช้ Prettier: รัน `prettier --write`
 4. ใช้ script จาก `package.json` ถ้ามี
@@ -108,6 +108,7 @@ auto_execution_mode: 3
 - รัน format อีกครั้งเพื่อยืนยัน
 - รัน lint ตามด้วย
 - ตรวจสอบว่าไม่มี regressions
+- ห้ามใช้ `--unsafe` flag กับ biome commands
 
 ## Expected Outcome
 

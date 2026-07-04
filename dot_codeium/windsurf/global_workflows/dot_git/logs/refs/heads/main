@@ -8,3 +8,11 @@ f4d8f3759be3baef93d9fff75f838fb44b0e5156 9762463414c1cc1fb4ff8791aa60ee7cd9db6c5
 9762463414c1cc1fb4ff8791aa60ee7cd9db6c56 4e8cee21e09bfd6e2edac9606df5a8c229fda456 newkub <newkubise@gmail.com> 1781492888 +0700	commit: refactor(workflows): merge and rename commit workflows
 4e8cee21e09bfd6e2edac9606df5a8c229fda456 4d6bcc3de383932f0579ec271cd67f49020f88c6 newkub <newkubise@gmail.com> 1781492963 +0700	commit: refactor(workflows): remove update references step from commit workflow
 4d6bcc3de383932f0579ec271cd67f49020f88c6 eca024d5e8aae2d8c071cb8645aab58042972d75 newkub <newkubise@gmail.com> 1781685132 +0700	commit: docs: update follow-zod with Zod v4 best practices
+eca024d5e8aae2d8c071cb8645aab58042972d75 135d3bf15fd7eaed62d52d217e797e998848adc0 newkub <newkubise@gmail.com> 1783088771 +0700	commit: refactor: consolidate and restructure refactor workflows
+135d3bf15fd7eaed62d52d217e797e998848adc0 86229693aaa16cb7ee9ec3b41a0cb59ddba00e24 newkub <newkubise@gmail.com> 1783092799 +0700	commit: feat: add /analyze-structure to related workflows
+86229693aaa16cb7ee9ec3b41a0cb59ddba00e24 c3e9bcbb0a0c0a054516e48b76959d82cb89b54a newkub <newkubise@gmail.com> 1783102710 +0700	commit: refactor: reorganize global workflows - remove run-format dependencies, add new workflows, clean up unused files
+c3e9bcbb0a0c0a054516e48b76959d82cb89b54a b8d41325bf0e1ea40ce2de3bfd6f2b4458d30588 newkub <newkubise@gmail.com> 1783111987 +0700	commit: fix: correct barrel workflow typo and improve multiple workflows
+b8d41325bf0e1ea40ce2de3bfd6f2b4458d30588 735350a772d9c05651624612f6d8ee2b32f610a1 newkub <newkubise@gmail.com> 1783135065 +0700	commit: docs(follow-lefthook): remove pre-commit hook from workflow
+735350a772d9c05651624612f6d8ee2b32f610a1 6d111399c5e04dd118305df409f5ec5acf8127a1 newkub <newkubise@gmail.com> 1783135148 +0700	commit: docs(commit): remove bold formatting for better readability
+6d111399c5e04dd118305df409f5ec5acf8127a1 bf91e3dda1d807c3462d82cc54d9a6edae81c67a newkub <newkubise@gmail.com> 1783135487 +0700	commit: docs(follow-lefthook): add lint, scan, format to pre-push hook
+bf91e3dda1d807c3462d82cc54d9a6edae81c67a d165cb5af4f7a8fd62a6f5eee6ae1784c5cad4e9 newkub <newkubise@gmail.com> 1783171824 +0700	commit: feat: add improve-all-skills and commit-at-global-skills workflows

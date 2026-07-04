@@ -3,7 +3,7 @@ title: Update Readme
 description: สร้าง README.md ครบถ้วนด้วย template มาตรฐานและข้อมูลจริงจากโปรเจกต์
 auto_execution_mode: 3
 related_workflows:
-  - /deep-analyze
+  - /analyze-project
   - /all-workspaces
   - /follow-content-quality
   - /write-windsurf-global-workflows
@@ -21,14 +21,14 @@ related_workflows:
 
 ### 1. Generate Changelog And Release
 
-Generate changelog and release notes before creating README
+สร้าง changelog และ release notes ก่อนสร้าง README
 
 1. ทำ `/gen-changelog` เพื่อสร้าง CHANGELOG.md
 2. ทำ `/gen-release` เพื่อสร้าง RELEASE.md
 
 ### 2. Detect Project Type
 
-Detect project type before writing README
+ตรวจสอบประเภท project ก่อนเขียน README
 
 1. อ่าน `package.json` หรือ `Cargo.toml` เพื่อดู type
 2. ตรวจสอบ source code structure:
@@ -41,7 +41,9 @@ Detect project type before writing README
 
 ### 3. Analyze And Write Root README
 
-1. ทำ `/deep-analyze` เพื่อเก็บข้อมูลโปรเจกต์ root
+วิเคราะหาและเขียน README สำหรับ root
+
+1. ทำ `/analyze-project` เพื่อเก็บข้อมูลโปรเจกต์ root
 2. อ่าน `manifest files`, `source code`, และ `config files`
 3. เลือก template ตาม project type:
    - ใช้ CLI/SDK Template สำหรับ CLI หรือ SDK
@@ -51,6 +53,8 @@ Detect project type before writing README
 
 ### 4. Update Workspaces READMEs
 
+อัพเดท README สำหรับทุก workspaces
+
 1. ทำ `/all-workspaces` เพื่อ update README ทุก workspaces
 2. ตรวจสอบ project type ของแต่ละ workspace
 3. เลือก template ตาม project type ของ workspace
@@ -58,6 +62,8 @@ Detect project type before writing README
 5. ไม่ต้องมี `License` และ `History sections` (ใช้ของ root)
 
 ### 5. Validate And Finalize
+
+ตรวจสอบและ finalize
 
 1. ทำ `/follow-content-quality` เพื่อตรวจสอบคุณภาพ
 2. ตรวจสอบ workflows ที่อ้างอิงมีอยู่จริง

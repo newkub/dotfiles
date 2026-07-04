@@ -3,7 +3,6 @@ title: Run Lint
 description: รัน lint และแก้ code เพื่อให้ผ่าน โดยไม่ใช้ ignore patterns และห้ามแก้ไข config ไฟล์
 auto_execution_mode: 3
 related_workflows:
-  - /run-format
   - /linter
   - /analyze-errors
   - /resolve-errors
@@ -19,20 +18,14 @@ related_workflows:
 
 ## Execute
 
-### 1. Run Format
-
-1. ทำ `/run-format` เพื่อ format code ก่อน
-2. รอให้ format เสร็จสิ้นก่อนดำเนินการต่อ
-3. ถ้ามีข้อผิดพลาดจาก format ให้แก้ไขก่อน
-
-### 2. Run Lint
+### 1. Run Lint
 
 1. รัน lint ตามที่กำหนดไว้ใน config:
-   - สำหรับ monorepo: รัน `bun run lint` หรือ `turbo lint`
-   - สำหรับโปรเจกต์ทั่วไป: รัน lint command ตาม config
+   - สำหรับ monorepo: รัน `bun run lint` หรือ `turbo lint` (ห้ามใช้ `--unsafe` flag กับ biome)
+   - สำหรับโปรเจกต์ทั่วไป: รัน lint command ตาม config (ห้ามใช้ `--unsafe` flag กับ biome)
 2. รอให้ lint เสร็จสิ้นก่อนดำเนินการต่อ
 
-### 3. Analyze Errors
+### 2. Analyze Errors
 
 1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ errors ที่เกิดจาก lint
 2. ตรวจสอบประเภทของ errors:
@@ -42,7 +35,7 @@ related_workflows:
    - type errors
    - style violations
 
-### 4. Fix Code Issues
+### 3. Fix Code Issues
 
 1. แก้ code-related errors ตามลำดับความสำคัญ
 2. สำหรับ unused variables:
@@ -52,7 +45,7 @@ related_workflows:
 3. สำหรับ type errors ให้แก้ types ให้ถูกต้อง
 4. สำหรับ style violations ให้แก้ตาม conventions
 
-### 6. Verify
+### 4. Verify
 
 1. รัน lint อีกครั้งเพื่อยืนยัน
 2. ตรวจสอบว่าไม่มี errors/warnings เหลือ
@@ -93,6 +86,7 @@ related_workflows:
 - รัน tests ทั้งหมด
 - ตรวจสอบว่าไม่มี regressions
 - ทำ `/check-unsued-files` เพื่อตรวจสอบว่าทุกไฟล์ถูกใช้
+- ห้ามใช้ `--unsafe` flag กับ biome commands
 
 ## Expected Outcome
 

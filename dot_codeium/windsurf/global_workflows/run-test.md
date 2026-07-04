@@ -13,25 +13,19 @@ related_workflows:
 
 ## Execute
 
-### 1. Run Format
-
-1. ทำ `/run-format` เพื่อ format code ก่อน
-2. รอให้ format เสร็จสิ้นก่อนดำเนินการต่อ
-3. ถ้ามีข้อผิดพลาดจาก format ให้แก้ไขก่อน
-
-### 2. Run Lint
+### 1. Run Lint
 
 1. ทำ `/run-lint` เพื่อตรวจสอบ code quality
 2. รอให้ lint เสร็จสิ้นก่อนดำเนินการต่อ
 3. ถ้ามีข้อผิดพลาดจาก lint ให้แก้ไขก่อน
 
-### 3. Run Typecheck
+### 2. Run Typecheck
 
 1. ทำ `/run-typecheck` เพื่อตรวจสอบ type safety
 2. รอให้ typecheck เสร็จสิ้นก่อนดำเนินการต่อ
 3. ถ้ามีข้อผิดพลาดจาก typecheck ให้แก้ไขก่อน
 
-### 4. Setup Test Structure
+### 3. Setup Test Structure
 
 1. ตรวจสอบ test structure ตามมาตรฐาน:
 
@@ -56,7 +50,7 @@ test/
 4. ตรวจสอบ test configuration
 5. ยืนยันว่ามี test config files ถ้าจำเป็น
 
-### 5. Write Tests
+### 4. Write Tests
 
 1. ทำ `/write-test` เพื่อเขียน tests ที่ขาดหายไป
 2. รอให้ `/write-test` เสร็จสิ้นก่อนดำเนินการต่อ
@@ -66,7 +60,7 @@ test/
 6. ตรวจสอบว่า testing strategy ครอบคลุมทุก test types ที่จำเป็น
 7. ตรวจสอบว่า formal verification ถูกทำสำหรับ critical components
 
-### 6. Run Tests
+### 5. Run Tests
 
 1. รัน `bun run test` หรือ `bun test`
 2. บันทึกผลลัพธ์ทั้งหมด
@@ -77,11 +71,11 @@ test/
 7. รัน security tests ถ้ามี
 8. รัน performance tests ถ้ามี
 
-### 7. Review Test Results
+### 6. Review Test Results
 
 ทำตาม `/review-test-result` เพื่อวิเคราะห์ผลลัพธ์ที่ครบถ้วน
 
-### 8. Check Coverage
+### 7. Check Coverage
 
 1. ทำ `/run-test-coverage` เพื่อวิเคราะห์ coverage
 2. ตรวจสอบว่า coverage ถึง 100% ทุก category (lines, branches, functions, statements)
@@ -91,7 +85,7 @@ test/
    - ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
 5. ถ้า coverage ถึง 100% แล้ว ดำเนินการต่อ
 
-### 9. Fix Failures
+### 8. Fix Failures
 
 1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ test failures
 2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
@@ -104,7 +98,7 @@ test/
 7. แก้ไข formal verification specifications ถ้าจำเป็น
 8. แก้ไข invariants ถ้าจำเป็น
 
-### 10. Verify
+### 9. Verify
 
 1. รัน tests อีกครั้งหลังแก้ไข
 2. ตรวจสอบว่า failures หมดไป
@@ -113,7 +107,7 @@ test/
 5. ยืนยันว่าผ่าน 100%
 6. ยืนยันว่า coverage ถึง 100% ทุก category
 
-### 11. Run Formal Verification
+### 10. Run Formal Verification
 
 1. รัน formal verification tools สำหรับ critical components
 2. ตรวจสอบว่า invariants ผ่านทั้งหมด
@@ -123,7 +117,7 @@ test/
 6. ตรวจสอบว่า static analysis ผ่านทั้งหมด
 7. Document formal verification results
 
-### 12. Report
+### 11. Report
 
 1. รัน `/report-format-metrics` เพื่อแสดง test coverage metrics
 2. รัน `/report-format-table` เพื่อจัดรูปแบบ test results

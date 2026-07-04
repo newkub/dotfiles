@@ -3,17 +3,13 @@ title: Follow Execution
 description: Execution guidelines สำหรับการทำงานทุก task ตามมาตรฐาน
 auto_execution_mode: 3
 related_workflows:
-  - /ship-run
   - /follow-workflows
   - /follow-skills
-  - /follow-content-quality
-  - /follow-config
   - /follow-agents-md
-  - /search-code
-  - /plan
-  - /loop-until-complete
+  - /read-related-workflows
   - /report
-  - /suggest-next-action
+  - /use-scripts
+  - /code-search
 ---
 
 ## Goal
@@ -30,78 +26,63 @@ related_workflows:
 
 ตั้งค่าและเตรียม workspace ก่อนเริ่ม task
 
-- ทำ `/ship-run` เพื่อ ship code ครบวงจร ทดสอบคุณภาพ และรัน development server
-- ดู tech stack ด้วย `/follow-my-tech-stack`
-- เปลี่ยน config หรือใช้ workflows `run-` ด้วย `/follow-config`
-- File operation ใดๆ ต้องทำ `/edit-relative`
-- `"."` = `/continue` หรือ `/try-again`
-- ก่อนแก้ไขไฟล์สำหรับ task ใหม่ ทำ `/follow-agents-md` เสมอ
+- ทำ `/follow-agents-md` ก่อนแก้ไขไฟล์สำหรับ task ใหม่
+- การทำงานกับไฟล์ทุกอย่างต้องทำ `/edit-relative`
+- ใช้ `"."` สำหรับ `/continue` หรือ `/try-again`
 
 ### 2. Read References
 
 อ่าน references ก่อนเริ่มทำงาน
 
+- ทำ `/read-related-workflows` เพื่ออ่าน workflows ที่เกี่ยวข้องทั้งหมดก่อนเริ่มทำงาน
 - ทำ `/follow-workflows` เพื่ออ่านและทำตาม workflows ทั้ง global และ project
-- ทำ `/follow-skills` เพื่ออ่านและใช้ skills ที่มีอยู่ตามที่เหมาะสม
-- ทำ `/read-related-workflows` เพื่ออ่านและสรุป workflows ที่เกี่ยวข้องแบบ recursive
+- ทำ `/follow-skills` เพื่ออ่านและใช้ skills ที่เหมาะสมกับ task
 
 ### 3. Analyze And Plan
 
 วิเคราะห์และวางแผนงาน
 
-- เวลา analyze อะไร ให้ใช้ `/use-bun-shell` + `/use-ast-grep` เสมอ
-- ทำ `/analyze-project` ด้วย `/use-scripts`
-- เมื่อได้รับ error ทำตาม `/error`
-- ถ้า error มาจากคำสั่งที่ผู้ใช้รันเอง แก้ไขเฉพาะ error นั้น
-- ถ้าแค่ส่ง errors โดยไม่บอกอะไรเพิ่มเติม หรือไม่ได้เกิดจากการรัน workflows ให้ทำ `/only-fix-errors` เท่านั้น
-- แก้ไขไฟล์จำนวนมาก ทำ `/plan` ก่อน
+- ใช้ `/use-scripts` สำหรับการวิเคราะห์
+- ทำ `/plan` ก่อนแก้ไขไฟล์จำนวนมาก
+- แก้ไข error เฉพาะสิ่งที่เกิดขึ้น ไม่แก้เกินความจำเป็น
 
 ### 4. Search Code
 
 ค้นหา code patterns, symbols, หรือ references
 
-- เมื่อต้องค้นหา code patterns, symbols, หรือ references ทำ `/search-code`
-- ใช้ `Grep` สำหรับ text search และ `find_by_name` สำหรับ file search
-- กำหนด scope ด้วย `type`, `glob`, หรือ `path`
+- ทำ `/code-search`
 
 ### 5. Write Code
 
 เขียนและแก้ไข code ตามมาตรฐาน
 
-- ก่อนเขียน code ทำ `/follow-principles-engineering`
-- แก้ไขอะไร ทำ `/follow-architecture`
+- ทำ `/refactor` ก่อนเขียน code
+- ทำ `/follow-architecture` เมื่อแก้ไข
 - Mock ให้ comment `// MOCK` และแยกไฟล์ไป `mock/`
-- ยังทำไม่เสร็จ comment `// TODO`
-- ไม่ mock หรือ TODO โดย default
-- ถ้าเขียน .md ให้ดู `/use-markdown` เพื่อใช้ format ที่เหมาะสม
+- ยังทำไม่เสร็จให้ comment `// TODO`
+- ห้าม mock หรือ TODO โดยไม่จำเป็น
 
 ### 6. Iterate And Complete
 
 ทำซ้ำจน implement เสร็จ
 
 - ทำ `/loop-until-complete` ทำซ้ำจน implement เสร็จ
-- กลับไป check planning เรื่อยๆ
+- กลับไปตรวจสอบ planning เรื่อยๆ
 
 ### 7. Report And Communicate
 
 รายงานผลลัพธ์และสื่อสาร
 
 - ทำตาม `/report`
-- เมื่อจบ task รัน `/suggest-next-action`
-- คุยกับผู้ใช้เป็นภาษาไทย
-- คำตอบกระชับ ตรงประเด็น
+- คุยกับผู้ใช้เป็นภาษาไทย กระชับ ตรงประเด็น
 
 ## Rules
 
-- ทำตาม `/follow-content-quality` สำหรับคุณภาพเนื้อหา
 - ใช้ `Bun shell` สำหรับ automation เสมอ
 - ใช้ `bunx` แทน `npx` เสมอ
-- ทุก workspace ต้องมี scripts มาตรฐาน
 - Execute ต้องให้ผลลัพธ์เหมือนกันทุกครั้ง
 - ระบุลำดับการทำงานชัดเจน
-- ไม่ใช้คำสั่ง subjective หรือ ambiguous
 - ทุกไฟล์ต้องยาวไม่เกิน 250 บรรทัด
-- ถ้าไฟล์ยาวเกิน 250 บรรทัด ให้ refactor และ grouping ให้เหมาะสม
 
 ## Expected Outcome
 
@@ -110,3 +91,4 @@ related_workflows:
 - ไม่มี mock หรือ TODO ที่ไม่จำเป็น
 - Workflows ทำงานได้อย่างมีประสิทธิภาพ
 - การสื่อสารชัดเจนและกระชับ
+- Execution ที่ให้ผลลัพธ์เหมือนกันทุกครั้งและคาดเดาได้

@@ -2,70 +2,73 @@
 title: Commit
 description: Commit ไฟล์ที่มีการเปลี่ยนแปลงตามมาตรฐาน conventional commits
 auto_execution_mode: 3
+related_workflows:
+  - /follow-gitignore
+  - /follow-lefthook
+  - /follow-config
+  - /update-readme
 ---
 
 ## Goal
 
-Commit ไฟล์ที่มีการเปลี่ยนแปลงตามมาตรฐาน conventional commits โดยรองรับทั้ง commit ทั้งหมดและ commit เฉพาะไฟล์ที่แก้ไปจาก task
+Commit ไฟล์ที่มีการเปลี่ยนแปลงตามมาตรฐาน conventional commits โดยรองรับ split commit ตามประเภทของการเปลี่ยนแปลง
 
 ## Scope
 
 ใช้สำหรับ commit ไฟล์ที่มีการเปลี่ยนแปลง โดย:
-- ถ้าต้องการ commit ทุกไฟล์: ใช้ `git add .`
-- ถ้าต้องการ commit เฉพาะไฟล์ที่ task แก้ไป: ใช้ `git add <files>` หรือ `git add -p`
+- Split Commit: แยก commit ตามประเภทของไฟล์ (docs, config, code, etc.)
+- Single Commit: commit เฉพาะไฟล์ที่ task แก้ไป
+- ใช้ `git add <files>` หรือ `git add -p` เสมอ ไม่ใช้ `git add .`
 
 ## Execute
 
-### 1. Setup Gitignore
+### 1. Setup Prerequisites
 
-ตรวจสอบและตั้งค่า .gitignore ให้ครอบคลุม
+ตรวจสอบและตั้งค่า prerequisites ก่อน commit
 
-1. ทำตาม `/follow-gitignore`
+1. ทำตาม `/follow-gitignore` สำหรับ .gitignore
+2. ทำตาม `/follow-lefthook` สำหรับ Git hooks
+3. ทำตาม `/follow-config` สำหรับ configuration
 
-### 2. Setup Lefthook
+### 2. Categorize Changes
 
-ตั้งค่า Lefthook สำหรับ Git hooks automation
+จัดกลุ่มไฟล์ที่มีการเปลี่ยนแปลงตามประเภท
 
-1. ทำตาม `/follow-lefthook`
-
-### 3. Setup Tasks
-
-ตั้งค่า scripts ใน package.json หรือ Cargo.toml ตามมาตรฐาน
-
-1. ทำตาม `/follow-tasks`
-
-### 4. Setup Config
-
-ตั้งค่า configuration ตาม dependencies ที่มีใน project
-
-1. ทำตาม `/follow-config`
-
-### 5. Pull Latest Changes
-
-ดึง changes ล่าสุดจาก remote
-
-1. รัน `git pull` เพื่อดึง changes ล่าสุดจาก remote
-2. ตรวจสอบว่าไม่มี conflicts
-3. ถ้ามี conflicts: แก้ไข conflicts ก่อนดำเนินการต่อ
-
-### 6. Stage Changes
-
-Stage ไฟล์ที่มีการเปลี่ยนแปลง
-
-**สำหรับ commit ทั้งหมด:**
 1. รัน `git status --porcelain` เพื่อดูไฟล์ที่มีการแก้ไขทั้งหมด
-2. รัน `git add .` เพื่อ stage ทุกไฟล์
+2. รัน `Get-ChildItem -Recurse -File | Sort-Object LastWriteTime -Descending | Select-Object -First 10` (Windows) หรือ `find . -type f -printf '%T@ %p\n' | sort -n | tail -10` (Unix) เพื่อดูไฟล์ที่ถูกแก้ล่าสุดตามเวลา
+3. จัดกลุ่มไฟล์ตามประเภท:
+   - docs: README.md, docs/, *.md
+   - config: package.json, tsconfig.json, biome.jsonc, .gitignore, lefthook.yml
+   - code: src/, lib/, packages/
+   - test: test/, *.test.ts, *.spec.ts
+   - chore: scripts/, tools/, build files
+4. ระบุไฟล์ที่ task แก้ไปจาก context สำหรับ single commit mode
+
+### 3. Review File Changes
+
+ดู actual changes ของไฟล์ที่จะ commit เพื่อให้ commit message ตรงมากขึ้น
+
+1. รัน `git diff` เพื่อดู changes ที่ยังไม่ได้ commit
+2. รัน `git diff --cached` เพื่อดู changes ที่ staged แล้ว
+3. รัน `git diff <file>` เพื่อดู changes ของไฟล์เฉพาะ
+4. วิเคราะห์ changes เพื่อเข้าใจสิ่งที่เปลี่ยนแปลงจริงๆ
+
+### 4. Stage Changes By Category
+
+Stage ไฟล์ตามประเภทสำหรับ split commit
+
+สำหรับ Split Commit (แนะนำ):
+1. Stage ไฟล์ตามประเภททีละกลุ่ม
+2. ใช้ `git add -p` ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน
 3. ตรวจสอบด้วย `git diff --cached` ว่าไฟล์ที่ stage ถูกต้อง
 
-**สำหรับ commit เฉพาะไฟล์ที่ task แก้ไป:**
-1. ระบุไฟล์และบรรทัดที่ task แก้ไปจาก context
-2. รัน `git status --porcelain` เพื่อดูไฟล์ที่มีการแก้ไขทั้งหมด
-3. เปรียบเทียบกับ context เพื่อระบุไฟล์ที่ task แก้ไป
-4. ใช้ `git add <files>` เพื่อ stage เฉพาะไฟล์ที่ task แก้ไป
-5. ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน: ใช้ `git add -p` เพื่อ stage เฉพาะส่วนที่ task แก้ไป
-6. ตรวจสอบด้วย `git diff --cached` ว่าเฉพาะส่วนที่ task แก้ไปถูก stage
+สำหรับ Single Commit (เฉพาะไฟล์ที่ task แก้ไป):
+1. ระบุไฟล์ที่ task แก้ไปจาก context
+2. ใช้ `git add <files>` เพื่อ stage เฉพาะไฟล์ที่ task แก้ไป
+3. ใช้ `git add -p` ถ้าไฟล์มีการเปลี่ยนแปลงหลายส่วน
+4. ตรวจสอบด้วย `git diff --cached` ว่าเฉพาะส่วนที่ task แก้ไปถูก stage
 
-### 7. Update README
+### 5. Update README
 
 อัปเดต README ก่อน commit (ถ้า commit ทั้งหมด)
 
@@ -73,19 +76,19 @@ Stage ไฟล์ที่มีการเปลี่ยนแปลง
 2. Stage README ที่ถูกอัปเดตด้วย `git add README.md`
 3. ตรวจสอบด้วย `git diff --cached` ว่า README ถูก stage ถูกต้อง
 
-### 8. Determine Commit Type
+### 6. Determine Commit Type
 
 เลือก conventional commit type ที่เหมาะสม
 
 1. ดู Rules ส่วน Commit Types
 
-### 9. Write Commit Message
+### 7. Write Commit Message
 
 เขียน commit message ตาม conventional commits format
 
 1. ดู Rules ส่วน Commit Message Format และ Body
 
-### 10. Execute Commit
+### 8. Execute Commit
 
 ดำเนินการ commit
 
@@ -93,7 +96,7 @@ Stage ไฟล์ที่มีการเปลี่ยนแปลง
 2. ตรวจสอบผลลัพธ์จาก git commit
 3. ถ้ามี error: แก้ไขแล้วลองอีกครั้ง
 
-### 11. Verify Commits
+### 9. Verify Commits
 
 ตรวจสอบความถูกต้องของ commits
 
@@ -142,17 +145,10 @@ Stage ไฟล์ที่มีการเปลี่ยนแปลง
 - แยกจาก subject ด้วยบรรทัดว่าง
 - ใช้ bullet points สำหรับหลายรายการ
 
-### Selective Staging
-
-Stage เฉพาะไฟล์ที่ task แก้ไป (สำหรับ commit เฉพาะไฟล์)
-
-- ใช้ `git add <files>` เพื่อ stage เฉพาะไฟล์ที่ task แก้ไป
-- ใช้ `git add -p` เพื่อ stage เฉพาะบรรทัดที่ task แก้ไป
-- ไม่ stage ไฟล์อื่นๆ ที่ไม่ได้ถูกแก้ไปโดย task
-
 ## Expected Outcome
 
 1. Commit messages ที่สอดคล้องกับ conventional commits
 2. Git history ที่อ่านง่ายและติดตามง่าย
-3. ไฟล์ที่มีการเปลี่ยนแปลงถูก commit ตามที่ต้องการ
-4. Working directory สะอาด (สำหรับ commit ทั้งหมด)
+3. Commits แยกตามประเภทของไฟล์ (docs, config, code, test, chore)
+4. ไฟล์ที่มีการเปลี่ยนแปลงถูก commit ตามที่ต้องการ
+5. Working directory สะอาด (สำหรับ commit ทั้งหมด)
