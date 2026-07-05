@@ -6,7 +6,7 @@ run = "winget source update && scoop update && winget upgrade --all && bun updat
 [tasks.cleanup]
 description = "cleanup caches"
 shell = "pwsh -Command"
-run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue && Get-ChildItem -Directory -Recurse -Filter node_modules -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue && cargo-clean-all ; podman system prune -af 2>$null ; mise prune ; git gc --auto 2>$null ; exit 0"
+run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue && Get-ChildItem -Directory -Recurse -Filter node_modules -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue && cargo-clean-all ; podman system prune -af 2>$null ; mise prune --yes ; git gc --auto 2>$null ; exit 0"
 
 [tasks.audit]
 description = "security audit"

@@ -2,6 +2,8 @@
 title: Follow Functional Programming
 description: พัฒนาโปรเจกต์ด้วย functional programming principles พร้อม pure functions, immutability, composition
 auto_execution_mode: 3
+related_workflows:
+  - /improve-side-effect
 ---
 
 ## Goal
@@ -59,6 +61,7 @@ auto_execution_mode: 3
 3. ใช้ `dependency injection` สำหรับ impure dependencies
 4. ทำ `I/O` ใน imperative shell เท่านั้น
 5. ทำ validation ใน pure functions
+6. ทำ `/improve-side-effect` เพื่อจัดการ side effects
 
 ### 6. Avoid Mutable State
 

@@ -1,5 +1,5 @@
 ---
-title: Improve Developer Experience
+title: Improve Dx
 description: ปรับปรุง developer experience ครบวงจร
 auto_execution_mode: 3
 related_workflows:
@@ -21,67 +21,67 @@ related_workflows:
 
 ปรับปรุง build performance
 
-- Optimize build configuration
-- ใช้ incremental builds
-- ใช้ cache สำหรับ dependencies
-- Parallelize build tasks
-- Reduce bundle size
-- Monitor build times
+1. Optimize build configuration
+2. ใช้ incremental builds
+3. ใช้ cache สำหรับ dependencies
+4. Parallelize build tasks
+5. Reduce bundle size
+6. Monitor build times
 
 ### 2. Error Messages
 
 ปรับปรุง error messages ให้ชัดเจน
 
-- ใช้ custom error messages ที่เป็นประโยชน์
-- แสดง suggestions สำหรับ fix errors
-- Link errors ไปยัง documentation
-- ใช้ error codes สำหรับ easy reference
-- แสดง stack traces ที่ readable
-- ใช้ pretty error formats
+1. ใช้ custom error messages ที่เป็นประโยชน์
+2. แสดง suggestions สำหรับ fix errors
+3. Link errors ไปยัง documentation
+4. ใช้ error codes สำหรับ easy reference
+5. แสดง stack traces ที่ readable
+6. ใช้ pretty error formats
 
 ### 3. Development Tools
 
 ตั้งค่า development tools ที่ดี
 
-- ใช้ IDE integrations (VS Code extensions)
-- ตั้งค่า linting และ formatting อัตโนมัติ
-- ใช้ pre-commit hooks
-- ตั้งค่า auto-completion
-- ใช้ debug tools ที่ powerful
-- ตั้งค่า snippets สำหรับ common patterns
+1. ใช้ IDE integrations (VS Code extensions)
+2. ตั้งค่า linting และ formatting อัตโนมัติ
+3. ใช้ pre-commit hooks
+4. ตั้งค่า auto-completion
+5. ใช้ debug tools ที่ powerful
+6. ตั้งค่า snippets สำหรับ common patterns
 
 ### 4. Hot Module Replacement
 
 ตั้งค่า HMR สำหรับ fast development
 
-- ตั้งค่า HMR สำหรับ frontend
-- ตั้งค่า HMR สำหรับ styles
-- Preserve state ระหว่าง HMR
-- ตั้งค่า fast refresh
-- Monitor HMR performance
-- Fix HMR issues
+1. ตั้งค่า HMR สำหรับ frontend
+2. ตั้งค่า HMR สำหรับ styles
+3. Preserve state ระหว่าง HMR
+4. ตั้งค่า fast refresh
+5. Monitor HMR performance
+6. Fix HMR issues
 
 ### 5. Onboarding Documentation
 
 สร้าง onboarding documentation ที่ชัดเจน
 
-- สร้าง README ที่ครบถ้วน
-- สร้าง setup guide ที่ step-by-step
-- สร้าง development guide
-- สร้าง contribution guide
-- สร้าง architecture documentation
-- สร้าง troubleshooting guide
+1. สร้าง README ที่ครบถ้วน
+2. สร้าง setup guide ที่ step-by-step
+3. สร้าง development guide
+4. สร้าง contribution guide
+5. สร้าง architecture documentation
+6. สร้าง troubleshooting guide
 
 ### 6. Local Development
 
 ปรับปรุง local development experience
 
-- ตั้งค่า local environment อัตโนมัติ
-- ใช้ Docker สำหรับ consistency
-- ตั้งค่า mock data สำหรับ development
-- ตั้งค่า seed data สำหรับ database
-- ใช้ hot reload สำหรับ backend
-- ตั้งค่า environment variables อัตโนมัติ
+1. ตั้งค่า local environment อัตโนมัติ
+2. ใช้ Docker สำหรับ consistency
+3. ตั้งค่า mock data สำหรับ development
+4. ตั้งค่า seed data สำหรับ database
+5. ใช้ hot reload สำหรับ backend
+6. ตั้งค่า environment variables อัตโนมัติ
 
 ## Rules
 

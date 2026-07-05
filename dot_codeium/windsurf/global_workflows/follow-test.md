@@ -5,11 +5,7 @@ auto_execution_mode: 3
 related_workflows:
   - /follow-tasks
   - /write-test
-  - /write-test-coverage
-  - /test-function
-  - /test-integration
-  - /test-e2e
-  - /test-component
+  - /run-test
   - /follow-stryker-mutator
   - /follow-mutants-rs
   - /follow-nextest
@@ -58,12 +54,8 @@ related_workflows:
 
 ### 6. Write Tests
 
-- ทำ `/write-test` สำหรับเขียน unit tests
-- ทำ `/write-test-coverage` สำหรับ coverage
-- ทำ `/test-function` สำหรับ test functions
-- ทำ `/test-integration` สำหรับ integration tests
-- ทำ `/test-e2e` สำหรับ e2e tests
-- ทำ `/test-component` สำหรับ component tests
+- ทำ `/write-test` สำหรับเขียน unit tests และ coverage
+- ทำ `/run-test` สำหรับรัน tests ทุกประเภท (unit, integration, e2e, component)
 
 ### 7. Validate
 

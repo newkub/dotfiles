@@ -13,7 +13,7 @@ related_workflows:
 
 ## Scope
 
-ใช้สำหรับสร้าง scripts ใน `.devin/scripts` ที่ root workspace เท่านั้น
+ใช้สำหรับสร้าง scripts ใน OS temp directory เท่านั้น
 
 ## Execute
 
@@ -42,27 +42,30 @@ related_workflows:
 
 ### 5. Execute and Cleanup
 
-1. รัน script ด้วย `bun run <script>.ts` สำหรับ Bun scripts
-2. รัน script ด้วย `pwsh <script>.ps1` สำหรับ PowerShell scripts
+1. รัน script ด้วย `bun run <tmpdir>/<script>.ts` สำหรับ Bun scripts
+2. รัน script ด้วย `pwsh <tmpdir>/<script>.ps1` สำหรับ PowerShell scripts
 3. รัน script ด้วย `ast-grep scan` สำหรับ ast-grep rules
-4. ลบ scripts จาก `.devin/scripts` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
-5. ลบ scripts ที่สร้างด้วย `/write-windsurf-global-workflows` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
+4. ลบ scripts จาก OS temp directory หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
 
 ## Rules
 
 ### File Location
 
-ตำแหน่งไฟล์สำหรับเก็บ scripts
+ตำแหน่งไฟล์สำหรับเก็บ scripts ใน OS temp directory
 
 ```
-.devin/scripts/    # Global scripts ที่ root workspace เท่านั้น (ลบหลังใช้)
+# Windows
+$TEMP/                          # เช่น C:\Users\<user>\AppData\Local\Temp
+# macOS / Linux
+/tmp/                           # OS temp directory
 ```
 
-- สร้าง scripts เฉพาะใน `.devin/scripts` ที่ root workspace
-- ไม่สร้าง scripts ใน sub-workspaces หรือแต่ละ workspace
+- สร้าง scripts เฉพาะใน OS temp directory เท่านั้น (ไม่สร้างใน workspace)
+- ใช้ `os.tmpdir()` สำหรับหา temp path ใน Bun scripts
+- ใช้ `$env:TEMP` สำหรับหา temp path ใน PowerShell
 - ใช้ `.ts` สำหรับ Bun scripts
 - ใช้ `.ps1` สำหรับ PowerShell scripts
-- ตั้งชื่อสื่อถึงการทำงาน
+- ตั้งชื่อสื่อถึงการทำงาน พร้อม prefix `wrikka-` เพื่อหลีกเลี่ยงการชนกับไฟล์อื่น
 
 ### Script Type Selection
 
@@ -114,6 +117,21 @@ ast-grep run -p 'console.log($ARG)'
 
 # Scan with rules
 ast-grep scan --config sgconfig.yml
+
+# Outline .ts file structure (functions, classes, interfaces, types)
+ast-grep outline src/parser.ts
+
+# Outline directory exports
+ast-grep outline src
+
+# Show imports/dependencies of a .ts file
+ast-grep outline src/parser.ts --items imports
+
+# Expand a specific symbol's members
+ast-grep outline src/parser.ts --match Parser --type class --view expanded
+
+# Filter imports matching a dependency across a folder
+ast-grep outline src --items imports --match ast-grep-core --view signatures
 ```
 
 ### CDN Imports
@@ -190,7 +208,7 @@ await script.run()
 
 - Scripts ที่ใช้งานได้จริง ด้วย Bun native APIs, pwsh, หรือ ast-grep
 - ไม่ต้อง install dependencies สำหรับ Bun scripts
-- Scripts ใน `.devin/scripts` ที่ root workspace เท่านั้น
+- Scripts ใน OS temp directory เท่านั้น (ไม่สร้างใน workspace)
 - Scripts ที่ใช้แล้วลบออก
 - Dry run mode สำหรับทดสอบก่อน execute จริง
 

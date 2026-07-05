@@ -6,6 +6,7 @@ related_workflows:
   - /follow-workflows
   - /improve-code-quality
   - /improve-error-handling
+  - /improve-side-effect
 ---
 
 ## Goal
@@ -67,13 +68,22 @@ related_workflows:
 4. หลีกเลี่ยง nested conditionals
 5. ใช้ guard clauses
 
-### 6. Verify Debuggability
+### 6. Improve Side Effects
+
+ปรับปรุงการจัดการ side effects
+
+1. ทำ `/improve-side-effect` เพื่อจัดการ side effects ด้วย Effect-TS
+2. Wrap logging ด้วย `Effect.sync`
+3. ลบ `console.log` ที่ไม่จำเป็น
+4. ใช้ structured logging library
+
+### 7. Verify Debuggability
 
 ตรวจสอบผลลัพธ์
 
 1. ทำ `/run-lint` และ `/run-typecheck`
 2. ทำ `/run-test` เพื่อตรวจสอบคุณภาพ
-3. ทำ `/report-format-summary` สำหรับสรุปผลลัพธ์
+3. ทำ `/report-format-table` สำหรับสรุปผลลัพธ์
 
 ## Rules
 

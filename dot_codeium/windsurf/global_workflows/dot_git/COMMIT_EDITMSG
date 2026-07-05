@@ -1,8 +1,7 @@
-feat: add report-plan workflow and improve plan workflows
+feat: add and improve global workflows for comprehensive codebase management
 
-- add report-plan.md for reporting plan before execution with task table and file structure
-- improve plan.md with cross-validation and quality standards
-- improve plan-task.md with detailed sub-tasks, scoring, and test strategy
-- improve plan-code.md with file pattern table and error contracts
-- remove unused workflows: follow-execution.md, only-fix-errors.md
-- update various workflows for consistency
+- Add 14 new improve-* workflows: audit-trail, caching, data-migration, deployment-strategy, error-messages, feature-flags, file-upload, health-check, i18n, idempotency, logging, multi-tenancy, notifications, pagination, queue, rate-limiting, search, session-management, webhooks
+
+- Update 14 existing workflows: follow-ast-grep, follow-solid-tanstack, improve-authentication, improve-backend-services, improve-backend, improve-codebase, improve-frontend, improve-operations, improve-performance, improve-reliability, improve-security, improve-web-saas, ship, write-ast-grep-rules
+
+- Remove refactor-workflows.md (consolidated into other workflows)

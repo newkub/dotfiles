@@ -17,3 +17,12 @@ b8d41325bf0e1ea40ce2de3bfd6f2b4458d30588 735350a772d9c05651624612f6d8ee2b32f610a
 6d111399c5e04dd118305df409f5ec5acf8127a1 bf91e3dda1d807c3462d82cc54d9a6edae81c67a newkub <newkubise@gmail.com> 1783135487 +0700	commit: docs(follow-lefthook): add lint, scan, format to pre-push hook
 bf91e3dda1d807c3462d82cc54d9a6edae81c67a d165cb5af4f7a8fd62a6f5eee6ae1784c5cad4e9 newkub <newkubise@gmail.com> 1783171824 +0700	commit: feat: add improve-all-skills and commit-at-global-skills workflows
 d165cb5af4f7a8fd62a6f5eee6ae1784c5cad4e9 29beb9330164bbb9a0bc91d0b9df4d300ef8202b newkub <newkubise@gmail.com> 1783183795 +0700	commit: feat: add report-plan workflow and improve plan workflows
+29beb9330164bbb9a0bc91d0b9df4d300ef8202b 689bc3d3e44f76ab9e463ef39250d1edb97a9aae newkub <newkubise@gmail.com> 1783190741 +0700	commit: feat: add new workflows and improve existing ones
+689bc3d3e44f76ab9e463ef39250d1edb97a9aae 4a679ec6daa7ca9565dd3ec60d5a31ba611919e0 newkub <newkubise@gmail.com> 1783200681 +0700	commit: feat: add review-pr and review-release-version workflows
+4a679ec6daa7ca9565dd3ec60d5a31ba611919e0 9ea8c40214d825c4dcbedaedb7481bacfcf759fa newkub <newkubise@gmail.com> 1783200716 +0700	commit: refactor: improve run-preview workflow with framework support and reporting
+9ea8c40214d825c4dcbedaedb7481bacfcf759fa e4c7546183a742a550e461be3907ad48b8bf170e newkub <newkubise@gmail.com> 1783200734 +0700	commit: feat: add ship and optimize-build workflows
+e4c7546183a742a550e461be3907ad48b8bf170e c4269b0d2677577d2308cb09bcd83cdd49401c2e newkub <newkubise@gmail.com> 1783200757 +0700	commit: refactor: improve multiple workflows for consistency and quality
+c4269b0d2677577d2308cb09bcd83cdd49401c2e d625ff2ab4bcc467e8f74d11226bfe62dae97948 newkub <newkubise@gmail.com> 1783200781 +0700	commit: chore: remove deprecated and redundant workflows
+d625ff2ab4bcc467e8f74d11226bfe62dae97948 7e3221c4c0c60657a32378cf42febc1d8feee201 newkub <newkubise@gmail.com> 1783204284 +0700	commit: refactor: consolidate test and report-format workflows, add new workflows
+7e3221c4c0c60657a32378cf42febc1d8feee201 972edb943f50b779b24b9fdb259ec19922a22bba newkub <newkubise@gmail.com> 1783211695 +0700	commit: refactor: split improve-codebase into sub-workflows and split follow-tanstack into library-specific workflows
+972edb943f50b779b24b9fdb259ec19922a22bba f75387da1a1cf10d49343f658de9efb76715a862 newkub <newkubise@gmail.com> 1783215854 +0700	commit: feat: add and improve global workflows for comprehensive codebase management

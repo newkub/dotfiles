@@ -8,14 +8,14 @@ local config = wezterm.config_builder()
 config.default_cwd = "D:\\"
 
 config.default_prog = {
-  "C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\powershell-core\\7.6.2\\pwsh.exe",
+  "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
 }
 
 config.launch_menu = {
   {
     label = "PowerShell 7",
     args = {
-      "C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\powershell-core\\7.6.2\\pwsh.exe",
+      "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
     },
     cwd = "D:\\",
   },

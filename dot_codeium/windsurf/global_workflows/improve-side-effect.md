@@ -1,171 +1,167 @@
 ---
 title: Improve Side Effect
-description: ปรับปรุงการจัดการ side effects ด้วย separation และ error handling
+description: ปรับปรุงการจัดการ side effects ด้วย functional programming patterns
 auto_execution_mode: 3
 related_workflows:
-  - /improve-testability
-  - /follow-clean-architecture
-  - /follow-event-driven
+  - /follow-functional-programming
+  - /follow-functional-core-imperative-shell
 ---
 
 ## Goal
 
-ปรับปรุงการจัดการ side effects ด้วยการแยก concerns และ error handling ที่ชัดเจน
+ปรับปรุงการจัดการ side effects ด้วย functional programming patterns เพื่อให้โค้ด test ได้ง่าย, maintain ได้ง่าย, และ predictable
 
 ## Scope
 
-ใช้สำหรับปรับปรุงการจัดการ side effects ทั้ง `I/O operations`, `async operations`, และ `state mutations`
+ใช้สำหรับปรับปรุง functions ที่มี side effects: database operations, API calls, file I/O, logging, external state mutations, time operations, และ randomness
 
 ## Execute
 
-### 1. Identify Side Effects
+### 0. Analyze Project
 
-ระบุ side effects ทั้งหมดใน codebase
+วิเคราะห์โปรเจกต์อย่างลึกซึ้งก่อนเริ่มปรับปรุง side effects
 
-- ทำ `/analyze-codebase` เพื่อหา side effects
-- ค้นหา `I/O operations` (`API calls`, `database`, `file system`)
-- ค้นหา `async operations` ที่ไม่มี error handling
-- ค้นหา `state mutations` ที่ไม่ชัดเจน
-- ค้นหา `global state` และ `singletons`
+1. ทำ `/use-scripts` ในการ `/deep-analyze` เพื่อวิเคราะห์โปรเจกต์อย่างลึกซึ้งครบทุกมิติ
+2. รับผลลัพธ์จาก deep analysis เพื่อใช้ในการวางแผนการปรับปรุง side effects
 
-### 2. Separate Side Effects
+### 1. Analyze Side Effects
 
-แยก side effects จาก pure logic
+วิเคราะห์ side effects ทั้งหมดใน codebase และจัดกลุ่มตามประเภท
 
-- ทำ `/follow-clean-architecture`
-- ย้าย `I/O operations` ไปยัง shell layer
-- แยก `async operations` จาก sync logic
-- แยก `state mutations` จาก pure functions
-- ทำให้ core layer ไม่มี side effects
+1. ทำ `/use-ast-grep` หา patterns ตามหมวดหมู่: database, logging, time, randomness, external APIs, file I/O, browser storage, timers, environment
+2. จัดกลุ่ม side effects ตามประเภท: database, I/O, external services, time, randomness, environment
 
-### 3. Improve Error Handling
+### 2. Separate Pure And Impure
 
-ปรับปรุง error handling สำหรับ side effects
+แยก pure functions จาก impure functions
 
-- เพิ่ม `try-catch` สำหรับ async operations
-- ใช้ `Result types` หรือ error boundaries
-- จัดการ `network errors` อย่างเหมาะสม
-- จัดการ `timeout` และ `retry logic`
-- ใช้ proper error types และ messages
+1. ทำ `/follow-functional-programming` เพื่อเข้าใจ pure/impure separation
+2. ทำ `/follow-functional-core-imperative-shell` เพื่อแยก core และ shell
+3. แยก business logic ที่เป็น pure ออกจาก side effects
+4. สร้าง pure functions สำหรับ calculations, validations, transformations
+5. ย้าย side effects ไปที่ outer layer (imperative shell)
+6. ใช้ dependency injection สำหรับ impure dependencies
 
-### 4. Manage Async Operations
+### 3. Apply Functional Patterns
 
-จัดการ async operations อย่างเป็นระบบ
+ใช้ functional programming patterns สำหรับ side effect management
 
-- ใช้ `async/await` อย่างถูกต้อง
-- จัดการ `race conditions`
-- ใช้ `cancellation tokens` สำหรับ long-running operations
-- จัดการ `concurrent operations`
-- ใช้ proper loading states
+1. แยก pure logic จาก side effects อย่างชัดเจน
+2. แยก query functions จาก execution
+3. แยก query building จาก query execution
+4. สร้าง service abstractions สำหรับ impure operations
 
-### 5. Isolate State Mutations
+### 4. Remove Impurities
 
-แยก state mutations ออกจาก pure logic
+ลบหรือ wrap impurities
 
-- ใช้ `immutable data structures`
-- ทำ state updates อย่างชัดเจนและ predictable
-- ใช้ state management patterns ตามภาษาที่ใช้
-- จัดการ side effects ใน `effect hooks` หรือ `middlewares`
-- ทำให้ state changes traceable ได้
+1. ลบ `console.log` ที่ไม่จำเป็น
+2. ใช้ structured logging library แทน console.log
+3. ใช้ dependency injection สำหรับ `Date` และ `Math.random`
+4. สร้าง service abstractions: `Clock`, `Random`, `Env`, `Logger`
 
-### 6. Add Logging And Observability
+### 5. Verify Improvements
 
-เพิ่ม logging สำหรับ side effects
+ตรวจสอบผลลัพธ์
 
-- Log `I/O operations` ทั้งหมด
-- Log errors และ exceptions
-- Log state changes
-- Log async operation lifecycles
-- ใช้ `structured logging`
-
-### 7. Verify Side Effect Management
-
-ตรวจสอบว่า side effects จัดการถูกต้อง
-
-- ทดสอบว่า pure functions ไม่มี side effects
-- ทดสอบ error handling ครอบคลุม
-- ทดสอบ async operations จัดการถูกต้อง
-- ทดสอบ state mutations predictable
-- ทำ `/run-test` สำหรับ side effect tests
+1. ทำ `/run-typecheck` เพื่อตรวจสอบ types
+2. ทำ `/run-lint` เพื่อตรวจสอบ code quality
+3. ทำ `/run-test` เพื่อตรวจสอบความถูกต้อง
 
 ## Rules
 
-### 1. Explicit Side Effects
+### 1. Pure Functions First
 
-ทำให้ side effects ชัดเจนและ visible
+เขียน pure functions ก่อนเสมอ
 
-- Side effects ต้องอยู่ใน functions ที่ชัดเจน
-- ตั้งชื่อ functions ให้บ่งบอก side effects
-- หลีกเลี่ยง hidden side effects
-- Document side effects ใน comments
-
-### 2. Error Handling
-
-จัดการ errors สำหรับ side effects ทั้งหมด
-
-- `Async operations` ต้องมี error handling
-- `I/O operations` ต้องมี error handling
-- ใช้ proper error types
-- จัดการ edge cases ทั้งหมด
-- ให้ feedback ที่ชัดเจนแก่ users
-
-### 3. Isolation
-
-แยก side effects ออกจาก pure logic
-
+- Business logic ต้องเป็น pure functions
 - Pure functions ต้องไม่มี side effects
-- Side effects ต้องอยู่ใน layer ที่แยก
-- ทำให้ side effects testable ได้
-- ทำให้ side effects mockable ได้
+- Pure functions ต้อง return ค่าเดิมเมื่อ input เดิม
+- Test pure functions ด้วย input/output เท่านั้น
 
-### 4. Observability
+### 2. Separate Core And Shell
 
-ทำให้ side effects observable ได้
+แยก functional core จาก imperative shell
 
-- Log side effects ทั้งหมด
-- Track async operation states
-- Monitor error rates
-- Track performance metrics
-- ใช้ `distributed tracing` ถ้าจำเป็น
+- Core: pure business logic
+- Shell: side effects และ I/O
+- ใช้ dependency injection สำหรับ impure dependencies
+- Shell เรียก core และจัดการ side effects
+- ทำตาม `/follow-functional-core-imperative-shell`
 
-### 5. Testing Strategies
+### 3. Functional Patterns
 
-ทดสอบ side effects อย่างเป็นระบบ
+ใช้ functional programming patterns อย่างถูกต้อง
 
-- ทดสอบ side effects ด้วย mocking
-- ทดสอบ error scenarios
-- ทดสอบ race conditions
-- ทดสอบ timeout และ retry logic
-- ทำ `/write-test` สำหรับ side effect tests
+- ใช้ dependency injection สำหรับ impure dependencies
+- ใช้ Result/Either patterns สำหรับ error handling
+- ใช้ retry logic สำหรับ transient failures
+- ใช้ timeout handling สำหรับ external calls
+- ใช้ typed errors แทน generic errors
+- ใช้ resource management patterns สำหรับ cleanup
+- ใช้ concurrency patterns สำหรับ parallel operations
 
-### 6. Performance Considerations
+### 4. Service Abstractions
 
-พิจารณา performance สำหรับ side effects
+สร้าง service abstractions สำหรับ impure operations
 
-- Batch `I/O operations`
-- Debounce/throttle side effects
-- Cache results สำหรับ expensive operations
-- Optimize concurrent operations
-- ทำ `/improve-performance` สำหรับ optimization
+- สร้าง interfaces สำหรับ external dependencies
+- ใช้ dependency injection สำหรับ services
+- Services ต้องเป็น thin wrappers ของ external libs
+- Pure logic อยู่ใน core layer
+- Services อยู่ใน shell layer
 
-### 7. Security Considerations
+### 5. Resource Management
 
-พิจารณา security สำหรับ side effects
+จัดการ resources อย่างเหมาะสม
 
-- Validate inputs ก่อน `I/O operations`
-- Sanitize data ก่อน state mutations
-- Handle sensitive data อย่างปลอดภัย
-- Rate limiting สำหรับ external calls
-- ทำ `/improve-security` สำหรับ security hardening
+- ใช้ RAII pattern สำหรับ resource cleanup
+- ปิด database connections อย่างชัดเจน
+- ปิด file handles อย่างชัดเจน
+- Cleanup timers และ intervals
+- Cleanup event listeners
+
+### 6. Caching Strategy
+
+ใช้ caching อย่างเหมาะสม
+
+- Cache operations ที่ read-heavy และ expensive
+- ใช้ memoization สำหรับ pure functions
+- ใช้ cache invalidation ที่เหมาะสม
+- ใช้ TTL สำหรับ cache entries
+- ใช้ cache keys ที่ deterministic
+
+### 7. Testability
+
+ทำให้โค้ด test ได้ง่าย
+
+- Pure functions test ง่ายด้วย input/output
+- Mock impure dependencies ด้วย dependency injection
+- Test side effects แยกจาก pure logic
+
+### 8. Immutability
+
+รักษา immutability
+
+- ไม่ mutate input parameters
+- ใช้ `Readonly<>` type สำหรับ inputs
+- ใช้ spread operator แทน mutation
+- ใช้ array methods ที่ไม่ mutate
 
 ## Expected Outcome
 
-- Side effects แยกจาก pure logic ทั้งหมด
-- Error handling ครอบคลุมสำหรับ side effects
-- Async operations จัดการอย่างเป็นระบบ
-- State mutations ชัดเจนและ predictable
-- Logging ครอบคลุมสำหรับ side effects
-- Code ง่ายต่อการ debug
-- Code ง่ายต่อการ test
-- Error rates ลดลง
-- Performance ดีขึ้น
+- Pure functions สำหรับ business logic
+- Side effects ถูกจัดการด้วย dependency injection
+- Clear separation ระหว่าง core และ shell
+- Service abstractions สำหรับ impure operations
+- Resource management ที่เหมาะสม
+- Caching strategy สำหรับ expensive operations
+- Error handling ด้วย functional patterns
+- Concurrency patterns สำหรับ parallel operations
+- Code ที่ test ได้ง่าย
+- Code ที่ maintain ได้ง่าย
+- Predictable side effects
+- No console.log ใน production code
+- Time และ randomness ที่ controllable
+- Environment variables ที่ injectable
+- Logging ที่ structured และ controllable

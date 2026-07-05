@@ -1,204 +1,167 @@
 ---
 title: Run Test
-description: รัน test suite อย่างเป็นระบบ เขียน test ด้วย /write-test และตรวจสอบ coverage 100%
+description: รัน test suite อย่างเป็นระบบ ครอบคลุม unit, integration, e2e และ specialized tests
 auto_execution_mode: 3
 related_workflows:
   - /write-test
   - /run-test-coverage
+  - /improve-test-coverage
+  - /review-test-result
+  - /validate-test
+  - /report
 ---
 
 ## Goal
 
-รัน test suite อย่างเป็นระบบ เขียน test ด้วย /write-test และตรวจสอบ coverage 100% พร้อมแก้ไข errors จนผ่านทั้งหมด
+รัน test suite อย่างเป็นระบบ เขียน test ด้วย `/write-test` ตรวจสอบ coverage 100% และรัน specialized tests ตาม project needs
+
+## Scope
+
+ครอบคลุมการทดสอบทุกประเภท: unit, integration, e2e, component, API, performance, security, accessibility, i18n, และอื่นๆ
 
 ## Execute
 
-### 1. Run Lint
+### 1. Run Lint And Typecheck
 
 1. ทำ `/run-lint` เพื่อตรวจสอบ code quality
-2. รอให้ lint เสร็จสิ้นก่อนดำเนินการต่อ
-3. ถ้ามีข้อผิดพลาดจาก lint ให้แก้ไขก่อน
+2. ทำ `/run-typecheck` เพื่อตรวจสอบ type safety
+3. แก้ไข errors ก่อนดำเนินการต่อ
 
-### 2. Run Typecheck
+### 2. Setup Test Structure
 
-1. ทำ `/run-typecheck` เพื่อตรวจสอบ type safety
-2. รอให้ typecheck เสร็จสิ้นก่อนดำเนินการต่อ
-3. ถ้ามีข้อผิดพลาดจาก typecheck ให้แก้ไขก่อน
+1. ตรวจสอบ test structure: `test/unit/`, `test/integration/`, `test/e2e/`, `test/fixtures/`, `test/mocks/`, `test/utils/`
+2. สร้าง directories ถ้ายังไม่มี
+3. ตรวจสอบ test frameworks ถูกติดตั้ง (Vitest, Playwright)
+4. ตรวจสอบ test configuration files
 
-### 3. Setup Test Structure
-
-1. ตรวจสอบ test structure ตามมาตรฐาน:
-
-```text
-test/
-├── unit/          # unit tests
-├── integration/   # integration tests
-├── e2e/          # end-to-end tests
-├── fixtures/     # test fixtures
-├── mocks/        # mock data
-└── utils/        # test utilities
-```
-
-2. สร้าง directories ถ้ายังไม่มี:
-   - `test/unit/` - unit tests
-   - `test/integration/` - integration tests
-   - `test/e2e/` - end-to-end tests
-   - `test/fixtures/` - test fixtures
-   - `test/mocks/` - mock data
-   - `test/utils/` - test utilities
-3. ตรวจสอบ test frameworks ถูกติดตั้ง
-4. ตรวจสอบ test configuration
-5. ยืนยันว่ามี test config files ถ้าจำเป็น
-
-### 4. Write Tests
+### 3. Write Tests
 
 1. ทำ `/write-test` เพื่อเขียน tests ที่ขาดหายไป
-2. รอให้ `/write-test` เสร็จสิ้นก่อนดำเนินการต่อ
-3. ตรวจสอบว่า test files ครบถ้วนตาม SPEC.md
-4. ตรวจสอบว่า test cases ครอบคลุมทุกกรณีใช้งาน
-5. ตรวจสอบว่า tests อยู่ใน location ที่ถูกต้อง
-6. ตรวจสอบว่า testing strategy ครอบคลุมทุก test types ที่จำเป็น
-7. ตรวจสอบว่า formal verification ถูกทำสำหรับ critical components
+2. ตรวจสอบ test files ครบถ้วนตาม `SPEC.md`
+3. ตรวจสอบครอบคลุม happy path, edge cases, error cases
+4. ตรวจสอบ formal verification สำหรับ critical components
 
-### 5. Run Tests
+### 4. Run Core Tests
 
 1. รัน `bun run test` หรือ `bun test`
-2. บันทึกผลลัพธ์ทั้งหมด
-3. ระบุ tests ที่ fail
-4. ติดตาม progress ของ tests
-5. บันทึก duration ของแต่ละ test
-6. รัน mutation tests ถ้ามี
-7. รัน security tests ถ้ามี
-8. รัน performance tests ถ้ามี
+2. บันทึกผลลัพธ์และระบุ tests ที่ fail
+3. บันทึก duration ของแต่ละ test
+
+### 5. Run Specialized Tests (Conditional)
+
+1. รัน specialized tests ตาม project characteristics:
+   - ถ้า project มี functions/business logic:
+     - Unit tests: test pure functions, edge cases, parameterized tests
+     - ใช้ `vitest run` สำหรับ fast unit testing
+   - ถ้า project มี integrations ระหว่าง modules:
+     - Integration tests: test module interactions, data flow, dependencies
+     - ตรวจสอบ integration points และ error handling
+   - ถ้า project มี UI:
+     - Component tests: test rendering, props, events, slots ด้วย `@vue/test-utils` หรือ `@testing-library/react`
+     - Accessibility tests: ตรวจสอบ WCAG compliance, ARIA labels, keyboard navigation, screen reader compatibility
+   - ถ้า project มี web frontend:
+     - E2E tests: test user flows บน real browser ด้วย `Playwright`
+     - Compatibility tests: test browser/device/OS compatibility
+     - Website tests: test บน real browser ด้วย agent-browser
+   - ถ้า project มี API:
+     - API tests: test endpoints, status codes, response format, error handling
+     - Contract tests: test API contracts ระหว่าง services ด้วย consumer-driven contracts
+   - ถ้า project มี database:
+     - Database tests: test queries, migrations, transactions, data integrity, indexes
+   - ถ้า project มี GraphQL:
+     - GraphQL tests: test queries, mutations, subscriptions, schema validation, resolvers
+   - ถ้า project มี WebSocket:
+     - WebSocket tests: test connections, real-time messaging, reconnection, error handling
+   - ถ้า project มี file operations:
+     - File tests: test upload, download, validation (type/size/extension), large files, security
+   - ถ้า project มี i18n:
+     - I18n tests: test translation completeness, RTL languages, date/time/number formatting, locale switching, pluralization
+   - ถ้า project มี caching:
+     - Cache tests: test cache strategies, invalidation, TTL, CDN caching
+   - ถ้า project มี network dependencies:
+     - Network tests: test offline mode, retry mechanisms, timeout handling, slow connections
+   - ถ้า project ต้องการ performance validation:
+     - Performance tests: unit tests < 10ms, integration tests < 100ms, bottlenecks
+     - Load tests: test scalability และ stability ภายใต้ load
+   - ถ้า project ต้องการ resilience validation:
+     - Chaos tests: test system resilience ด้วย chaos engineering
+   - ถ้า project มี users:
+     - Usage tests: test การใช้งานจริงใน production-like environment
+   - ถ้า project มี critical components:
+     - Formal verification: type systems, property-based testing, static analysis
+     - Security tests: input validation, authentication/authorization, data sanitization, vulnerability scanning
+     - Mutation tests: mutation score > 80%, killed mutants ครอบคลุม critical code
 
 ### 6. Review Test Results
 
-ทำตาม `/review-test-result` เพื่อวิเคราะห์ผลลัพธ์ที่ครบถ้วน
+1. ทำ `/review-test-result` เพื่อวิเคราะห์ผล test execution และหา root cause ของ failures
 
 ### 7. Check Coverage
 
 1. ทำ `/run-test-coverage` เพื่อวิเคราะห์ coverage
-2. ตรวจสอบว่า coverage ถึง 100% ทุก category (lines, branches, functions, statements)
-3. ระบุส่วนที่ยังไม่มี coverage จาก report
-4. ถ้า coverage ไม่ถึง 100%:
-   - ทำ `/write-test` เพื่อเพิ่ม tests สำหรับส่วนที่ขาด coverage
-   - ทำซ้ำขั้นตอน 3-5 จนกว่า coverage จะถึง 100%
-5. ถ้า coverage ถึง 100% แล้ว ดำเนินการต่อ
+2. ตรวจสอบ coverage 100% ทุก category (lines, branches, functions, statements)
+3. ถ้าไม่ถึง 100% ให้ทำ `/write-test` เพิ่ม แล้วทำซ้ำขั้นตอน 4-7
 
 ### 8. Fix Failures
 
-1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ test failures
-2. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
-   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
-   - ถ้าเป็น isolated errors → `/resolve-errors`
-3. แก้ไข code หรือ test
-4. แก้ไข test assertions ถ้า test outdated
-5. แก้ไข mock data ถ้าจำเป็น
-6. บันทึกสิ่งที่แก้ไข
-7. แก้ไข formal verification specifications ถ้าจำเป็น
-8. แก้ไข invariants ถ้าจำเป็น
+1. ทำ `/analyze-errors` เพื่อจัดลำดับ failures
+2. ถ้า cascade issues → `/debug-issue` → `/resolve-errors`
+3. ถ้า isolated errors → `/resolve-errors`
+4. แก้ไข code, test assertions, หรือ mock data ตามความจำเป็น
 
-### 9. Verify
+### 9. Verify And Report
 
-1. รัน tests อีกครั้งหลังแก้ไข
-2. ตรวจสอบว่า failures หมดไป
-3. ทำซ้ำขั้นตอน 3-6 จนกว่าจะผ่าน
-4. รัน tests ทั้งหมดอีกครั้ง
-5. ยืนยันว่าผ่าน 100%
-6. ยืนยันว่า coverage ถึง 100% ทุก category
-
-### 10. Run Formal Verification
-
-1. รัน formal verification tools สำหรับ critical components
-2. ตรวจสอบว่า invariants ผ่านทั้งหมด
-3. ตรวจสอบว่า type systems ตรวจจับ errors ทั้งหมด
-4. ตรวจสอบว่า property-based tests ผ่านทั้งหมด
-5. ตรวจสอบว่า model checking ผ่านทั้งหมด
-6. ตรวจสอบว่า static analysis ผ่านทั้งหมด
-7. Document formal verification results
-
-### 11. Report
-
-1. รัน `/report-format-metrics` เพื่อแสดง test coverage metrics
-2. รัน `/report-format-table` เพื่อจัดรูปแบบ test results
-3. รัน `/report-format-summary` เพื่อสรุปผลลัพธ์ test
-4. รายงาน formal verification results
-5. รายงาน mutation testing results
-6. รายงาน security testing results
-7. รายงาน performance testing results
+1. รัน tests อีกครั้งจนกว่าจะผ่าน 100%
+2. ทำ `/validate-test` เพื่อตรวจสอบ test quality ครบวงจร
+3. ทำ `/report` สรุปผลลัพธ์:
+   - `/report-format-table` สำหรับ coverage metrics
+   - `/report-format-table` สำหรับ test results
+   - `/report-format-table` สำหรับสรุปผล
 
 ## Rules
 
 ### 1. Test Execution
 
-วิธีการจัดการ test ที่มีสถานะต่างกัน
-
 - Test fail: วิเคราะห์ cause และแก้ไข
 - Test error: ตรวจสอบ error message และ fix
-- Test pass: Continue ไป test ถัดไป
+- Test pass: continue ไป test ถัดไป
 - Test timeout: ตรวจสอบ performance และ adjust
 
-### 2. Error Resolution
+### 2. Specialized Test Selection
 
-ขั้นตอนการแก้ไข error
+- รันเฉพาะ specialized tests ที่เกี่ยวข้องกับ project
+- ใช้ "ถ้า project มี..." เพื่อกำหนด test types
+- ไม่ต้องรันทุก test type ถ้า project ไม่มี component นั้น
+- ถ้าไม่แน่ใจ ให้ถามผู้ใช้
 
-- อ่าน error message
-- ระบุ root cause
-- แก้ไข code หรือ test
-- รัน test อีกครั้ง
-- ทำซ้ำจนผ่าน
+### 3. Error Resolution
 
-### 3. Analysis
-
-การวิเคราะห์ผลลัพธ์
-
-- ต้องวิเคราะห์ผลลัพธ์อย่างละเอียด ไม่เพียงแค่ดู pass/fail
-- ต้องระบุ root cause ของการล้มเหลว
-- ต้องพิจารณาทั้ง test quality และ implementation quality
+- อ่าน error message และระบุ root cause
+- แก้ไข code หรือ test ตามความจำเป็น
+- ทำซ้ำจนผ่าน ห้ามข้าม errors
 
 ### 4. Coverage
 
-การตรวจสอบ code coverage
-
-- ต้องตรวจสอบ coverage ทั้งหมด (line, branch, function, statement)
-- ต้องระบุส่วนที่สำคัญแต่ยังไม่มี test
-- ต้องพิจารณา criticality ของส่วนที่ไม่มี coverage
-- ใช้ `/run-test-coverage` สำหรับวิเคราะห์ coverage อย่างละเอียด
-- เป้าหมาย coverage 100% ทุก category โดยไม่มีข้อยกเว้น
-- หาก coverage ไม่ถึง 100% ต้องเพิ่ม tests จนครบ
+- ตรวจสอบ coverage ทุก category (line, branch, function, statement)
+- เป้าหมาย 100% โดยไม่มีข้อยกเว้น
+- พิจารณา criticality ของส่วนที่ไม่มี coverage
 
 ### 5. Performance
 
-การตรวจสอบ performance ของ test
+- ตรวจสอบ performance ของ tests
+- ระบุ tests ที่ช้าและแนะนำการปรับปรุง
+- พิจารณา impact ต่อ CI/CD pipeline
 
-- ต้องตรวจสอบ performance ของ test
-- ต้องระบุ test ที่ช้าและแนะนำการปรับปรุง
-- ต้องพิจารณา impact ต่อ CI/CD pipeline
+### 6. Reporting
 
-### 6. Documentation
-
-การประเมิน test documentation
-
-- ต้องประเมินคุณภาพของ test documentation
-- ต้องแนะนำการปรับปรุงถ้าจำเป็น
-- ต้องส่งเสริม best practices สำหรับการเขียน test
-
-### 7. Reporting
-
-การสร้างรายงาน
-
-- ต้องสร้างรายงานที่ชัดเจนและ action-oriented
-- ต้องระบุ priority สำหรับการดำเนินการ
-- ต้องให้ข้อมูลเพียงพอสำหรับการตัดสินใจ
+- สร้างรายงานชัดเจนและ action-oriented
+- ระบุ priority สำหรับการดำเนินการ
+- ให้ข้อมูลเพียงพอสำหรับการตัดสินใจ
 
 ## Expected Outcome
 
-- ทุก tests ผ่านทั้งหมด
-- ไม่มี failures หรือ errors
-- Test coverage ถึง 100% ทุก category (lines, branches, functions, statements)
-- Code behavior ถูกต้องตาม expected
-- Formal verification ผ่านสำหรับ critical components
-- Mutation testing ผ่านด้วยคะแนนสูง
-- Security tests ผ่านทั้งหมด
-- Performance tests ผ่านทั้งหมด
+- ทุก tests ผ่าน 100%
+- Test coverage ถึง 100% ทุก category
+- Specialized tests ผ่านตาม project needs
+     Formal verification ผ่านสำหรับ critical components (ถ้ามี)
 - รายงานสรุปผลลัพธ์ test ที่ครบถ้วน
