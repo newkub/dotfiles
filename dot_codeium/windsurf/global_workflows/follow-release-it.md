@@ -4,6 +4,7 @@ description: ตั้งค่า release-it สำหรับ automated relea
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 ตั้งค่า release-it สำหรับ automated releases ไปยัง npm

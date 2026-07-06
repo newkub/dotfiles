@@ -4,6 +4,7 @@ description: จัดกลุ่ม items ตามหมวดหมู่ห
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 จัดกลุ่ม items ตามหมวดหมู่หรือคุณลักษณะที่เกี่ยวข้อง

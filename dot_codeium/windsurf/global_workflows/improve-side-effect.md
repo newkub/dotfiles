@@ -5,6 +5,7 @@ auto_execution_mode: 3
 related_workflows:
   - /follow-functional-programming
   - /follow-functional-core-imperative-shell
+  - /follow-code-quality
 ---
 
 ## Goal

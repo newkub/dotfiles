@@ -4,6 +4,7 @@ description: แนวทางการใช้งาน Pinia สำหรั
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 กำหนดแนวทางการใช้งาน Pinia สำหรับ state management ใน Vue applications ให้มีประสิทธิภาพและเป็นมาตรฐาน

@@ -4,6 +4,7 @@ description: Commit ไฟล์และ push ไปยัง remote repository
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 Commit ไฟล์และ push ไปยัง remote repository

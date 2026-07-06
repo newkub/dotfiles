@@ -2,11 +2,21 @@
 title: Run Dev
 description: รัน development server และแก้ไขข้อผิดพลาด
 auto_execution_mode: 3
+related_workflows:
+  - /open-web
+  - /watch-terminal
+  - /watch-browser
+  - /resolve-errors
+  - /report-format-terminal
 ---
 
 ## Goal
 
-รัน development server และแก้ไขข้อผิดพลาดที่เกิดขึ้น
+รัน development server และแก้ไขข้อผิดพลาดที่เกิดขึ้น พร้อม watch terminal และ browser
+
+## Scope
+
+ใช้สำหรับรัน development server ของ project ใดๆ พร้อมตรวจสอบและแก้ไข errors
 
 ## Execute
 
@@ -19,44 +29,63 @@ auto_execution_mode: 3
 
 ### 2. Run Dev Server
 
-1. ดำเนินการรัน dev server ด้วยคำสั่งที่เหมาะสม (bun dev, npm run dev, cargo run)
-2. ถ้ามี errors ให้รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ
-3. `/analyze-errors` จะตัดสินใจว่าควรไป workflow ไหนต่อ:
-   - ถ้าเป็น cascade issues → `/debug-issue` → `/resolve-errors`
-   - ถ้าเป็น isolated errors → `/resolve-errors`
-4. ติดตามและแก้ไขข้อผิดพลาดที่เกิดขึ้นทันทีจนกว่าจะผ่าน
-5. ตรวจสอบว่า dev server เริ่มต้นสำเร็จ
+1. รัน dev server ด้วยคำสั่งที่เหมาะสม (bun dev, npm run dev, cargo run)
+2. ถ้ามี errors ให้ทำ `/resolve-errors` เพื่อแก้ไข
+3. ติดตามและแก้ไขข้อผิดพลาดทันทีจนกว่าจะผ่าน
+4. ตรวจสอบว่า dev server เริ่มต้นสำเร็จ
 
-### 3. Open Browser and Watch (ถ้าจำเป็น)
+### 3. Watch Terminal
 
-1. ถ้า run dev ที่ต้องเปิด URL ให้เลือก:
-   - ถ้าต้องการตรวจสอบผ่าน browser automation → รัน `/watch-browser`
-   - ถ้าต้องการเปิดใน browser เท่านั้น → รัน `/open-web`
-   - ถ้าต้องการ watch terminal ทุก 5 วินาที → รัน `/watch-terminal`
+1. ทำ `/watch-terminal` เพื่อ watch terminal ทุก 5 วินาที
+2. ตรวจจับ errors และ warnings ใหม่ๆ อัตโนมัติ
+3. ถ้าพบ errors ให้ทำ `/resolve-errors` ทันที
+
+### 4. Open Web (ถ้าเป็น web)
+
+1. ถ้าเป็น web project ให้ทำ `/open-web` เพื่อเปิด browser ที่ dev server URL
+2. ตรวจสอบว่า website เปิดได้และแสดงผลถูกต้อง
+
+### 5. Watch Browser (ถ้าเป็น web)
+
+1. ถ้าเป็น web project ให้ทำ `/watch-browser` เพื่อตรวจสอบ browser
 2. ตรวจสอบว่า dev server ทำงานได้จริงผ่าน browser
-3. ทดสอบเข้าถึง dev server และตรวจสอบว่า features หลักทำงานได้
+3. ทดสอบ features หลักทำงานได้
 
-### 4. Verify
+### 6. Verify
 
 1. ยืนยันว่าไม่มี critical errors ที่ขัดขวางการทำงาน
 2. ตรวจสอบว่า services ที่เกี่ยวข้องทำงานปกติ
 3. ยืนยันว่าไม่มี runtime errors ใน console
-4. ตรวจสอบว่า development environment พร้อมใช้งาน
 
-### 5. Report
+### 7. Report
 
-1. รัน `/report-format-terminal` เพื่อวาด terminal output ด้วย ANSI codes
-2. รัน `/report-format-table` เพื่อจัดรูปแบบตาราง
-3. แสดงผลลัพธ์ที่จัดรูปแบบแล้ว
+1. ทำ `/report-format-terminal` เพื่อแสดง terminal output
+2. สรุปสถานะ dev server และ issues ที่เหลือ
 
 ## Rules
 
+### 1. Runtime Selection
+
 - ใช้คำสั่งที่เหมาะสมกับ runtime (bun dev, npm run dev, cargo run)
-- ติดตามและแก้ไขข้อผิดพลาดทันทีจนกว่าจะผ่าน
-- ตรวจสอบว่า dev server เริ่มต้นสำเร็จก่อนเปิด browser
+- ตรวจสอบ ecosystem จาก package manifest ก่อนเลือกคำสั่ง
+
+### 2. Error Resolution
+
+- ทำ `/resolve-errors` เมื่อพบ error
+- แก้ที่ root cause ไม่ใช่ symptoms
+- ตรวจสอบว่า dev server เริ่มต้นสำเร็จก่อน watch
+
+### 3. Watch Strategy
+
+- ทำ `/open-web` เฉพาะ web project เพื่อเปิด browser ที่ dev server URL
+- ทำ `/watch-terminal` สำหรับทุก project
+- ทำ `/watch-browser` เฉพาะ web project
+- ถ้าพบ errors ระหว่าง watch ให้ทำ `/resolve-errors` ทันที
 
 ## Expected Outcome
 
 - Development server ทำงานได้
 - ไม่มี critical errors
+- Terminal ถูก watch ต่อเนื่อง
+- Browser แสดงผลถูกต้อง (ถ้าเป็น web)
 - Features หลักทำงานได้

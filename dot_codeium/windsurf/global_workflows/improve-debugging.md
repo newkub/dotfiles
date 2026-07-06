@@ -4,7 +4,7 @@ description: ทำให้โค้ด debug ง่ายด้วย logging,
 auto_execution_mode: 3
 related_workflows:
   - /follow-workflows
-  - /improve-code-quality
+  - /follow-code-quality
   - /improve-error-handling
   - /improve-side-effect
 ---

@@ -4,6 +4,7 @@ description: run command จนกว่าจะผ่าน และแก้
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 run command จนกว่าจะผ่าน ถ้าเจอ error ให้แก้ไขท้งหมดจนไม่มีเหลือ

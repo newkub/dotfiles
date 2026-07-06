@@ -4,6 +4,7 @@ description: Deploy applications บน Cloudflare Workers พร้อม Wrang
 auto_execution_mode: 3
 ---
 
+
 Deploy applications บน Cloudflare Workers platform พร้อม auto-configuration และ bindings
 
 ## Execute

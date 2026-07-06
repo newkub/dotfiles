@@ -1,0 +1,102 @@
+---
+title: Learn
+description: เรียนรู้ concept, tool, หรือ library อย่างเป็นระบบ ด้วย research และ practice
+auto_execution_mode: 3
+related_workflows:
+  - /deep-research
+  - /learn-from-web
+  - /learn-from-pattern
+  - /follow-best-practice
+---
+
+## Goal
+
+เรียนรู้ concept, tool, หรือ library อย่างเป็นระบบ โดยใช้ research และ practice เพื่อให้เข้าใจอย่างลึกซึ้ง
+
+## Scope
+
+ใช้สำหรับเรียนรู้สิ่งใหม่ ไม่ว่าจะเป็น concept, tool, library, framework, หรือ codebase
+
+## Execute
+
+### 1. Define Learning Target
+
+กำหนดเป้าหมายการเรียนรู้:
+
+1. ระบุสิ่งที่ต้องการเรียนรู้ (concept, tool, library, framework, codebase)
+2. กำหนดระดับความลึกที่ต้องการ (overview, intermediate, deep)
+3. ระบุคำถามหลักที่ต้องการคำตอบ
+4. กำหนดเวลาและขอบเขตการเรียนรู้
+
+### 2. Deep Research
+
+ทำ `/deep-research` เพื่อค้นหาข้อมูลลึก:
+
+1. ค้นหาจาก NPM, GitHub, DeepWiki, Context7 และ WebSearch
+2. อ่าน official documentation ของ tool/library ที่เรียนรู้
+3. ค้นหา best practices และ common patterns
+4. ค้นหา examples และ tutorials
+5. ตรวจสอบ version compatibility กับ project
+
+### 3. Learn From Web
+
+ทำ `/learn-from-web` สำหรับเรียนรู้จากเว็บไซต์หลัก:
+
+1. ใช้ DeepWiki สำหรับ GitHub repositories
+2. ใช้ Context7 สำหรับ libraries และ frameworks
+3. ใช้ Web Search สำหรับ fallback
+4. บันทึก code examples และ configuration examples
+
+### 4. Apply Best Practices
+
+ทำ `/follow-best-practice` เพื่อนำความรู้ไปใช้:
+
+1. นำ best practices ที่เรียนรู้มาประยุกต์ใช้
+2. ตรวจสอบความถูกต้องด้วย linter และ typecheck
+3. ทดสอบด้วย examples ที่เรียนรู้มา
+4. ปรับปรุงตาม feedback
+
+### 5. Practice And Validate
+
+ฝึกและตรวจสอบความเข้าใจ:
+
+1. สร้างตัวอย่างการใช้งานจริง
+2. ทดลอง edge cases และ error handling
+3. เปรียบเทียบผลลัพธ์กับที่เรียนรู้มา
+4. บันทึก lessons learned
+
+## Rules
+
+### 1. Learning Approach
+
+- เริ่มจาก overview ก่อน deep dive
+- ใช้ multiple sources เพื่อ cross-reference
+- ฝึกปฏิบัติจริง ไม่ใช่แค่อ่าน
+
+### 2. Research Standards
+
+- ทำ `/deep-research` สำหรับค้นหาข้อมูลลึกจาก multiple sources
+- ทำ `/learn-from-web` สำหรับเรียนรู้จากเว็บไซต์หลัก
+- ตรวจสอบ credibility และ freshness ของข้อมูล
+- บันทึก code examples และ configuration examples
+
+### 3. Best Practices
+
+- ทำ `/follow-best-practice` เพื่อนำความรู้ไปใช้ตามมาตรฐาน
+- ตรวจสอบความถูกต้องด้วย linter และ typecheck
+- รัน tests เพื่อยืนยันความถูกต้อง
+
+### 4. Knowledge Retention
+
+- บันทึกหลักการสำคัญและ core concepts
+- บันทึก edge cases และ common pitfalls
+- สร้าง examples สำหรับทีม
+- แชร์ความรู้ผ่าน documentation
+
+## Expected Outcome
+
+- เข้าใจ concept, tool, หรือ library อย่างลึกซึ้ง
+- ข้อมูลครบถ้วนจาก multiple sources
+- Code examples และ best practices ที่บันทึกไว้
+- การนำความรู้ไปใช้จริงพร้อม validation
+- Lessons learned สำหรับ future reference

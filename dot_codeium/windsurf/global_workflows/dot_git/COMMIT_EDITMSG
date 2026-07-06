@@ -1,7 +1,5 @@
-feat: add and improve global workflows for comprehensive codebase management
+chore: update and remove global workflows
 
-- Add 14 new improve-* workflows: audit-trail, caching, data-migration, deployment-strategy, error-messages, feature-flags, file-upload, health-check, i18n, idempotency, logging, multi-tenancy, notifications, pagination, queue, rate-limiting, search, session-management, webhooks
-
-- Update 14 existing workflows: follow-ast-grep, follow-solid-tanstack, improve-authentication, improve-backend-services, improve-backend, improve-codebase, improve-frontend, improve-operations, improve-performance, improve-reliability, improve-security, improve-web-saas, ship, write-ast-grep-rules
-
-- Remove refactor-workflows.md (consolidated into other workflows)
+- Remove report-before.md (consolidated into report-before-after)
+- Update multiple workflows for consistency and improvements
+- Affected: analyze-missing-implementation, follow-moonrepo, follow-my-tech-stack, follow-turborepo, realize-implementation, refactor, update-agents, use-lib-effective, write-windsurf-global-workflows

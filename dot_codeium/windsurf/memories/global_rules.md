@@ -15,6 +15,10 @@ related_workflows:
   - /refactor
   - /edit-relative
   - /plan
+  - /realize-implementation
+  - /update-dot-devin
+  - /loop-until-complete
+  - /run-check
 ---
 
 ## Goal
@@ -48,6 +52,7 @@ related_workflows:
 
 - ใช้ `/use-scripts` สำหรับการวิเคราะห์
 - ทำ `/plan` ก่อนแก้ไขไฟล์จำนวนมาก
+- ถ้าไฟล์ชื่อขึ้นต้นด้วย `analyze-` ให้ทำ `/deep-analyze-with-use-scripts`
 - ถ้ามี error ให้ทำ `/resolve-errors`
 
 ### 4. Search Code
@@ -62,6 +67,7 @@ related_workflows:
 
 - ทำ `/refactor` ก่อนเขียน code
 - ทำ `/follow-architecture` เมื่อแก้ไข
+- ถ้าแก้ไขไฟล์มากกว่า 10 ไฟล์ ให้ทำ `/use-scripts`
 - Mock ให้ comment `// MOCK` และแยกไฟล์ไป `mock/`
 - ยังทำไม่เสร็จให้ comment `// TODO`
 - ห้าม mock หรือ TODO โดยไม่จำเป็น
@@ -71,36 +77,48 @@ related_workflows:
 ทำซ้ำจน implement เสร็จ
 
 - กลับไปตรวจสอบ planning เรื่อยๆ
+- ทำ `/loop-until-complete` เมื่องานต้อง verify จนกว่าจะผ่านเงื่อนไข
+- ทำ `/realize-implementation` หลังเสร็จงานเสมอ
+- ถ้ามีการเปลี่ยนแปลง package manifest ให้ทำ `/update-dot-devin` เสมอ
+- ทำ `/run-check` หลังจาก task เสมอ
 
 ### 7. Report And Communicate
 
 รายงานผลลัพธ์และสื่อสาร
 
 - ทำตาม `/report`
-- สื่อสารตาม Rules ที่เกี่ยวกับ Communication
+- รายงานผลเป็น bullet points สั้นๆ ในภาษาไทย
+- ไม่เริ่มตอบด้วย acknowledgment phrases
+- ไม่ถามผู้ใช้ยกเว้นกรณีเสี่ยงสูง
 
 ## Rules
 
-- Execute ต้องให้ผลลัพธ์เหมือนกันทุกครั้ง
-- ระบุลำดับการทำงานชัดเจน
+### Execution Consistency
+
+- Execute ต้องให้ผลลัพธ์เหมือนกันทุกครั้ง ระบุลำดับการทำงานชัดเจน
 - ทุกไฟล์ต้องยาวไม่เกิน 250 บรรทัด
-- Global workflows อาจเขียนสำหรับ ecosystem เฉพาะ (เช่น `Bun`, `Node.js`, `Deno`)
-- ถ้า project ใช้ ecosystem อื่น ให้ใช้ `libs`, `tools`, `commands` ของ ecosystem นั้นๆ ที่เหมาะสม
-- แปลง tool equivalents อัตโนมัติ (เช่น `bunx` → `npx`, `bun test` → `vitest`, `Bun.file` → `fs/promises`)
-- ตรวจสอบ `package.json`, `Cargo.toml`, `go.mod`, ฯลฯ เพื่อระบุ ecosystem ก่อน execute
-- ถ้า workflow อ้างถึง tool เฉพาะ ecosystem ให้หา equivalent ของ ecosystem ปัจจุบันแทน
+
+### Ecosystem Detection
+
+- ตรวจสอบ `package.json`, `Cargo.toml`, `go.mod` เพื่อระบุ ecosystem
+- แปลง tool equivalents อัตโนมัติ (เช่น `bunx` → `npx`, `bun test` → `vitest`)
+
+### Communication
+
 - คุยกับผู้ใช้เป็นภาษาไทย กระชับ ตรงประเด็น
-- ไม่เริ่มตอบด้วย acknowledgment phrases (เช่น "You're absolutely right!", "Great idea!")
-- รายงานผลลัพธ์เป็น bullet points สั้นๆ ไม่ใช่ paragraphs ยาว
-- ไม่ต้องถามผู้ใช้ ให้ทำตามที่แนะนำเลย ยกเว้นกรณีที่มีความเสี่ยงสูง (เช่น ลบไฟล์สำคัญ,  deploy production)
-- แก้ที่ root cause ไม่ใช่ symptoms
-- ใช้ minimal upstream fixes ไม่ใช่ downstream workarounds
-- ห้ามแก้เกินความจำเป็น (no over-fixing)
-- ถ้าไม่แน่ใจใน root cause ให้ debug ก่อน ไม่เดาสุ่มแก้
-- ทำตาม existing style ของ codebase ไม่เปลี่ยน style เอง
+- ไม่เริ่มตอบด้วย acknowledgment phrases
+- รายงานผลเป็น bullet points สั้นๆ
+- ไม่ถามผู้ใช้ยกเว้นกรณีเสี่ยงสูง
+- ถ้าผู้ใช้บอกว่า "ขอ idea" ให้ทำ `/request-idea`
+
+### Code Quality
+
+- แก้ที่ root cause ไม่ใช่ symptoms ใช้ minimal upstream fixes
+- ห้ามแก้เกินความจำเป็น ถ้าไม่แน่ใจให้ debug ก่อน
+- ทำตาม existing style ของ codebase
+- ห้ามเปลี่ยน code ที่ไม่เกี่ยวข้อง
 - ห้ามลบหรือเพิ่ม comments โดยไม่จำเป็น
-- ห้ามเปลี่ยน code ที่ไม่เกี่ยวข้องกับ task (no unrelated changes)
-- ถ้าเป็นไฟล์ใหม่ให้สร้างเฉพาะที่จำเป็น ไม่สร้างไฟล์รบกวน workspace
+- สร้างไฟล์ใหม่เฉพาะที่จำเป็น
 
 ## Expected Outcome
 
@@ -109,6 +127,4 @@ related_workflows:
 - ไม่มี mock หรือ TODO ที่ไม่จำเป็น
 - Workflows ทำงานได้อย่างมีประสิทธิภาพ
 - การสื่อสารชัดเจนและกระชับ
-- Execution ที่ให้ผลลัพธ์เหมือนกันทุกครั้งและคาดเดาได้
 - ใช้ tools และ libs ของ ecosystem นั้นๆ ได้อย่างเหมาะสม
-- แก้ปัญหาที่ root cause ไม่ใช่ symptoms

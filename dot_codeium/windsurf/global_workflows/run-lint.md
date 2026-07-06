@@ -6,6 +6,7 @@ related_workflows:
   - /linter
   - /analyze-errors
   - /resolve-errors
+  - /follow-code-quality
 ---
 
 ## Goal

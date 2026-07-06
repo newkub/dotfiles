@@ -5,6 +5,7 @@ auto_execution_mode: 3
 related_workflows:
   - /use-bun-shell
   - /use-ast-grep
+  - /follow-gitignore
 ---
 
 ## Goal
@@ -13,13 +14,14 @@ related_workflows:
 
 ## Scope
 
-ใช้สำหรับสร้าง scripts ใน OS temp directory เท่านั้น
+ใช้สำหรับสร้าง scripts ใน `.devin/scripts/temp/` ใน workspace เท่านั้น
 
 ## Execute
 
 ### 1. Prepare
 
 1. ทำตาม `/write-windsurf-global-workflows` เมื่อสร้างหรือแก้ไข workflow
+2. ทำตาม `/follow-gitignore` เพื่อให้ temp directory ถูก ignore ใน .gitignore
 
 ### 2. Choose Script Type
 
@@ -33,6 +35,7 @@ related_workflows:
 2. เขียนแบบ composable: `createScript()` return state + actions
 3. ดูรายละเอียด Bun APIs จาก `/use-bun-shell`
 4. ดูรายละเอียด ast-grep จาก `/use-ast-grep`
+5. ไฟล์ script ยาวได้ตามต้องการ ไม่ต้อง split
 
 ### 4. Dry Run
 
@@ -42,27 +45,23 @@ related_workflows:
 
 ### 5. Execute and Cleanup
 
-1. รัน script ด้วย `bun run <tmpdir>/<script>.ts` สำหรับ Bun scripts
-2. รัน script ด้วย `pwsh <tmpdir>/<script>.ps1` สำหรับ PowerShell scripts
+1. รัน script ด้วย `bun run .devin/scripts/temp/<script>.ts` สำหรับ Bun scripts
+2. รัน script ด้วย `pwsh .devin/scripts/temp/<script>.ps1` สำหรับ PowerShell scripts
 3. รัน script ด้วย `ast-grep scan` สำหรับ ast-grep rules
-4. ลบ scripts จาก OS temp directory หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
+4. ลบ scripts จาก `.devin/scripts/temp/` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
 
 ## Rules
 
 ### File Location
 
-ตำแหน่งไฟล์สำหรับเก็บ scripts ใน OS temp directory
+ตำแหน่งไฟล์สำหรับเก็บ scripts ใน workspace
 
 ```
-# Windows
-$TEMP/                          # เช่น C:\Users\<user>\AppData\Local\Temp
-# macOS / Linux
-/tmp/                           # OS temp directory
+.devin/scripts/temp/            # สร้าง scripts ที่นี่ (ถูก ignore โดย .gitignore)
 ```
 
-- สร้าง scripts เฉพาะใน OS temp directory เท่านั้น (ไม่สร้างใน workspace)
-- ใช้ `os.tmpdir()` สำหรับหา temp path ใน Bun scripts
-- ใช้ `$env:TEMP` สำหรับหา temp path ใน PowerShell
+- สร้าง scripts เฉพาะใน `.devin/scripts/temp/` ใน workspace เท่านั้น
+- ต้องเพิ่ม `.devin/scripts/temp/` ใน `.gitignore` ของทุก project
 - ใช้ `.ts` สำหรับ Bun scripts
 - ใช้ `.ps1` สำหรับ PowerShell scripts
 - ตั้งชื่อสื่อถึงการทำงาน พร้อม prefix `wrikka-` เพื่อหลีกเลี่ยงการชนกับไฟล์อื่น
@@ -71,68 +70,9 @@ $TEMP/                          # เช่น C:\Users\<user>\AppData\Local\Tem
 
 เลือก script type ตามความเหมาะสม
 
-- **Bun native APIs**: ใช้สำหรับ file operations, networking, database, compression, crypto
-- **pwsh**: ใช้สำหรับ Windows system administration, file system operations, automation
-- **ast-grep**: ใช้สำหรับ AST-based code search, linting, transformation
-
-### Bun Native APIs
-
-ดูรายละเอียดจาก `/use-bun-shell`:
-
-```typescript
-// File operations
-const content = await Bun.file(path).text()
-await Bun.write(outputPath, content)
-
-// Shell commands
-await $`git status`.text()
-
-// File patterns
-for await (const file of new Bun.Glob("**/*.ts").scan()) {
-  // process file
-}
-```
-
-### PowerShell Commands
-
-ใช้ PowerShell สำหรับ Windows-specific tasks:
-
-```powershell
-# File operations
-Get-ChildItem -Path "." -Filter "*.ts" | ForEach-Object {
-  # process file
-}
-
-# System commands
-Get-Process | Where-Object { $_.Name -eq "node" }
-```
-
-### Ast-grep Commands
-
-ดูรายละเอียดจาก `/use-ast-grep`:
-
-```bash
-# Search pattern
-ast-grep run -p 'console.log($ARG)'
-
-# Scan with rules
-ast-grep scan --config sgconfig.yml
-
-# Outline .ts file structure (functions, classes, interfaces, types)
-ast-grep outline src/parser.ts
-
-# Outline directory exports
-ast-grep outline src
-
-# Show imports/dependencies of a .ts file
-ast-grep outline src/parser.ts --items imports
-
-# Expand a specific symbol's members
-ast-grep outline src/parser.ts --match Parser --type class --view expanded
-
-# Filter imports matching a dependency across a folder
-ast-grep outline src --items imports --match ast-grep-core --view signatures
-```
+- `Bun native APIs`: ใช้สำหรับ file operations, networking, database, compression, crypto
+- `pwsh`: ใช้สำหรับ Windows system administration, file system operations, automation
+- `ast-grep`: ใช้สำหรับ AST-based code search, linting, transformation
 
 ### CDN Imports
 
@@ -147,60 +87,88 @@ import { glob } from "https://esm.sh/glob"
 - ใช้ `https://deno.land/` สำหรับ Deno-compatible packages
 - ไม่ต้อง install dependencies ด้วย package manager
 
-### Script Template
-
-ตัวอย่าง script แบบ composable (Bun)
-
-```typescript
-#!/usr/bin/env bun
-
-import { z } from "https://esm.sh/zod"
-
-interface ScriptOptions {
-  pattern: string
-  dryRun?: boolean
-}
-
-function createScript(options: ScriptOptions) {
-  const errors: Error[] = []
-  let processed = 0
-
-  async function run() {
-    const files = new Bun.Glob(options.pattern).scan()
-    for await (const file of files) {
-      if (options.dryRun) {
-        console.log(`[DRY RUN] Would process: ${file}`)
-      } else {
-        // Process logic
-        processed++
-      }
-    }
-  }
-
-  return { run, errors, processed }
-}
-
-const script = createScript({ pattern: "**/*.ts", dryRun: true })
-await script.run()
-```
-
 ### Dry Run Mode
 
 ทุก script ต้องรองรับ dry run mode:
 
 - เพิ่ม `dryRun` option ใน script
 - แสดงผลลัพธ์ที่จะเกิดขึ้นโดยไม่ execute จริง
-- ใช้ console.log หรือ log output เพื่อแสดงผล
 - ตรวจสอบผลลัพธ์ก่อน execute จริง
+
+### Recommended Libraries
+
+Libraries สำหรับ CLI scripts (ใช้ CDN imports `https://esm.sh/<name>`):
+
+#### CLI And Output
+
+| Library | Purpose |
+|---------|---------|
+| `zod` | Schema validation, input parsing |
+| `cac` | CLI argument parsing, subcommands |
+| `citty` | CLI framework, type-safe args (UnJS) |
+| `consola` | Structured logging, log levels |
+| `@clack/prompts` | Interactive prompts, confirm, select |
+| `chalk` / `picocolors` | Terminal colors (`picocolors` เล็กกว่า) |
+| `cli-table3` | Table output for reports |
+| `boxen` | Terminal boxes for highlight output |
+| `listr2` | Multi-step task list for CLI |
+| `ora` | Spinners, progress indicators |
+| `cli-progress` | Progress bars (single/multi) |
+| `log-symbols` | Success/warning/error/info symbols |
+
+#### String And Parsing
+
+| Library | Purpose |
+|---------|---------|
+| `change-case` | Case conversion (camel, snake, kebab, pascal) |
+| `diff-match-patch` | Text diffing for file changes |
+| `string-width` | Visual width of strings (CJK, emoji) |
+| `cli-truncate` | Truncate text to fit terminal width |
+| `yaml` | YAML parsing and stringifying |
+| `gray-matter` | Markdown frontmatter parsing |
+| `jsonc-parser` | JSONC parsing (JSON with comments) |
+| `csv-parse` | CSV parsing (streaming, sync) |
+| `markdown-it` | Markdown parsing to HTML |
+
+#### File System And System
+
+| Library | Purpose |
+|---------|---------|
+| `pretty-bytes` | Human-readable file sizes |
+| `env-paths` | OS-specific app paths (config, cache, data) |
+| `fs-extra` | Extra fs methods (copy, ensure, readJson) |
+| `semver` | Semantic version comparison and parsing |
+| `envinfo` | Collect environment info (OS, packages) |
+
+#### Code Analysis And Async
+
+| Library | Purpose |
+|---------|---------|
+| `ts-morph` | TypeScript AST analysis |
+| `oxc-parser` | Rust-based JS/TS parser (เร็วกว่า `ts-morph` 50-100x) |
+| `p-limit` | Limit promise concurrency |
+| `p-queue` | Promise queue with concurrency control |
+| `p-map` | Map over async with concurrency |
+
+#### Time And Benchmarking
+
+| Library | Purpose |
+|---------|---------|
+| `pretty-ms` | Human-readable milliseconds |
+| `date-fns` | Modern date utilities |
+| `mitata` | Fast benchmarking (Rust-based) |
+
+### Bun Native Alternatives
+
+- ใช้ `Bun.Glob` แทน `fast-glob`
+- ใช้ `Bun.$` แทน `execa` สำหรับ child process execution
+- ใช้ `Bun.file()` + `Bun.write()` แทน `fs-extra` สำหรับ file I/O เมื่อเป็นไปได้
 
 ### Standards
 
-มาตรฐานการเขียน scripts
-
-- ใช้ Bun native APIs, pwsh, หรือ ast-grep ตามความเหมาะสม
 - ใช้ ESM format สำหรับ Bun scripts
 - เขียนแบบ composable: `createScript()` return state + actions
-- ใช้ CDN imports สำหรับ external dependencies (Bun scripts)
+- ใช้ CDN imports สำหรับ external dependencies
 - รองรับ dry run mode เสมอ
 - ลบ scripts หลังใช้งาน
 
@@ -208,7 +176,7 @@ await script.run()
 
 - Scripts ที่ใช้งานได้จริง ด้วย Bun native APIs, pwsh, หรือ ast-grep
 - ไม่ต้อง install dependencies สำหรับ Bun scripts
-- Scripts ใน OS temp directory เท่านั้น (ไม่สร้างใน workspace)
+- Scripts ใน `.devin/scripts/temp/` ใน workspace เท่านั้น (ถูก ignore โดย .gitignore)
 - Scripts ที่ใช้แล้วลบออก
 - Dry run mode สำหรับทดสอบก่อน execute จริง
 

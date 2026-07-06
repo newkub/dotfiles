@@ -4,6 +4,7 @@ description: สร้าง Desktop Applications ด้วย Tauri, Vite, Reac
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 สร้าง Tauri desktop application ที่ใช้ web frontend (Vite + React) ร่วมกับ Rust backend สำหรับ cross-platform desktop apps
@@ -89,6 +90,7 @@ bun add @tauri-apps/plugin-<plugin-name>
 - title: Title Case
 - description: ไม่เกิน 100 ตัวอักษร
 - auto_execution_mode: 3
+related_workflows:
 
 ### Project Structure
 

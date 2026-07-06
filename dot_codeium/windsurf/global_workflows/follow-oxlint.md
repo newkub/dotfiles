@@ -4,6 +4,7 @@ description: ตั้งค่า eslint-plugin-oxlint สำหรับ fast 
 auto_execution_mode: 3
 ---
 
+
 ## Goal
 
 ติดตั้งและตั้งค่า eslint-plugin-oxlint สำหรับใช้งานร่วมกับ ESLint 9+ (flat config) เพื่อ linting ที่เร็วขึ้นด้วย Rust-based linter

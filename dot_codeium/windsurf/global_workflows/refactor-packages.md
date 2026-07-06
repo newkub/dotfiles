@@ -5,6 +5,7 @@ auto_execution_mode: 3
 related_workflows:
   - /refactor-modules
   - /edit-relative
+  - /follow-code-quality
 ---
 
 ## Goal

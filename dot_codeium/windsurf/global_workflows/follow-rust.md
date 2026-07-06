@@ -11,6 +11,7 @@ related_workflows:
   - /follow-test
   - /follow-release-crates
   - /follow-best-practice
+  - /follow-code-quality
 ---
 
 ## Goal

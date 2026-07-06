@@ -4,6 +4,7 @@ description: แนวทางการเขียน Vue/Nuxt Composables
 auto_execution_mode: 3
 ---
 
+
 ## Prompt
 
 สร้างหรือปรับปรุง Vue/Nuxt Composables ให้มีคุณภาพสูง

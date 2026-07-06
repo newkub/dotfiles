@@ -9,6 +9,7 @@ related_workflows:
   - /follow-stryker-mutator
   - /follow-mutants-rs
   - /follow-nextest
+  - /follow-code-quality
 ---
 
 ## Goal

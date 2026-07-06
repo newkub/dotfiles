@@ -6,6 +6,7 @@ related_workflows:
   - /run-lint
   - /run-typecheck
   - /run-scan
+  - /follow-code-quality
 ---
 
 ## Goal

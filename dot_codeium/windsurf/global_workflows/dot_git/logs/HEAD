@@ -26,3 +26,5 @@ c4269b0d2677577d2308cb09bcd83cdd49401c2e d625ff2ab4bcc467e8f74d11226bfe62dae9794
 d625ff2ab4bcc467e8f74d11226bfe62dae97948 7e3221c4c0c60657a32378cf42febc1d8feee201 newkub <newkubise@gmail.com> 1783204284 +0700	commit: refactor: consolidate test and report-format workflows, add new workflows
 7e3221c4c0c60657a32378cf42febc1d8feee201 972edb943f50b779b24b9fdb259ec19922a22bba newkub <newkubise@gmail.com> 1783211695 +0700	commit: refactor: split improve-codebase into sub-workflows and split follow-tanstack into library-specific workflows
 972edb943f50b779b24b9fdb259ec19922a22bba f75387da1a1cf10d49343f658de9efb76715a862 newkub <newkubise@gmail.com> 1783215854 +0700	commit: feat: add and improve global workflows for comprehensive codebase management
+f75387da1a1cf10d49343f658de9efb76715a862 4d639b34d7047f0d93b90d91a882013666e75288 newkub <newkubise@gmail.com> 1783321688 +0700	commit: refactor: restructure and standardize global workflows
+4d639b34d7047f0d93b90d91a882013666e75288 890692df47df01ccf02af4380e5c62c6b7efd814 newkub <newkubise@gmail.com> 1783325679 +0700	commit: chore: update and remove global workflows

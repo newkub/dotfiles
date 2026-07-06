@@ -6,6 +6,7 @@ related_workflows:
   - /improve-codebase
   - /improve-monitoring
   - /improve-side-effect
+  - /follow-code-quality
 ---
 
 ## Goal

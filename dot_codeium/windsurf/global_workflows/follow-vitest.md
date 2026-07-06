@@ -7,6 +7,7 @@ related_workflows:
   - /follow-typescript
   - /write-test
   - /follow-stryker-mutator
+  - /follow-code-quality
 ---
 
 ## Goal
