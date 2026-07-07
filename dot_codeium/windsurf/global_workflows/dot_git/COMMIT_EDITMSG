@@ -1,5 +1,9 @@
-chore: update and remove global workflows
+feat: add git workflows, improve existing workflows and add new utility workflows
 
-- Remove report-before.md (consolidated into report-before-after)
-- Update multiple workflows for consistency and improvements
-- Affected: analyze-missing-implementation, follow-moonrepo, follow-my-tech-stack, follow-turborepo, realize-implementation, refactor, update-agents, use-lib-effective, write-windsurf-global-workflows
+- Add 16 git workflow files (bisect, blame, cherry-pick, clone, config, conflict, filter, hooks, lfs, rebase, reflog, revert, stash, submodules, tags, workflows)
+
+- Add new workflows: improve, review, memorize, my-persona, pondering, refactor-workflow, idea-improve-naming, idea-new-global-workflows, deep-optimize, deep-secure, follow-debugging
+
+- Improve and refactor 26 existing workflows for consistency
+
+- Remove deprecated: suggest-global-workflows, use-git-worktree (replaced by follow-git-workflows)

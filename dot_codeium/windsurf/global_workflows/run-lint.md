@@ -3,10 +3,12 @@ title: Run Lint
 description: รัน lint และแก้ code เพื่อให้ผ่าน โดยไม่ใช้ ignore patterns และห้ามแก้ไข config ไฟล์
 auto_execution_mode: 3
 related_workflows:
-  - /linter
+  - /follow-linter
   - /analyze-errors
   - /resolve-errors
+  - /no-use-ignore
   - /follow-code-quality
+  - /run-check
 ---
 
 ## Goal
@@ -21,10 +23,11 @@ related_workflows:
 
 ### 1. Run Lint
 
-1. รัน lint ตามที่กำหนดไว้ใน config:
-   - สำหรับ monorepo: รัน `bun run lint` หรือ `turbo lint` (ห้ามใช้ `--unsafe` flag กับ biome)
-   - สำหรับโปรเจกต์ทั่วไป: รัน lint command ตาม config (ห้ามใช้ `--unsafe` flag กับ biome)
-2. รอให้ lint เสร็จสิ้นก่อนดำเนินการต่อ
+1. ตรวจสอบ project type และ lint config ก่อนรัน
+2. รัน lint ตามที่กำหนดไว้ใน config:
+   - สำหรับ monorepo: รัน `bun run lint` หรือ `turbo lint`
+   - สำหรับโปรเจกต์ทั่วไป: รัน lint command ตาม config
+3. รอให้ lint เสร็จสิ้นก่อนดำเนินการต่อ
 
 ### 2. Analyze Errors
 
@@ -73,7 +76,7 @@ related_workflows:
 
 ### 3. Error Resolution
 
-แก้ปัญหาที่ source แทนการ suppress
+แก้ปัญหาที่ source แทนการ suppress ทำตาม `/no-use-ignore`
 
 - แก้ code ให้ผ่าน lint rules
 - หลีกเลี่ยงการใช้ ignore comments/attributes
@@ -86,8 +89,8 @@ related_workflows:
 - รัน lint อีกครั้งเพื่อยืนยัน
 - รัน tests ทั้งหมด
 - ตรวจสอบว่าไม่มี regressions
-- ทำ `/check-unsued-files` เพื่อตรวจสอบว่าทุกไฟล์ถูกใช้
-- ห้ามใช้ `--unsafe` flag กับ biome commands
+- ทำ `/check-unused-files` เพื่อตรวจสอบว่าทุกไฟล์ถูกใช้
+- ห้ามใช้ `--unsafe` flag กับ `biome` commands
 
 ## Expected Outcome
 

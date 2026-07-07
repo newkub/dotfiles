@@ -91,9 +91,9 @@ Thumbs.db
 
 ### 3. Validate
 
-1. ทำ `/content-quality` เพื่อตรวจสอบคุณภาพเนื้อหา
+1. ทำ `/follow-content-quality` เพื่อตรวจสอบคุณภาพเนื้อหา
 2. ทดสอบด้วย `git check-ignore <file>`
-3. ทำ `/update-references` หากมี file operations
+3. ทำ `/update-reference` หากมี file operations
 
 ## Rules
 

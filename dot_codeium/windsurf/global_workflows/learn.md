@@ -5,8 +5,9 @@ auto_execution_mode: 3
 related_workflows:
   - /deep-research
   - /learn-from-web
-  - /learn-from-pattern
+  - /learn-from-code-pattern
   - /follow-best-practice
+  - /write-examples
 ---
 
 ## Goal
@@ -56,14 +57,25 @@ related_workflows:
 3. ทดสอบด้วย examples ที่เรียนรู้มา
 4. ปรับปรุงตาม feedback
 
-### 5. Practice And Validate
+### 5. Learn From Code Patterns
 
-ฝึกและตรวจสอบความเข้าใจ:
+ทำ `/learn-from-code-pattern` เพื่อสกัด reusable patterns
 
-1. สร้างตัวอย่างการใช้งานจริง
+1. ค้นหา code patterns จาก real-world projects
+2. วิเคราะห์ patterns ที่ใช้ใน production codebases
+3. ระบุ pattern variants และ trade-offs
+4. บันทึก patterns พร้อม use cases
+
+### 6. Hands-On Practice
+
+ฝึกปฏิบัติจริงเพื่อยืนยันความเข้าใจ
+
+1. สร้างตัวอย่างการใช้งานจริงใน project context
 2. ทดลอง edge cases และ error handling
-3. เปรียบเทียบผลลัพธ์กับที่เรียนรู้มา
-4. บันทึก lessons learned
+3. ทดลอง integration กับ existing code
+4. เปรียบเทียบผลลัพธ์กับที่เรียนรู้มา
+5. ทำ `/write-examples` เพื่อสร้าง examples ครอบคลุม
+6. บันทึก lessons learned และ cheat sheet สำหรับ future reference
 
 ## Rules
 
@@ -72,6 +84,8 @@ related_workflows:
 - เริ่มจาก overview ก่อน deep dive
 - ใช้ multiple sources เพื่อ cross-reference
 - ฝึกปฏิบัติจริง ไม่ใช่แค่อ่าน
+- สกัด code patterns จาก real-world projects
+- สร้าง examples ที่นำไปใช้ได้จริงใน project
 
 ### 2. Research Standards
 

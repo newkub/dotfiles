@@ -5,7 +5,6 @@ auto_execution_mode: 3
 related_workflows:
   - /deep-research
   - /follow-best-practice
-  - /learn-from-pattern
 ---
 
 ## Goal

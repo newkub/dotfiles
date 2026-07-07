@@ -6,7 +6,7 @@ related_workflows:
   - /write-test
   - /run-test-coverage
   - /improve-test-coverage
-  - /review-test-result
+  - /analyze-test-result
   - /validate-test
   - /report
   - /follow-code-quality
@@ -95,7 +95,7 @@ related_workflows:
 
 ### 6. Review Test Results
 
-1. ทำ `/review-test-result` เพื่อวิเคราะห์ผล test execution และหา root cause ของ failures
+1. ทำ `/analyze-test-result` เพื่อวิเคราะห์ผล test execution และหา root cause ของ failures
 
 ### 7. Check Coverage
 
@@ -106,7 +106,7 @@ related_workflows:
 ### 8. Fix Failures
 
 1. ทำ `/analyze-errors` เพื่อจัดลำดับ failures
-2. ถ้า cascade issues → `/debug-issue` → `/resolve-errors`
+2. ถ้า cascade issues → `/debug-issue` → `/deep-debug` → `/resolve-errors`
 3. ถ้า isolated errors → `/resolve-errors`
 4. แก้ไข code, test assertions, หรือ mock data ตามความจำเป็น
 

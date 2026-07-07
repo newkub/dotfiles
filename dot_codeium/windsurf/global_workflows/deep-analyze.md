@@ -11,7 +11,6 @@ related_workflows:
   - /deep-thinking
   - /scan-codebase
   - /follow-code-quality
-  - /learn-from-pattern
 ---
 
 ## Goal

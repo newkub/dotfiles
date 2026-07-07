@@ -7,6 +7,7 @@ related_workflows:
   - /follow-code-quality
   - /improve-error-handling
   - /improve-side-effect
+  - /follow-debugging
 ---
 
 ## Goal

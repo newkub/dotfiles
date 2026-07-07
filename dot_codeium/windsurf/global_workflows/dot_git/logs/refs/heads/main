@@ -28,3 +28,9 @@ d625ff2ab4bcc467e8f74d11226bfe62dae97948 7e3221c4c0c60657a32378cf42febc1d8feee20
 972edb943f50b779b24b9fdb259ec19922a22bba f75387da1a1cf10d49343f658de9efb76715a862 newkub <newkubise@gmail.com> 1783215854 +0700	commit: feat: add and improve global workflows for comprehensive codebase management
 f75387da1a1cf10d49343f658de9efb76715a862 4d639b34d7047f0d93b90d91a882013666e75288 newkub <newkubise@gmail.com> 1783321688 +0700	commit: refactor: restructure and standardize global workflows
 4d639b34d7047f0d93b90d91a882013666e75288 890692df47df01ccf02af4380e5c62c6b7efd814 newkub <newkubise@gmail.com> 1783325679 +0700	commit: chore: update and remove global workflows
+890692df47df01ccf02af4380e5c62c6b7efd814 9f889b0be1f47181505658bd4f78441dedd4730b newkub <newkubise@gmail.com> 1783363782 +0700	commit: refactor(commit): replace /update-readme with /update-project in workflow
+9f889b0be1f47181505658bd4f78441dedd4730b 172ae994e15e7b8262166ffdecffc88c31d5021d newkub <newkubise@gmail.com> 1783364102 +0700	commit: refactor: consolidate and update all global workflows
+172ae994e15e7b8262166ffdecffc88c31d5021d 640eb1068cc639ddae05f72d80509ce59db72880 newkub <newkubise@gmail.com> 1783370996 +0700	commit: refactor: rename and update workflows for consistency
+640eb1068cc639ddae05f72d80509ce59db72880 98b9ab1cc102b40080336581f0aced0a4020d8a0 newkub <newkubise@gmail.com> 1783416905 +0700	commit: refactor: restructure and standardize all global workflows
+98b9ab1cc102b40080336581f0aced0a4020d8a0 430a2f0dde55710e80eb907929a4bccd1a81c031 newkub <newkubise@gmail.com> 1783416958 +0700	commit: refactor(ship): integrate git worktree workflow into ship process
+430a2f0dde55710e80eb907929a4bccd1a81c031 3f8ef8b3b9e9537a3d88055c944b82696414c6a2 newkub <newkubise@gmail.com> 1783427747 +0700	commit: feat: add git workflows, improve existing workflows and add new utility workflows

@@ -6,6 +6,7 @@ related_workflows:
   - /use-bun-shell
   - /use-ast-grep
   - /follow-gitignore
+  - /learn-from-code-pattern
 ---
 
 ## Goal
@@ -20,7 +21,7 @@ related_workflows:
 
 ### 1. Prepare
 
-1. ทำตาม `/write-windsurf-global-workflows` เมื่อสร้างหรือแก้ไข workflow
+1. ทำตาม `/write-global-workflows` เมื่อสร้างหรือแก้ไข workflow
 2. ทำตาม `/follow-gitignore` เพื่อให้ temp directory ถูก ignore ใน .gitignore
 
 ### 2. Choose Script Type

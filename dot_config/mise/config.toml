@@ -202,6 +202,7 @@ opencode = "latest"
 "npm:taze" = "latest"
 "npm:pake-cli" = "latest"
 "cargo:elio" = "latest"
+ffmpeg = "8.1.2"
 
 
 [settings]

@@ -2,9 +2,11 @@
 title: Watch Browser
 description: เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง
 auto_execution_mode: 3
+url: https://agent-browser.dev
 related_workflows:
   - /follow-agent-browser
   - /resolve-errors
+  - /run-typecheck
 ---
 
 ## Goal
@@ -13,7 +15,7 @@ related_workflows:
 
 ## Scope
 
-ใช้สำหรับ browser automation และ web testing ด้วย `agent-browser` CLI
+ใช้สำหรับ browser automation และ continuous monitoring ด้วย `agent-browser` CLI
 
 ## Execute
 
@@ -21,11 +23,23 @@ related_workflows:
 
 ทำ `/run-typecheck` ก่อนเริ่ม watch browser เพื่อให้แน่ใจว่าโค้ดผ่าน type check
 
-### 2. Use Agent Browser
+### 2. Install And Verify Agent Browser
 
-ทำตาม `/follow-agent-browser` สำหรับ browser automation และ configuration ทั้งหมด
+ติดตั้งและตรวจสอบ `agent-browser` ตาม `/follow-agent-browser` ข้อ 1
 
-### 3. Watch And Monitor
+1. ตรวจสอบการติดตั้งด้วย `agent-browser --help`
+2. ถ้าไม่ได้ติดตั้ง ให้ติดตั้งด้วย `npm install -g agent-browser`
+3. ดาวน์โหลด Chrome ด้วย `agent-browser install`
+4. ถ้าติดตั้งไม่ได้ ให้ใช้ `playwriter` skill หรือ `browser-preview` tool แทน
+
+### 3. Open Browser
+
+เปิด browser และ navigate ไปยัง URL ที่ต้องการ watch ตาม `/follow-agent-browser` ข้อ 2
+
+1. ใช้ `agent-browser open <url> --headed` เพื่อเปิด browser แบบมองเห็นหน้าต่าง
+2. ถ้าเปิดไม่ได้ ให้ใช้ `browser-preview` tool แทน
+
+### 4. Watch And Monitor
 
 Monitor ตาม ## Rules ข้อ 1 และจัดการ errors ตาม ## Rules ข้อ 2
 
@@ -33,21 +47,24 @@ Monitor ตาม ## Rules ข้อ 1 และจัดการ errors ตา
 
 ### 1. Continuous Monitoring
 
-Monitor อย่างต่อเนื่องและมีประสิทธิภาพ
+Monitor อย่างต่อเนื่องและมีประสิทธิภาพ ดูคำสั่งเต็มที่ `/follow-agent-browser` ข้อ 4
 
-- Monitor console messages และ errors อย่างต่อเนื่อง
-- Monitor network requests และ responses
-- ใช้ `snapshot` เพื่อดู accessibility tree อย่างต่อเนื่อง
-- ใช้ `screenshot` เมื่อจำเป็นสำหรับ debugging
+- ใช้ `agent-browser snapshot -i` เพื่อดู interactive elements และ refs อย่างต่อเนื่อง
+- ใช้ `agent-browser snapshot` เพื่อดู full accessibility tree
+- ใช้ `agent-browser screenshot` เมื่อจำเป็นสำหรับ debugging
+- ใช้ `agent-browser screenshot --annotate` สำหรับ annotated screenshot พร้อม element labels
+- ใช้ `agent-browser console` สำหรับดู console messages
+- ใช้ `agent-browser errors` สำหรับดู page errors
 
 ### 2. Error Handling
 
-จัดการ errors ที่เกิดขึ้นอย่างถูกต้อง
+จัดการ errors ตาม `/follow-agent-browser` ข้อ 5
 
 - เมื่อเจอ error ต้องเรียก `/resolve-errors` ทันที
-- ถ้า `daemon` error ให้ใช้ `browser-preview` แทน
-- บันทึก error logs สำหรับ debugging
-- ตรวจสอบ element availability ก่อน interact
+- ถ้า `daemon` error ให้ใช้ `browser-preview` tool แทน
+- ถ้า `agent-browser` ไม่ติดตั้ง ให้ใช้ `playwriter` skill แทน
+- บันทึก error logs ด้วย `agent-browser console` และ `agent-browser errors`
+- ตรวจสอบ element availability ก่อน interact ด้วย `agent-browser wait @e1`
 
 ## Expected Outcome
 

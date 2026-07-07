@@ -6,7 +6,7 @@ related_workflows:
   - /analyze-project
   - /all-workspaces
   - /follow-content-quality
-  - /write-windsurf-global-workflows
+  - /write-global-workflows
   - /use-lang-en
 ---
 
@@ -49,9 +49,9 @@ related_workflows:
 
 - `Status Callout`: ด้านบนสุด - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, รวม License MIT badge)
-- `## Quick Start`: numbered steps ด้านบน, แต่ละ step มี heading + description ก่อน codeblock, ANSI preview ด้านล่าง
-- `## Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม icon จาก iconify CDN
-- `## Usage`: `### filename.ts` heading + code block ด้านบน, `ansi` codeblock preview ด้านล่าง
+- `## Quick Start`: numbered steps ด้านบน, แต่ละ step มี heading + description ก่อน codeblock
+- `## Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม colored icon จาก iconify CDN
+- `## Usage`: `### filename.ts` heading + code block เท่านั้น
 - `## Project`: `<details>`/`<summary>` accordion ลำดับ Goal, Scope, When To Use, Key Concepts, Core Principles, Best Practices
 - `## API References`: `<details>`/`<summary>` accordion สำหรับ subsections พร้อม Markdown table (ไม่มี file structure)
 - `## Development`: `<details>`/`<summary>` accordion ลำดับ Tech Stack, How It Work, Architecture, Scripts, Workflows, Skills
@@ -65,7 +65,7 @@ related_workflows:
 - `Project > When To Use`: 3 columns (Icon, Use Case, Description)
 - `Project > Key Concepts`/`Core Principles`/`Best Practices`: 3 columns (Icon, Name, Description)
 - `Development > Tech Stack`: 4 columns (Layer, Technology, Version, Description)
-- `Development > How It Work`: ANSI visual codeblock
+- `Development > How It Work`: ภาพ diagram แบบ text codeblock (ไม่ใช่ ANSI)
 - `Development > Architecture`/`Workflows`/`Skills`: codeblock
 - `Development > Scripts`: JSON codeblock พร้อม comment
 
@@ -85,6 +85,7 @@ related_workflows:
 ### 5. Icons
 
 - ใช้ iconify CDN: `![icon](https://api.iconify.design/<set>:<name>.svg?color=<hex>)`
+- ห้ามใช้ icon ขาวดำ (ไม่มี color parameter) ทุก icon ต้องมี `?color=<hex>`
 - ห้ามใช้ emoji ในตารางทั้งหมด
 - เลือก icon set ที่เหมาะสม: `mdi`, `lucide`, `material-symbols`, `tabler`, `ph`, `iconoir`
 - แต่ละ icon ต้องมี color ที่แตกต่างกันตามเหมาะสม - ไม่ใช้สีเดียวทั้งหมด
@@ -93,8 +94,9 @@ related_workflows:
 - แนวทางสี (เลือกตาม context ของแต่ละ icon):
   - `1976d2` (ฟ้า) — core, utility, primary | `388e3c` (เขียว) — success, in scope | `d32f2f` (แดง) — negative, out of scope, security
   - `f57c00` (ส้ม) — warning, highlight | `7b1fa2` (ม่วง) — design, UI | `c2185b` (ชมพู) — features, testing
-  - `303f9f` (คราม) — concepts, web | `0097a7` (ฟ้าขี้ม้า) — development, CLI | `00796b` (เขียวเข้ม) — build, tools | `ffa000` (เหลืองอำพัน) — file, content
+  - `303f9f` (คราม) — concepts, web | `0097a7` (ฟ้าขี้ม้า) — development, CLI | `00796b` (เขียวเข้ม) — build, tools | `ffa000` (เหลือวอำพัน) — file, content
 - ตัวอย่าง: `![rocket](https://api.iconify.design/mdi:rocket.svg?color=303f9f)`
+- ห้ามใช้ ANSI codeblock ใน README ทั้งหมด ใช้ codeblock ธรรมดาแทน
 
 ## Example Template
 
@@ -122,20 +124,10 @@ Longer description.
    func();
    ```
 
-```ansi
-┌─────────────────────────┐
-│  ✓ Installed            │
-│  ✓ Imported             │
-│  ✓ Running              │
-│                         │
-│  Output: hello          │
-└─────────────────────────┘
-```
-
 ## Features
 | :---: | Feature | Description | Benefit | Usage |
 |------|---------|-------------|---------|-------|
-| ![icon](url) | Name | What it does | Why it matters | `func()` |
+| ![icon](https://api.iconify.design/mdi:rocket.svg?color=303f9f) | Name | What it does | Why it matters | `func()` |
 
 ## Usage
 
@@ -146,30 +138,23 @@ import { func } from '@wrikka/package-name';
 func('hello');
 ```
 
-```ansi
-┌─────────────────────────┐
-│  Result output here     │
-│  ✓ Done                 │
-└─────────────────────────┘
-```
-
 ## Project
 <details><summary>Goal</summary>
 | :---: | Goal | Status | Description |
 |------|------|--------|-------------|
-| ![icon](url) | Goal item | ✓ Goal | Desc |
-| ![icon](url) | Non-goal | ✗ Not Goal | Desc |
+| ![icon](https://api.iconify.design/mdi:target.svg?color=388e3c) | Goal item | ✓ Goal | Desc |
+| ![icon](https://api.iconify.design/mdi:close.svg?color=d32f2f) | Non-goal | ✗ Not Goal | Desc |
 </details>
 <details><summary>Scope</summary>
 | :---: | Scope | Status | Description |
 |------|-------|--------|-------------|
-| ![icon](url) | In scope | ✓ In Scope | Desc |
-| ![icon](url) | Out of scope | ✗ Out of Scope | Desc |
+| ![icon](https://api.iconify.design/mdi:check.svg?color=388e3c) | In scope | ✓ In Scope | Desc |
+| ![icon](https://api.iconify.design/mdi:close.svg?color=d32f2f) | Out of scope | ✗ Out of Scope | Desc |
 </details>
 <details><summary>Key Concepts</summary>
 | :---: | Concept | Description |
 |------|---------|-------------|
-| ![icon](url) | Concept | Desc |
+| ![icon](https://api.iconify.design/mdi:lightbulb.svg?color=303f9f) | Concept | Desc |
 </details>
 <!-- Core Principles, When To Use, Best Practices: same 3-column pattern as Key Concepts -->
 
@@ -188,9 +173,9 @@ func('hello');
 | Language | TypeScript | 6.0.3 | Type-safe development |
 </details>
 <details><summary>How It Work</summary>
-```ansi
+```text
       ┌─────────┐         ┌─────────┐         ┌─────────┐
-      │ 📦 Input │  ─────▶ │ 🔧 Process │  ─────▶ │ ✅ Output │
+      │ Input   │  ─────▶ │ Process │  ─────▶ │ Output  │
       └─────────┘         └─────────┘         └─────────┘
 ```
 </details>
@@ -222,5 +207,6 @@ src/
 - README.md ครบถ้วน ใช้ข้อมูลจริงจาก `/analyze-project` ไม่มี placeholder ยกเว้น banner image
 - Section order: Quick Start > Features > Usage > Project > API References > Development > License
 - Features: row กระชับ ครอบคลุมทุก feature จาก source code เขียน business value
-- ตารางทั้งหมดใช้ icon จาก iconify CDN คอลัมน์ Icon จัดกึ่งกลางด้วย `:---:`
+- ตารางทั้งหมดใช้ colored icon จาก iconify CDN (มี `?color=<hex>`) คอลัมน์ Icon จัดกึ่งกลางด้วย `:---:`
+- ไม่มี ANSI codeblock ใน README ทั้งหมด
 - ภาษาอังกฤษทั้งหมดตาม `/use-lang-en`
