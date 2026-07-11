@@ -9,6 +9,7 @@ related_workflows:
   - /update-docs
   - /improve-performance
   - /improve-uxui
+  - /pondering
 ---
 
 ## Goal
@@ -44,11 +45,12 @@ related_workflows:
 
 ปรับปรุง project จนดีกว่าคู่แข่ง
 
-1. ทำ `/plan` เพื่อวางแผนการปรับปรุง
-2. ทำ `/ship` เพื่อ implement จนดีกว่าคู่แข่ง
-3. ทำ `/improve-performance` สำหรับ performance improvements
-4. ทำ `/improve-uxui` สำหรับ UX/UI improvements
-5. หยุดเมื่อ project ดีกว่าคู่แข่งทั้งหมมในทุกมิติ
+1. ทำ `/pondering` เพื่อทบทวนว่าควรปรับปรุงอะไรก่อนและผลกระทบของแต่ละการเปลี่ยนแปลง
+2. ทำ `/plan` เพื่อวางแผนการปรับปรุง
+3. ทำ `/ship` เพื่อ implement จนดีกว่าคู่แข่ง
+4. ทำ `/improve-performance` สำหรับ performance improvements
+5. ทำ `/improve-uxui` สำหรับ UX/UI improvements
+6. หยุดเมื่อ project ดีกว่าคู่แข่งทั้งหมมในทุกมิติ
 
 ### 4. Update Progress
 

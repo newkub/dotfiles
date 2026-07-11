@@ -34,3 +34,6 @@ f75387da1a1cf10d49343f658de9efb76715a862 4d639b34d7047f0d93b90d91a882013666e7528
 640eb1068cc639ddae05f72d80509ce59db72880 98b9ab1cc102b40080336581f0aced0a4020d8a0 newkub <newkubise@gmail.com> 1783416905 +0700	commit: refactor: restructure and standardize all global workflows
 98b9ab1cc102b40080336581f0aced0a4020d8a0 430a2f0dde55710e80eb907929a4bccd1a81c031 newkub <newkubise@gmail.com> 1783416958 +0700	commit: refactor(ship): integrate git worktree workflow into ship process
 430a2f0dde55710e80eb907929a4bccd1a81c031 3f8ef8b3b9e9537a3d88055c944b82696414c6a2 newkub <newkubise@gmail.com> 1783427747 +0700	commit: feat: add git workflows, improve existing workflows and add new utility workflows
+3f8ef8b3b9e9537a3d88055c944b82696414c6a2 ac38df7244059a07506f26545e3a56c9be18e5ce newkub <newkubise@gmail.com> 1783756737 +0700	commit: fix: update review-codebase-and-fix, follow-agents-md, write-global-workflows workflows
+ac38df7244059a07506f26545e3a56c9be18e5ce 2e0c59cc22bdca46d5d923005cbdf6d16f55e4a9 newkub <newkubise@gmail.com> 1783757134 +0700	commit: feat: add /pondering to 7 workflows with high-impact decision points
+2e0c59cc22bdca46d5d923005cbdf6d16f55e4a9 f9e0932f77d730710442905282fb8567ad7d3e96 newkub <newkubise@gmail.com> 1783763270 +0700	commit: refactor(workflow): add /analyze-type-safety as step 0 in /improve-type-safety

@@ -5,6 +5,7 @@ auto_execution_mode: 3
 url: https://agent-browser.dev
 related_workflows:
   - /follow-agent-browser
+  - /watch-browser-console
   - /resolve-errors
   - /run-typecheck
 ---
@@ -43,6 +44,9 @@ related_workflows:
 
 Monitor ตาม ## Rules ข้อ 1 และจัดการ errors ตาม ## Rules ข้อ 2
 
+1. ใช้ `/watch-browser-console` สำหรับ focus ที่ console errors โดยเฉพาะ
+2. ใช้ `agent-browser snapshot -i` สำหรับ interactive elements และ `agent-browser console` สำหรับ console messages
+
 ## Rules
 
 ### 1. Continuous Monitoring
@@ -55,6 +59,7 @@ Monitor อย่างต่อเนื่องและมีประสิ
 - ใช้ `agent-browser screenshot --annotate` สำหรับ annotated screenshot พร้อม element labels
 - ใช้ `agent-browser console` สำหรับดู console messages
 - ใช้ `agent-browser errors` สำหรับดู page errors
+- ใช้ `/watch-browser-console` สำหรับ continuous console monitoring โดยเฉพาะ
 
 ### 2. Error Handling
 

@@ -1,9 +1,1 @@
-feat: add git workflows, improve existing workflows and add new utility workflows
-
-- Add 16 git workflow files (bisect, blame, cherry-pick, clone, config, conflict, filter, hooks, lfs, rebase, reflog, revert, stash, submodules, tags, workflows)
-
-- Add new workflows: improve, review, memorize, my-persona, pondering, refactor-workflow, idea-improve-naming, idea-new-global-workflows, deep-optimize, deep-secure, follow-debugging
-
-- Improve and refactor 26 existing workflows for consistency
-
-- Remove deprecated: suggest-global-workflows, use-git-worktree (replaced by follow-git-workflows)
+refactor(workflow): add /analyze-type-safety as step 0 in /improve-type-safety
