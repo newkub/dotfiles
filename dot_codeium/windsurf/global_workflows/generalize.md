@@ -2,7 +2,7 @@
 title: Generalize
 description: ทำให้ code หรือ patterns เป็น generic เพื่อ reuse กับหลาย use cases
 auto_execution_mode: 3
-related_workflows:
+related:
   - /refactor
   - /dont-over-engineer
   - /use-scripts

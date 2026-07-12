@@ -2,7 +2,7 @@
 title: Follow Functional Programming
 description: พัฒนาโปรเจกต์ด้วย functional programming principles พร้อม pure functions, immutability, composition
 auto_execution_mode: 3
-related_workflows:
+related:
   - /improve-side-effect
 ---
 

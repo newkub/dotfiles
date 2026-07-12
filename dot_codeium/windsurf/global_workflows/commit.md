@@ -2,7 +2,7 @@
 title: Commit
 description: Commit ไฟล์ที่มีการเปลี่ยนแปลงตามมาตรฐาน conventional commits
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-gitignore
   - /follow-lefthook
   - /follow-config

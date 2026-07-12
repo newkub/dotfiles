@@ -2,7 +2,7 @@
 title: Improve Error Handling
 description: ปรับปรุง error handling และ resilience ครบวงจร
 auto_execution_mode: 3
-related_workflows:
+related:
   - /improve-codebase
   - /improve-monitoring
   - /improve-side-effect

@@ -2,7 +2,7 @@
 title: Rename
 description: เปลี่ยนชื่อไฟล์หรือโฟลเดอร์และอัปเดท references ทั้งหมด
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-file-operation
   - /update-references
 ---

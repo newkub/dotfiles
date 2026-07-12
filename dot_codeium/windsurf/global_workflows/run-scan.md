@@ -2,7 +2,7 @@
 title: Run Scan
 description: รัน ast-grep scan เพื่อตรวจสอบ codebase ด้วย AST-based patterns
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-ast-grep
   - /update-ast-grep-rules
   - /validate-ast-grep-rules

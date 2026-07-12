@@ -2,7 +2,7 @@
 title: Follow Gitignore
 description: สร้างและจัดการ .gitignore ตามประเภทโปรเจกต์
 auto_execution_mode: 3
-related_workflows:
+related:
   - /use-scripts
   - /follow-content-quality
 ---

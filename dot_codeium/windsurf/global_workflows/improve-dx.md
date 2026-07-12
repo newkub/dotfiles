@@ -2,7 +2,7 @@
 title: Improve Dx
 description: ปรับปรุง developer experience ครบวงจร
 auto_execution_mode: 3
-related_workflows:
+related:
   - improve-codebase
   - follow-config
 ---

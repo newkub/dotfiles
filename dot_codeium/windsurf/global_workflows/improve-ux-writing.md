@@ -2,7 +2,7 @@
 title: Improve Ux Writing
 description: ปรับปรุง UX writing ให้ชัดเจน เข้าใจง่าย กระชับ และสนับสนุน user journey
 auto_execution_mode: 3
-related_workflows:
+related:
   - improve-uxui
   - improve-content
   - improve-error-messages

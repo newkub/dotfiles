@@ -3,7 +3,7 @@ title: Watch Browser
 description: เปิดเบราว์เซอร์ด้วย agent-browser และ watch หน้าเว็บต่อเนื่อง
 auto_execution_mode: 3
 url: https://agent-browser.dev
-related_workflows:
+related:
   - /follow-agent-browser
   - /watch-browser-console
   - /resolve-errors

@@ -2,11 +2,11 @@
 title: Run Test
 description: รัน test suite อย่างเป็นระบบ ครอบคลุม unit, integration, e2e และ specialized tests
 auto_execution_mode: 3
-related_workflows:
+related:
   - /write-test
   - /run-test-coverage
   - /improve-test-coverage
-  - /analyze-test-result
+  - /deep-review
   - /validate-test
   - /report
   - /follow-code-quality
@@ -95,7 +95,7 @@ related_workflows:
 
 ### 6. Review Test Results
 
-1. ทำ `/analyze-test-result` เพื่อวิเคราะห์ผล test execution และหา root cause ของ failures
+1. ทำ `/deep-review` เพื่อวิเคราะห์ผล test execution และหา root cause ของ failures
 
 ### 7. Check Coverage
 
@@ -105,7 +105,7 @@ related_workflows:
 
 ### 8. Fix Failures
 
-1. ทำ `/analyze-errors` เพื่อจัดลำดับ failures
+1. ทำ `/deep-review` เพื่อจัดลำดับ failures
 2. ถ้า cascade issues → `/debug-issue` → `/deep-debug` → `/resolve-errors`
 3. ถ้า isolated errors → `/resolve-errors`
 4. แก้ไข code, test assertions, หรือ mock data ตามความจำเป็น

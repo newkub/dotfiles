@@ -2,9 +2,9 @@
 title: Run Lint
 description: รัน lint และแก้ code เพื่อให้ผ่าน โดยไม่ใช้ ignore patterns และห้ามแก้ไข config ไฟล์
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-linter
-  - /analyze-errors
+  - /deep-review
   - /resolve-errors
   - /no-use-ignore
   - /follow-code-quality
@@ -31,7 +31,7 @@ related_workflows:
 
 ### 2. Analyze Errors
 
-1. รัน `/analyze-errors` เพื่อวิเคราะห์และจัดลำดับ errors ที่เกิดจาก lint
+1. รัน `/deep-review` เพื่อวิเคราะห์และจัดลำดับ errors ที่เกิดจาก lint
 2. ตรวจสอบประเภทของ errors:
    - config-related errors
    - code-related errors

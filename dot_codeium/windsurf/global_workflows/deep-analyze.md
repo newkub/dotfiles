@@ -2,11 +2,11 @@
 title: Deep Analyze
 description: วิเคราะห์โปรเจกต์อย่างลึกซึ้งด้วยหลายมิติและ external research
 auto_execution_mode: 3
-related_workflows:
+related:
   - /analyze-project
-  - /analyze-features
-  - /analyze-structure
-  - /analyze-errors
+  - /deep-review
+  - /deep-review
+  - /deep-review
   - /deep-research
   - /deep-thinking
   - /scan-codebase
@@ -53,7 +53,7 @@ related_workflows:
 
 ### 3. Structure Analysis
 
-ทำ `/analyze-structure` เพื่อวิเคราะห์โครงสร้าง
+ทำ `/deep-review` เพื่อวิเคราะห์โครงสร้าง
 
 1. รัน tree command ดู directory structure
 2. รัน ast-grep outline ดู structure ภายในไฟล์
@@ -64,7 +64,7 @@ related_workflows:
 
 วิเคราะห์ architecture และ design patterns
 
-1. ทำ `/review-architecture` ระบุ architectural pattern
+1. ทำ `/deep-review` ระบุ architectural pattern
 2. วิเคราะหา data flow ด้วย `Grep`
 3. ระบุ design patterns ที่ใช้
 4. ตรวจสอบ adherence ต่อ architecture principles
@@ -72,7 +72,7 @@ related_workflows:
 
 ### 5. Features Analysis
 
-ทำ `/analyze-features` เพื่อวิเคราะห์ features
+ทำ `/deep-review` เพื่อวิเคราะห์ features
 
 1. Discovery และ inventory features ทั้งหมด
 2. Categorize และ group features
@@ -145,9 +145,9 @@ related_workflows:
 
 เลือก tools ที่เหมาะสมกับแต่ละมิติ
 
-- **Structure**: `/analyze-structure`, tree command, ast-grep outline
-- **Architecture**: `/review-architecture`, `Grep`, `/use-ast-grep`
-- **Features**: `/analyze-features`
+- **Structure**: `/deep-review`, tree command, ast-grep outline
+- **Architecture**: `/deep-review`, `Grep`, `/use-ast-grep`
+- **Features**: `/deep-review`
 - **Code Quality**: `/use-ast-grep`, `Grep`, `/use-scripts`, check workflows
 - **Dependencies**: manifest files, `/check-vulnerability`
 - **Research**: `/deep-research`, DeepWiki, Context7, WebSearch

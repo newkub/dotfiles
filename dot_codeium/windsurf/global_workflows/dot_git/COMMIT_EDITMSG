@@ -1,1 +1,1 @@
-refactor(workflow): add /analyze-type-safety as step 0 in /improve-type-safety
+feat: require title and description in frontmatter for all .devin/rules files

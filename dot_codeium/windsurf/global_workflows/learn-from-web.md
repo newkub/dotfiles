@@ -2,7 +2,7 @@
 title: Learn from Web
 description: เรียนรู้จากเว็บไซต์หลักและเอกสารด้วย DeepWiki, Context7 และ Official Documentation
 auto_execution_mode: 3
-related_workflows:
+related:
   - /deep-research
   - /follow-best-practice
 ---

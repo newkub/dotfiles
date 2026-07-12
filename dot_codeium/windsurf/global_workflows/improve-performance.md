@@ -2,7 +2,7 @@
 title: Improve Performance
 description: ปรับปรุง web performance, rendering, scalability และ caching
 auto_execution_mode: 3
-related_workflows:
+related:
   - /improve-web-performance
   - /improve-web-rendering
   - /improve-scalability

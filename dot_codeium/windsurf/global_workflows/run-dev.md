@@ -2,7 +2,7 @@
 title: Run Dev
 description: รัน development server และแก้ไขข้อผิดพลาด
 auto_execution_mode: 3
-related_workflows:
+related:
   - /open-web
   - /watch-terminal
   - /watch-browser

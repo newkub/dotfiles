@@ -14,6 +14,7 @@ related_workflows:
   - /resolve-errors
   - /refactor
   - /edit-relative
+  - /edit-manual
   - /plan
   - /report-plan
   - /realize-implementation
@@ -39,6 +40,16 @@ related_workflows:
   - /report-format-table
   - /idea
   - /use-workflows
+  - /write-skills
+  - /ship
+  - /dont-over-engineer
+  - /follow-software-engineering
+  - /improve-all-skills
+  - /improve-all-workflows
+  - /improve-redundancy
+  - /improve-correctness
+  - /validate
+  - /review-by-ai
 ---
 
 ## Goal
@@ -52,7 +63,7 @@ related_workflows:
 ### 1. Prepare Workspace
 ตั้งค่าและเตรียม workspace ก่อนเริ่ม task
 - การทำงานกับไฟล์ทุกอย่างต้องทำ `/edit-relative`
-- ใช้ `"."` สำหรับ `/continue` หรือ `/try-again`
+- ใช้ `"."` สำหรับ `/continue` หรือ `/follow-your-suggestion`
 
 ### 2. Read References
 อ่าน references ก่อนเริ่มทำงาน
@@ -100,8 +111,10 @@ related_workflows:
 - ทำ `/loop-until-complete` เมื่องานต้อง verify จนกว่าจะผ่านเงื่อนไข
 - ทำ `/realize-implementation` หลังเสร็จงานเสมอ
 - ถ้ามีการเปลี่ยนแปลง package manifest ให้ทำ `/update-dot-devin` เสมอ
+- ทำ `/validate` ทุกครั้งก่อนจบ task เพื่อตรวจสอบความถูกต้อง คุณภาพ และความเหมาะสม
 - ทำ `/run-check` หลังจาก task เสมอ
 - ทำ `/commit` เป็นระยะๆ ตามเหมาะสม — ไม่ถี่เกินไปและไม่นานเกินไป พิจารณาเมื่อ: งานมีความเสี่ยงสูง, ทำการเปลี่ยนแปลงเยอะ, จบ sub-task สำคัญ, หรือต้องการบันทึก progress ก่อนขั้นตอนใหญ่ถัดไป
+- ทำ `/ship` หลังเสร็จงานเสมอ เพื่อสรุปและส่งมอบงาน
 
 ### 8. Report And Communicate
 รายงานผลลัพธ์และสื่อสาร
@@ -174,7 +187,8 @@ related_workflows:
 
 ### 11. Code Quality
 - แก้ที่ root cause ไม่ใช่ symptoms ใช้ minimal upstream fixes
-- ห้ามแก้เกินความจำเป็น ถ้าไม่แน่ใจให้ debug ก่อน
+- ทำ `/dont-over-engineer` เพื่อหลีกเลี่ยงการแก้เกินความจำเป็น ถ้าไม่แน่ใจให้ debug ก่อน
+- ทำ `/follow-software-engineering` เพื่อออกแบบ architecture ที่ test ง่าย scale ง่าย
 - ทำตาม existing style ของ codebase
 - ห้ามเปลี่ยน code ที่ไม่เกี่ยวข้อง
 - ห้ามลบหรือเพิ่ม comments โดยไม่จำเป็น

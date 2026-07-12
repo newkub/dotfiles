@@ -2,7 +2,7 @@
 title: Benchmark Competitors
 description: ศึกษาคู่แข่งและปรับปรุงจนดีกว่าในทุกมิติ
 auto_execution_mode: 3
-related_workflows:
+related:
   - /deep-research
   - /plan
   - /ship

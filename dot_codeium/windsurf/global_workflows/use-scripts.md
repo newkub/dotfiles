@@ -2,7 +2,7 @@
 title: Use Scripts
 description: สร้าง scripts สำหรับ automate งานด้วย Bun native APIs, pwsh, หรือ ast-grep
 auto_execution_mode: 3
-related_workflows:
+related:
   - /use-bun-shell
   - /use-ast-grep
   - /follow-gitignore

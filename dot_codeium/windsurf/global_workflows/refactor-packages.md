@@ -2,7 +2,7 @@
 title: Refactor Packages
 description: Refactor packages ให้มี single responsibility และแนะนำ packages ที่เหมาะสม
 auto_execution_mode: 3
-related_workflows:
+related:
   - /refactor-modules
   - /edit-relative
   - /follow-code-quality

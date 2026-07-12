@@ -2,7 +2,7 @@
 title: Follow Test
 description: ตั้งค่าและใช้งาน testing strategies ครบวงจรตามมาตรฐาน
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-tasks
   - /write-test
   - /run-test

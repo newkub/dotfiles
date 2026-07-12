@@ -2,7 +2,7 @@
 title: Setup Knip
 description: Setup Knip for detecting unused files, dependencies, and exports
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-code-quality
 ---
 

@@ -2,7 +2,7 @@
 title: Improve Debugging
 description: ทำให้โค้ด debug ง่ายด้วย logging, error messages, และ clear naming
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-workflows
   - /follow-code-quality
   - /improve-error-handling

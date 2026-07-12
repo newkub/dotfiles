@@ -2,7 +2,7 @@
 title: Follow Vite
 description: แนวทางการพัฒนาด้วย Vite 7+ build tool สำหรับ modern web applications
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-typescript
   - /follow-tsdown
   - /follow-unocss

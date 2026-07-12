@@ -2,7 +2,7 @@
 title: Commit And Push
 description: Commit ไฟล์และ push ไปยัง remote repository
 auto_execution_mode: 3
-related_workflows:
+related:
   - /commit
   - /git-push
   - /edit-relative

@@ -2,7 +2,7 @@
 title: Run Deploy
 description: Deploy application ไปยัง platform ที่กำหนด
 auto_execution_mode: 3
-related_workflows:
+related:
   - /run-verify
   - /run-build
   - /deploy-to-vercel
@@ -10,10 +10,9 @@ related_workflows:
   - /deploy-to-railway
   - /watch-browser
   - /run-test-browser
-  - /analyze-backup-recovery
+  - /deep-review
   - /resolve-errors
 ---
-
 
 ## Goal
 
@@ -73,7 +72,7 @@ Deploy application ตาม platform ที่ใช้
 
 เตรียม rollback procedure และตรวจสอบ backup
 
-1. ทำ `/analyze-backup-recovery` เพื่อตรวจสอบ backup strategy ก่อน deploy
+1. ทำ `/deep-review` เพื่อตรวจสอบ backup strategy ก่อน deploy
 2. เตรียม rollback procedure ชัดเจนก่อน deploy
 3. ตรวจสอบว่า deploy เป็น zero-downtime (ถ้าต้องการ)
 4. ถ้า deploy ล้มเหลว ให้ rollback ทันทีและทำ `/resolve-errors`

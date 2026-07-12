@@ -2,7 +2,7 @@
 title: Playwright Configuration
 description: ติดตั้งและตั้งค่า Playwright สำหรับ E2E testing
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-vitest
   - /follow-typescript
   - /write-test

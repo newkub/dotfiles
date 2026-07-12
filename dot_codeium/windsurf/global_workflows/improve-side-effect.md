@@ -2,7 +2,7 @@
 title: Improve Side Effect
 description: ปรับปรุงการจัดการ side effects ด้วย functional programming patterns
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-functional-programming
   - /follow-functional-core-imperative-shell
   - /follow-code-quality

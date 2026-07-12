@@ -2,7 +2,7 @@
 title: UnoCSS
 description: ติดตั้งและตั้งค่า UnoCSS v66 พร้อม presetWind4 และ transformers
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-unocss-theme
   - /follow-vite
   - /follow-typescript

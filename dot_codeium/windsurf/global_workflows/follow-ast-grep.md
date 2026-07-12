@@ -3,7 +3,7 @@ title: Follow Ast Grep
 description: ตั้งค่าและใช้งาน ast-grep สำหรับ code search, lint และ transformation ด้วย AST patterns
 auto_execution_mode: 3
 url: https://ast-grep.github.io/
-related_workflows:
+related:
   - /follow-best-practice
   - /deep-research
   - /update-ast-grep-rules

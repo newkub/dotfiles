@@ -2,7 +2,7 @@
 title: Vitest Configuration
 description: ติดตั้งและตั้งค่า Vitest 4 สำหรับ unit testing ด้วย Vite
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-vite
   - /follow-typescript
   - /write-test

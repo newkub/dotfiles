@@ -2,7 +2,7 @@
 title: Edit Relative
 description: อัปเดท references ทั้งหมดเมื่อแก้ไข ย้าย หรือลบไฟล์ ครอบคลุมทุกตำแหน่ง
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-content-quality
   - /write-global-workflows
   - /follow-consistency

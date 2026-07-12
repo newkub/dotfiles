@@ -2,10 +2,9 @@
 title: Follow Biome
 description: ตั้งค่าและใช้งาน Biome สำหรับ linting และ formatting แทน ESLint/Prettier
 auto_execution_mode: 3
-related_workflows:
+related:
   - /follow-code-quality
 ---
-
 ตั้งค่า Biome เป็นเครื่องมือหลักสำหรับ linting และ formatting แทน ESLint/Prettier
 
 ## Goal

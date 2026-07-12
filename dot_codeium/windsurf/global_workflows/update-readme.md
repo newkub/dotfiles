@@ -2,7 +2,7 @@
 title: Update Readme
 description: สร้าง README.md ครบถ้วนด้วย template มาตรฐานและข้อมูลจริงจากโปรเจกต์
 auto_execution_mode: 3
-related_workflows:
+related:
   - /analyze-project
   - /all-workspaces
   - /follow-content-quality

@@ -2,13 +2,13 @@
 title: Test Usage
 description: ทดสอบการใช้งานรูปแบบต่างๆ เช่น CLI, API, Browser, SDK, TUI อย่างเป็นระบบ
 auto_execution_mode: 3
-related_workflows:
+related:
   - /test-cli
   - /run-test
   - /run-test-browser
   - /run-test-coverage
   - /write-test
-  - /analyze-test-result
+  - /deep-review
   - /validate-test
   - /record-terminal
   - /capture-terminal
@@ -110,7 +110,7 @@ related_workflows:
 ### 10. Record And Report
 
 1. ทำ `/record-terminal` และ `/capture-terminal` เพื่อบันทึก test execution และ screenshots
-2. ทำ `/analyze-test-result` เพื่อวิเคราะห์ผล test execution
+2. ทำ `/deep-review` เพื่อวิเคราะห์ผล test execution
 3. ทำ `/report` สรุปผลลัพธ์ด้วย `/report-format-table` และ `/report-format-terminal`
 
 ## Rules

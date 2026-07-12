@@ -37,3 +37,5 @@ f75387da1a1cf10d49343f658de9efb76715a862 4d639b34d7047f0d93b90d91a882013666e7528
 3f8ef8b3b9e9537a3d88055c944b82696414c6a2 ac38df7244059a07506f26545e3a56c9be18e5ce newkub <newkubise@gmail.com> 1783756737 +0700	commit: fix: update review-codebase-and-fix, follow-agents-md, write-global-workflows workflows
 ac38df7244059a07506f26545e3a56c9be18e5ce 2e0c59cc22bdca46d5d923005cbdf6d16f55e4a9 newkub <newkubise@gmail.com> 1783757134 +0700	commit: feat: add /pondering to 7 workflows with high-impact decision points
 2e0c59cc22bdca46d5d923005cbdf6d16f55e4a9 f9e0932f77d730710442905282fb8567ad7d3e96 newkub <newkubise@gmail.com> 1783763270 +0700	commit: refactor(workflow): add /analyze-type-safety as step 0 in /improve-type-safety
+f9e0932f77d730710442905282fb8567ad7d3e96 5e63be47c48d323b66be82cdffef57a6bcd29f45 newkub <newkubise@gmail.com> 1783791603 +0700	commit: refactor: deduplicate /ship with /review-codebase-everything
+5e63be47c48d323b66be82cdffef57a6bcd29f45 790c410ffe2501685c985c8e7fc4ca32a8275c76 newkub <newkubise@gmail.com> 1783792265 +0700	commit: feat: require title and description in frontmatter for all .devin/rules files
