@@ -3,6 +3,7 @@ title: Global Rules
 description: Execution guidelines สำหรับการทำงานทุก task ตามมาตรฐาน
 auto_execution_mode: 3
 related_workflows:
+  - /review-codebase-everything
   - /follow-workflows
   - /follow-skills
   - /read-related-workflows
@@ -13,6 +14,7 @@ related_workflows:
   - /code-search
   - /resolve-errors
   - /refactor
+  - /restructure
   - /edit-relative
   - /edit-manual
   - /plan
@@ -94,6 +96,7 @@ related_workflows:
 ### 6. Write Code
 เขียนและแก้ไข code ตามมาตรฐาน
 - ทำ `/refactor` ก่อนเขียน code
+- ทำ `/restructure` เมื่อต้องปรับ physical file/folder structure
 - ทำ `/follow-architecture` เมื่อแก้ไข
 - ถ้าแก้ไขไฟล์มากกว่า 10 ไฟล์ ให้ทำ `/use-scripts`
 - ถ้าเจอไฟล์ที่ยาวกว่า 250 บรรทัด ให้จดไว้ก่อน แล้วทำ `/refactor` หลังจบ task

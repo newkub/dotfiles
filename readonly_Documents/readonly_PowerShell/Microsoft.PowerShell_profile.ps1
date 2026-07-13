@@ -401,29 +401,4 @@ function cpo {
 # ==============================================================================
 
 
-function loc {
-    param([int]$threshold = 200, [string]$path = ".")
-    $files = fd -t f --ignore-vcs $path
-    $longFiles = @()
-    foreach ($file in $files) {
-        try {
-            $lineCount = (Get-Content $file -ErrorAction SilentlyContinue).Count
-            if ($lineCount -gt $threshold) {
-                $longFiles += [PSCustomObject]@{
-                    Filename = $file
-                    Lines = $lineCount
-                }
-            }
-        } catch {
-            # Skip files that can't be read
-        }
-    }
-    if ($longFiles.Count -eq 0) {
-        Write-Host "No files with more than $threshold lines found." -ForegroundColor Green
-    } else {
-        Write-Host "Files with more than $threshold lines:" -ForegroundColor Yellow
-        $longFiles | Sort-Object Lines -Descending | Format-Table -AutoSize
-    }
-}
-
 (&mise activate pwsh) | Out-String | Invoke-Expression

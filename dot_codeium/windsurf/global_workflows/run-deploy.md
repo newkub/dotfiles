@@ -1,26 +1,29 @@
 ---
 title: Run Deploy
-description: Deploy application ไปยัง platform ที่กำหนด
+description: Deploy application ไปยัง platform ที่กำหนด พร้อม commit, push และ watch จน live
 auto_execution_mode: 3
 related:
   - /run-verify
   - /run-build
-  - /deploy-to-vercel
-  - /deploy-to-cloudflare
+  - /follow-vercel
+  - /follow-cloudflare-worker
   - /deploy-to-railway
   - /watch-browser
   - /run-test-browser
   - /deep-review
   - /resolve-errors
+  - /commit
+  - /git-push
+  - /loop-until-complete
 ---
 
 ## Goal
 
-Deploy application ไปยัง platform ที่กำหนดตามมาตรฐาน พร้อม post-deploy validation และ rollback procedure
+Deploy application ไปยัง platform ที่กำหนด พร้อม post-deploy validation, commit/push และ watch browser จนกว่า deployment จะ live
 
 ## Scope
 
-ครอบคลุมการ verify, build, deploy, post-deploy validation และ rollback & recovery
+ครอบคลุมการ verify, build, deploy, commit/push, post-deploy validation, watch until live และ rollback & recovery
 
 ## Execute
 
@@ -44,13 +47,20 @@ Build application สำหรับ deployment
 
 Deploy application ตาม platform ที่ใช้
 
-1. สำหรับ Vercel: ทำ `/deploy-to-vercel`
-2. สำหรับ Cloudflare: ทำ `/deploy-to-cloudflare`
+1. สำหรับ Vercel: ทำ `/follow-vercel`
+2. สำหรับ Cloudflare: ทำ `/follow-cloudflare-worker`
 3. สำหรับ Railway: ทำ `/deploy-to-railway`
 4. สำหรับ platform อื่น: ทำตาม workflow ที่เกี่ยวข้อง
 5. ตรวจสอบว่า deploy สำเร็จ
 
-### 4. Verify Deployment
+### 4. Commit And Push
+
+Commit และ push changes ไปยัง repository
+
+1. ทำ `/commit`
+2. ทำ `/git-push`
+
+### 5. Verify Deployment
 
 ตรวจสอบว่า deployment ทำงานได้
 
@@ -59,7 +69,17 @@ Deploy application ตาม platform ที่ใช้
 3. ตรวจสอบ logs ว่าไม่มี error
 4. ทำ `/watch-browser` ถ้ามี URL
 
-### 5. Post-Deploy Validation
+### 6. Watch Until Live
+
+Watch deployment ด้วย browser จนกว่าจะ live
+
+1. ทำ `/watch-browser` ด้วย deployment URL
+2. ตรวจสอบว่า page load สำเร็จ
+3. ตรวจสอบ console errors และ network errors
+4. ทำ `/resolve-errors` ถ้าพบปัญหา
+5. ทำ `/loop-until-complete` จนกว่า deployment live สำเร็จ
+
+### 7. Post-Deploy Validation
 
 ตรวจสอบ deployment อย่างละเอียดหลัง deploy
 
@@ -68,7 +88,7 @@ Deploy application ตาม platform ที่ใช้
 3. ตรวจสอบ error logs หลัง deploy 5-10 นาที
 4. ถ้าพบ critical errors ให้ทำ rollback ทันที และทำ `/resolve-errors`
 
-### 6. Rollback & Recovery
+### 8. Rollback And Recovery
 
 เตรียม rollback procedure และตรวจสอบ backup
 
@@ -97,21 +117,27 @@ Deploy application ตาม platform ที่ใช้
 - ต้อง deploy สำเร็จ
 - ตรวจสอบ deployment status
 
-### 4. Verification
+### 4. Commit And Push
 
-- ต้องเปิด URL และตรวจสอบ
-- Application ต้องทำงานได้
-- ไม่มี error ใน logs
-- ใช้ `/watch-browser` ถ้ามี URL
+- Deploy ก่อน commit/push ถ้าจำเป็น
+- Commit/push หลังจาก deploy สำเร็จ
+- Watch browser หลังจากได้ deployment URL
 
-### 5. Post-Deploy Validation
+### 5. Watch Until Live
+
+- ใช้ `/watch-browser` สำหรับ monitoring
+- ใช้ `/resolve-errors` เมื่อพบปัญหา
+- ตรวจสอบ console และ network errors
+- ทำ `/loop-until-complete` จนกว่า deployment live
+
+### 6. Post-Deploy Validation
 
 - ต้องทดสอบ critical paths หลัง deploy
 - ต้องตรวจสอบ health endpoint
 - ต้องตรวจสอบ error logs หลัง deploy 5-10 นาที
 - ถ้าพบ critical errors ให้ rollback ทันที
 
-### 6. Rollback & Recovery
+### 7. Rollback And Recovery
 
 - ต้องเตรียม rollback procedure ก่อน deploy
 - ต้องตรวจสอบ backup strategy ก่อน deploy
@@ -121,9 +147,10 @@ Deploy application ตาม platform ที่ใช้
 ## Expected Outcome
 
 - Application ถูก deploy สำเร็จ
+- Changes committed และ pushed แล้ว
 - URL สามารถเข้าถึงได้
 - Application ทำงานได้ปกติ
-- ไม่มี error ที่เกิดขึ้น
+- ไม่มี console หรือ network errors
 - Post-deploy validation ผ่าน (smoke test, health check, logs)
 - Rollback procedure พร้อมใช้งาน
 - Backup strategy ถูกตรวจสอบก่อน deploy
