@@ -5,9 +5,13 @@ auto_execution_mode: 3
 ---
 
 
-## Prompt
+## Goal
 
 สร้างหรือปรับปรุง Vue/Nuxt Composables ให้มีคุณภาพสูง
+
+## Scope
+
+ใช้สำหรับ project ที่ใช้ Vue/Nuxt composables
 
 ## Execute
 
@@ -110,3 +114,11 @@ export function useBookingList() {
 
   return { bookings, isLoading, error, refresh, sorted }
 }
+
+## Expected Outcome
+
+- Composables มีคุณภาพสูง
+- ใช้ `use` prefix
+- มี type safety
+- มี reactivity ที่ถูกต้อง
+- ไม่มี mock data

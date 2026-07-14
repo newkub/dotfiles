@@ -5,6 +5,14 @@ auto_execution_mode: 3
 ---
 
 
+## Goal
+
+ตั้งค่าและใช้งาน dprint สำหรับ formatting code หลายภาษาด้วย pluggable architecture
+
+## Scope
+
+ใช้สำหรับ project ที่ต้องการ code formatting หลายภาษา
+
 ## Execute
 
 1. Precondition Check
@@ -99,4 +107,11 @@ auto_execution_mode: 3
 - ต้องใช้ lineWidth: 100 สำหรับ TypeScript
 - ต้องใช้ quoteStyle: alwaysSingle สำหรับ TypeScript
 - ต้องใช้ semiColons: asi สำหรับ TypeScript
+
+## Expected Outcome
+
+- dprint ติดตั้งและกำหนดค่าใน project
+- รองรับหลายภาษาด้วย pluggable architecture
+- มี `dprint.json` พร้อม plugins และ config
+- มี format script ใน package.json
 

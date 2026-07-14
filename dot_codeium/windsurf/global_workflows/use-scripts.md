@@ -15,7 +15,11 @@ related:
 
 ## Scope
 
-ใช้สำหรับสร้าง scripts ใน `.devin/scripts/temp/` ใน workspace เท่านั้น
+ใช้สำหรับสร้าง scripts ใน 3 ที่ใน workspace:
+
+1. `temp/` — scripts ชั่วคราวที่ workspace root (throwaway, ถูก ignore โดย .gitignore)
+2. `.devin/scripts/` — scripts ถาวรที่เก็บไว้ใช้ซ้ำ (committed, ไม่ลบ)
+3. `.devin/scripts/temp/` — scripts ชั่วคราวใน .devin (ถูก ignore โดย .gitignore, ลบหลังใช้)
 
 ## Execute
 
@@ -32,7 +36,10 @@ related:
 
 ### 3. Create Script
 
-1. สร้างไฟล์ script ตาม Rules ในหมวด File Location
+1. เลือก location ตาม Rules ในหมวด File Location:
+   - `temp/` — สำหรับ scripts ชั่วคราวที่ workspace root (throwaway)
+   - `.devin/scripts/` — สำหรับ scripts ถาวรที่ต้องการเก็บไว้ใช้ซ้ำ
+   - `.devin/scripts/temp/` — สำหรับ scripts ชั่วคราวใน .devin (default)
 2. เขียนแบบ composable: `createScript()` return state + actions
 3. ดูรายละเอียด Bun APIs จาก `/use-bun-shell`
 4. ดูรายละเอียด ast-grep จาก `/use-ast-grep`
@@ -46,23 +53,28 @@ related:
 
 ### 5. Execute and Cleanup
 
-1. รัน script ด้วย `bun run .devin/scripts/temp/<script>.ts` สำหรับ Bun scripts
-2. รัน script ด้วย `pwsh .devin/scripts/temp/<script>.ps1` สำหรับ PowerShell scripts
+1. รัน script ด้วย `bun run <location>/<script>.ts` สำหรับ Bun scripts
+2. รัน script ด้วย `pwsh <location>/<script>.ps1` สำหรับ PowerShell scripts
 3. รัน script ด้วย `ast-grep scan` สำหรับ ast-grep rules
-4. ลบ scripts จาก `.devin/scripts/temp/` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
+4. ลบ scripts จาก `temp/` และ `.devin/scripts/temp/` หลังใช้งานเสร็จ (สำคัญ: ต้องลบทุกครั้งหลังใช้งาน)
+5. ไม่ลบ scripts ใน `.devin/scripts/` — เก็บไว้สำหรับใช้ซ้ำ
 
 ## Rules
 
 ### File Location
 
-ตำแหน่งไฟล์สำหรับเก็บ scripts ใน workspace
+ตำแหน่งไฟล์สำหรับเก็บ scripts ใน workspace แบ่งเป็น 3 ที่:
 
 ```
-.devin/scripts/temp/            # สร้าง scripts ที่นี่ (ถูก ignore โดย .gitignore)
+temp/                           # scripts ชั่วคราวที่ workspace root (throwaway, gitignored)
+.devin/scripts/                 # scripts ถาวร (committed, เก็บไว้ใช้ซ้ำ)
+.devin/scripts/temp/            # scripts ชั่วคราวใน .devin (gitignored, ลบหลังใช้)
 ```
 
-- สร้าง scripts เฉพาะใน `.devin/scripts/temp/` ใน workspace เท่านั้น
-- ต้องเพิ่ม `.devin/scripts/temp/` ใน `.gitignore` ของทุก project
+- `temp/` — สำหรับ scripts ชั่วคราวที่ไม่ต้องการเก็บ ใช้แล้วลบ
+- `.devin/scripts/` — สำหรับ scripts ถาวรที่ต้องการ reuse และ commit
+- `.devin/scripts/temp/` — สำหรับ scripts ชั่วคราวใน .devin (default location)
+- ต้องเพิ่ม `temp/` และ `.devin/scripts/temp/` ใน `.gitignore` ของทุก project
 - ใช้ `.ts` สำหรับ Bun scripts
 - ใช้ `.ps1` สำหรับ PowerShell scripts
 - ตั้งชื่อสื่อถึงการทำงาน พร้อม prefix `wrikka-` เพื่อหลีกเลี่ยงการชนกับไฟล์อื่น
@@ -171,13 +183,15 @@ Libraries สำหรับ CLI scripts (ใช้ CDN imports `https://esm.sh/
 - เขียนแบบ composable: `createScript()` return state + actions
 - ใช้ CDN imports สำหรับ external dependencies
 - รองรับ dry run mode เสมอ
-- ลบ scripts หลังใช้งาน
+- ลบ scripts จาก `temp/` และ `.devin/scripts/temp/` หลังใช้งาน
+- ไม่ลบ scripts ใน `.devin/scripts/` — เก็บไว้สำหรับใช้ซ้ำ
 
 ## Expected Outcome
 
 - Scripts ที่ใช้งานได้จริง ด้วย Bun native APIs, pwsh, หรือ ast-grep
 - ไม่ต้อง install dependencies สำหรับ Bun scripts
-- Scripts ใน `.devin/scripts/temp/` ใน workspace เท่านั้น (ถูก ignore โดย .gitignore)
-- Scripts ที่ใช้แล้วลบออก
+- Scripts ใน `temp/`, `.devin/scripts/`, หรือ `.devin/scripts/temp/` ใน workspace
+- Scripts ใน `temp/` และ `.devin/scripts/temp/` ถูก ignore โดย .gitignore และลบหลังใช้งาน
+- Scripts ใน `.devin/scripts/` เก็บไว้สำหรับใช้ซ้ำ (committed)
 - Dry run mode สำหรับทดสอบก่อน execute จริง
 

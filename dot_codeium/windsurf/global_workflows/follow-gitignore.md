@@ -1,142 +1,104 @@
 ---
 title: Follow Gitignore
-description: สร้างและจัดการ .gitignore ตามประเภทโปรเจกต์
+description: สร้างและจัดการ .gitignore ที่ root และ workspace โดยแจกจ่าย patterns ตาม responsibility
 auto_execution_mode: 3
 related:
-  - /use-scripts
-  - /follow-content-quality
+  - /relocation
+  - /edit-relative
 ---
 
 ## Goal
 
-สร้าง .gitignore ที่ครอบคลุมตามประเภทโปรเจกต์เพื่อป้องกันการ commit ไฟล์ที่ไม่จำเป็น
+สร้าง .gitignore ที่ครอบคลุมโดยแจกจ่าย patterns ระหว่าง root และ workspace ตาม responsibility เพื่อป้องกัน commit ไฟล์ที่ไม่จำเป็น
 
 ## Scope
 
-สร้าง .gitignore สำหรับ projects และ monorepos
+สร้างและจัดการ .gitignore สำหรับ projects และ monorepos ทั้งที่ root และแต่ละ workspace
 
 ## Execute
 
-### 1. Analyze Project
+### 1. Read All Gitignore Files
 
-1. ทำ `/analyze-project` เพื่อดูภาพรวมโปรเจกต์
-2. ตรวจสอบโครงสร้างโปรเจกต์ (package.json, Cargo.toml, go.mod, pyproject.toml)
-3. ระบุประเภทโปรเจกต์และ tools ที่ใช้จริง
+อ่าน .gitignore ทั้งหมดที่มีอยู่เพื่อเข้าใจสถานะปัจจุบันก่อนแก้ไข
 
-### 2. Create Gitignore
+> Goal: รู้ patterns ที่มีอยู่ในทุก .gitignore ทุกระดับ
 
-1. สร้าง .gitignore ที่ root ของ workspace
-2. เพิ่ม patterns ตามประเภทโปรเจกต์ (ดู Rules)
-3. เพิ่ม patterns ตาม tools ที่ใช้จริงเท่านั้น
+1. ค้นหาไฟล์ .gitignore ทั้งหมดใน project (root + workspace + subdirectories)
+2. อ่าน .gitignore ทุกไฟล์พร้อมกัน
+3. ถ้าไม่มี .gitignore ที่ root → ถือว่าเริ่มใหม่
 
-ตัวอย่าง .gitignore:
+### 2. Analyze Project
 
-```gitignore
-# Dependencies
-node_modules/
+วิเคราะห์ tools และ workspaces เพื่อระบุ patterns ที่จำเป็น
 
-# Build
-dist/
-build/
-.next/
-.nuxt/
-.output/
-nitro/
+> Goal: รู้ประเภทโปรเจกต์ tools และ workspace ที่ต้องมี .gitignore
 
-# TypeScript
-*.tsbuildinfo
+1. ตรวจสอบ manifest files (package.json, Cargo.toml, go.mod, pyproject.toml)
+2. ระบุ tools ที่ใช้จริงในแต่ละ workspace
+3. สำหรับ monorepo → ระบุแต่ละ workspace และ tools เฉพาะ
 
-# Build Tools
-.turbo/
-.vite/
-.swc/
-.vinxi/
-.solid/
-.svelte-kit/
-.moon/
+### 3. Distribute Patterns
 
-# Linter Cache
-.eslintcache
-.prettiercache
-.biome/
-.oxlint/
-node_modules/.cache/
-node_modules/.moon/
+แจกจ่าย patterns ระหว่าง root และ workspace ตามหลักการ `/relocation` — shared ไป root, specific ไป workspace
 
-# Testing
-coverage/
-vitest.config.ts.timestamp-*
+> Goal: แต่ละ pattern อยู่ใน .gitignore ที่เหมาะสม ไม่ซ้ำกัน
 
-# Environment
-.env*
+1. ระบุ shared patterns (ใช้กับหลาย workspace) → ใส่ใน root .gitignore
+2. ระบุ workspace-specific patterns (ใช้กับ workspace เดียว) → ย้ายไป .gitignore ของ workspace นั้น (ทำ `/relocation`)
+3. สำหรับ monorepo → ใช้ recursive patterns ที่ root (เช่น `apps/*/node_modules/`)
+4. เพิ่มเฉพาะ patterns ของ tools ที่ project ใช้จริง
+5. ถ้า workspace ไม่มี patterns เฉพาะ → ไม่ต้องสร้าง .gitignore
 
-# Logs
-*.log
+### 4. Validate
 
-# OS
-.DS_Store
-Thumbs.db
+ตรวจสอบว่า patterns ทำงานถูกต้องและไม่มีไฟล์ที่ไม่ควร commit ถูกติดตาม
 
-# Temporary files
-*.tmp
-*.temp
-.cache/
-.**/temp/
-.devin/scripts/temp/
+> Goal: ทุก pattern ทำงานถูกต้อง ไม่มีไฟล์รั่ว
 
-# IDE
-.vscode/
-.idea/
-```
-
-### 3. Validate
-
-1. ทำ `/follow-content-quality` เพื่อตรวจสอบคุณภาพเนื้อหา
-2. ทดสอบด้วย `git check-ignore <file>`
-3. ทำ `/update-reference` หากมี file operations
+1. ตรวจสอบว่าไม่มี patterns ซ้ำกันระหว่าง root และ workspace
+2. ทดสอบด้วย `git check-ignore <file>` สำหรับไฟล์ที่ควรถูก ignore
+3. ตรวจสอบว่าไม่มีไฟล์ที่ไม่ควร commit ถูก tracked โดย Git
+4. ทำ `/edit-relative` หากมี file operations
 
 ## Rules
 
-### 1. File Structure
+### 1. Pattern Distribution
 
-- ต้องมี .gitignore ที่ root ของ workspace เสมอ
-- **Monorepo**: ต้องมี .gitignore แค่ที่ root เท่านั้น ห้ามมี .gitignore ใน sub-directories
+- Root .gitignore: shared patterns (dependencies, build, OS, IDE, logs, env, testing, temporary)
+- Workspace .gitignore: workspace-specific patterns (framework outputs, generated files, platform artifacts)
+- ห้ามซ้ำ patterns ระหว่าง root และ workspace — ถ้า root ครอบคลุมแล้ว → ไม่ต้องใส่ใน workspace
+- ถ้า pattern ใช้กับหลาย workspace → ย้ายไป root ด้วย recursive pattern
+- ถ้า pattern ใช้กับ workspace เดียว → ใส่ใน .gitignore ของ workspace นั้น
 
-### 2. Patterns by Project Type
+### 2. Selective Addition
 
-- Node.js: node_modules/, .pnp, .pnp.js, npm/yarn logs
-- Rust: target/, Cargo.lock (root only), **/*.rs.bk, .rustc_info.json
-- Python: __pycache__/, *.pyc, .pytest_cache/, .venv/
-- Go: bin/, *.sum
-- Common: .env*, *.log, .DS_Store, Thumbs.db, desktop.ini
+- เพิ่มเฉพาะ patterns ที่ project ใช้จริง — ตรวจสอบ manifest files ว่ามี tools หรือไม่
+- ถ้าไม่ใช้ tool → ไม่ต้องใส่ patterns ของ tool นั้น
 
-### 3. Patterns by Tools
+### 3. Common Patterns
 
-- Temporary: *.tmp, *.temp, .cache/, .**/temp/, .devin/scripts/temp/ (จาก `/use-scripts`)
-- Build: dist/, build/, .next/, .nuxt/, .vite/, .turbo/, .swc/
-- Framework: .svelte-kit/, .astro/, .remix/, .parcel-cache/
-- Deployment: .vercel/, .netlify/, .wrangler/, .sst/, .amplify/, .firebase/
-- Linter Cache: .eslintcache, .prettiercache, .biome/, .oxlint/, node_modules/.cache/
-- TypeScript: *.tsbuildinfo
-- IDE: .vscode/, .idea/, *.sublime-*, .vim/, *.swp, *.swo, *~
+- Dependencies: `node_modules/`, `.pnp`, `.pnp.js`
+- Build: `dist/`, `build/`, `.output/`, `*.tsbuildinfo`
+- Build Tools: `.turbo/`, `.vite/`, `.swc/`, `.vinxi/`, `.solid/`
+- Linter Cache: `.eslintcache`, `.prettiercache`, `.biome/`, `.oxlint/`
+- Testing: `coverage/`, `test-results/`, `playwright-report/`
+- Environment: `.env*`, `!.env.example`, `.dev.vars`, `*.local`
+- Logs: `*.log`, `logs/`
+- OS: `.DS_Store`, `Thumbs.db`, `desktop.ini`
+- Temporary: `*.tmp`, `*.temp`, `.cache/`, `.**/temp/`
+- IDE: `.vscode/`, `.idea/`, `*.sublime-*`, `*.swp`, `*.swo`
 
 ### 4. Monorepo Guidelines
 
-- ใช้ .gitignore เดียวที่ root สำหรับทั้ง monorepo
-- ใช้ patterns แบบ recursive (เช่น `apps/*/target/`, `packages/*/node_modules/`)
-- สำหรับ Cargo.lock: track ที่ root แต่ ignore `apps/*/Cargo.lock` และ `packages/*/Cargo.lock`
-- ห้ามมี .gitignore ใน apps/, packages/, หรือ sub-workspaces
-
-### 5. Selective Addition
-
-- เพิ่มเฉพาะ patterns ที่ project ใช้จริง
-- ตรวจสอบ package.json หรือ Cargo.toml ว่ามี dependencies ของ tools หรือไม่
-- ถ้าไม่ใช้ tool → ไม่ต้องใส่ patterns ของ tool นั้น
+- Root .gitignore สำหรับ shared patterns ที่ใช้ร่วมกันทุก workspace
+- แต่ละ workspace มี .gitignore เฉพาะ patterns ที่ root ไม่ครอบคลุม
+- ใช้ recursive patterns ที่ root (เช่น `apps/*/bun.lock`)
+- ตัวอย่าง: `apps/mobile/android/` มี .gitignore สำหรับ Android artifacts, `apps/website/` มี .gitignore สำหรับ TanStack outputs
 
 ## Expected Outcome
 
-- มี .gitignore ที่เหมาะสมกับประเภทโปรเจกต์
+- Root .gitignore มีเฉพาะ shared patterns
+- แต่ละ workspace ที่มี patterns เฉพาะมี .gitignore ของตัวเอง
+- ไม่มี patterns ซ้ำกันระหว่าง root และ workspace
 - ไม่มีไฟล์ที่ไม่ควร commit ถูกติดตามโดย Git
-- โปรเจกต์สามารถทำงานได้ตามปกติหลังจาก ignore ไฟล์ที่ไม่จำเป็น
-- Monorepo มี .gitignore เดียวที่ root ที่ครอบคลุมทุก sub-workspaces
 

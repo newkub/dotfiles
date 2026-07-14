@@ -4,7 +4,11 @@ auto_execution_mode: 3
 title: Follow Drizzle
 ---
 
-## Purpose
+## Goal
+
+ตั้งค่าและใช้งาน Drizzle ORM สำหรับ TypeScript-first database operations ด้วย SQL-like syntax
+
+## Execute
 
 ตั้งค่า Drizzle ORM สำหรับ type-safe database operations ด้วย SQL-like syntax, zero dependencies และ excellent TypeScript support
 

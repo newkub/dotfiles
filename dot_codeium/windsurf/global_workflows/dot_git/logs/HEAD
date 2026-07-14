@@ -1,10 +1,3 @@
-0000000000000000000000000000000000000000 ba459781cf7cd3cde4bb06645939ce895bbf4ed5 newkub <newkubise@gmail.com> 1780886636 +0700	commit (initial): chore: initial commit
-ba459781cf7cd3cde4bb06645939ce895bbf4ed5 701e7f636ba85e945bebbaa211dac5689979743f newkub <newkubise@gmail.com> 1781070501 +0700	commit: refactor(workflows): rename optimize workflows remove follow- prefix
-701e7f636ba85e945bebbaa211dac5689979743f 961814984b247f318d62e7dd216b52dcb340a188 newkub <newkubise@gmail.com> 1781167577 +0700	commit: refactor: update refactor.md to comply with write-windsurf-global-workflows standard
-961814984b247f318d62e7dd216b52dcb340a188 1e7073a0f7995a4308e392ee64c65f16e15d0e9c newkub <newkubise@gmail.com> 1781167873 +0700	commit: docs: update hook paths from windspeed to devin
-1e7073a0f7995a4308e392ee64c65f16e15d0e9c 6bb629599802cd9858ce757db4229cf62796a16a newkub <newkubise@gmail.com> 1781193061 +0700	commit: feat: add framework-specific templates to follow-gitignore workflow
-6bb629599802cd9858ce757db4229cf62796a16a f4d8f3759be3baef93d9fff75f838fb44b0e5156 newkub <newkubise@gmail.com> 1781193553 +0700	commit: refactor: restructure and expand global workflows
-f4d8f3759be3baef93d9fff75f838fb44b0e5156 9762463414c1cc1fb4ff8791aa60ee7cd9db6c56 newkub <newkubise@gmail.com> 1781365309 +0700	commit: chore: update Moonrepo and Turborepo workflows with latest best practices
 9762463414c1cc1fb4ff8791aa60ee7cd9db6c56 4e8cee21e09bfd6e2edac9606df5a8c229fda456 newkub <newkubise@gmail.com> 1781492888 +0700	commit: refactor(workflows): merge and rename commit workflows
 4e8cee21e09bfd6e2edac9606df5a8c229fda456 4d6bcc3de383932f0579ec271cd67f49020f88c6 newkub <newkubise@gmail.com> 1781492963 +0700	commit: refactor(workflows): remove update references step from commit workflow
 4d6bcc3de383932f0579ec271cd67f49020f88c6 eca024d5e8aae2d8c071cb8645aab58042972d75 newkub <newkubise@gmail.com> 1781685132 +0700	commit: docs: update follow-zod with Zod v4 best practices
@@ -40,3 +33,8 @@ ac38df7244059a07506f26545e3a56c9be18e5ce 2e0c59cc22bdca46d5d923005cbdf6d16f55e4a
 f9e0932f77d730710442905282fb8567ad7d3e96 f9e0932f77d730710442905282fb8567ad7d3e96 newkub <newkubise@gmail.com> 1783784074 +0700	reset: moving to HEAD
 f9e0932f77d730710442905282fb8567ad7d3e96 5e63be47c48d323b66be82cdffef57a6bcd29f45 newkub <newkubise@gmail.com> 1783791603 +0700	commit: refactor: deduplicate /ship with /review-codebase-everything
 5e63be47c48d323b66be82cdffef57a6bcd29f45 790c410ffe2501685c985c8e7fc4ca32a8275c76 newkub <newkubise@gmail.com> 1783792265 +0700	commit: feat: require title and description in frontmatter for all .devin/rules files
+790c410ffe2501685c985c8e7fc4ca32a8275c76 ed2d473104888ebecb917c67480f1a8e11acddfa newkub <newkubise@gmail.com> 1783988063 +0700	commit: refactor: restructure global workflows with deep, review, roleplay, and report categories
+ed2d473104888ebecb917c67480f1a8e11acddfa 06ac91c27ca70bfca6a29b0ba85cb90dd8b4fbd2 newkub <newkubise@gmail.com> 1783988156 +0700	commit: fix: remove reversible field and fix BOM in follow-frontmatter-workflow
+06ac91c27ca70bfca6a29b0ba85cb90dd8b4fbd2 1ad7af733a5889e2251c9b6f8fba1e80891fc09e newkub <newkubise@gmail.com> 1783988196 +0700	commit: refactor: update frontmatter spec with safety mapping and validation checklist
+1ad7af733a5889e2251c9b6f8fba1e80891fc09e 424f361dac5053ab44456171943fc2e6b9c68afe newkub <newkubise@gmail.com> 1784017441 +0700	commit: refactor: update global workflows with full coverage rules and new workflows
+424f361dac5053ab44456171943fc2e6b9c68afe b42350fc4731c59d93004edb559330a430cef7ab newkub <newkubise@gmail.com> 1784031866 +0700	commit: refactor: standardize workflow structures and clean up redundant files

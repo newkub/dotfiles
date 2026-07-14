@@ -1,210 +1,206 @@
 ---
 title: Global Rules
-description: Execution guidelines สำหรับการทำงานทุก task ตามมาตรฐาน
+description: ลำดับการทำงานทุก task ให้ปลอดภัย ตรวจสอบได้ และส่งมอบครบ
 auto_execution_mode: 3
 related_workflows:
-  - /review-codebase-everything
+  - /edit-relative
+  - /continue
+  - /follow-your-suggestion
+  - /read-related-workflows
   - /follow-workflows
   - /follow-skills
-  - /read-related-workflows
-  - /follow-architecture
-  - /follow-content-quality
-  - /report
-  - /use-scripts
-  - /code-search
-  - /resolve-errors
-  - /refactor
-  - /restructure
-  - /edit-relative
-  - /edit-manual
-  - /plan
-  - /report-plan
-  - /realize-implementation
-  - /update-dot-devin
-  - /loop-until-complete
-  - /run-check
-  - /commit
-  - /follow-git-workflows
-  - /suggest-next-action
-  - /use-in-another-workflows
-  - /write-global-workflows
-  - /follow-config
   - /check-reference
   - /follow-best-practice
   - /learn-from-web
   - /deep-research
-  - /follow-your-suggestion
-  - /continue
-  - /try-again
-  - /deep-analyze-with-use-scripts
-  - /ask-me
+  - /use-scripts
+  - /plan
+  - /report-plan
+  - /deep-analyze-codebase
+  - /resolve-errors
   - /scan-codebase
-  - /report-format-table
-  - /idea
-  - /use-workflows
+  - /refactor
+  - /follow-architecture
+  - /write-global-workflows
   - /write-skills
+  - /follow-config
+  - /follow-barrel-export
+  - /restructure
+  - /run-check
+  - /loop-until-complete
+  - /realize-implementation
+  - /update-dot-devin
+  - /validate
+  - /commit
   - /ship
+  - /report
+  - /ask-me
+  - /idea
+  - /suggest-next-action
   - /dont-over-engineer
   - /follow-software-engineering
-  - /improve-all-skills
-  - /improve-all-workflows
-  - /improve-redundancy
-  - /improve-correctness
-  - /validate
-  - /review-by-ai
+  - /report-format-table
+  - /update-health-cli
+  - /report-before
 ---
 
 ## Goal
-ทำตาม execution guidelines ทุกครั้งเพื่อให้การทำงานสม่ำเสมอและมีคุณภาพ
+
+กำหนดลำดับการทำงานทุก task ให้ปลอดภัย ตรวจสอบได้ และส่งมอบครบ
 
 ## Scope
-ใช้สำหรับทุก workspace ในการทำงานทุก task
+
+ใช้กับทุก task และทุก workspace โดยปรับ tools ตาม ecosystem ที่ตรวจพบ
 
 ## Execute
 
 ### 1. Prepare Workspace
-ตั้งค่าและเตรียม workspace ก่อนเริ่ม task
-- การทำงานกับไฟล์ทุกอย่างต้องทำ `/edit-relative`
-- ใช้ `"."` สำหรับ `/continue` หรือ `/follow-your-suggestion`
+
+เตรียม workspace และขอบเขตงาน
+
+> Goal: ระบุ workspace ขอบเขต และ references ชัดเจน
+
+1. ทำ `/edit-relative` สำหรับงานที่เกี่ยวข้องกับไฟล์
+2. ใช้ `"."` เป็น target สำหรับ `/continue` หรือ `/follow-your-suggestion`
+3. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 
 ### 2. Read References
-อ่าน references ก่อนเริ่มทำงาน
-- ทำ `/read-related-workflows` เพื่ออ่าน workflows ที่เกี่ยวข้องทั้งหมดก่อนเริ่มทำงาน
-- ทำ `/follow-workflows` เพื่ออ่านและทำตาม workflows ทั้ง global และ project
-- ทำ `/follow-skills` เพื่ออ่านและใช้ skills ที่เหมาะสมกับ task
-- ทำ `/check-reference` เพื่อตรวจสอบ references ที่จะใช้มีอยู่จริง
+
+อ่าน workflows, skills และ references ก่อนวิเคราะห์หรือเขียน
+
+> Goal: ใช้ข้อกำหนดที่มีอยู่จริง ไม่ซ้ำซ้อน
+
+1. ทำ `/read-related-workflows` และ `/follow-workflows` สำหรับ global และ project workflows
+2. ทำ `/follow-skills` เพื่อเลือก skills ที่ตรงกับ task
+3. ทำ `/check-reference` เพื่อยืนยันว่า references มีอยู่จริง
+4. ถ้า reference จำเป็นไม่มี → stop และ report
 
 ### 3. Research And Learn
-เรียนรู้ best practices และ official docs ก่อนเริ่มงานที่ต้องความรู้ใหม่
-- ทำ `/follow-best-practice` สำหรับ topic ที่เกี่ยวข้อง
-- ทำ `/learn-from-web` เพื่อเรียนรู้จาก official documentation
-- ทำ `/deep-research` เมื่อต้องการข้อมูลลึกจาก multiple sources
 
-### 4. Analyze And Plan
-วิเคราะห์และวางแผนงาน
-- ใช้ `/use-scripts` สำหรับการวิเคราะห์
-- ทำ `/plan` ก่อนแก้ไขไฟล์จำนวนมาก
-- ก่อนลงมือทำ ให้ทำ `/report-plan` มาก่อน ตอบในแชท แล้วทำต่อได้เลย
-- ถ้าไฟล์ชื่อขึ้นต้นด้วย `analyze-` ให้ทำ `/deep-analyze-with-use-scripts`
-- ถ้ามี error ให้ทำ `/resolve-errors`
-- ทำ `/follow-your-suggestion` เพื่อ apply suggestions จากการวิเคราะห์ก่อนหน้า
+ค้นคว้าเฉพาะเมื่อ task ต้องใช้ความรู้ใหม่หรือข้อมูลภายนอก
 
-### 5. Search Code
-ค้นหา code patterns, symbols, หรือ references
-- ทำ `/code-search`
+> Goal: ข้อมูลถูกต้อง ทันสมัย มีแหล่งอ้างอิง
 
-### 6. Write Code
-เขียนและแก้ไข code ตามมาตรฐาน
-- ทำ `/refactor` ก่อนเขียน code
-- ทำ `/restructure` เมื่อต้องปรับ physical file/folder structure
-- ทำ `/follow-architecture` เมื่อแก้ไข
-- ถ้าแก้ไขไฟล์มากกว่า 10 ไฟล์ ให้ทำ `/use-scripts`
-- ถ้าเจอไฟล์ที่ยาวกว่า 250 บรรทัด ให้จดไว้ก่อน แล้วทำ `/refactor` หลังจบ task
-- Mock ให้ comment `// MOCK` และแยกไฟล์ไป `mock/`
-- ยังทำไม่เสร็จให้ comment `// TODO`
-- ห้าม mock หรือ TODO โดยไม่จำเป็น
-- ถ้าแก้ไข workflows ให้ทำ `/write-global-workflows`
-- ถ้าแก้ไข `global_rules.md` ให้ทำ `/write-global-workflows`
-- ถ้าแก้ไข skills ให้ทำ `/write-skills`
-- ถ้าแก้ไข config file ให้ทำ `/follow-config`
+1. ทำ `/follow-best-practice` สำหรับ topic, tool หรือ library ที่เกี่ยวข้อง
+2. ทำ `/learn-from-web` โดยให้ official docs เป็นแหล่งหลัก
+3. ทำ `/deep-research` เมื่อต้อง cross-check หลายแหล่งหรือมีความเสี่ยงสูง
+4. ถ้าตรวจสอบข้อมูลสำคัญไม่ได้ → ระบุความไม่แน่นอนและ stop ก่อนเปลี่ยนแปลงที่เสี่ยง
 
-### 7. Iterate And Complete
-ทำซ้ำจน implement เสร็จ
-- กลับไปตรวจสอบ planning เรื่อยๆ
-- ทำ `/loop-until-complete` เมื่องานต้อง verify จนกว่าจะผ่านเงื่อนไข
-- ทำ `/realize-implementation` หลังเสร็จงานเสมอ
-- ถ้ามีการเปลี่ยนแปลง package manifest ให้ทำ `/update-dot-devin` เสมอ
-- ทำ `/validate` ทุกครั้งก่อนจบ task เพื่อตรวจสอบความถูกต้อง คุณภาพ และความเหมาะสม
-- ทำ `/run-check` หลังจาก task เสมอ
-- ทำ `/commit` เป็นระยะๆ ตามเหมาะสม — ไม่ถี่เกินไปและไม่นานเกินไป พิจารณาเมื่อ: งานมีความเสี่ยงสูง, ทำการเปลี่ยนแปลงเยอะ, จบ sub-task สำคัญ, หรือต้องการบันทึก progress ก่อนขั้นตอนใหญ่ถัดไป
-- ทำ `/ship` หลังเสร็จงานเสมอ เพื่อสรุปและส่งมอบงาน
+### 4. Analyze Plan And Search
 
-### 8. Report And Communicate
-รายงานผลลัพธ์และสื่อสาร
-- ทำตาม `/report`
-- คุยกับผู้ใช้เป็นภาษาไทย กระชับ ตรงประเด็น
-- รายงานผลเป็น bullet points สั้นๆ
-- ไม่เริ่มตอบด้วย acknowledgment phrases
-- ไม่ถามผู้ใช้ยกเว้นกรณีเสี่ยงสูง ถ้าต้องถามให้ใช้ `/ask-me`
-- ถ้าผู้ใช้บอกว่า "ขอ idea" ให้ทำ `/idea`
+วิเคราะห์ context วางแผน และค้นหา code ก่อนแก้ไข
 
-### 9. Suggest Next Action And Cross-References
-พิจารณาการใช้ต่อหลังเสร็จงาน
-- ทำ `/suggest-next-action` เพื่อแนะนำ action ถัดไปที่ควรทำ
-- ทำ `/use-in-another-workflows` เพื่อพิจารณาว่า workflow หรือ skill ควรถูกอ้างอิงในไฟล์ใดบ้าง
+> Goal: ระบุ root cause, impact, consumers และแผนแก้ไขที่เล็กที่สุด
+
+1. ทำ `/report-before` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน แล้วดำเนินการต่อทันที
+2. ใช้ `/use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
+3. ทำ `/plan` ก่อนแก้ไขหลายไฟล์ และ `/report-plan` ก่อนลงมือ
+4. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `/deep-analyze-codebase`
+5. ทำ `/scan-codebase` เพื่อค้นหา symbols, call sites, consumers
+6. ทำ `/follow-your-suggestion` เมื่อ task ให้ apply ข้อเสนอจากการวิเคราะห์ก่อนหน้า
+7. ถ้าพบ error → ทำ `/resolve-errors`; ถ้าข้อกำหนดเสี่ยงสูงไม่ชัด → ใช้ `/ask-me`
+
+### 5. Write Code
+
+เขียนหรือ refactor โดยรักษา architecture, references และ public API
+
+> Goal: การเปลี่ยนแปลง minimal, runnable, สอดคล้องมาตรฐาน project
+
+1. อ่าน `/refactor` ก่อนเขียน code
+2. ทำ `/follow-architecture` และรักษา existing style
+3. ถ้าแก้ >10 ไฟล์ → ทำ `/use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `/refactor` หลังจบ task
+4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
+5. ถ้าแก้ workflows หรือ `global_rules.md` → ทำ `/write-global-workflows`; ถ้าแก้ skills → ทำ `/write-skills`
+6. ถ้าแก้ config → ทำ `/follow-config`; ถ้าแก้ barrel export → ทำ `/follow-barrel-export`
+7. หลังเขียนหรือ refactor → ทำ `/restructure` และ `/run-check`
+8. ถ้า check ไม่ผ่าน → ทำ `/resolve-errors` และ recheck สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report
+
+### 6. Validate And Complete
+
+ตรวจสอบ implementation จนผ่านเกณฑ์และพร้อมส่งมอบ
+
+> Goal: ไม่มี implementation gap, regression หรือ validation failure
+
+1. ทบทวนแผนและทำ `/loop-until-complete` เมื่อต้องตรวจซ้ำจนผ่าน
+2. ทำ `/realize-implementation` หลัง implementation เสร็จ
+3. ถ้า package manifest เปลี่ยน → ทำ `/update-dot-devin`
+4. ทำ `/validate` และ `/run-check` ก่อนจบ task
+5. ทำ `/commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
+6. ทำ `/ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
+
+### 7. Report And Communicate
+
+รายงานผลตาม evidence โดยกระชับและตรงสถานะจริง
+
+> Goal: ผู้ใช้ทราบสิ่งที่เปลี่ยน ผลตรวจสอบ ข้อจำกัด และสถานะส่งมอบ
+
+1. ทำตาม `/report` และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ
+2. ไม่เริ่มด้วย acknowledgment phrase และไม่กล่าวอ้างผลที่ยังไม่ตรวจสอบ
+3. ถ้าตัดสินใจเรื่องเสี่ยงสูง → ใช้ `/ask-me`; ถ้าผู้ใช้ขอ idea → ทำ `/idea`
+4. ถ้างานไม่สมบูรณ์ → ระบุสิ่งที่ค้าง สาเหตุ และขั้นตอนที่จำเป็น
+
+### 8. Update Cross-References
+
+ตรวจผลกระทบต่อ references และกำหนด action ถัดไป
+
+> Goal: ไม่มี broken references และมี next action ที่สอดคล้องผลลัพธ์
+
+1. ทำ `/deep-analyze-codebase` step 4-5 เพื่อระบุและเพิ่ม cross-references ที่ต้องอัปเดต
+2. ทำ `/suggest-next-action` เพื่อเสนอ action ถัดไปที่มี impact จริง
+3. ถ้าไม่พบ reference หรือ action ที่ต้องเปลี่ยน → report ว่าไม่ต้องดำเนินการเพิ่ม
 
 ## Rules
 
 ### 1. Structure And Consistency
-- `title`: Title Case ชัดเจน (ตรงกับ filename)
-- `description`: กระชับไม่เกิน 100 ตัวอักษร
-- `auto_execution_mode`: 3 เท่านั้น
-- ## Goal, ## Scope, ## Execute, ## Rules, ## Expected Outcome (required)
-- Goal สอดคล้องกับ Filename, Execute สอดคล้องกับ Goal และ Rules
-- Expected Outcome สอดคล้องกับ Goal
-- Execute ต้องให้ผลลัพธ์เหมือนกันทุกครั้ง ระบุลำดับการทำงานชัดเจน
-- ทุกไฟล์ต้องยาวไม่เกิน 250 บรรทัด
+
+- เรียง `## Goal` → `## Scope` → `## Execute` → `## Rules` → `## Expected Outcome` ไม่เกิน 250 บรรทัด
+- Frontmatter: `title` Title Case, `description` ≤100 ตัวอักษร, `auto_execution_mode: 3`
+- Execute: heading → description → `> Goal:` → numbered list; Rules: bullet list แต่ละหัวข้อมี single concern
+- ทุก section ต้องสอดคล้องกันและให้ผลเหมือนเดิมเมื่อ input เหมือนเดิม
 
 ### 2. Multi-Tool Compatibility
-- รองรับหลาย AI tools โดยใช้ relative references ไม่ผูกกับ tool เดียว
-- ตรวจจับ tool จาก directory structure ก่อนเขียน
-- ใช้ relative paths ใน workflow content ไม่ใช้ absolute paths ของ tool เฉพาะ
 
-### 3. Content And Style
-- หัวข้อภาษาอังกฤษ Title Case, รายการภาษาไทย
-- ทุก heading ใน Execute ต้องเป็นภาษาอังกฤษ Title Case
-- ใช้ bullet points (-) ชิดซ้ายใน Rules
-- ใช้ backticks สำหรับ `tools`, `commands`, `file paths`, `/workflow-name`
-- เขียนเป็นหลักการ how-to ไม่ใช่ step-by-step เฉพาะกรณี
+- ตรวจ ecosystem จาก `package.json`, `Cargo.toml`, `go.mod` ก่อนเลือก tools
+- ใช้ relative references และแปลง command equivalents ตาม ecosystem ไม่ผูกกับ AI tool เดียว
+- ใช้ `use-*` workflows สำหรับ tools/libraries เฉพาะเจาะจง และใช้ official docs เป็นแหล่งหลัก
 
-### 4. References And Non-Redundancy
-- ใช้ references แทนการ duplicate เนื้อหา
-- ทำ `/check-reference` เพื่อตรวจสอบ references มีอยู่จริง
-- ไม่ซ้ำซ้อนระหว่าง Execute และ Rules
-- Orchestrator workflow อ้างถึง sub-workflow โดยไม่ระบุรายละเอียดภายใน
+### 3. References And Automation
 
-### 5. Execution Ordering
-- เรียงลำดับ: Foundation ก่อน, High impact ก่อน, Dependencies ก่อน, Critical path ก่อน, Hard to change ก่อน, High risk เพื่อ fail fast
-- เขียน conditional execution สำหรับ steps ที่ไม่จำเป็นต้องทำทุก project ใช้ "ถ้ามี..." หรือ "ถ้า project มี..."
+- ใช้ references แทน duplicate และทำ `/check-reference` ก่อนใช้งาน
+- `related_workflows` ต้องมีเฉพาะ workflows ที่เรียกโดยตรง ไม่มี missing/unused
+- ใช้ `/use-scripts` เมื่อ >10 ไฟล์, pattern matching ต้องใช้ parser, metrics ต้อง aggregation หรือ batch transformation ต้อง consistency
+- ใช้ `/scan-codebase` สำหรับ quick scan และ `/deep-analyze-codebase` สำหรับ deep analysis
+- `review-*` ต้องตรวจ `/update-health-cli` ก่อน: ถ้ามี→รันเลย ถ้าไม่มี→ทำ `/update-health-cli` ก่อนแล้วรัน
 
-### 6. Script Automation
-- ใช้ `/use-scripts` เมื่อ file operations มากกว่า 10 ไฟล์, data processing ซับซ้อน, หรือ batch transformations ต้อง consistency
-- ใช้ `/use-scripts` เมื่อ pattern matching ต้อง parser หรือ metrics calculation ต้อง aggregation
+### 4. Content And Reporting
 
-### 7. Workflow Selection
-- ใช้ workflows ที่ขึ้นต้นด้วย "use-" สำหรับ tools/libraries ที่เฉพาะเจาะจง
-- ใช้ `/scan-codebase` สำหรับ scan codebase อย่างรวดเร็ว
-- ใช้ `/deep-analyze-with-use-scripts` สำหรับ workflows ที่มี step วิเคราะห์โปรเจกต์
+- Heading ภาษาอังกฤษ Title Case, รายการภาษาไทย, backticks สำหรับ `tools`, `commands`, paths และ workflow references
+- เขียนเป็น how-to ที่ explicit และ actionable ไม่เพิ่ม noise หรือ duplicate ระหว่าง Execute กับ Rules
+- `analyze-*` ต้องรายงานด้วย `/report-format-table`; `review-*` ต้องมี severity และ actionable recommendations
+- รายงานเฉพาะผลที่มี evidence แยก completed, failed, skipped, unverified ชัดเจน
 
-### 8. Report Formatting
-- `analyze-*` workflows ต้องมี report step (เช่น `/report-format-table`)
-- `review-*` workflows ต้องมี severity classification (Critical, High, Medium, Low) และ actionable recommendations
+### 5. Safety And Code Quality
 
-### 9. Best Practices Alignment
-- อ้างอิง official documentation เมื่อเขียนเกี่ยวกับ tools หรือ libraries เฉพาะเจาะจง
-- ตรวจสอบว่า structure สอดคล้องกับ best practices ของ markdown และ documentation
+- แก้ root cause ด้วย minimal upstream fix; ทำ `/dont-over-engineer` และ `/follow-software-engineering`
+- ห้ามเปลี่ยน code ไม่เกี่ยวข้อง เพิ่ม/ลบ comments โดยไม่จำเป็น สร้างไฟล์เกินจำเป็น หรือ hardcode secrets
+- การลบ ย้าย overwrite หรือ action เสี่ยงสูงต้องมี dry run และ user confirmation ก่อนดำเนินการ
+- ทำตาม existing style; ถ้าไม่แน่ใจ → debug และตรวจ evidence ก่อนแก้
 
-### 10. Ecosystem Detection
-- ตรวจสอบ `package.json`, `Cargo.toml`, `go.mod` เพื่อระบุ ecosystem
-- แปลง tool equivalents อัตโนมัติ (เช่น `bunx` → `npx`, `bun test` → `vitest`)
+### 6. Deterministic Execution
 
-### 11. Code Quality
-- แก้ที่ root cause ไม่ใช่ symptoms ใช้ minimal upstream fixes
-- ทำ `/dont-over-engineer` เพื่อหลีกเลี่ยงการแก้เกินความจำเป็น ถ้าไม่แน่ใจให้ debug ก่อน
-- ทำ `/follow-software-engineering` เพื่อออกแบบ architecture ที่ test ง่าย scale ง่าย
-- ทำตาม existing style ของ codebase
-- ห้ามเปลี่ยน code ที่ไม่เกี่ยวข้อง
-- ห้ามลบหรือเพิ่ม comments โดยไม่จำเป็น
-- สร้างไฟล์ใหม่เฉพาะที่จำเป็น
+- เรียง Foundation → Dependencies → High impact → Critical path → High risk เพื่อ fail fast ลด rework
+- ใช้เงื่อนไข "ถ้ามี..." เฉพาะ steps ที่ไม่จำเป็นทุก task และระบุเกณฑ์ผ่าน/ไม่ผ่านที่วัดผลได้
+- Validation retry สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report ไม่ซ่อน failure
+- รันซ้ำด้วย input/state เดิมต้องได้ output เดิม ไม่สร้าง side effects ซ้ำ
+
+### 7. High Impact Content
+
+- เก็บเฉพาะข้อกำหนดที่ทำให้ผลลัพธ์เปลี่ยนอย่างมีนัยสำคัญ ครอบคลุม impact สำคัญทั้งหมด
+- ทุก instruction ต้องระบุ action, condition หรือ expected result ที่ตีความได้ทางเดียว
+- ห้ามใช้ placeholder, generic filler, mock หรือ TODO ที่ไม่จำเป็น
 
 ## Expected Outcome
-- การทำงานสม่ำเสมอทุก workspace
-- Code quality สูงและเป็นไปตามมาตรฐาน
-- ไม่มี mock หรือ TODO ที่ไม่จำเป็น
-- Workflows ทำงานได้อย่างมีประสิทธิภาพ
-- การสื่อสารชัดเจนและกระชับ
-- ใช้ tools และ libs ของ ecosystem นั้นๆ ได้อย่างเหมาะสม
-- รองรับหลาย AI tools โดยใช้ relative references
-- มีการ research และ learn ก่อนเริ่มงานที่ต้องความรู้ใหม่
-- มีการ apply suggestions อย่างเป็นระบบตาม priority
 
+- ลำดับ prepare → read → research → analyze → write → validate → report → update references อย่างชัดเจน
+- ทุก task ใช้ references ที่มีอยู่จริง แก้ไขปลอดภัย ตรวจสอบผลได้ รายงานตาม evidence
+- รองรับหลาย workspace, ecosystems และ AI tools โดยไม่ทำลาย backward compatibility

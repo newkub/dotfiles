@@ -11,6 +11,7 @@ related:
   - /deep-thinking
   - /scan-codebase
   - /follow-code-quality
+  - /check-duplication
 ---
 
 ## Goal
@@ -87,7 +88,7 @@ related:
 2. หา code smells ด้วย `Grep` multiline mode
 3. ทำ `/use-scripts` คำนวณ metrics (complexity, coupling, cohesion)
 4. ตรวจสอบ naming conventions
-5. ทำ `/check-duplication`, `/check-unsued-files`, `/check-unused-deps` แบบ parallel
+5. ทำ `/check-duplication`, `/check-unused-files`, `/check-unused-deps` แบบ parallel
 6. ตรวจหา hardcoded secrets ด้วย `Grep`
 
 ### 7. Dependencies And Tech Stack
