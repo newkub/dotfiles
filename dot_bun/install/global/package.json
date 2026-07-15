@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@ast-grep/cli": "^0.43.0",
+    "node-gyp": "^13.0.1",
     "tuistory": "^0.8.1"
   }
 }

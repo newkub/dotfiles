@@ -16,7 +16,11 @@ related_workflows:
   - /use-scripts
   - /plan
   - /report-plan
-  - /deep-analyze-codebase
+  - /deep-analyze
+  - /deep-analyze-by-use-scripts
+  - /deep-follow
+  - /follow-parallel
+  - /follow-deep
   - /resolve-errors
   - /scan-codebase
   - /refactor
@@ -95,7 +99,7 @@ related_workflows:
 1. ทำ `/report-before` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน แล้วดำเนินการต่อทันที
 2. ใช้ `/use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
 3. ทำ `/plan` ก่อนแก้ไขหลายไฟล์ และ `/report-plan` ก่อนลงมือ
-4. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `/deep-analyze-codebase`
+4. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `/deep-analyze-by-use-scripts`
 5. ทำ `/scan-codebase` เพื่อค้นหา symbols, call sites, consumers
 6. ทำ `/follow-your-suggestion` เมื่อ task ให้ apply ข้อเสนอจากการวิเคราะห์ก่อนหน้า
 7. ถ้าพบ error → ทำ `/resolve-errors`; ถ้าข้อกำหนดเสี่ยงสูงไม่ชัด → ใช้ `/ask-me`
@@ -145,7 +149,7 @@ related_workflows:
 
 > Goal: ไม่มี broken references และมี next action ที่สอดคล้องผลลัพธ์
 
-1. ทำ `/deep-analyze-codebase` step 4-5 เพื่อระบุและเพิ่ม cross-references ที่ต้องอัปเดต
+1. ทำ `/deep-analyze-by-use-scripts` step 5-6 เพื่อระบุและเพิ่ม cross-references ที่ต้องอัปเดต
 2. ทำ `/suggest-next-action` เพื่อเสนอ action ถัดไปที่มี impact จริง
 3. ถ้าไม่พบ reference หรือ action ที่ต้องเปลี่ยน → report ว่าไม่ต้องดำเนินการเพิ่ม
 
@@ -169,7 +173,9 @@ related_workflows:
 - ใช้ references แทน duplicate และทำ `/check-reference` ก่อนใช้งาน
 - `related_workflows` ต้องมีเฉพาะ workflows ที่เรียกโดยตรง ไม่มี missing/unused
 - ใช้ `/use-scripts` เมื่อ >10 ไฟล์, pattern matching ต้องใช้ parser, metrics ต้อง aggregation หรือ batch transformation ต้อง consistency
-- ใช้ `/scan-codebase` สำหรับ quick scan และ `/deep-analyze-codebase` สำหรับ deep analysis
+- ใช้ `/scan-codebase` สำหรับ quick scan และ `/deep-analyze` สำหรับ deep analysis; ถ้าต้อง scripts/health CLI ใช้ `/deep-analyze-by-use-scripts`
+- ใช้ `/follow-parallel` สำหรับ parallel execution ของ independent operations
+- ใช้ `/follow-deep` สำหรับพิจารณาและเรียก `deep-*` workflows ที่เกี่ยวข้องตาม context
 - `review-*` ต้องตรวจ `/update-health-cli` ก่อน: ถ้ามี→รันเลย ถ้าไม่มี→ทำ `/update-health-cli` ก่อนแล้วรัน
 
 ### 4. Content And Reporting

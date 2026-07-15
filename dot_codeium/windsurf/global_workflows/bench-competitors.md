@@ -1,94 +1,115 @@
 ---
 title: Benchmark Competitors
-description: ศึกษาคู่แข่งและปรับปรุงจนดีกว่าในทุกมิติ
+description: ศึกษาคู่แข่งและปรับปรุง project ให้ดีกว่าในทุกมิติ
 auto_execution_mode: 3
 related:
+  - /bench-features
   - /deep-research
+  - /pondering
   - /plan
   - /ship
   - /update-docs
   - /review-performance
   - /review-frontend
-  - /pondering
+  - /ask-me
 ---
 
 ## Goal
 
-ศึกษาคู่แข่งและปรับปรุง project จนดีกว่าในทุกมิติ
+ศึกษาคู่แข่งและปรับปรุง project ให้ดีกว่าในทุกมิติ
 
 ## Scope
 
-ครอบคลุมทุกมิติของ product: features, performance, UX/UI, architecture, DX, security, scalability, business
+ครอบคลุมทุกมิติของ product: features, performance, UX/UI, architecture, DX, security, scalability, business ไม่ใช่แค่มิติใดมิติหนึ่ง
 
 ## Execute
 
 ### 1. Research Competitors
 
-วิจัยคู่แข่งที่ relevant กับ project
+วิจัยคู่แข่งที่ relevant
+
+> Goal: รู้ competitor landscape และ best practices
 
 1. ทำ `/deep-research` เพื่อรวบรวมข้อมูลคู่แข่ง
 2. ระบุ competitors ที่เป็น direct และ indirect
-3. วิเคราะห์ strengths, weaknesses, และ unique selling points
-4. ระบุ tech stack, UX patterns, และ best practices
+3. วิเคราะห์ strengths, weaknesses, unique selling points, tech stack, UX patterns
+4. ถ้าหาข้อมูลไม่ได้ → stop และ report
 
-### 2. Create Comparison Report
+### 2. Benchmark Features
 
-สร้างรายงานเปรียบเทียบทุกมิติ
+เปรียบเทียบและปรับปรุงมิติ features
 
-1. ทำ `/update-docs` เพื่อสร้าง docs structure ก่อน
-2. สร้างไฟล์ `comparison.md` ใน `docs/project/`
-3. สร้างตารางเปรียบเทียบทุกมิติ (Features, Performance, UX/UI, Architecture, DX, Security, Business)
-4. สร้าง improvement roadmap พร้อม priority (Critical, High, Medium, Nice-to-have)
-5. วิเคราะห์คู่แข่งแต่ละเจ้าแบบกระชับ
+> Goal: ให้ features ดีกว่าคู่แข่ง
 
-### 3. Implement Improvements
+1. ทำ `/bench-features` เพื่อ benchmark มิติ features
+2. รับผลเป็น section หรือไฟล์ `comparison-features.md`
+3. ถ้า `/bench-features` fail → stop และ report
 
-ปรับปรุง project จนดีกว่าคู่แข่ง
+### 3. Benchmark Other Dimensions
 
-1. ทำ `/pondering` เพื่อทบทวนว่าควรปรับปรุงอะไรก่อนและผลกระทบของแต่ละการเปลี่ยนแปลง
-2. ทำ `/plan` เพื่อวางแผนการปรับปรุง
-3. ทำ `/ship` เพื่อ implement จนดีกว่าคู่แข่ง
-4. ทำ `/review-performance` สำหรับ performance improvements
-5. ทำ `/review-frontend` สำหรับ UX/UI improvements
-6. หยุดเมื่อ project ดีกว่าคู่แข่งทั้งหมมในทุกมิติ
+เปรียบเทียบมิติที่เหลือนอกเหนือ features
 
-### 4. Update Progress
+> Goal: ครอบคลุม performance, UX/UI, architecture, DX, security, business
 
-อัพเดทความคืบหน้าอย่างสม่ำเสมอ
+1. ทำ `/review-performance` สำหรับ performance
+2. ทำ `/review-frontend` สำหรับ UX/UI
+3. ถ้ามีมิติอื่น (architecture, DX, security, scalability, business) ให้ใช้เครื่องมือที่เหมาะสม
+4. บันทึกผลใน `docs/project/comparison.md`
 
-1. Update ไฟล์ `comparison.md` เมื่อ implement เสร็จ
-2. Update status ในตารางเปรียบเทียบ
-3. Re-benchmark หลังการปรับปรุงแต่ละครั้ง
+### 4. Plan Improvements
+
+วางแผนปรับปรุงให้ดีกว่าคู่แข่ง
+
+> Goal: ได้ roadmap ครอบทุกมิติ
+
+1. ทำ `/pondering` เพื่อทบทวน priority และผลกระทบ
+2. ทำ `/plan` เพื่อสร้าง roadmap ครอบทุกมิติ
+3. ระบุ priority: Critical, High, Medium, Nice-to-have
+4. ถ้า scope ไม่ชัด → ใช้ `/ask-me` ก่อน plan
+
+### 5. Implement Improvements
+
+ปรับปรุง project ตาม roadmap
+
+> Goal: ดีกว่าคู่แข่งในทุกมิติ
+
+1. ทำ `/ship` เพื่อ implement improvements
+2. ทำ `/review-performance` สำหรับ performance improvements
+3. ทำ `/review-frontend` สำหรับ UX/UI improvements
+4. หยุดเมื่อดีกว่าคู่แข่งทั้งหมดในทุกมิติ
+
+### 6. Update Report
+
+อัปเดตรายงานเปรียบเทียบ
+
+> Goal: รายงาน reflect สถานะล่าสุด
+
+1. ทำ `/update-docs` เพื่ออัปเดต `docs/project/comparison.md`
+2. อัปเดต status ในตารางเปรียบเทียบ
+3. Re-benchmark หลังการปรับปรุง
 
 ## Rules
 
-### 1. Focus on Actionable Insights
+### 1. Focus On Actionable Insights
 
-เน้น metrics ที่ measurable และ actionable
-
-- ไม่ต้อง research ลึกเกินความจำเป็น
 - เน้น metrics ที่ measurable และ actionable
+- ไม่ research ลึกเกินความจำเป็น
 - รายงานกระชับไม่เกิน 1 หน้า A4
 
 ### 2. Document Structure
 
-รักษาโครงสร้างให้สม่ำเสมอ
-
-- แค่ 1 ไฟล์ `comparison.md` ใน `docs/project/`
+- ไฟล์หลัก `comparison.md` ใน `docs/project/`
+- อนุญาตไฟล์ย่อย `comparison-*.md` จาก sub-workflows เช่น `comparison-features.md`
 - 2-3 sections หลักพอ
 - ไม่ต้องมี timeline ละเอียด
 
 ### 3. Multi-Dimension Focus
-
-ครอบคลุมทุกมิติของ product
 
 - ไม่ใช่แค่ features แต่ครอบคลุมทุกมิติ
 - วัดด้วย metrics ที่ objective
 - เปรียบเทียบกับ competitors ที่ relevant
 
 ### 4. Implementation Discipline
-
-ทำตาม plan จนกว่าจะดีกว่าคู่แข่ง
 
 - ทำตาม plan จนกว่าจะดีกว่าคู่แข่ง
 - หยุดเมื่อสำเร็จเป้าหมายในทุกมิติ
@@ -97,14 +118,12 @@ related:
 
 ### 5. Stop When Better
 
-หยุดการทำงานเมื่อดีกว่าคู่แข่งแล้ว
-
 - หยุดทันทีเมื่อ project ดีกว่าคู่แข่งในทุกมิติ
-- ไม่ต้องทำ over-engineering หรือเพิ่ม features ที่ไม่จำเป็น
+- ไม่ทำ over-engineering หรือเพิ่ม features ที่ไม่จำเป็น
 - ย้ายไปทำงานอื่นเมื่อสำเร็จเป้าหมายแล้ว
 
 ## Expected Outcome
 
-- ไฟล์ `comparison.md` ใน `docs/project/` ที่มีตารางเปรียบเทียบทุกมิติ
+- ไฟล์ `docs/project/comparison.md` ที่มีตารางเปรียบเทียบทุกมิติ
 - Project ดีกว่าคู่แข่งในทุกมิติ
 - ใช้เวลาไม่เกิน 30 นาทีในการ benchmark

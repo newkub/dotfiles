@@ -3,7 +3,7 @@ title: Git Push
 description: Push commits ทั้ง root และ git submodules ไปยัง remote
 auto_execution_mode: 3
 related:
-  - /commit-and-push
+  - /git-commit-and-push
   - /refactor-commit
   - /watch-github-actions
   - /open-web

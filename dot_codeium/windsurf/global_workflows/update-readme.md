@@ -8,6 +8,7 @@ related:
   - /follow-content-quality
   - /use-lang-en
   - /edit-relative
+  - /report-uxui-sketch
 ---
 
 ## Goal
@@ -41,7 +42,18 @@ related:
 3. เขียน README ตาม template ด้านล่าง
 4. ถ้าข้อมูลไม่ครบ → stop และ report ไม่ใช้ placeholder
 
-### 3. Update Workspaces READMEs
+### 3. Generate UI Sketch
+
+สร้าง UX/UI sketch สำหรับ README
+
+> Goal: มี sketch แสดง layout หลักของ workspace
+
+1. ทำ `/report-uxui-sketch` เพื่อวาด layout หลักของ workspace
+2. วาดเฉพาะหน้าหลักหรือหน้าที่สำคัญที่สุดของ workspace
+3. แปลง sketch เป็น text codeblock (ไม่ใช่ ANSI) สำหรับใส่ใน README
+4. วาง sketch ด้านบน Quick Start โดยไม่ต้องมี heading
+
+### 4. Update Workspaces READMEs
 
 อัปเดต README ทุก workspace ใน monorepo
 
@@ -51,7 +63,7 @@ related:
 2. ไม่ต้องมี `License` section (ใช้ของ root)
 3. ถ้า workspace ไม่มี `package.json` → skip และ report
 
-### 4. Validate
+### 5. Validate
 
 ตรวจสอบคุณภาพและอัปเดต references
 
@@ -69,6 +81,7 @@ related:
 
 - `Status Callout`: ด้านบนสุด - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, ไม่รวม License badge)
+- `UI Sketch`: text codeblock แสดง UX/UI layout sketch จาก `/report-uxui-sketch` (ไม่ใช่ ANSI, ใช้ text codeblock ธรรมดา) - วางด้านบน Quick Start โดยไม่ต้องมี heading
 - `## Quick Start`: numbered steps ด้านบน, แต่ละ step มี heading + description ก่อน codeblock
 - `## Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม colored icon จาก iconify CDN
 - `## Usage`: `### filename.ts` heading + code block เท่านั้น
@@ -124,6 +137,20 @@ related:
 # @wrikka/package-name
 > 🚀 Short description
 Longer description.
+
+```text
+┌─────────────────────────────────────────────────┐
+│  [×]  Package Name                              │
+├─────────────────────────────────────────────────┤
+│  ┌───────────┐  ┌─────────────────────────────┐ │
+│  │ Sidebar   │  │ Main Content                │ │
+│  │ [Item 1]  │  │  ┌───────────────────────┐  │ │
+│  │ [Item 2]  │  │  │ Component             │  │ │
+│  │ [Item 3]  │  │  └───────────────────────┘  │ │
+│  └───────────┘  └─────────────────────────────┘ │
+└─────────────────────────────────────────────────┘
+```
+
 ## Quick Start
 
 1. **Install Package** — `terminal`
@@ -242,7 +269,7 @@ skills/
 ## Expected Outcome
 
 - README.md ครบถ้วน ใช้ข้อมูลจริงจาก `/analyze-project` ไม่มี placeholder ยกเว้น banner image
-- Section order: Quick Start > Features > Usage > Project > API References > Development > License
+- Section order: UI Sketch (no heading) > Quick Start > Features > Usage > Project > API References > Development > License
 - Features: row กระชับ ครอบคลุมทุก feature จาก source code เขียน business value
 - ตารางทั้งหมดใช้ colored icon จาก iconify CDN (มี `?color=%23<hex>`) คอลัมน์ Icon จัดกึ่งกลางด้วย `:---:`
 - ไม่มี ANSI codeblock ใน README ทั้งหมด

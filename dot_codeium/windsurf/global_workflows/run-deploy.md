@@ -12,7 +12,7 @@ related:
   - /run-test-browser
   - /deep-review
   - /resolve-errors
-  - /commit
+  - /git-commit
   - /git-push
   - /loop-until-complete
 ---
@@ -57,7 +57,7 @@ Deploy application ตาม platform ที่ใช้
 
 Commit และ push changes ไปยัง repository
 
-1. ทำ `/commit`
+1. ทำ `/git-commit`
 2. ทำ `/git-push`
 
 ### 5. Verify Deployment

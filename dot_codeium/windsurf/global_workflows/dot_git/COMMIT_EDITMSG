@@ -1,8 +1,1 @@
-refactor: standardize workflow structures and clean up redundant files
-
-- Add missing Goal, Scope, Expected Outcome sections to 37 workflow files
-- Rename follow-sumarize-request to sumarize-request (remove follow- prefix)
-- Delete follow-sumarize-features (duplicated by report-features)
-- Delete create-cli-tools (unused)
-- Delete stale workflows: check-unsued-files, code-search, deep-analyze-with-use-scripts, improve-code-structure, review-code-quality-core, use-import-alias, use-in-another-workflows
-- Add new workflows: add-task-in-package-manifest, analyze-code-structure, check-unused-files, deep-analyze-codebase, follow-import, follow-jscpd, follow-orm, follow-parallel, follow-time-complexity, follow-validation, list-git-branch, list-git-stash, list-git-tags, report-api, report-before, report-bundle, report-changelog, report-config-drift, report-database, report-deps, report-git-diff, report-impact, report-todo, sumarize-request, summarize-this-chat-session
+refactor: update global workflows structure and add new workflows
