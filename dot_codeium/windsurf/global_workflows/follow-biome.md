@@ -64,12 +64,12 @@ related:
 
 ### 3. Monorepo
 
-1. ในแต่ละ workspace สร้าง `biome.jsonc` ด้วย `root: false` และ `extends: "//"`
+1. ในแต่ละ workspace สร้าง `biome.jsonc` ด้วย `root: false` และ `extends: ["../../biome.jsonc"]`
 
 ```json [biome.jsonc]
 {
-   "root": false,
-   "extends": "//"
+	"root": false,
+	"extends": ["../../biome.jsonc"]
 }
 ```
 

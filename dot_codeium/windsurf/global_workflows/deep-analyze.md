@@ -9,6 +9,7 @@ related:
   - /deep-thinking
   - /scan-codebase
   - /use-ast-grep
+  - /use-ast-grep-outline
   - /check-duplication
   - /report-format-table
 ---
@@ -56,13 +57,14 @@ related:
 ทำ `/scan-codebase` เพื่อวิเคราะห์โครงสร้าง
 
 1. รัน tree command ดู directory structure
-2. รัน `bunx ast-grep outline` ดู structure ภายในไฟล์
-3. วิเคราะห์ findings (SRP violations, tight coupling)
-4. ตรวจสอบ file patterns และ naming conventions
+2. ทำ `/use-ast-grep-outline` เพื่อเข้าใจวิธีใช้งาน `ast-grep outline`
+3. รัน `bunx ast-grep outline` ดู structure ภายในไฟล์
+4. วิเคราะหา findings (SRP violations, tight coupling)
+5. ตรวจสอบ file patterns และ naming conventions
 
 ### 4. Architecture Analysis
 
-วิเคราะห์ architecture และ design patterns
+วิเคราะหา architecture และ design patterns
 
 1. ทำ `/use-ast-grep` ระบุ architectural pattern
 2. วิเคราะหา data flow ด้วย `Grep`
@@ -72,7 +74,7 @@ related:
 
 ### 5. Features Analysis
 
-วิเคราะห์ features และ business logic
+วิเคราะหา features และ business logic
 
 1. Discovery และ inventory features ทั้งหมด
 2. Categorize และ group features
@@ -81,7 +83,7 @@ related:
 
 ### 6. Code Quality Analysis
 
-วิเคราะห์ code quality อย่างละเอียด
+วิเคราะหา code quality อย่างละเอียด
 
 1. ทำ `/use-ast-grep` หา patterns, anti-patterns, design patterns
 2. หา code smells ด้วย `Grep` multiline mode
@@ -92,7 +94,7 @@ related:
 
 ### 7. Dependencies And Tech Stack
 
-วิเคราะห์ dependencies และ tech stack
+วิเคราะหา dependencies และ tech stack
 
 1. อ่าน manifest files แบบ parallel
 2. ระบุ tech stack และ versions
@@ -102,7 +104,7 @@ related:
 
 ### 8. Performance And Security
 
-วิเคราะห์ performance และ security
+วิเคราะหา performance และ security
 
 1. วิเคราะหา performance bottlenecks
 2. ตรวจสอบ security vulnerabilities
