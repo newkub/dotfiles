@@ -5,6 +5,7 @@ auto_execution_mode: 3
 related:
   - /git-commit-and-push
   - /refactor-commit
+  - /resolve-errors
   - /watch-github-actions
   - /open-web
   - /follow-gitignore
@@ -24,11 +25,12 @@ Push commits จาก local repository และ git submodules ไปยัง
 
 - ทำ `git branch --show-current`, `git status`, และ `git submodule status` เพื่อดูสถานะปัจจุบัน
 - ทำ `git log --oneline origin/<branch>..HEAD` เพื่อดู commits ที่จะ push
-- ถ้า commits ใหญ่หรือหยาบเกินไป แนะนำให้ทำ `/refactor-commit` ก่อน push
+- พิจารณา `/refactor-commit` ก่อน push เสมอ — ตรวจสอบว่า commits มีขนาดเหมาะสม message ชัดเจน และ logical order — ถ้า commits ใหญ่เกินไป หรือ message ไม่ชัด ให้ทำ `/refactor-commit` ก่อน push
 
 ### 2. Push
 
-- ทำ `git push origin <branch>` และ `git submodule foreach --recursive git push origin <branch>`
+- ทำ `git push origin <branch>` และ `git submodule foreach --recursive git push origin <branch>` — ห้ามใช้ `--no-verify` หรือ flag ที่ข้าม git hooks ทุกประเภท
+- ถ้า git hook แจ้ง error ให้แก้ที่ root cause ไม่ข้าม hook — ทำ `/resolve-errors` ถ้าจำเป็น
 - ถ้า push ถูก reject ให้หยุดและแจ้งผู้ใช้ ไม่ force push
 
 ### 3. Validate
@@ -75,6 +77,9 @@ Push commits จาก local repository และ git submodules ไปยัง
 
 ### 2. Safety
 
+- ห้ามใช้ `--no-verify` หรือ flag อื่นใดที่ข้าม git hooks (เช่น `--no-verify`, `HOOK_SKIP=true`) — git hooks ต้องทำงานทุกครั้ง
+- ถ้า git hook แจ้ง error ให้แก้ที่ root cause ไม่ข้าม hook — ทำ `/resolve-errors` ถ้าจำเป็น
+- พิจารณา `/refactor-commit` ก่อน push เสมอ เพื่อให้ commits สะอาดและเหมาะสม
 - ไม่ force push โดยไม่จำเป็น
 - ถ้า push ถูก reject ให้หยุดและแจ้งผู้ใช้ ไม่ force push
 

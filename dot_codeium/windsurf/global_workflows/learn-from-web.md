@@ -19,13 +19,36 @@ related:
 
 ### 1. Research Strategy
 
-1. กำหนดลำดับความสำคัญของแหล่งข้อมูล
-2. ใช้ DeepWiki สำหรับ GitHub repositories
-3. ใช้ Context7 สำหรับ libraries และ frameworks
-4. ใช้ Web Search เป็น fallback
-5. เข้าถึง Official Documentation เสมอ
+กำหนดลำดับความสำคัญของแหล่งข้อมูลก่อนเริ่มค้นหา
 
-### 2. DeepWiki Research
+> Goal: รู้ลำดับแหล่งข้อมูลและใช้แหล่งที่เหมาะสมก่อน
+
+1. กำหนดลำดับความสำคัญของแหล่งข้อมูล
+2. ใช้ Official Documentation เป็นแหล่งหลักเสมอ (priority สูงสุด)
+3. ใช้ DeepWiki สำหรับ GitHub repositories
+4. ใช้ Context7 สำหรับ libraries และ frameworks
+5. ใช้ Web Search เป็น fallback
+
+### 2. Official Website Research
+
+อ่าน documentation โดยตรงจาก official website ของ tool, library หรือ framework
+
+> Goal: ได้ข้อมูลจากแหล่งหลักที่ถูกต้องและเป็นปัจจุบันที่สุด
+
+1. ระบุ official website ของ tool, library หรือ framework ที่ต้องการเรียนรู้
+2. ใช้ `read_url_content` เพื่ออ่านหน้า documentation โดยตรง
+3. ใช้ CRW (`crw_scrape`, `crw_map`, `crw_crawl`) สำหรับ crawl documentation ทั้ง site
+4. เริ่มจากหน้า getting started หรือ quickstart เสมอ
+5. อ่าน API reference และ guides ตามลำดับ
+6. บันทึก code examples และ configuration examples จาก official site
+7. ตรวจสอบ version ที่ตรงกับ project ปัจจุบัน
+8. ใช้ domain filter ใน Web Search เพื่อจำกัดผลลัพธ์เฉพาะ official site เช่น domain: "bun.sh"
+
+### 3. DeepWiki Research
+
+ใช้ DeepWiki สำหรับ GitHub repositories เพื่อดู topics และถามคำถามเฉพาะเจาะจง
+
+> Goal: เข้าใจ repository structure และได้คำตอบเฉพาะเจาะจง
 
 1. ใช้ `read_wiki_structure` เพื่อดู topics ทั้งหมด
 2. ใช้ `read_wiki_contents` เพื่ออ่านเนื้อหาของ topic ที่เลือก
@@ -35,7 +58,11 @@ related:
 6. อ่าน getting started ก่อน advanced topics
 7. บันทึก code examples และ configuration examples
 
-### 3. Context7 Research
+### 4. Context7 Research
+
+ใช้ Context7 สำหรับ libraries และ frameworks ที่มี documentation ในระบบ
+
+> Goal: ได้ documentation และ code examples ที่ตรงกับ library version
 
 1. ใช้ `resolve-library-id` เพื่อหา library ID ที่ถูกต้อง
 2. ใช้ `query-docs` สำหรับ documentation ที่ต้องการ
@@ -46,7 +73,11 @@ related:
 7. ตรวจสอบ version ที่เข้ากันได้กับ project
 8. ไม่เรียก Context7 เกิน 3 ครั้งต่อคำถาม
 
-### 4. Web Search Research
+### 5. Web Search Research
+
+ใช้ Web Search เป็น fallback เมื่อไม่มีข้อมูลจากแหล่งอื่น
+
+> Goal: ได้ข้อมูลเพิ่มเติมเมื่อแหล่งหลักไม่เพียงพอ
 
 1. ใช้ `search_web` เมื่อไม่มีข้อมูลจาก DeepWiki หรือ Context7
 2. กำหนด query ที่ชัดเจนและเฉพาะเจาะจง
@@ -54,7 +85,11 @@ related:
 4. เปรียบเทียบข้อมูลจากหลายแหล่ง
 5. ตรวจสอบว่าข้อมูลเป็นปัจจุบัน (check publish date)
 
-### 5. Knowledge Extraction
+### 6. Knowledge Extraction
+
+สกัดและบันทึกความรู้ที่ได้จากทุกแหล่งข้อมูล
+
+> Goal: มีความรู้ที่จดบันทึกและจัดระเบียบไว้ใช้งาน
 
 1. จดบันทึกหลักการที่สำคัญและ core concepts
 2. ระบุ features และ capabilities หลักทั้งหมด
@@ -64,7 +99,11 @@ related:
 6. บันทึก edge cases และ common pitfalls
 7. สร้าง summary สำหรับแต่ละ source
 
-### 6. Validation
+### 7. Validation
+
+ตรวจสอบความถูกต้องของข้อมูลและ code examples ที่ได้จากการเรียนรู้
+
+> Goal: ยืนยันว่าข้อมูลและ code ทำงานได้จริง
 
 1. ทดลองใช้งานตามที่เรียนรู้
 2. สร้างโปรเจกต์ตัวอย่างเพื่อทดสอบ
@@ -73,7 +112,11 @@ related:
 5. ตรวจสอบว่า code examples ทำงานได้จริง
 6. ทดสอบ edge cases และ error handling
 
-### 7. Application
+### 8. Application
+
+นำความรู้ที่ได้ไปใช้ในโปรเจกต์จริงและแชร์กับทีม
+
+> Goal: ความรู้ถูกนำไปใช้และแชร์อย่างมีประสิทธิภาพ
 
 1. นำความรู้ไปใช้ในโปรเจกต์จริง
 2. สร้าง examples หรือ tutorials สำหรับทีม
@@ -88,11 +131,11 @@ related:
 
 กำหนดลำดับความสำคัญของแหล่งข้อมูล:
 
-- ลำดับแหล่งข้อมูล: `DeepWiki` → `Context7` → `Web Search` → `Official Docs`
-- ใช้ `DeepWiki` ก่อนถ้าเป็น GitHub repository
+- ลำดับแหล่งข้อมูล: `Official Docs` → `DeepWiki` → `Context7` → `Web Search`
+- ใช้ `Official Documentation` เป็นแหล่งหลักเสมอ พยายามเข้า official website โดยตรงก่อน
+- ใช้ `DeepWiki` สำหรับ GitHub repositories
 - ใช้ `Context7` สำหรับ libraries และ frameworks
-- ใช้ `Web Search` เป็น fallback
-- เข้าถึง `Official Documentation` เสมอ
+- ใช้ `Web Search` เป็น fallback โดยใช้ domain filter เฉพาะ official site ก่อน
 
 ### 2. Deep Research Integration
 

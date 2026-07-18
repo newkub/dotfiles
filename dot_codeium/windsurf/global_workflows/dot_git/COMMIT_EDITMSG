@@ -1,1 +1,18 @@
-refactor: update global workflows structure and add new workflows
+feat: add improve-naming, improve-test-coverage, improve-features-coverage, convert-workflows-to-skills, idea-implement workflows and update references
+
+- add improve-naming workflow for naming convention fixes
+- add improve-test-coverage workflow for test gap analysis and writing
+- add improve-features-coverage workflow for missing features implementation
+- add convert-workflows-to-skills workflow for workflow-to-skill conversion
+- add idea-implement workflow for implementation gap ideation
+- add template-workflows-* templates for all workflow prefixes
+- add improve-typesafe, improve-config, improve-coverage workflows
+- add git-debug, git-restore-from-last, refactor-to-srp workflows
+- add improve-all-windsurf-global-workflows, improve-windsurf-global-workflows-all
+- add follow-solid-tanstack-architecture workflow
+- update refactor.md to use /improve-naming in Execute step 2.6
+- update review-testing, run-test-coverage to reference /improve-test-coverage
+- update review-missing-features, idea-features to reference /improve-features-coverage
+- update review-naming, idea-improve-naming to reference /improve-naming
+- remove deprecated update-all-windsurf-global-workflows, update-windsurf-global-workflows-all
+- remove deprecated follow-solid-start-architecture (replaced by follow-solid-tanstack-architecture)

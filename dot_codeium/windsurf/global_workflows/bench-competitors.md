@@ -7,7 +7,7 @@ related:
   - /deep-research
   - /pondering
   - /plan
-  - /ship
+  - /ship-code
   - /update-docs
   - /review-performance
   - /review-frontend
@@ -73,7 +73,7 @@ related:
 
 > Goal: ดีกว่าคู่แข่งในทุกมิติ
 
-1. ทำ `/ship` เพื่อ implement improvements
+1. ทำ `/ship-code` เพื่อ implement improvements
 2. ทำ `/review-performance` สำหรับ performance improvements
 3. ทำ `/review-frontend` สำหรับ UX/UI improvements
 4. หยุดเมื่อดีกว่าคู่แข่งทั้งหมดในทุกมิติ

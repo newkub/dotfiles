@@ -4,6 +4,7 @@ description: เปิดเบราว์เซอร์และ watch termin
 auto_execution_mode: 3
 related:
   - /resolve-errors
+  - /debug-issue
 ---
 
 ## Goal

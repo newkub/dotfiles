@@ -85,7 +85,7 @@ related:
 - Environment: `.env*`, `!.env.example`, `.dev.vars`, `*.local`
 - Logs: `*.log`, `logs/`
 - OS: `.DS_Store`, `Thumbs.db`, `desktop.ini`
-- Temporary: `*.tmp`, `*.temp`, `.cache/`, `.**/temp/`
+- Temporary: `*.tmp`, `*.temp`, `.cache/`, `.**/temp/`, `**/scripts/temp/`
 - IDE: `.vscode/`, `.idea/`, `*.sublime-*`, `*.swp`, `*.swo`
 
 ### 4. Monorepo Guidelines

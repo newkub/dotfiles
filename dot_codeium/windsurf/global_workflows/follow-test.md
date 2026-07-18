@@ -10,6 +10,7 @@ related:
   - /follow-mutants-rs
   - /follow-nextest
   - /follow-code-quality
+  - /debug-issue
 ---
 
 ## Goal

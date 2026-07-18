@@ -3,12 +3,16 @@ title: Update Readme
 description: สร้าง README.md ครบถ้วนด้วย template มาตรฐานและข้อมูลจริงจากโปรเจกต์
 auto_execution_mode: 3
 related:
+  - /check-should-update
+  - /gen-changelog
+  - /gen-release
   - /analyze-project
   - /all-workspaces
   - /follow-content-quality
   - /use-lang-en
   - /edit-relative
   - /report-uxui-sketch
+  - /follow-parallel
 ---
 
 ## Goal
@@ -17,7 +21,7 @@ related:
 
 ## Scope
 
-ครอบคลุมการสร้าง `README.md` สำหรับ root และทุก workspace ใน monorepo
+ครอบคลุมการสร้าง `README.md` สำหรับ root และทุก workspace ใน monorepo — idempotent: รันซ้ำได้โดยไม่เกิด side effects
 
 ## Execute
 
@@ -27,9 +31,10 @@ related:
 
 > Goal: รู้ project type และมี changelog พร้อม
 
-1. ทำ `/gen-changelog` และ `/gen-release` ถ้ามี tag release
-2. อ่าน `package.json` ตรวจสอบ project type: `cli-sdk` หรือ `app`
-3. ถ้าอ่าน `package.json` ไม่ได้ → stop และ report
+1. ทำ `/check-should-update` เพื่อตรวจ git changes ก่อน — ถ้าไม่มี changes → skip และ report
+2. parallel: `/gen-changelog` ∥ `/gen-release` ถ้ามี tag release — ใช้ `/follow-parallel`
+3. อ่าน `package.json` ตรวจสอบ project type: `cli-sdk` หรือ `app`
+4. ถ้าอ่าน `package.json` ไม่ได้ → stop และ report
 
 ### 2. Write Root README
 
@@ -40,7 +45,7 @@ related:
 1. ทำ `/analyze-project` เพื่อเก็บข้อมูล root
 2. อ่าน `manifest files`, `source code`, `config files`
 3. เขียน README ตาม template ด้านล่าง
-4. ถ้าข้อมูลไม่ครบ → stop และ report ไม่ใช้ placeholder
+4. ถ้าข้อมูลไม่ครบ → stop และ report ไม่ใช้ placeholder — ถ้า write fail → retry (max 3 → stop/report)
 
 ### 3. Generate UI Sketch
 
@@ -51,7 +56,7 @@ related:
 1. ทำ `/report-uxui-sketch` เพื่อวาด layout หลักของ workspace
 2. วาดเฉพาะหน้าหลักหรือหน้าที่สำคัญที่สุดของ workspace
 3. แปลง sketch เป็น text codeblock (ไม่ใช่ ANSI) สำหรับใส่ใน README
-4. วาง sketch ด้านบน Quick Start โดยไม่ต้องมี heading
+4. วาง sketch ด้านบน Get Started โดยไม่ต้องมี heading — ถ้า sketch fail → retry (max 3 → stop/report)
 
 ### 4. Update Workspaces READMEs
 
@@ -61,7 +66,7 @@ related:
 
 1. ทำ `/all-workspaces` เพื่อ update README ทุก workspaces
 2. ไม่ต้องมี `License` section (ใช้ของ root)
-3. ถ้า workspace ไม่มี `package.json` → skip และ report
+3. ถ้า workspace ไม่มี `package.json` → skip และ report — ถ้า update fail → retry (max 3 → stop/report)
 
 ### 5. Validate
 
@@ -69,9 +74,8 @@ related:
 
 > Goal: README ผ่าน quality check และ references ถูกต้อง
 
-1. ทำ `/follow-content-quality` เพื่อตรวจสอบคุณภาพ
-2. ทำ `/edit-relative` หากมี file changes ที่กระทบ references
-3. ถ้า validation ไม่ผ่าน → revise และ recheck (max 3 ครั้ง → stop/report)
+1. parallel: `/follow-content-quality` ∥ `/edit-relative` เพื่อตรวจสอบคุณภาพและอัปเดต references ไปพร้อมกัน — ใช้ `/follow-parallel`
+2. ถ้า validation ไม่ผ่าน → revise และ recheck (max 3 ครั้ง → stop/report)
 
 ## Rules
 
@@ -81,10 +85,10 @@ related:
 
 - `Status Callout`: ด้านบนสุด - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, ไม่รวม License badge)
-- `UI Sketch`: text codeblock แสดง UX/UI layout sketch จาก `/report-uxui-sketch` (ไม่ใช่ ANSI, ใช้ text codeblock ธรรมดา) - วางด้านบน Quick Start โดยไม่ต้องมี heading
-- `## Quick Start`: numbered steps ด้านบน, แต่ละ step มี heading + description ก่อน codeblock
+- `UI Sketch`: text codeblock แสดง UX/UI layout sketch จาก `/report-uxui-sketch` (ไม่ใช่ ANSI, ใช้ text codeblock ธรรมดา) - วางด้านบน Get Started โดยไม่ต้องมี heading
+- `## Get Started`: numbered steps ด้านบน, แต่ละ step มี heading + description ก่อน codeblock
 - `## Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม colored icon จาก iconify CDN
-- `## Usage`: `### filename.ts` heading + code block เท่านั้น
+- `## Usage`: `### Usage via ...` heading สำหรับแต่ละ access method (Web, API, CLI, SDK, TUI, etc.) — ครอบคลุมทุก ways ที่ user ใช้งานได้ — ดู Rule `Usage Content Types`
 - `## Project`: `<details>`/`<summary>` accordion ลำดับ Goal, Scope, When To Use, Key Concepts, Core Principles, Best Practices
 - `## API References`: `<details>`/`<summary>` accordion สำหรับ subsections พร้อม Markdown table (ไม่มี file structure)
 - `## Development`: `<details>`/`<summary>` accordion ลำดับ Tech Stack, How It Work, Architecture, Scripts, Workflows, Skills
@@ -115,57 +119,49 @@ related:
 - Concise Rows: แต่ละ row กระชับ มี row ให้ครบ ไม่เขียน Description ยาว
 - Business-Focused: เขียน business value ไม่ใช่แค่ technical details
 
-### 5. Icons
+### 5. Usage Content Types
 
-- ใช้ iconify CDN: `![icon](https://api.iconify.design/<set>:<name>.svg?color=<hex>)`
-- ห้ามใช้ icon ขาวดำ (ไม่มี color parameter) ทุก icon ต้องมี `?color=<hex>`
-- ห้ามใช้ emoji ในตารางทั้งหมด
-- เลือก icon set ที่เหมาะสม: `mdi`, `lucide`, `material-symbols`, `tabler`, `ph`, `iconoir`
-- แต่ละ icon ต้องมี color ที่แตกต่างกันตามเหมาะสม - ไม่ใช้สีเดียวทั้งหมด
-- กำหนด color ด้วย `?color=%23<hex>` (`%23` = URL-encoded `#`) เช่น `?color=%231976d2` — ถ้าไม่มี `%23` SVG จะไม่แสดงสี
-- คอลัมน์ Icon ในตารางต้องจัดให้อยู่ตรงกลางของ cell เสมอ ใช้ `:---:` ใน header row
-- แนวทางสี (เลือกตาม context ของแต่ละ icon):
-  - `1976d2` (ฟ้า) — core, utility, primary | `388e3c` (เขียว) — success, in scope | `d32f2f` (แดง) — negative, out of scope, security
-  - `f57c00` (ส้ม) — warning, highlight | `7b1fa2` (ม่วง) — design, UI | `c2185b` (ชมพู) — features, testing
-  - `303f9f` (คราม) — concepts, web | `0097a7` (ฟ้าขี้ม้า) — development, CLI | `00796b` (เขียวเข้ม) — build, tools | `ffa000` (เหลือวอำพัน) — file, content
-- ตัวอย่าง: `![rocket](https://api.iconify.design/mdi:rocket.svg?color=%23303f9f&width=20)`
-- ห้ามใช้ ANSI codeblock ใน README ทั้งหมด ใช้ codeblock ธรรมดาแทน
+- **Web**: เขียนเป็น text instructions บอกว่ากดอะไรตรงไหน เช่น "Open the app, navigate to sidebar, click on module" — ห้ามใช้ code block
+- **API**: เขียนเป็น code block พร้อม import และ function call
+- **CLI**: เขียนเป็น bash code block พร้อม command
+- **SDK**: เขียนเป็น code block พร้อม install + import + usage
+- **TUI**: เขียนเป็น text instructions บอกว่ากด key อะไร เช่น "Press `q` to quit, `/` to search"
+- **Desktop**: เขียนเป็น text instructions บอกว่าเปิด app อย่างไร ใช้ menu อะไร
+- **Browser Extension**: เขียนเป็น text instructions บอกว่า install จาก store ไหน ใช้ปุ่มอะไร
+
+### 6. Icons
+
+- ใช้ iconify CDN: `![icon](https://api.iconify.design/<set>:<name>.svg?color=%23<hex>&width=20)` — ต้องมี `?color=%23<hex>` เสมอ (ไม่มี = ขาวดำ)
+- ห้ามใช้ emoji ในตาราง — ใช้ icon set: `mdi`, `lucide`, `material-symbols`, `tabler`, `ph`, `iconoir`
+- คอลัมน์ Icon จัดกึ่งกลางด้วย `:---:` — แต่ละ icon ต้องมี color ที่แตกต่างกัน
+- แนวทางสี: `1976d2` (ฟ้า/core), `388e3c` (เขียว/in scope), `d32f2f` (แดง/out scope), `f57c00` (ส้ม/warning), `7b1fa2` (ม่วง/UI), `c2185b` (ชมพู/features), `303f9f` (คราม/concepts), `0097a7` (ฟ้าขี้ม้า/CLI), `00796b` (เขียวเข้ม/build), `ffa000` (ทอง/content)
+- ห้ามใช้ ANSI codeblock ใน README ทั้งหมด
 
 ## Example Template
 
 ```markdown
 # @wrikka/package-name
-> 🚀 Short description
-Longer description.
+> 🚀 Short description — Longer description.
 
 ```text
-┌─────────────────────────────────────────────────┐
-│  [×]  Package Name                              │
-├─────────────────────────────────────────────────┤
-│  ┌───────────┐  ┌─────────────────────────────┐ │
-│  │ Sidebar   │  │ Main Content                │ │
-│  │ [Item 1]  │  │  ┌───────────────────────┐  │ │
-│  │ [Item 2]  │  │  │ Component             │  │ │
-│  │ [Item 3]  │  │  └───────────────────────┘  │ │
-│  └───────────┘  └─────────────────────────────┘ │
-└─────────────────────────────────────────────────┘
+┌───────────────────────────────────┐
+│  [×]  Package Name                │
+├──────────┬────────────────────────┤
+│  Sidebar │  Main Content          │
+│  [Item]  │  ┌──────────────┐      │
+│  └───────┘  │  Component   │      │
+└───────────────────────────────────┘
 ```
 
-## Quick Start
+## Get Started
 
 1. **Install Package** — `terminal`
-   Install the package to your project
    ```bash
    bun add @wrikka/package-name
    ```
-2. **Import Utilities** — `src/index.ts`
-   Import functions from the package
+2. **Import And Use** — `src/app.ts`
    ```typescript
    import { func } from '@wrikka/package-name';
-   ```
-3. **Use In Your App** — `src/app.ts`
-   Call the function in your code
-   ```typescript
    func();
    ```
 
@@ -176,11 +172,22 @@ Longer description.
 
 ## Usage
 
-### example.ts
+### Usage via Web
+
+Open the app at `http://localhost:3000`. Navigate to the sidebar and click on the desired module.
+
+### Usage via API
 
 ```typescript
-import { func } from '@wrikka/package-name';
-func('hello');
+import { createClient } from '@wrikka/package-name/client';
+const client = createClient({ url: 'https://api.wrikka.app' });
+await client.func('hello');
+```
+
+### Usage via CLI
+
+```bash
+bunx @wrikka/package-name hello
 ```
 
 ## Project
@@ -190,18 +197,7 @@ func('hello');
 | ![icon](https://api.iconify.design/mdi:target.svg?color=%23388e3c&width=20) | Goal item | ✓ Goal | Desc |
 | ![icon](https://api.iconify.design/mdi:close.svg?color=%23d32f2f&width=20) | Non-goal | ✗ Not Goal | Desc |
 </details>
-<details><summary>Scope</summary>
-| Icon | Scope | Status | Description |
-|:---:|-------|--------|-------------|
-| ![icon](https://api.iconify.design/mdi:check.svg?color=%23388e3c&width=20) | In scope | ✓ In Scope | Desc |
-| ![icon](https://api.iconify.design/mdi:close.svg?color=%23d32f2f&width=20) | Out of scope | ✗ Out of Scope | Desc |
-</details>
-<details><summary>Key Concepts</summary>
-| Icon | Concept | Description |
-|:---:|---------|-------------|
-| ![icon](https://api.iconify.design/mdi:lightbulb.svg?color=%23303f9f&width=20) | Concept | Desc |
-</details>
-<!-- Core Principles, When To Use, Best Practices: same 3-column pattern as Key Concepts -->
+<!-- Scope, When To Use, Key Concepts, Core Principles, Best Practices: same pattern -->
 
 ## API References
 <details><summary>Functions</summary>
@@ -219,58 +215,36 @@ func('hello');
 </details>
 <details><summary>How It Work</summary>
 ```text
-      ┌─────────┐         ┌─────────┐         ┌─────────┐
-      │ Input   │  ─────▶ │ Process │  ─────▶ │ Output  │
-      └─────────┘         └─────────┘         └─────────┘
+┌─────────┐    ┌─────────┐    ┌─────────┐
+│ Input   │ ─▶ │ Process │ ─▶ │ Output  │
+└─────────┘    └─────────┘    └─────────┘
 ```
 </details>
 <details><summary>Architecture</summary>
 ```
 src/
 ├── modules/
-│   └── ...
 └── index.ts
 ```
 </details>
 <details><summary>Scripts</summary>
 ```json
 {
-  "dev": "bun run src/index.ts",              // Run in development mode
-  "build": "bunup",                            // Build with bunup
-  "test": "vitest run",                         // Run tests with Vitest
-  "lint": "biome check",                        // Lint with Biome
-  "typecheck": "tsgo --noEmit",                 // Type check with tsgo
-  "verify": "bun run lint && bun run test",    // Check + test
-  "ci": "bun run verify && bun run build"      // Verify + build
+  "dev": "bun run src/index.ts",       // Development mode
+  "build": "bunup",                     // Build
+  "test": "vitest run",                 // Tests
+  "check": "biome lint && tsgo --noEmit && ast-grep scan",  // Lint + type + scan
+  "verify": "bun run check && bun run test",                // Check + test
+  "ci": "bun run verify && bun run build"                   // Verify + build
 }
 ```
 </details>
-<details><summary>Workflows</summary>
-
-```text
-workflows/
-  follow-bun.md         # Bun runtime and package manager
-  follow-typescript.md  # TypeScript standards
-  follow-biome.md       # Linting and formatting
-  follow-turborepo.md   # Monorepo task orchestration
-```
-</details>
-<details><summary>Skills</summary>
-
-```text
-skills/
-  bun.md         # Bun runtime and package manager
-  typescript.md  # TypeScript standards
-  biome.md       # Linting and formatting
-  turborepo.md   # Monorepo task orchestration
-```
-</details>
+<!-- Workflows, Skills: file structure codeblock with # comments -->
 
 ## Expected Outcome
 
 - README.md ครบถ้วน ใช้ข้อมูลจริงจาก `/analyze-project` ไม่มี placeholder ยกเว้น banner image
-- Section order: UI Sketch (no heading) > Quick Start > Features > Usage > Project > API References > Development > License
-- Features: row กระชับ ครอบคลุมทุก feature จาก source code เขียน business value
-- ตารางทั้งหมดใช้ colored icon จาก iconify CDN (มี `?color=%23<hex>`) คอลัมน์ Icon จัดกึ่งกลางด้วย `:---:`
-- ไม่มี ANSI codeblock ใน README ทั้งหมด
-- ภาษาอังกฤษทั้งหมดตาม `/use-lang-en`
+- Section order: UI Sketch > Get Started > Features > Usage > Project > API References > Development > License
+- `## Usage` ครอบคลุมทุก access methods — ใช้ `### Usage via ...` heading สำหรับแต่ละ method
+- Features: row กระชับ ครอบคลุมทุก feature เขียน business value
+- ตารางทั้งหมดใช้ colored icon จาก iconify CDN คอลัมน์ Icon จัดกึ่งกลาง — ไม่มี ANSI codeblock — ภาษาอังกฤษตาม `/use-lang-en`

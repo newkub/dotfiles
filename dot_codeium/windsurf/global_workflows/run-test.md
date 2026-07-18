@@ -14,6 +14,7 @@ related:
   - /deep-review
   - /report
   - /follow-code-quality
+  - /debug-issue
 ---
 
 ## Goal

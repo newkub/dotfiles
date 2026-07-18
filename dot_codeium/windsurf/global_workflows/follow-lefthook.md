@@ -108,7 +108,7 @@ pre-merge-commit:
 5. ใช้ custom scripts ใน `lefthook/hooks/`
 
 ```yaml
-pre-commit:
+pre-push:
   parallel: true
   commands:
     frontend-lint:
@@ -125,7 +125,7 @@ pre-commit:
       tags: [backend]
 
 # lefthook-local.yml (add to .gitignore)
-pre-commit:
+pre-push:
   commands:
     some-heavy-check:
       skip: true
@@ -138,7 +138,7 @@ pre-commit:
 1. รัน `bunx lefthook run pre-push` เพื่อทดสอบ pre-push hook
 2. รัน `bunx lefthook run pre-merge-commit` เพื่อทดสอบ pre-merge-commit hook
 3. รัน `bunx lefthook run` เพื่อรัน hooks group
-4. ใช้ `LEFTHOOK=0 git commit` เพื่อ skip hooks
+4. ใช้ `LEFTHOOK=0 git push` เพื่อ skip hooks
 5. ตั้งค่า `output` option เพื่อ control output
 6. ใช้ `--no-stage-fixed` flag เพื่อทดสอบโดยไม่ stage ไฟล์ที่แก้ไข
 
@@ -154,7 +154,7 @@ pre-commit:
 - ใช้ `fail_text` ทุก command เพื่อแสดง actionable error messages
 - ใช้ Biome สำหรับ lint และ format ไม่ใช้ ESLint หรือ Prettier
 - ใช้ `--no-errors-on-unmatched` สำหรับ biome lint เพื่อไม่ error เมื่อไม่มีไฟล์ตรง glob
-- ใช้ hook name ที่ถูกต้อง: `pre-commit`, `pre-push`, `pre-merge-commit` (ไม่ใช่ `pre-merge`)
+- ใช้ hook name ที่ถูกต้อง: `pre-push`, `pre-merge-commit` (ไม่ใช่ `pre-merge` หรือ `pre-commit`)
 - ใช้ `skip: - merge` และ `skip: - rebase` เพื่อข้าม hooks
 - ใช้ `tags` เพื่อ group commands ที่เกี่ยวข้องกัน
 - ใช้ `lefthook-local.yml` สำหรับ local overrides

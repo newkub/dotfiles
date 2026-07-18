@@ -12,6 +12,7 @@ related:
   - /use-ast-grep-outline
   - /check-duplication
   - /report-format-table
+  - /debug-issue
 ---
 
 ## Goal

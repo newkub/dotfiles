@@ -8,6 +8,7 @@ related:
   - /watch-browser
   - /resolve-errors
   - /report-format-terminal
+  - /debug-issue
 ---
 
 ## Goal

@@ -6,6 +6,7 @@ related:
   - /optimize-build
   - /run-clean
   - /run-typecheck
+  - /debug-issue
 ---
 
 ## Goal
