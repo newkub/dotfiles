@@ -195,6 +195,42 @@ config.keys = {
     mods = "CTRL|SHIFT",
     action = wezterm.action.ActivateTabRelative(-1),
   },
+
+  {
+    key = "UpArrow",
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local dims = pane:get_dimensions()
+      local text = pane:get_lines_as_text(dims.viewport_rows)
+      local lines = {}
+      for line in text:gmatch("[^\r\n]+") do
+        table.insert(lines, line)
+      end
+      -- Find prompt lines (PowerShell: starts with "PS " or ends with ">")
+      local last_prompt_idx = nil
+      local second_last_prompt_idx = nil
+      for i = #lines, 1, -1 do
+        local line = lines[i]
+        -- Match common PowerShell prompt patterns: "PS path>" or "❯" or custom prompts
+        if line:match("^PS%s") or line:match("❯") or line:match("^➜") or line:match(">$") then
+          if last_prompt_idx == nil then
+            last_prompt_idx = i
+          elseif second_last_prompt_idx == nil then
+            second_last_prompt_idx = i
+            break
+          end
+        end
+      end
+      -- If we found the second-to-last prompt, copy from there to end
+      -- Otherwise just copy the whole viewport
+      local start_idx = second_last_prompt_idx or last_prompt_idx or 1
+      local result = {}
+      for i = start_idx, #lines do
+        table.insert(result, lines[i])
+      end
+      window:copy_to_clipboard(table.concat(result, "\n"), "Clipboard")
+    end),
+  },
 }
 
 for i = 1, 9 do
