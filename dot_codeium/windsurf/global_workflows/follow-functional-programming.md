@@ -1,178 +1,178 @@
 ---
 title: Follow Functional Programming
-description: พัฒนาโปรเจกต์ด้วย functional programming principles พร้อม pure functions, immutability, composition
+description: à¸žà¸±à¸’à¸™à¸²à¹‚à¸›à¸£à¹€à¸ˆà¸à¸•à¹Œà¸”à¹‰à¸§à¸¢ functional programming principles à¸žà¸£à¹‰à¸­à¸¡ pure functions, immutability, composition
 auto_execution_mode: 3
 related:
-  - /review-architecture
+  - /improve-architecture
 ---
 
 ## Goal
 
-พัฒนาโปรเจกต์ด้วย functional programming principles เพื่อลดความซับซ้อน เพิ่มความปลอดภัย และทำให้โค้ด test ได้ง่ายขึ้น
+à¸žà¸±à¸’à¸™à¸²à¹‚à¸›à¸£à¹€à¸ˆà¸à¸•à¹Œà¸”à¹‰à¸§à¸¢ functional programming principles à¹€à¸žà¸·à¹ˆà¸­à¸¥à¸”à¸„à¸§à¸²à¸¡à¸‹à¸±à¸šà¸‹à¹‰à¸­à¸™ à¹€à¸žà¸´à¹ˆà¸¡à¸„à¸§à¸²à¸¡à¸›à¸¥à¸­à¸”à¸ à¸±à¸¢ à¹à¸¥à¸°à¸—à¸³à¹ƒà¸«à¹‰à¹‚à¸„à¹‰à¸” test à¹„à¸”à¹‰à¸‡à¹ˆà¸²à¸¢à¸‚à¸¶à¹‰à¸™
 
 ## Execute
 
 ### 1. Use Pure Functions
 
-เขียนฟังก์ชันที่ pure เสมอเมื่อเป็นไปได้
+à¹€à¸‚à¸µà¸¢à¸™à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸—à¸µà¹ˆ pure à¹€à¸ªà¸¡à¸­à¹€à¸¡à¸·à¹ˆà¸­à¹€à¸›à¹‡à¸™à¹„à¸›à¹„à¸”à¹‰
 
-1. หลีกเลี่ยง `side effects`: `API calls`, `DOM access`, `external state`
-2. Return ค่าเดิมเสมอเมื่อ input เดิม
-3. แยก pure logic จาก impure interactions
-4. ใช้ `pure functions` สำหรับ business logic
-5. ใช้ `impure functions` เฉพาะใน imperative shell
+1. à¸«à¸¥à¸µà¸à¹€à¸¥à¸µà¹ˆà¸¢à¸‡ `side effects`: `API calls`, `DOM access`, `external state`
+2. Return à¸„à¹ˆà¸²à¹€à¸”à¸´à¸¡à¹€à¸ªà¸¡à¸­à¹€à¸¡à¸·à¹ˆà¸­ input à¹€à¸”à¸´à¸¡
+3. à¹à¸¢à¸ pure logic à¸ˆà¸²à¸ impure interactions
+4. à¹ƒà¸Šà¹‰ `pure functions` à¸ªà¸³à¸«à¸£à¸±à¸š business logic
+5. à¹ƒà¸Šà¹‰ `impure functions` à¹€à¸‰à¸žà¸²à¸°à¹ƒà¸™ imperative shell
 
 ### 2. Enforce Immutability
 
-ทำตาม `/declarative-programming` เพื่อใช้ immutability
+à¸—à¸³à¸•à¸²à¸¡ `/declarative-programming` à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸Šà¹‰ immutability
 
-1. ใช้ `const` แทน `let/var` เสมอ
-2. ใช้ `Readonly<>` type สำหรับ objects/arrays
-3. ใช้ `readonly modifier` สำหรับ class properties
-4. ใช้ `spread operator` แทน mutation
-5. ใช้ `array methods` ที่ไม่ mutate: `map`, `filter`, `reduce`
+1. à¹ƒà¸Šà¹‰ `const` à¹à¸—à¸™ `let/var` à¹€à¸ªà¸¡à¸­
+2. à¹ƒà¸Šà¹‰ `Readonly<>` type à¸ªà¸³à¸«à¸£à¸±à¸š objects/arrays
+3. à¹ƒà¸Šà¹‰ `readonly modifier` à¸ªà¸³à¸«à¸£à¸±à¸š class properties
+4. à¹ƒà¸Šà¹‰ `spread operator` à¹à¸—à¸™ mutation
+5. à¹ƒà¸Šà¹‰ `array methods` à¸—à¸µà¹ˆà¹„à¸¡à¹ˆ mutate: `map`, `filter`, `reduce`
 
 ### 3. Function Composition
 
-ทำตาม `/declarative-programming` เพื่อใช้ composition
+à¸—à¸³à¸•à¸²à¸¡ `/declarative-programming` à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸Šà¹‰ composition
 
-1. เขียนฟังก์ชันขนาดเล็กที่ทำหน้าที่เดียว
-2. ใช้ `higher-order functions`: `map`, `filter`, `reduce`
-3. สร้าง `compose function` สำหรับ pipeline
-4. ใช้ `type inference` สำหรับ type safety
-5. ใช้ `generics` สำหรับ reusable composition
+1. à¹€à¸‚à¸µà¸¢à¸™à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸‚à¸™à¸²à¸”à¹€à¸¥à¹‡à¸à¸—à¸µà¹ˆà¸—à¸³à¸«à¸™à¹‰à¸²à¸—à¸µà¹ˆà¹€à¸”à¸µà¸¢à¸§
+2. à¹ƒà¸Šà¹‰ `higher-order functions`: `map`, `filter`, `reduce`
+3. à¸ªà¸£à¹‰à¸²à¸‡ `compose function` à¸ªà¸³à¸«à¸£à¸±à¸š pipeline
+4. à¹ƒà¸Šà¹‰ `type inference` à¸ªà¸³à¸«à¸£à¸±à¸š type safety
+5. à¹ƒà¸Šà¹‰ `generics` à¸ªà¸³à¸«à¸£à¸±à¸š reusable composition
 
 ### 4. Type Safety
 
-ทำตาม `/typescript` เพื่อเพิ่มความปลอดภัย
+à¸—à¸³à¸•à¸²à¸¡ `/typescript` à¹€à¸žà¸·à¹ˆà¸­à¹€à¸žà¸´à¹ˆà¸¡à¸„à¸§à¸²à¸¡à¸›à¸¥à¸­à¸”à¸ à¸±à¸¢
 
-1. ใช้ `function types` อย่างชัดเจน
-2. ใช้ `generics` สำหรับ reusable functions
-3. ใช้ `union types` สำหรับ multiple return types
-4. ใช้ `type guards` สำหรับ type narrowing
-5. ใช้ `discriminated unions` สำหรับ complex state
+1. à¹ƒà¸Šà¹‰ `function types` à¸­à¸¢à¹ˆà¸²à¸‡à¸Šà¸±à¸”à¹€à¸ˆà¸™
+2. à¹ƒà¸Šà¹‰ `generics` à¸ªà¸³à¸«à¸£à¸±à¸š reusable functions
+3. à¹ƒà¸Šà¹‰ `union types` à¸ªà¸³à¸«à¸£à¸±à¸š multiple return types
+4. à¹ƒà¸Šà¹‰ `type guards` à¸ªà¸³à¸«à¸£à¸±à¸š type narrowing
+5. à¹ƒà¸Šà¹‰ `discriminated unions` à¸ªà¸³à¸«à¸£à¸±à¸š complex state
 
 ### 5. Separate Core and Shell
 
-แยก functional core จาก imperative shell
+à¹à¸¢à¸ functional core à¸ˆà¸²à¸ imperative shell
 
-1. ทำ business logic ใน `pure functions`
-2. แยก `side effects` ไปที่ outer layer
-3. ใช้ `dependency injection` สำหรับ impure dependencies
-4. ทำ `I/O` ใน imperative shell เท่านั้น
-5. ทำ validation ใน pure functions
-6. ทำ `/review-architecture` เพื่อจัดการ side effects
+1. à¸—à¸³ business logic à¹ƒà¸™ `pure functions`
+2. à¹à¸¢à¸ `side effects` à¹„à¸›à¸—à¸µà¹ˆ outer layer
+3. à¹ƒà¸Šà¹‰ `dependency injection` à¸ªà¸³à¸«à¸£à¸±à¸š impure dependencies
+4. à¸—à¸³ `I/O` à¹ƒà¸™ imperative shell à¹€à¸—à¹ˆà¸²à¸™à¸±à¹‰à¸™
+5. à¸—à¸³ validation à¹ƒà¸™ pure functions
+6. à¸—à¸³ `/improve-architecture` à¹€à¸žà¸·à¹ˆà¸­à¸ˆà¸±à¸”à¸à¸²à¸£ side effects
 
 ### 6. Avoid Mutable State
 
-หลีกเลี่ยง mutable state ที่ไม่จำเป็น
+à¸«à¸¥à¸µà¸à¹€à¸¥à¸µà¹ˆà¸¢à¸‡ mutable state à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¸ˆà¸³à¹€à¸›à¹‡à¸™
 
-1. ใช้ `state machines` สำหรับ complex state
-2. ใช้ `reducers` สำหรับ state updates
-3. ใช้ `immutable data structures`
-4. หลีกเลี่ยง `shared state`
-5. ใช้ `message passing` แทน shared state
+1. à¹ƒà¸Šà¹‰ `state machines` à¸ªà¸³à¸«à¸£à¸±à¸š complex state
+2. à¹ƒà¸Šà¹‰ `reducers` à¸ªà¸³à¸«à¸£à¸±à¸š state updates
+3. à¹ƒà¸Šà¹‰ `immutable data structures`
+4. à¸«à¸¥à¸µà¸à¹€à¸¥à¸µà¹ˆà¸¢à¸‡ `shared state`
+5. à¹ƒà¸Šà¹‰ `message passing` à¹à¸—à¸™ shared state
 
 ### 7. Error Handling
 
-จัดการ errors ด้วย functional approach
+à¸ˆà¸±à¸”à¸à¸²à¸£ errors à¸”à¹‰à¸§à¸¢ functional approach
 
-1. ใช้ `Result/Either types` แทน exceptions
-2. ใช้ `Option/Maybe types` สำหรับ nullable values
-3. Propagate errors ผ่าน types ไม่ใช่ exceptions
-4. ใช้ `typed error classes`
-5. Handle errors อย่าง explicit
+1. à¹ƒà¸Šà¹‰ `Result/Either types` à¹à¸—à¸™ exceptions
+2. à¹ƒà¸Šà¹‰ `Option/Maybe types` à¸ªà¸³à¸«à¸£à¸±à¸š nullable values
+3. Propagate errors à¸œà¹ˆà¸²à¸™ types à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆ exceptions
+4. à¹ƒà¸Šà¹‰ `typed error classes`
+5. Handle errors à¸­à¸¢à¹ˆà¸²à¸‡ explicit
 
 ### 8. Testing
 
-เขียน tests สำหรับ pure functions
+à¹€à¸‚à¸µà¸¢à¸™ tests à¸ªà¸³à¸«à¸£à¸±à¸š pure functions
 
-1. `Pure functions` test ง่ายด้วย input/output
-2. Mock impure dependencies ใน imperative shell
-3. Test composition แยกจาก individual functions
-4. ใช้ `property-based testing`
-5. Test edge cases ด้วย pure functions
+1. `Pure functions` test à¸‡à¹ˆà¸²à¸¢à¸”à¹‰à¸§à¸¢ input/output
+2. Mock impure dependencies à¹ƒà¸™ imperative shell
+3. Test composition à¹à¸¢à¸à¸ˆà¸²à¸ individual functions
+4. à¹ƒà¸Šà¹‰ `property-based testing`
+5. Test edge cases à¸”à¹‰à¸§à¸¢ pure functions
 
 ## Rules
 
 ### Pure Functions
 
-ฟังก์ชันต้องเป็น pure เมื่อเป็นไปได้
+à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸•à¹‰à¸­à¸‡à¹€à¸›à¹‡à¸™ pure à¹€à¸¡à¸·à¹ˆà¸­à¹€à¸›à¹‡à¸™à¹„à¸›à¹„à¸”à¹‰
 
-- ไม่มี `side effects`
-- Return ค่าเดิมเสมอเมื่อ `input` เดิม
-- ไม่ access `external state`
-- ไม่ mutate `input parameters`
-- แยก pure logic จาก `I/O`
+- à¹„à¸¡à¹ˆà¸¡à¸µ `side effects`
+- Return à¸„à¹ˆà¸²à¹€à¸”à¸´à¸¡à¹€à¸ªà¸¡à¸­à¹€à¸¡à¸·à¹ˆà¸­ `input` à¹€à¸”à¸´à¸¡
+- à¹„à¸¡à¹ˆ access `external state`
+- à¹„à¸¡à¹ˆ mutate `input parameters`
+- à¹à¸¢à¸ pure logic à¸ˆà¸²à¸ `I/O`
 
 ### Immutability
 
-ทำตาม `/declarative-programming` เพื่อใช้ immutability
+à¸—à¸³à¸•à¸²à¸¡ `/declarative-programming` à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸Šà¹‰ immutability
 
-- ใช้ `const` แทน `let/var`
-- ใช้ `Readonly<>` type
-- ใช้ `spread operator`
-- ใช้ `array methods` ที่ไม่ mutate
-- ไม่ mutate `objects/arrays` โดยตรง
+- à¹ƒà¸Šà¹‰ `const` à¹à¸—à¸™ `let/var`
+- à¹ƒà¸Šà¹‰ `Readonly<>` type
+- à¹ƒà¸Šà¹‰ `spread operator`
+- à¹ƒà¸Šà¹‰ `array methods` à¸—à¸µà¹ˆà¹„à¸¡à¹ˆ mutate
+- à¹„à¸¡à¹ˆ mutate `objects/arrays` à¹‚à¸”à¸¢à¸•à¸£à¸‡
 
 ### Function Composition
 
-ทำตาม `/declarative-programming` เพื่อใช้ composition
+à¸—à¸³à¸•à¸²à¸¡ `/declarative-programming` à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸Šà¹‰ composition
 
-- ฟังก์ชันขนาดเล็ก `single responsibility`
-- ใช้ `higher-order functions`
-- ใช้ `pipeline pattern`
+- à¸Ÿà¸±à¸‡à¸à¹Œà¸Šà¸±à¸™à¸‚à¸™à¸²à¸”à¹€à¸¥à¹‡à¸ `single responsibility`
+- à¹ƒà¸Šà¹‰ `higher-order functions`
+- à¹ƒà¸Šà¹‰ `pipeline pattern`
 - `Type-safe` composition
 - `Reusable generic functions`
 
 ### Type Safety
 
-ทำตาม `/typescript` เพื่อความปลอดภัย
+à¸—à¸³à¸•à¸²à¸¡ `/typescript` à¹€à¸žà¸·à¹ˆà¸­à¸„à¸§à¸²à¸¡à¸›à¸¥à¸­à¸”à¸ à¸±à¸¢
 
 - Explicit `function types`
-- `Generics` สำหรับ reusability
-- `Type guards` สำหรับ narrowing
+- `Generics` à¸ªà¸³à¸«à¸£à¸±à¸š reusability
+- `Type guards` à¸ªà¸³à¸«à¸£à¸±à¸š narrowing
 - `Discriminated unions`
 - `Strict TypeScript config`
 
 ### Core and Shell
 
-แยก functional core จาก imperative shell
+à¹à¸¢à¸ functional core à¸ˆà¸²à¸ imperative shell
 
-- Business logic เป็น `pure functions`
-- `Side effects` ใน outer layer
+- Business logic à¹€à¸›à¹‡à¸™ `pure functions`
+- `Side effects` à¹ƒà¸™ outer layer
 - `Dependency injection`
-- `I/O` เฉพาะใน shell
-- Validation ใน `pure functions`
+- `I/O` à¹€à¸‰à¸žà¸²à¸°à¹ƒà¸™ shell
+- Validation à¹ƒà¸™ `pure functions`
 
 ### State Management
 
-จัดการ state ด้วย functional approach
+à¸ˆà¸±à¸”à¸à¸²à¸£ state à¸”à¹‰à¸§à¸¢ functional approach
 
 - `Immutable state`
-- `Reducers` สำหรับ updates
+- `Reducers` à¸ªà¸³à¸«à¸£à¸±à¸š updates
 - `State machines`
 - No `shared state`
 - `Message passing`
 
 ### Error Handling
 
-จัดการ errors ด้วย types ไม่ใช่ exceptions
+à¸ˆà¸±à¸”à¸à¸²à¸£ errors à¸”à¹‰à¸§à¸¢ types à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆ exceptions
 
 - `Result/Either types`
 - `Option/Maybe types`
 - `Typed error classes`
 - Explicit `error propagation`
-- No `try/catch` ใน pure functions
+- No `try/catch` à¹ƒà¸™ pure functions
 
 ## Expected Outcome
 
-- Pure functions สำหรับ business logic
-- Immutability ทั่วทั้ง codebase
-- Function composition ที่ type-safe
-- Clear separation ระหว่าง core และ shell
-- Error handling ด้วย types
-- State management ที่ predictable
-- Tests ที่เขียนง่าย
-- Code ที่ maintain ได้ง่าย
+- Pure functions à¸ªà¸³à¸«à¸£à¸±à¸š business logic
+- Immutability à¸—à¸±à¹ˆà¸§à¸—à¸±à¹‰à¸‡ codebase
+- Function composition à¸—à¸µà¹ˆ type-safe
+- Clear separation à¸£à¸°à¸«à¸§à¹ˆà¸²à¸‡ core à¹à¸¥à¸° shell
+- Error handling à¸”à¹‰à¸§à¸¢ types
+- State management à¸—à¸µà¹ˆ predictable
+- Tests à¸—à¸µà¹ˆà¹€à¸‚à¸µà¸¢à¸™à¸‡à¹ˆà¸²à¸¢
+- Code à¸—à¸µà¹ˆ maintain à¹„à¸”à¹‰à¸‡à¹ˆà¸²à¸¢
 

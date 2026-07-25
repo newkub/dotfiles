@@ -1,6 +1,6 @@
 ---
 title: Benchmark Competitors
-description: ศึกษาคู่แข่งและปรับปรุง project ให้ดีกว่าในทุกมิติ
+description: à¸¨à¸¶à¸à¸©à¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¹à¸¥à¸°à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡ project à¹ƒà¸«à¹‰à¸”à¸µà¸à¸§à¹ˆà¸²à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
 auto_execution_mode: 3
 related:
   - /bench-features
@@ -9,121 +9,121 @@ related:
   - /plan
   - /ship-code
   - /update-docs
-  - /review-performance
-  - /review-frontend
+  - /improve-performance
+  - /improve-frontend
   - /ask-me
 ---
 
 ## Goal
 
-ศึกษาคู่แข่งและปรับปรุง project ให้ดีกว่าในทุกมิติ
+à¸¨à¸¶à¸à¸©à¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¹à¸¥à¸°à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡ project à¹ƒà¸«à¹‰à¸”à¸µà¸à¸§à¹ˆà¸²à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
 
 ## Scope
 
-ครอบคลุมทุกมิติของ product: features, performance, UX/UI, architecture, DX, security, scalability, business ไม่ใช่แค่มิติใดมิติหนึ่ง
+à¸„à¸£à¸­à¸šà¸„à¸¥à¸¸à¸¡à¸—à¸¸à¸à¸¡à¸´à¸•à¸´à¸‚à¸­à¸‡ product: features, performance, UX/UI, architecture, DX, security, scalability, business à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¹à¸„à¹ˆà¸¡à¸´à¸•à¸´à¹ƒà¸”à¸¡à¸´à¸•à¸´à¸«à¸™à¸¶à¹ˆà¸‡
 
 ## Execute
 
 ### 1. Research Competitors
 
-วิจัยคู่แข่งที่ relevant
+à¸§à¸´à¸ˆà¸±à¸¢à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¸—à¸µà¹ˆ relevant
 
-> Goal: รู้ competitor landscape และ best practices
+> Goal: à¸£à¸¹à¹‰ competitor landscape à¹à¸¥à¸° best practices
 
-1. ทำ `/deep-research` เพื่อรวบรวมข้อมูลคู่แข่ง
-2. ระบุ competitors ที่เป็น direct และ indirect
-3. วิเคราะห์ strengths, weaknesses, unique selling points, tech stack, UX patterns
-4. ถ้าหาข้อมูลไม่ได้ → stop และ report
+1. à¸—à¸³ `/deep-research` à¹€à¸žà¸·à¹ˆà¸­à¸£à¸§à¸šà¸£à¸§à¸¡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡
+2. à¸£à¸°à¸šà¸¸ competitors à¸—à¸µà¹ˆà¹€à¸›à¹‡à¸™ direct à¹à¸¥à¸° indirect
+3. à¸§à¸´à¹€à¸„à¸£à¸²à¸°à¸«à¹Œ strengths, weaknesses, unique selling points, tech stack, UX patterns
+4. à¸–à¹‰à¸²à¸«à¸²à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¹„à¸¡à¹ˆà¹„à¸”à¹‰ â†’ stop à¹à¸¥à¸° report
 
 ### 2. Benchmark Features
 
-เปรียบเทียบและปรับปรุงมิติ features
+à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸šà¹à¸¥à¸°à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡à¸¡à¸´à¸•à¸´ features
 
-> Goal: ให้ features ดีกว่าคู่แข่ง
+> Goal: à¹ƒà¸«à¹‰ features à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡
 
-1. ทำ `/bench-features` เพื่อ benchmark มิติ features
-2. รับผลเป็น section หรือไฟล์ `comparison-features.md`
-3. ถ้า `/bench-features` fail → stop และ report
+1. à¸—à¸³ `/bench-features` à¹€à¸žà¸·à¹ˆà¸­ benchmark à¸¡à¸´à¸•à¸´ features
+2. à¸£à¸±à¸šà¸œà¸¥à¹€à¸›à¹‡à¸™ section à¸«à¸£à¸·à¸­à¹„à¸Ÿà¸¥à¹Œ `comparison-features.md`
+3. à¸–à¹‰à¸² `/bench-features` fail â†’ stop à¹à¸¥à¸° report
 
 ### 3. Benchmark Other Dimensions
 
-เปรียบเทียบมิติที่เหลือนอกเหนือ features
+à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸šà¸¡à¸´à¸•à¸´à¸—à¸µà¹ˆà¹€à¸«à¸¥à¸·à¸­à¸™à¸­à¸à¹€à¸«à¸™à¸·à¸­ features
 
-> Goal: ครอบคลุม performance, UX/UI, architecture, DX, security, business
+> Goal: à¸„à¸£à¸­à¸šà¸„à¸¥à¸¸à¸¡ performance, UX/UI, architecture, DX, security, business
 
-1. ทำ `/review-performance` สำหรับ performance
-2. ทำ `/review-frontend` สำหรับ UX/UI
-3. ถ้ามีมิติอื่น (architecture, DX, security, scalability, business) ให้ใช้เครื่องมือที่เหมาะสม
-4. บันทึกผลใน `docs/project/comparison.md`
+1. à¸—à¸³ `/improve-performance` à¸ªà¸³à¸«à¸£à¸±à¸š performance
+2. à¸—à¸³ `/improve-frontend` à¸ªà¸³à¸«à¸£à¸±à¸š UX/UI
+3. à¸–à¹‰à¸²à¸¡à¸µà¸¡à¸´à¸•à¸´à¸­à¸·à¹ˆà¸™ (architecture, DX, security, scalability, business) à¹ƒà¸«à¹‰à¹ƒà¸Šà¹‰à¹€à¸„à¸£à¸·à¹ˆà¸­à¸‡à¸¡à¸·à¸­à¸—à¸µà¹ˆà¹€à¸«à¸¡à¸²à¸°à¸ªà¸¡
+4. à¸šà¸±à¸™à¸—à¸¶à¸à¸œà¸¥à¹ƒà¸™ `docs/project/comparison.md`
 
 ### 4. Plan Improvements
 
-วางแผนปรับปรุงให้ดีกว่าคู่แข่ง
+à¸§à¸²à¸‡à¹à¸œà¸™à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡à¹ƒà¸«à¹‰à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡
 
-> Goal: ได้ roadmap ครอบทุกมิติ
+> Goal: à¹„à¸”à¹‰ roadmap à¸„à¸£à¸­à¸šà¸—à¸¸à¸à¸¡à¸´à¸•à¸´
 
-1. ทำ `/pondering` เพื่อทบทวน priority และผลกระทบ
-2. ทำ `/plan` เพื่อสร้าง roadmap ครอบทุกมิติ
-3. ระบุ priority: Critical, High, Medium, Nice-to-have
-4. ถ้า scope ไม่ชัด → ใช้ `/ask-me` ก่อน plan
+1. à¸—à¸³ `/pondering` à¹€à¸žà¸·à¹ˆà¸­à¸—à¸šà¸—à¸§à¸™ priority à¹à¸¥à¸°à¸œà¸¥à¸à¸£à¸°à¸—à¸š
+2. à¸—à¸³ `/plan` à¹€à¸žà¸·à¹ˆà¸­à¸ªà¸£à¹‰à¸²à¸‡ roadmap à¸„à¸£à¸­à¸šà¸—à¸¸à¸à¸¡à¸´à¸•à¸´
+3. à¸£à¸°à¸šà¸¸ priority: Critical, High, Medium, Nice-to-have
+4. à¸–à¹‰à¸² scope à¹„à¸¡à¹ˆà¸Šà¸±à¸” â†’ à¹ƒà¸Šà¹‰ `/ask-me` à¸à¹ˆà¸­à¸™ plan
 
 ### 5. Implement Improvements
 
-ปรับปรุง project ตาม roadmap
+à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡ project à¸•à¸²à¸¡ roadmap
 
-> Goal: ดีกว่าคู่แข่งในทุกมิติ
+> Goal: à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
 
-1. ทำ `/ship-code` เพื่อ implement improvements
-2. ทำ `/review-performance` สำหรับ performance improvements
-3. ทำ `/review-frontend` สำหรับ UX/UI improvements
-4. หยุดเมื่อดีกว่าคู่แข่งทั้งหมดในทุกมิติ
+1. à¸—à¸³ `/ship-code` à¹€à¸žà¸·à¹ˆà¸­ implement improvements
+2. à¸—à¸³ `/improve-performance` à¸ªà¸³à¸«à¸£à¸±à¸š performance improvements
+3. à¸—à¸³ `/improve-frontend` à¸ªà¸³à¸«à¸£à¸±à¸š UX/UI improvements
+4. à¸«à¸¢à¸¸à¸”à¹€à¸¡à¸·à¹ˆà¸­à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
 
 ### 6. Update Report
 
-อัปเดตรายงานเปรียบเทียบ
+à¸­à¸±à¸›à¹€à¸”à¸•à¸£à¸²à¸¢à¸‡à¸²à¸™à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸š
 
-> Goal: รายงาน reflect สถานะล่าสุด
+> Goal: à¸£à¸²à¸¢à¸‡à¸²à¸™ reflect à¸ªà¸–à¸²à¸™à¸°à¸¥à¹ˆà¸²à¸ªà¸¸à¸”
 
-1. ทำ `/update-docs` เพื่ออัปเดต `docs/project/comparison.md`
-2. อัปเดต status ในตารางเปรียบเทียบ
-3. Re-benchmark หลังการปรับปรุง
+1. à¸—à¸³ `/update-docs` à¹€à¸žà¸·à¹ˆà¸­à¸­à¸±à¸›à¹€à¸”à¸• `docs/project/comparison.md`
+2. à¸­à¸±à¸›à¹€à¸”à¸• status à¹ƒà¸™à¸•à¸²à¸£à¸²à¸‡à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸š
+3. Re-benchmark à¸«à¸¥à¸±à¸‡à¸à¸²à¸£à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡
 
 ## Rules
 
 ### 1. Focus On Actionable Insights
 
-- เน้น metrics ที่ measurable และ actionable
-- ไม่ research ลึกเกินความจำเป็น
-- รายงานกระชับไม่เกิน 1 หน้า A4
+- à¹€à¸™à¹‰à¸™ metrics à¸—à¸µà¹ˆ measurable à¹à¸¥à¸° actionable
+- à¹„à¸¡à¹ˆ research à¸¥à¸¶à¸à¹€à¸à¸´à¸™à¸„à¸§à¸²à¸¡à¸ˆà¸³à¹€à¸›à¹‡à¸™
+- à¸£à¸²à¸¢à¸‡à¸²à¸™à¸à¸£à¸°à¸Šà¸±à¸šà¹„à¸¡à¹ˆà¹€à¸à¸´à¸™ 1 à¸«à¸™à¹‰à¸² A4
 
 ### 2. Document Structure
 
-- ไฟล์หลัก `comparison.md` ใน `docs/project/`
-- อนุญาตไฟล์ย่อย `comparison-*.md` จาก sub-workflows เช่น `comparison-features.md`
-- 2-3 sections หลักพอ
-- ไม่ต้องมี timeline ละเอียด
+- à¹„à¸Ÿà¸¥à¹Œà¸«à¸¥à¸±à¸ `comparison.md` à¹ƒà¸™ `docs/project/`
+- à¸­à¸™à¸¸à¸à¸²à¸•à¹„à¸Ÿà¸¥à¹Œà¸¢à¹ˆà¸­à¸¢ `comparison-*.md` à¸ˆà¸²à¸ sub-workflows à¹€à¸Šà¹ˆà¸™ `comparison-features.md`
+- 2-3 sections à¸«à¸¥à¸±à¸à¸žà¸­
+- à¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡à¸¡à¸µ timeline à¸¥à¸°à¹€à¸­à¸µà¸¢à¸”
 
 ### 3. Multi-Dimension Focus
 
-- ไม่ใช่แค่ features แต่ครอบคลุมทุกมิติ
-- วัดด้วย metrics ที่ objective
-- เปรียบเทียบกับ competitors ที่ relevant
+- à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¹à¸„à¹ˆ features à¹à¸•à¹ˆà¸„à¸£à¸­à¸šà¸„à¸¥à¸¸à¸¡à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
+- à¸§à¸±à¸”à¸”à¹‰à¸§à¸¢ metrics à¸—à¸µà¹ˆ objective
+- à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸šà¸à¸±à¸š competitors à¸—à¸µà¹ˆ relevant
 
 ### 4. Implementation Discipline
 
-- ทำตาม plan จนกว่าจะดีกว่าคู่แข่ง
-- หยุดเมื่อสำเร็จเป้าหมายในทุกมิติ
-- ติดตามความคืบหน้าอย่างสม่ำเสมอ
-- Re-benchmark หลังการปรับปรุงแต่ละครั้ง
+- à¸—à¸³à¸•à¸²à¸¡ plan à¸ˆà¸™à¸à¸§à¹ˆà¸²à¸ˆà¸°à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡
+- à¸«à¸¢à¸¸à¸”à¹€à¸¡à¸·à¹ˆà¸­à¸ªà¸³à¹€à¸£à¹‡à¸ˆà¹€à¸›à¹‰à¸²à¸«à¸¡à¸²à¸¢à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
+- à¸•à¸´à¸”à¸•à¸²à¸¡à¸„à¸§à¸²à¸¡à¸„à¸·à¸šà¸«à¸™à¹‰à¸²à¸­à¸¢à¹ˆà¸²à¸‡à¸ªà¸¡à¹ˆà¸³à¹€à¸ªà¸¡à¸­
+- Re-benchmark à¸«à¸¥à¸±à¸‡à¸à¸²à¸£à¸›à¸£à¸±à¸šà¸›à¸£à¸¸à¸‡à¹à¸•à¹ˆà¸¥à¸°à¸„à¸£à¸±à¹‰à¸‡
 
 ### 5. Stop When Better
 
-- หยุดทันทีเมื่อ project ดีกว่าคู่แข่งในทุกมิติ
-- ไม่ทำ over-engineering หรือเพิ่ม features ที่ไม่จำเป็น
-- ย้ายไปทำงานอื่นเมื่อสำเร็จเป้าหมายแล้ว
+- à¸«à¸¢à¸¸à¸”à¸—à¸±à¸™à¸—à¸µà¹€à¸¡à¸·à¹ˆà¸­ project à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
+- à¹„à¸¡à¹ˆà¸—à¸³ over-engineering à¸«à¸£à¸·à¸­à¹€à¸žà¸´à¹ˆà¸¡ features à¸—à¸µà¹ˆà¹„à¸¡à¹ˆà¸ˆà¸³à¹€à¸›à¹‡à¸™
+- à¸¢à¹‰à¸²à¸¢à¹„à¸›à¸—à¸³à¸‡à¸²à¸™à¸­à¸·à¹ˆà¸™à¹€à¸¡à¸·à¹ˆà¸­à¸ªà¸³à¹€à¸£à¹‡à¸ˆà¹€à¸›à¹‰à¸²à¸«à¸¡à¸²à¸¢à¹à¸¥à¹‰à¸§
 
 ## Expected Outcome
 
-- ไฟล์ `docs/project/comparison.md` ที่มีตารางเปรียบเทียบทุกมิติ
-- Project ดีกว่าคู่แข่งในทุกมิติ
-- ใช้เวลาไม่เกิน 30 นาทีในการ benchmark
+- à¹„à¸Ÿà¸¥à¹Œ `docs/project/comparison.md` à¸—à¸µà¹ˆà¸¡à¸µà¸•à¸²à¸£à¸²à¸‡à¹€à¸›à¸£à¸µà¸¢à¸šà¹€à¸—à¸µà¸¢à¸šà¸—à¸¸à¸à¸¡à¸´à¸•à¸´
+- Project à¸”à¸µà¸à¸§à¹ˆà¸²à¸„à¸¹à¹ˆà¹à¸‚à¹ˆà¸‡à¹ƒà¸™à¸—à¸¸à¸à¸¡à¸´à¸•à¸´
+- à¹ƒà¸Šà¹‰à¹€à¸§à¸¥à¸²à¹„à¸¡à¹ˆà¹€à¸à¸´à¸™ 30 à¸™à¸²à¸—à¸µà¹ƒà¸™à¸à¸²à¸£ benchmark
