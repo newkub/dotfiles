@@ -1,6 +1,6 @@
 ---
 title: Run Test
-description: à¸£à¸±à¸™ test suite à¸•à¸£à¸§à¸ˆà¸«à¸² failures à¹à¸¥à¹‰à¸§ validate/review à¹€à¸žà¸·à¹ˆà¸­à¸£à¸°à¸šà¸¸à¸§à¹ˆà¸²à¸„à¸§à¸£à¹à¸à¹‰ source à¸«à¸£à¸·à¸­ test
+description: รัน test suite ตรวจหา failures แล้ว validate/review เพื่อระบุว่าควรแก้ source หรือ test
 auto_execution_mode: 3
 related:
   - /run-lint
@@ -10,7 +10,7 @@ related:
   - /validate
   - /validate-test
   - /review
-  - /improve-testing
+  - /review-testing
   - /deep-review
   - /report
   - /follow-code-quality
@@ -19,137 +19,137 @@ related:
 
 ## Goal
 
-à¸£à¸±à¸™ test suite à¸­à¸¢à¹ˆà¸²à¸‡à¹€à¸›à¹‡à¸™à¸£à¸°à¸šà¸š à¸•à¸£à¸§à¸ˆà¸«à¸² failures à¹à¸¥à¹‰à¸§ validate/review à¹€à¸žà¸·à¹ˆà¸­à¸à¸³à¸«à¸™à¸”à¸§à¹ˆà¸²à¸„à¸§à¸£à¹à¸à¹‰ source à¸«à¸£à¸·à¸­ test à¹‚à¸”à¸¢à¹„à¸¡à¹ˆà¹à¸à¹‰à¹ƒà¸«à¹‰à¸œà¹ˆà¸²à¸™à¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´
+รัน test suite อย่างเป็นระบบ ตรวจหา failures แล้ว validate/review เพื่อกำหนดว่าควรแก้ source หรือ test โดยไม่แก้ให้ผ่านอัตโนมัติ
 
 ## Scope
 
-à¸„à¸£à¸­à¸šà¸„à¸¥à¸¸à¸¡ unit, integration, e2e, component, API, database, performance, security, accessibility, i18n, à¹à¸¥à¸° specialized tests à¸•à¸²à¸¡ project needs
+ครอบคลุม unit, integration, e2e, component, API, database, performance, security, accessibility, i18n, และ specialized tests ตาม project needs
 
 ## Execute
 
 ### 1. Run Lint And Typecheck
 
-1. à¸—à¸³ `/run-lint` à¹€à¸žà¸·à¹ˆà¸­à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š code quality
-2. à¸—à¸³ `/run-typecheck` à¹€à¸žà¸·à¹ˆà¸­à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š type safety
-3. à¹à¸à¹‰à¹„à¸‚ lint/type errors à¸à¹ˆà¸­à¸™à¸£à¸±à¸™ tests (code quality à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆ test failure)
+1. ทำ `/run-lint` เพื่อตรวจสอบ code quality
+2. ทำ `/run-typecheck` เพื่อตรวจสอบ type safety
+3. แก้ไข lint/type errors ก่อนรัน tests (code quality ไม่ใช่ test failure)
 
 ### 2. Setup Test Structure
 
-1. à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š test structure: `test/unit/`, `test/integration/`, `test/e2e/`, `test/fixtures/`, `test/mocks/`, `test/utils/`
-2. à¸ªà¸£à¹‰à¸²à¸‡ directories à¸–à¹‰à¸²à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¸¡à¸µ
-3. à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š test frameworks à¸•à¸´à¸”à¸•à¸±à¹‰à¸‡ (Vitest, Playwright)
-4. à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š test config files (`vitest.config.ts`, `playwright.config.ts`)
+1. ตรวจสอบ test structure: `test/unit/`, `test/integration/`, `test/e2e/`, `test/fixtures/`, `test/mocks/`, `test/utils/`
+2. สร้าง directories ถ้ายังไม่มี
+3. ตรวจสอบ test frameworks ติดตั้ง (Vitest, Playwright)
+4. ตรวจสอบ test config files (`vitest.config.ts`, `playwright.config.ts`)
 
 ### 3. Prepare Tests
 
-1. à¸–à¹‰à¸² project à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¸¡à¸µ tests à¸«à¸£à¸·à¸­ coverage à¹„à¸¡à¹ˆà¸„à¸£à¸š à¹ƒà¸«à¹‰à¸—à¸³ `/write-test` à¹€à¸žà¸·à¹ˆà¸­à¸ªà¸£à¹‰à¸²à¸‡ tests à¸—à¸µà¹ˆà¸‚à¸²à¸”à¸«à¸²à¸¢à¹„à¸›
-2. à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š test files à¸„à¸£à¸­à¸šà¸„à¸¥à¸¸à¸¡ happy path, edge cases, error cases
-3. à¹„à¸¡à¹ˆà¹à¸à¹‰à¹„à¸‚ test assertions à¸«à¸£à¸·à¸­ source code à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸œà¹ˆà¸²à¸™à¹ƒà¸™à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™à¸™à¸µà¹‰
+1. ถ้า project ยังไม่มี tests หรือ coverage ไม่ครบ ให้ทำ `/write-test` เพื่อสร้าง tests ที่ขาดหายไป
+2. ตรวจสอบ test files ครอบคลุม happy path, edge cases, error cases
+3. ไม่แก้ไข test assertions หรือ source code เพื่อให้ผ่านในขั้นตอนนี้
 
 ### 4. Run Core Tests
 
-1. à¸£à¸±à¸™ `bun run test` à¸«à¸£à¸·à¸­ `bun test`
-2. à¸šà¸±à¸™à¸—à¸¶à¸à¸œà¸¥à¸¥à¸±à¸žà¸˜à¹Œ, duration, à¹à¸¥à¸°à¸£à¸²à¸¢à¸à¸²à¸£ tests à¸—à¸µà¹ˆ fail
-3. à¸–à¹‰à¸²à¸¡à¸µ fail à¹ƒà¸«à¹‰à¹„à¸›à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™ Validate/Review à¸—à¸±à¸™à¸—à¸µ à¹‚à¸”à¸¢à¹„à¸¡à¹ˆà¹à¸à¹‰à¹„à¸‚ code
+1. รัน `bun run test` หรือ `bun test`
+2. บันทึกผลลัพธ์, duration, และรายการ tests ที่ fail
+3. ถ้ามี fail ให้ไปขั้นตอน Validate/Review ทันที โดยไม่แก้ไข code
 
 ### 5. Run Specialized Tests (Conditional)
 
-à¸£à¸±à¸™à¹€à¸‰à¸žà¸²à¸° test types à¸—à¸µà¹ˆà¹€à¸à¸µà¹ˆà¸¢à¸§à¸‚à¹‰à¸­à¸‡à¸à¸±à¸š project:
+รันเฉพาะ test types ที่เกี่ยวข้องกับ project:
 
-- à¸–à¹‰à¸²à¸¡à¸µ functions/business logic: unit tests à¸ªà¸³à¸«à¸£à¸±à¸š pure functions, edge cases, parameterized tests
-- à¸–à¹‰à¸²à¸¡à¸µ integrations à¸£à¸°à¸«à¸§à¹ˆà¸²à¸‡ modules: integration tests à¸ªà¸³à¸«à¸£à¸±à¸š data flow, integration points, error handling
-- à¸–à¹‰à¸²à¸¡à¸µ UI: component tests à¹à¸¥à¸° accessibility tests (WCAG, ARIA, keyboard, screen reader)
-- à¸–à¹‰à¸²à¸¡à¸µ web frontend: E2E tests à¸”à¹‰à¸§à¸¢ `Playwright`, compatibility tests, agent-browser tests
-- à¸–à¹‰à¸²à¸¡à¸µ API: API tests à¹à¸¥à¸° contract tests
-- à¸–à¹‰à¸²à¸¡à¸µ database: database tests à¸ªà¸³à¸«à¸£à¸±à¸š queries, migrations, transactions, data integrity, indexes
-- à¸–à¹‰à¸²à¸¡à¸µ GraphQL: GraphQL tests à¸ªà¸³à¸«à¸£à¸±à¸š queries, mutations, subscriptions, schema validation, resolvers
-- à¸–à¹‰à¸²à¸¡à¸µ WebSocket: WebSocket tests à¸ªà¸³à¸«à¸£à¸±à¸š connections, real-time messaging, reconnection, error handling
-- à¸–à¹‰à¸²à¸¡à¸µ file operations: file tests à¸ªà¸³à¸«à¸£à¸±à¸š upload, download, validation, large files, security
-- à¸–à¹‰à¸²à¸¡à¸µ i18n: i18n tests à¸ªà¸³à¸«à¸£à¸±à¸š translation completeness, RTL, formatting, locale switching, pluralization
-- à¸–à¹‰à¸²à¸¡à¸µ caching: cache tests à¸ªà¸³à¸«à¸£à¸±à¸š invalidation, TTL, CDN caching
-- à¸–à¹‰à¸²à¸¡à¸µ network dependencies: network tests à¸ªà¸³à¸«à¸£à¸±à¸š offline mode, retry, timeout, slow connections
-- à¸–à¹‰à¸²à¸•à¹‰à¸­à¸‡à¸à¸²à¸£ performance validation: performance tests (unit < 10ms, integration < 100ms) à¹à¸¥à¸° load tests
-- à¸–à¹‰à¸²à¸•à¹‰à¸­à¸‡à¸à¸²à¸£ resilience validation: chaos tests
-- à¸–à¹‰à¸²à¸¡à¸µ users: usage tests à¹ƒà¸™ production-like environment
-- à¸–à¹‰à¸²à¸¡à¸µ critical components: formal verification, security tests, mutation tests (score > 80%)
+- ถ้ามี functions/business logic: unit tests สำหรับ pure functions, edge cases, parameterized tests
+- ถ้ามี integrations ระหว่าง modules: integration tests สำหรับ data flow, integration points, error handling
+- ถ้ามี UI: component tests และ accessibility tests (WCAG, ARIA, keyboard, screen reader)
+- ถ้ามี web frontend: E2E tests ด้วย `Playwright`, compatibility tests, agent-browser tests
+- ถ้ามี API: API tests และ contract tests
+- ถ้ามี database: database tests สำหรับ queries, migrations, transactions, data integrity, indexes
+- ถ้ามี GraphQL: GraphQL tests สำหรับ queries, mutations, subscriptions, schema validation, resolvers
+- ถ้ามี WebSocket: WebSocket tests สำหรับ connections, real-time messaging, reconnection, error handling
+- ถ้ามี file operations: file tests สำหรับ upload, download, validation, large files, security
+- ถ้ามี i18n: i18n tests สำหรับ translation completeness, RTL, formatting, locale switching, pluralization
+- ถ้ามี caching: cache tests สำหรับ invalidation, TTL, CDN caching
+- ถ้ามี network dependencies: network tests สำหรับ offline mode, retry, timeout, slow connections
+- ถ้าต้องการ performance validation: performance tests (unit < 10ms, integration < 100ms) และ load tests
+- ถ้าต้องการ resilience validation: chaos tests
+- ถ้ามี users: usage tests ใน production-like environment
+- ถ้ามี critical components: formal verification, security tests, mutation tests (score > 80%)
 
 ### 6. Validate And Classify Failures
 
-1. à¸—à¸³ `/validate` à¸à¸±à¸š source code à¸—à¸µà¹ˆà¹€à¸à¸µà¹ˆà¸¢à¸§à¸‚à¹‰à¸­à¸‡à¹€à¸žà¸·à¹ˆà¸­à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸šà¸„à¸§à¸²à¸¡à¸–à¸¹à¸à¸•à¹‰à¸­à¸‡
-2. à¸—à¸³ `/validate-test` à¹€à¸žà¸·à¹ˆà¸­à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š test quality, assertions, mocks
-3. à¸—à¸³ `/review` à¸«à¸£à¸·à¸­ `/improve-testing` à¹€à¸žà¸·à¹ˆà¸­ review à¸—à¸±à¹‰à¸‡ source à¹à¸¥à¸° test files
-4. à¸ˆà¸³à¹à¸™à¸à¸œà¸¥:
-   - à¸–à¹‰à¸² source à¸œà¸´à¸” â†’ à¸£à¸°à¸šà¸¸à¹„à¸Ÿà¸¥à¹Œ source à¸—à¸µà¹ˆà¸•à¹‰à¸­à¸‡à¹à¸à¹‰ à¹à¸™à¸°à¸™à¸³ `/fix` à¸«à¸£à¸·à¸­ `/resolve-errors`
-   - à¸–à¹‰à¸² test à¸œà¸´à¸” (assertion, mock, expectation) â†’ à¸£à¸°à¸šà¸¸à¹„à¸Ÿà¸¥à¹Œ test à¸—à¸µà¹ˆà¸•à¹‰à¸­à¸‡à¹à¸à¹‰ à¹à¸™à¸°à¸™à¸³ `/write-test` à¸«à¸£à¸·à¸­ `/edit`
-   - à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸Šà¸±à¸”à¹€à¸ˆà¸™ â†’ à¸—à¸³ `/deep-review` à¹à¸¥à¹‰à¸§ report à¸à¹ˆà¸­à¸™à¸”à¸³à¹€à¸™à¸´à¸™à¸à¸²à¸£
-5. à¸«à¹‰à¸²à¸¡à¹à¸à¹‰ source à¸«à¸£à¸·à¸­ test à¹‚à¸”à¸¢à¹„à¸¡à¹ˆà¸¡à¸µ evidence à¸ˆà¸²à¸ validate/review
+1. ทำ `/validate` กับ source code ที่เกี่ยวข้องเพื่อตรวจสอบความถูกต้อง
+2. ทำ `/validate-test` เพื่อตรวจสอบ test quality, assertions, mocks
+3. ทำ `/review` หรือ `/review-testing` เพื่อ review ทั้ง source และ test files
+4. จำแนกผล:
+   - ถ้า source ผิด → ระบุไฟล์ source ที่ต้องแก้ แนะนำ `/fix` หรือ `/resolve-errors`
+   - ถ้า test ผิด (assertion, mock, expectation) → ระบุไฟล์ test ที่ต้องแก้ แนะนำ `/write-test` หรือ `/edit`
+   - ถ้าไม่ชัดเจน → ทำ `/deep-review` แล้ว report ก่อนดำเนินการ
+5. ห้ามแก้ source หรือ test โดยไม่มี evidence จาก validate/review
 
 ### 7. Fix Based On Classification
 
-1. à¸–à¹‰à¸²à¹„à¸”à¹‰à¸£à¸±à¸šà¸à¸²à¸£à¸¢à¸·à¸™à¸¢à¸±à¸™à¹à¸¥à¸°à¸œà¸¥ validate/review à¸Šà¸±à¸”à¹€à¸ˆà¸™:
-   - à¸–à¹‰à¸² source à¸œà¸´à¸” â†’ à¸—à¸³ `/fix` à¸«à¸£à¸·à¸­ `/resolve-errors` à¸à¸±à¸š source
-   - à¸–à¹‰à¸² test à¸œà¸´à¸” â†’ à¸—à¸³ `/write-test` à¸«à¸£à¸·à¸­ `/edit` à¸à¸±à¸š test
-2. à¸£à¸±à¸™ tests à¸­à¸µà¸à¸„à¸£à¸±à¹‰à¸‡à¸«à¸¥à¸±à¸‡à¹à¸à¹‰à¹„à¸‚
-3. à¸–à¹‰à¸²à¸¢à¸±à¸‡ fail à¹ƒà¸«à¹‰à¸à¸¥à¸±à¸šà¹„à¸›à¸‚à¸±à¹‰à¸™à¸•à¸­à¸™ Validate/Review à¹„à¸¡à¹ˆà¹à¸à¹‰à¹ƒà¸«à¹‰à¸œà¹ˆà¸²à¸™à¹à¸šà¸šà¸­à¸±à¸•à¹‚à¸™à¸¡à¸±à¸•à¸´
+1. ถ้าได้รับการยืนยันและผล validate/review ชัดเจน:
+   - ถ้า source ผิด → ทำ `/fix` หรือ `/resolve-errors` กับ source
+   - ถ้า test ผิด → ทำ `/write-test` หรือ `/edit` กับ test
+2. รัน tests อีกครั้งหลังแก้ไข
+3. ถ้ายัง fail ให้กลับไปขั้นตอน Validate/Review ไม่แก้ให้ผ่านแบบอัตโนมัติ
 
 ### 8. Check Coverage
 
-1. à¸—à¸³ `/run-test-coverage` à¹€à¸žà¸·à¹ˆà¸­à¸§à¸´à¹€à¸„à¸£à¸²à¸°à¸«à¹Œ coverage
-2. à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š coverage à¸—à¸¸à¸ category (lines, branches, functions, statements)
-3. à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸–à¸¶à¸‡à¹€à¸›à¹‰à¸²à¸«à¸¡à¸²à¸¢ à¹ƒà¸«à¹‰à¸—à¸³ `/write-test` à¹€à¸žà¸´à¹ˆà¸¡ à¹à¸¥à¹‰à¸§à¸£à¸±à¸™ tests à¹ƒà¸«à¸¡à¹ˆ
+1. ทำ `/run-test-coverage` เพื่อวิเคราะห์ coverage
+2. ตรวจสอบ coverage ทุก category (lines, branches, functions, statements)
+3. ถ้าไม่ถึงเป้าหมาย ให้ทำ `/write-test` เพิ่ม แล้วรัน tests ใหม่
 
 ### 9. Report
 
-1. à¸—à¸³ `/report` à¸ªà¸£à¸¸à¸›à¸œà¸¥à¸¥à¸±à¸žà¸˜à¹Œ
-2. à¹ƒà¸Šà¹‰ `/report-format-table` à¸ªà¸³à¸«à¸£à¸±à¸š test results, coverage metrics, à¹à¸¥à¸° action items
-3. à¸—à¸³ `/suggest-next-action` à¸«à¸²à¸à¸¢à¸±à¸‡à¸¡à¸µ issues
+1. ทำ `/report` สรุปผลลัพธ์
+2. ใช้ `/report-format-table` สำหรับ test results, coverage metrics, และ action items
+3. ทำ `/suggest-next-action` หากยังมี issues
 
 ## Rules
 
 ### 1. Test Failure Handling
 
-- Test fail: à¸«à¹‰à¸²à¸¡à¹à¸à¹‰à¹ƒà¸«à¹‰à¸œà¹ˆà¸²à¸™à¹‚à¸”à¸¢à¹„à¸¡à¹ˆ validate/review à¸à¹ˆà¸­à¸™
-- Test error: à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š error message à¹à¸¥à¹‰à¸§ classify
-- Test pass: continue à¹„à¸› test à¸–à¸±à¸”à¹„à¸›
-- Test timeout: à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š performance
-- à¸à¹ˆà¸­à¸™à¹à¸à¹‰à¹„à¸‚à¸•à¹‰à¸­à¸‡à¸¡à¸µ evidence à¸§à¹ˆà¸² source à¸«à¸£à¸·à¸­ test à¸œà¸´à¸”
+- Test fail: ห้ามแก้ให้ผ่านโดยไม่ validate/review ก่อน
+- Test error: ตรวจสอบ error message แล้ว classify
+- Test pass: continue ไป test ถัดไป
+- Test timeout: ตรวจสอบ performance
+- ก่อนแก้ไขต้องมี evidence ว่า source หรือ test ผิด
 
 ### 2. Validation And Review
 
-- à¸—à¸³ `/validate` à¸à¸±à¸š source à¸—à¸¸à¸à¸„à¸£à¸±à¹‰à¸‡à¹€à¸¡à¸·à¹ˆà¸­ test fail
-- à¸—à¸³ `/validate-test` à¸à¸±à¸š test à¸—à¸¸à¸à¸„à¸£à¸±à¹‰à¸‡à¹€à¸¡à¸·à¹ˆà¸­ test fail
-- à¸—à¸³ `/review` à¸«à¸£à¸·à¸­ `/improve-testing` à¹€à¸žà¸·à¹ˆà¸­à¸«à¸²à¸•à¹‰à¸™à¹€à¸«à¸•à¸¸
-- à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¸Šà¸±à¸”à¹€à¸ˆà¸™ â†’ à¸—à¸³ `/deep-review` à¹à¸¥à¹‰à¸§ report
+- ทำ `/validate` กับ source ทุกครั้งเมื่อ test fail
+- ทำ `/validate-test` กับ test ทุกครั้งเมื่อ test fail
+- ทำ `/review` หรือ `/review-testing` เพื่อหาต้นเหตุ
+- ถ้าไม่ชัดเจน → ทำ `/deep-review` แล้ว report
 
 ### 3. Fix Direction
 
-- à¸–à¹‰à¸² source à¸œà¸´à¸” â†’ à¹à¸à¹‰ source à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆ test
-- à¸–à¹‰à¸² test à¸œà¸´à¸” (outdated, assertion à¸œà¸´à¸”, mock à¸œà¸´à¸”) â†’ à¹à¸à¹‰ test
-- à¸«à¹‰à¸²à¸¡à¹à¸à¹‰ assertion à¹ƒà¸«à¹‰à¸­à¹ˆà¸­à¸™à¸¥à¸‡à¹€à¸žà¸·à¹ˆà¸­à¹ƒà¸«à¹‰à¸œà¹ˆà¸²à¸™
-- à¸«à¹‰à¸²à¸¡à¹à¸à¹‰ source à¹ƒà¸«à¹‰à¹€à¸‚à¹‰à¸²à¸à¸±à¸š test à¸—à¸µà¹ˆà¸œà¸´à¸”
+- ถ้า source ผิด → แก้ source ไม่ใช่ test
+- ถ้า test ผิด (outdated, assertion ผิด, mock ผิด) → แก้ test
+- ห้ามแก้ assertion ให้อ่อนลงเพื่อให้ผ่าน
+- ห้ามแก้ source ให้เข้ากับ test ที่ผิด
 
 ### 4. Specialized Test Selection
 
-- à¸£à¸±à¸™à¹€à¸‰à¸žà¸²à¸° test types à¸—à¸µà¹ˆà¹€à¸à¸µà¹ˆà¸¢à¸§à¸‚à¹‰à¸­à¸‡à¸à¸±à¸š project
-- à¹„à¸¡à¹ˆà¸•à¹‰à¸­à¸‡à¸£à¸±à¸™à¸—à¸¸à¸ type
-- à¸–à¹‰à¸²à¹„à¸¡à¹ˆà¹à¸™à¹ˆà¹ƒà¸ˆ à¸–à¸²à¸¡à¸œà¸¹à¹‰à¹ƒà¸Šà¹‰
+- รันเฉพาะ test types ที่เกี่ยวข้องกับ project
+- ไม่ต้องรันทุก type
+- ถ้าไม่แน่ใจ ถามผู้ใช้
 
 ### 5. Coverage
 
-- à¸•à¸£à¸§à¸ˆà¸ªà¸­à¸š coverage à¸—à¸¸à¸ category (line, branch, function, statement)
-- à¹€à¸›à¹‰à¸²à¸«à¸¡à¸²à¸¢ 100% à¸–à¹‰à¸² project à¸à¸³à¸«à¸™à¸”
-- à¸–à¹‰à¸²à¸¢à¸±à¸‡à¹„à¸¡à¹ˆà¸–à¸¶à¸‡ à¹ƒà¸«à¹‰à¹€à¸žà¸´à¹ˆà¸¡ tests à¹„à¸¡à¹ˆà¹ƒà¸Šà¹ˆà¸¥à¸” coverage target
+- ตรวจสอบ coverage ทุก category (line, branch, function, statement)
+- เป้าหมาย 100% ถ้า project กำหนด
+- ถ้ายังไม่ถึง ให้เพิ่ม tests ไม่ใช่ลด coverage target
 
 ### 6. Reporting
 
-- à¸£à¸²à¸¢à¸‡à¸²à¸™à¸Šà¸±à¸”à¹€à¸ˆà¸™à¹à¸¥à¸° action-oriented
-- à¸£à¸°à¸šà¸¸ priority
-- à¹à¸¢à¸à¸œà¸¥à¹€à¸›à¹‡à¸™ source issue à¸à¸±à¸š test issue
+- รายงานชัดเจนและ action-oriented
+- ระบุ priority
+- แยกผลเป็น source issue กับ test issue
 
 ## Expected Outcome
 
-- Tests à¸£à¸±à¸™à¹€à¸ªà¸£à¹‡à¸ˆà¸ªà¸¡à¸šà¸¹à¸£à¸“à¹Œ
-- Test failures à¹„à¸”à¹‰à¸£à¸±à¸šà¸à¸²à¸£ validate/review à¹à¸¥à¸°à¸ˆà¸³à¹à¸™à¸à¸§à¹ˆà¸²à¹€à¸›à¹‡à¸™ source à¸«à¸£à¸·à¸­ test issue
-- à¹„à¸¡à¹ˆà¸¡à¸µà¸à¸²à¸£à¹à¸à¹‰à¹„à¸‚à¹‚à¸”à¸¢à¹„à¸¡à¹ˆà¸¡à¸µ evidence
-- Coverage à¸œà¹ˆà¸²à¸™à¹€à¸›à¹‰à¸²à¸«à¸¡à¸²à¸¢ (à¸–à¹‰à¸²à¸¡à¸µ)
-- à¸£à¸²à¸¢à¸‡à¸²à¸™à¸œà¸¥ test results, coverage, à¹à¸¥à¸° action items à¸Šà¸±à¸”à¹€à¸ˆà¸™
+- Tests รันเสร็จสมบูรณ์
+- Test failures ได้รับการ validate/review และจำแนกว่าเป็น source หรือ test issue
+- ไม่มีการแก้ไขโดยไม่มี evidence
+- Coverage ผ่านเป้าหมาย (ถ้ามี)
+- รายงานผล test results, coverage, และ action items ชัดเจน
