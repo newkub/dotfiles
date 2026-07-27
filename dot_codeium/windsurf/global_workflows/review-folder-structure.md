@@ -1,254 +1,95 @@
 ---
-description: review-folder-structure
-auto_execution_mode: 1
+title: Review Folder Structure
+description: Review folder structure ครอบคลุม project structure, directory organization, module boundaries, import paths และ package.json
+auto_execution_mode: 3
+related:
+  - /scan-codebase
+  - /deep-analyze-by-use-scripts
+  - /validate
+  - /report
+  - /report-format-table
+  - /suggest-next-action
+  - /follow-import-export
 ---
 
-Folder Structure Review Guidelines with Code Examples
+## Goal
 
-## **Recommended Folder Structures by Project Type:**
+Review folder structure และ project organization quality ครอบคลุม directory organization, module boundaries, import paths, barrel exports, package.json requirements และ framework-specific structure
 
-**For Vite Projects:**
-- Is src/ used as the main source directory?
-- Are components organized in src/components/ with feature-based grouping?
-- Are utilities and helpers in src/utils/ or src/lib/?
-- Are types organized in src/types/ or src/interfaces/?
-- Are assets properly organized in src/assets/?
-- Is public/ used only for static assets served directly?
+## Scope
 
-**For Next.js Projects:**
-- Is the app directory structure used (app/ router) instead of pages/?
-- Are API routes properly organized in app/api/ or pages/api/?
-- Are components organized by feature in components/ or by type?
-- Are layouts and templates properly structured?
-- Are middleware and instrumentation files in the root?
+file structure, directory organization, module boundaries, import paths, path aliases, barrel exports, file naming, package.json requirements, config files placement, และ framework-specific structure (Vite, Next.js, Nuxt.js, TypeScript, Monorepo)
 
-**For Nuxt.js Projects:**
-- Are pages organized in pages/ directory with file-based routing?
-- Are components organized in components/ with auto-imports?
-- Are composables organized in composables/ directory?
-- Are server API routes in server/api/?
-- Are middleware functions in middleware/?
-- Are plugins organized in plugins/?
+## Execute
 
-**For Pure TypeScript Projects:**
-- Is src/ used as the main source directory?
-- Are source files organized by feature or by type?
-- Are utility functions in src/utils/ or src/helpers/?
-- Are types centralized in src/types/?
-- Are configuration files in the root or src/config/?
-- Are build outputs separated from source?
+### 1. Prepare
 
-**For Monorepo Projects:**
-- Are packages organized in packages/ or apps/ directory?
-- Do package names follow consistent naming conventions?
-- Are shared utilities in packages/shared/ or packages/common/?
-- Are package.json files properly configured for each package?
-- Are build and development scripts properly orchestrated?
-- Are dependencies managed at the workspace level?
+เตรียม context ก่อนเริ่ม review
 
-### **Vite Project Structure Example:**
-```
-vite-project/
-├── public/
-│   ├── favicon.ico
-│   └── robots.txt
-├── src/
-│   ├── assets/
-│   │   ├── images/
-│   │   └── icons/
-│   ├── components/
-│   │   ├── ui/
-│   │   │   ├── Button.vue
-│   │   │   └── Input.vue
-│   │   └── features/
-│   │       ├── auth/
-│   │       │   ├── LoginForm.vue
-│   │       │   └── RegisterForm.vue
-│   │       └── dashboard/
-│   │           └── StatsCard.vue
-│   ├── composables/
-│   │   └── useAuth.ts
-│   ├── types/
-│   │   └── index.ts
-│   ├── utils/
-│   │   └── helpers.ts
-│   ├── styles/
-│   │   └── main.css
-│   └── main.ts
-├── index.html
-├── package.json
-├── tsconfig.json
-├── uno.config.ts
-└── vite.config.ts
-```
+> Goal: เข้าใจ project structure และ framework ใน codebase
 
-### **Next.js Project Structure Example:**
-```
-nextjs-project/
-├── app/
-│   ├── api/
-│   │   └── users/
-│   │       └── route.ts
-│   ├── dashboard/
-│   │   ├── page.tsx
-│   │   └── layout.tsx
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/
-│   │   ├── Button.tsx
-│   │   └── Input.tsx
-│   └── providers/
-│       └── ThemeProvider.tsx
-├── lib/
-│   ├── utils.ts
-│   └── db.ts
-├── types/
-│   └── index.ts
-├── public/
-│   └── favicon.ico
-├── middleware.ts
-├── next.config.js
-├── package.json
-├── tailwind.config.js
-└── tsconfig.json
-```
+1. ทำ `/scan-codebase` เพื่อเข้าใจ filesystem structure
+2. ระบุ project type: Vite, Next.js, Nuxt.js, TypeScript, Monorepo
+3. ตรวจสอบ package.json fields: `name`, `description`, `scripts`, `type: "module"`
 
-### **Nuxt.js Project Structure Example:**
-```
-nuxt-project/
-├── assets/
-│   └── css/
-│       └── main.css
-├── components/
-│   ├── ui/
-│   │   ├── Button.vue
-│   │   └── Card.vue
-│   └── TheHeader.vue
-├── composables/
-│   ├── useAuth.ts
-│   └── useApi.ts
-├── layouts/
-│   └── default.vue
-├── middleware/
-│   └── auth.ts
-├── pages/
-│   ├── index.vue
-│   └── dashboard.vue
-├── plugins/
-│   └── vuetify.ts
-├── server/
-│   └── api/
-│       └── users.get.ts
-├── types/
-│   └── index.ts
-├── app.vue
-├── nuxt.config.ts
-└── package.json
-```
+### 2. Deep Analyze
 
-### **Pure TypeScript Project Structure Example:**
-```
-ts-project/
-├── src/
-│   ├── core/
-│   │   ├── domain/
-│   │   │   └── User.ts
-│   │   └── services/
-│   │       └── UserService.ts
-│   ├── ui/
-│   │   ├── components/
-│   │   │   ├── Button.tsx
-│   │   │   └── Modal.tsx
-│   │   └── styles/
-│   │       └── index.css
-│   ├── utils/
-│   │   ├── validators.ts
-│   │   └── formatters.ts
-│   ├── types/
-│   │   ├── api.ts
-│   │   └── ui.ts
-│   └── index.ts
-├── dist/
-├── tests/
-│   └── UserService.test.ts
-├── package.json
-├── tsconfig.json
-├── eslint.config.js
-└── uno.config.ts
-```
+วิเคราะห์ folder structure อย่างลึกซึ้ง
 
-### **Monorepo Project Structure Example:**
-```
-monorepo/
-├── packages/
-│   ├── shared/
-│   │   ├── ui/
-│   │   │   ├── src/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── Button.tsx
-│   │   │   │   │   └── Input.tsx
-│   │   │   │   └── index.ts
-│   │   │   ├── package.json
-│   │   │   └── tsconfig.json
-│   │   └── utils/
-│   │       ├── src/
-│   │       │   └── index.ts
-│   │       ├── package.json
-│   │       └── tsconfig.json
-│   ├── web/
-│   │   ├── src/
-│   │   │   ├── App.tsx
-│   │   │   └── main.tsx
-│   │   ├── index.html
-│   │   ├── package.json
-│   │   └── vite.config.ts
-│   └── mobile/
-│       ├── src/
-│       │   ├── App.tsx
-│       │   └── main.tsx
-│       ├── package.json
-│       └── vite.config.ts
-├── package.json
-├── turbo.json
-└── tsconfig.json
-```
+> Goal: ครอบคลุมทุก folder structure dimension พร้อม health score
 
-Is the folder structure promoting good development practices?
+1. ทำ `/deep-analyze-by-use-scripts` เพื่อสร้าง `analyze-folder-structure.ts` ใน `.devin/scripts/analyze/`
+2. Script ตรวจสอบ framework-specific structure:
+   - **Vite**: `src/` source, `public/` static, `index.html`, `vite.config.ts`
+   - **Next.js**: `app/` router, `components/`, `lib/`, `middleware.ts`, `next.config.js`
+   - **Nuxt.js**: `pages/`, `components/`, `composables/`, `server/api/`, `middleware/`, `plugins/`
+   - **TypeScript**: `src/`, `tests/`, `tsconfig.json`, strict mode, ESNext target
+   - **Monorepo**: `packages/` หรือ `apps/`, workspace dependencies, consistent naming
+3. Script ตรวจสอบ module boundaries, circular dependencies, และ import direction
+4. Script ตรวจสอบ import paths, path aliases, relative vs absolute imports, และ barrel exports
+5. Script ตรวจสอบ package.json: required fields, scripts (dev, build, lint, format), type: "module"
+6. Script ตรวจสอบ config files placement: `tsconfig.json`, `biome.json`, `README.md` ที่ root
+7. Script ตรวจสอบ structure quality: SRP, co-location, build output separation, scalability
+8. Script คำนวณ folder structure health score และ output เป็น structured JSON
 
-- Does the structure follow the single responsibility principle?
-- Are related files co-located (styles, tests, types with components)?
-- Are build outputs and dependencies separated from source code?
-- Are configuration files appropriately placed?
-- Are static assets properly organized and optimized?
+### 3. Validate Findings
 
-Is the structure scalable and maintainable?
+ตรวจสอบว่า findings แต่ละอย่างถูกต้อง
 
-- Can new features be added without disrupting existing structure?
-- Are there clear boundaries between different parts of the application?
-- Is the structure intuitive for new developers?
-- Are there opportunities to extract shared code into packages?
+> Goal: Findings ถูกต้องและจัดลำดับตาม severity
 
-Does the structure support modern development workflows?
+1. ทำ `/validate` สำหรับ validate issues แต่ละอย่าง
+2. จัดลำดับการ validate ตาม severity
 
-- Are there separate directories for different environments (dev, staging, prod)?
-- Is testing code properly organized (tests/, __tests__/, or *.test.* files)?
-- Are documentation files properly placed (docs/, .github/)?
-- Are deployment and CI/CD configurations properly organized?
+### 4. Report
 
-Is UnoCSS integration properly structured?
+รายงานผล review ในรูปแบบตาราง
 
-- Are UnoCSS configuration files in the appropriate location?
-- Are custom utility classes organized in a maintainable way?
-- Are UnoCSS presets and themes properly configured?
-- Are UnoCSS icon collections properly integrated?
+> Goal: รายงาน findings พร้อม actionable recommendations
 
-Are there any structural issues that need addressing?
+1. ทำ `/report` พร้อม `/report-format-table`
+2. สร้างตาราง findings และ recommended actions
+3. ทำ `/suggest-next-action`
 
-- Are there any deeply nested folders that should be flattened?
-- Are there any files in the wrong directories?
-- Are there any empty or unused directories?
-- Are there opportunities to improve the overall organization?
+## Rules
 
-👉 If you see something that should be done, just do it without asking.
+### 1. Severity Classification
+
+- **Critical**: circular dependency, broken import path, missing module boundary, missing required package.json fields
+- **High**: inconsistent file structure, deep relative imports, missing barrel export, missing config files, wrong type field
+- **Medium**: suboptimal grouping, inconsistent import style, minor path issue, missing scripts
+- **Low**: minor filesystem improvement, naming convention
+
+### 2. Evidence-Based Findings
+
+- ทุก finding ต้องมี file path และ line number
+
+### 3. Review Independence
+
+- ทำ review เท่านั้น ไม่แก้ไข code ระหว่าง review
+
+## Expected Outcome
+
+- รายงานตาราง findings พร้อม severity และ location
+- รายงาน recommended actions พร้อม priority
+- แนะนำ action ถัดไปผ่าน `/suggest-next-action`
