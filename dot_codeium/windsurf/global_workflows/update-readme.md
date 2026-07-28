@@ -10,9 +10,8 @@ related:
   - /all-workspaces
   - /follow-content-quality
   - /use-lang-en
-  - /edit-relative
+  - /update-reference
   - /report-uxui-sketch
-  - /follow-parallel
 ---
 
 ## Goal
@@ -32,7 +31,7 @@ related:
 > Goal: รู้ project type และมี changelog พร้อม
 
 1. ทำ `/check-should-update` เพื่อตรวจ git changes ก่อน — ถ้าไม่มี changes → skip และ report
-2. parallel: `/gen-changelog` ∥ `/gen-release` ถ้ามี tag release — ใช้ `/follow-parallel`
+2. `/gen-changelog`, `/gen-release` ถ้ามี tag release
 3. อ่าน `package.json` ตรวจสอบ project type: `cli-sdk` หรือ `app`
 4. ถ้าอ่าน `package.json` ไม่ได้ → stop และ report
 
@@ -74,7 +73,7 @@ related:
 
 > Goal: README ผ่าน quality check และ references ถูกต้อง
 
-1. parallel: `/follow-content-quality` ∥ `/edit-relative` เพื่อตรวจสอบคุณภาพและอัปเดต references ไปพร้อมกัน — ใช้ `/follow-parallel`
+1. `/follow-content-quality`, `/update-reference` เพื่อตรวจสอบคุณภาพและอัปเดต references ไปพร้อมกัน
 2. ถ้า validation ไม่ผ่าน → revise และ recheck (max 3 ครั้ง → stop/report)
 
 ## Rules
@@ -121,13 +120,13 @@ related:
 
 ### 5. Usage Content Types
 
-- **Web**: เขียนเป็น text instructions บอกว่ากดอะไรตรงไหน เช่น "Open the app, navigate to sidebar, click on module" — ห้ามใช้ code block
-- **API**: เขียนเป็น code block พร้อม import และ function call
-- **CLI**: เขียนเป็น bash code block พร้อม command
-- **SDK**: เขียนเป็น code block พร้อม install + import + usage
-- **TUI**: เขียนเป็น text instructions บอกว่ากด key อะไร เช่น "Press `q` to quit, `/` to search"
-- **Desktop**: เขียนเป็น text instructions บอกว่าเปิด app อย่างไร ใช้ menu อะไร
-- **Browser Extension**: เขียนเป็น text instructions บอกว่า install จาก store ไหน ใช้ปุ่มอะไร
+- Web: เขียนเป็น text instructions บอกว่ากดอะไรตรงไหน เช่น "Open the app, navigate to sidebar, click on module" — ห้ามใช้ code block
+- API: เขียนเป็น code block พร้อม import และ function call
+- CLI: เขียนเป็น bash code block พร้อม command
+- SDK: เขียนเป็น code block พร้อม install + import + usage
+- TUI: เขียนเป็น text instructions บอกว่ากด key อะไร เช่น "Press `q` to quit, `/` to search"
+- Desktop: เขียนเป็น text instructions บอกว่าเปิด app อย่างไร ใช้ menu อะไร
+- Browser Extension: เขียนเป็น text instructions บอกว่า install จาก store ไหน ใช้ปุ่มอะไร
 
 ### 6. Icons
 
@@ -155,11 +154,11 @@ related:
 
 ## Get Started
 
-1. **Install Package** — `terminal`
+1. Install Package — `terminal`
    ```bash
    bun add @wrikka/package-name
    ```
-2. **Import And Use** — `src/app.ts`
+2. Import And Use — `src/app.ts`
    ```typescript
    import { func } from '@wrikka/package-name';
    func();

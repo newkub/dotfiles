@@ -170,6 +170,13 @@ related_workflows:
 - ทุก instruction ต้องระบุ action, condition หรือ expected result ที่ตีความได้ทางเดียว
 - ห้ามใช้ placeholder, generic filler, mock หรือ TODO ที่ไม่จำเป็น
 
+### 5. Shell And Command Runner
+
+- ทุก shell command ให้ใช้ `nushell` (`nu`) ก่อน ไม่ใช่ `pwsh` หรือ `powershell`
+- รันคำสั่งด้วย `nu -c '<command>'` หรือ `nu script.nu` แทน `pwsh`
+- file operations (`ls`, `cp`, `mv`, `rm`, `mkdir`, `rename`) ใช้ `nu` commands เช่น `ls`, `cp`, `mv`, `rm`, `mkdir`, `rename`
+- ถ้า `nu` ไม่รองรับ command ที่จำเป็น ให้ fallback เป็น `pwsh` ไม่ใช่ `cmd` ยกเว้นผู้ใช้ระบุชัดเจน
+
 ## Expected Outcome
 
 - ลำดับ prepare → read → research → analyze → write → validate → report อย่างชัดเจน

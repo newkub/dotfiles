@@ -73,9 +73,9 @@ bun run tauri add <plugin-name>
 bun add @tauri-apps/plugin-<plugin-name>
 ```
 
-**Official Plugins (30+):** autostart, barcode-scanner, biometric, cli, clipboard-manager, deep-link, dialog, fs, geolocation, global-shortcut, haptics, http, localhost, log, nfc, notification, opener, os, persisted-scope, positioner, process, shell, single-instance, sql, store, stronghold, updater, upload, websocket, window-state
+Official Plugins (30+): autostart, barcode-scanner, biometric, cli, clipboard-manager, deep-link, dialog, fs, geolocation, global-shortcut, haptics, http, localhost, log, nfc, notification, opener, os, persisted-scope, positioner, process, shell, single-instance, sql, store, stronghold, updater, upload, websocket, window-state
 
-**Community Plugins (40+):** tauri-plugin-blec, tauri-plugin-cache, tauri-plugin-context-menu, tauri-plugin-device-info, tauri-plugin-graphql, tauri-plugin-iap, tauri-plugin-in-app-review, tauri-plugin-ios-photos, tauri-plugin-js, tauri-plugin-keep-screen-on, tauri-plugin-macos-permissions, tauri-plugin-mobile-sharetarget, tauri-plugin-mqtt, tauri-plugin-network, tauri-plugin-nosleep, tauri-plugin-ota, tauri-plugin-pinia, tauri-plugin-prevent-default, tauri-plugin-python, tauri-plugin-screenshots, tauri-plugin-serialport, tauri-plugin-sharesheet, tauri-plugin-svelte, tauri-plugin-system-info, tauri-plugin-tcp, tauri-plugin-theme, tauri-plugin-thermal-printer, tauri-plugin-tracing, tauri-plugin-udp, tauri-plugin-velesdb, tauri-plugin-view, taurpc
+Community Plugins (40+): tauri-plugin-blec, tauri-plugin-cache, tauri-plugin-context-menu, tauri-plugin-device-info, tauri-plugin-graphql, tauri-plugin-iap, tauri-plugin-in-app-review, tauri-plugin-ios-photos, tauri-plugin-js, tauri-plugin-keep-screen-on, tauri-plugin-macos-permissions, tauri-plugin-mobile-sharetarget, tauri-plugin-mqtt, tauri-plugin-network, tauri-plugin-nosleep, tauri-plugin-ota, tauri-plugin-pinia, tauri-plugin-prevent-default, tauri-plugin-python, tauri-plugin-screenshots, tauri-plugin-serialport, tauri-plugin-sharesheet, tauri-plugin-svelte, tauri-plugin-system-info, tauri-plugin-tcp, tauri-plugin-theme, tauri-plugin-thermal-printer, tauri-plugin-tracing, tauri-plugin-udp, tauri-plugin-velesdb, tauri-plugin-view, taurpc
 
 ### 7. Build And Test
 

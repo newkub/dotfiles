@@ -58,7 +58,7 @@ auto_execution_mode: 3
 
 ### 5. Performance
 
-1. **Lazy Loading Components** - ใช้ `Lazy` prefix สำหรับ components ที่ไม่จำเป็นต้องโหลดทันที
+1. Lazy Loading Components - ใช้ `Lazy` prefix สำหรับ components ที่ไม่จำเป็นต้องโหลดทันที
    ```vue
    <!-- Bad: โหลดทันที -->
    <Modal v-if="showModal" />
@@ -67,12 +67,12 @@ auto_execution_mode: 3
    <LazyModal v-if="showModal" />
    ```
 
-2. **Lazy Hydration** - ใช้ `hydrate-on-visible` สำหรับ components ที่ไม่ต้อง interactive ทันที
+2. Lazy Hydration - ใช้ `hydrate-on-visible` สำหรับ components ที่ไม่ต้อง interactive ทันที
    ```vue
    <LazyMyComponent hydrate-on-visible />
    ```
 
-3. **Hybrid Rendering** - ใช้ route rules สำหรับ rendering แบบผสม
+3. Hybrid Rendering - ใช้ route rules สำหรับ rendering แบบผสม
    ```typescript
    export default defineNuxtConfig({
      routeRules: {
@@ -84,17 +84,17 @@ auto_execution_mode: 3
    })
    ```
 
-4. **NuxtLink Smart Prefetching** - ใช้ `<NuxtLink>` แทน `<a>` tag ทั้งหมด ไม่ใช้ `<a>` โดยตรง
+4. NuxtLink Smart Prefetching - ใช้ `<NuxtLink>` แทน `<a>` tag ทั้งหมด ไม่ใช้ `<a>` โดยตรง
    ```vue
    <NuxtLink to="/about">About page</NuxtLink>
    ```
 
-5. **Data Fetching Optimization** - ใช้ `useFetch` และ `useAsyncData` พร้อม key parameter
+5. Data Fetching Optimization - ใช้ `useFetch` และ `useAsyncData` พร้อม key parameter
    ```typescript
    const { data } = useAsyncData('tracks', () => fetch(`/tracks/${id}`))
    ```
 
-6. **Built-in Storage** - ใช้ `useStorage` สำหรับ key-value storage
+6. Built-in Storage - ใช้ `useStorage` สำหรับ key-value storage
    ```typescript
    const storage = useStorage()
    await storage.setItem('session:token', sessionToken)
@@ -102,12 +102,12 @@ auto_execution_mode: 3
 
 ### 6. Plugins Best Practices
 
-1. **Avoid costly plugin setup** - หลีกเลี่ยง plugins ที่มีการคำนวณหนักหรือใช้เวลา initialize นาน
-2. **Use Composition whenever possible** - ใช้ composables แทน plugins เมื่อเป็นไปได้
-3. **Enable parallel for async plugins** - ใช้ `parallel: true` สำหรับ async plugins
+1. Avoid costly plugin setup - หลีกเลี่ยง plugins ที่มีการคำนวณหนักหรือใช้เวลา initialize นาน
+2. Use Composition whenever possible - ใช้ composables แทน plugins เมื่อเป็นไปได้
+3. Enable parallel for async plugins - ใช้ `true` สำหรับ async plugins
    ```typescript
    export default defineNuxtPlugin({
-     parallel: true,
+     true,
      async setup() {
        // async initialization
      }
@@ -116,21 +116,21 @@ auto_execution_mode: 3
 
 ### 7. Assets Management
 
-1. **Use /assets for processed files** - ใช้ `~/assets` สำหรับไฟล์ที่ต้อง processing
+1. Use /assets for processed files - ใช้ `~/assets` สำหรับไฟล์ที่ต้อง processing
    ```typescript
    import image from '~/assets/image.png'
    ```
 
-2. **Use /public for static files** - ใช้ `~/public` สำหรับไฟล์ที่ไม่ต้อง processing
+2. Use /public for static files - ใช้ `~/public` สำหรับไฟล์ที่ไม่ต้อง processing
    ```vue
    <img src="/image.png" />
    ```
 
-3. **Build-time validation** - `/assets` จะตรวจสอบ missing files ใน build time
+3. Build-time validation - `/assets` จะตรวจสอบ missing files ใน build time
 
 ### 8. Error Handling
 
-1. **Use NuxtErrorBoundary** - ใช้สำหรับ handle errors ในส่วนต่างๆ ของ app
+1. Use NuxtErrorBoundary - ใช้สำหรับ handle errors ในส่วนต่างๆ ของ app
    ```vue
    <NuxtErrorBoundary>
      <NuxtPage />

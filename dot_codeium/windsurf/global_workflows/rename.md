@@ -5,7 +5,7 @@ auto_execution_mode: 3
 url: https://ast-grep.github.io/guide/rewrite-code.html
 related:
   - /use-ast-grep
-  - /edit-relative
+  - /update-reference
   - /scan-codebase
   - /resolve-errors
   - /run-verify
@@ -90,7 +90,7 @@ Rename code identifiers ด้วย ast-grep AST-based pattern matching — ไ
 
 > Goal: ไม่มี broken references ในทุกประเภทไฟล์
 
-1. ทำ `/edit-relative` เพื่ออัปเดท references ใน config files, markdown, JSON, YAML
+1. ทำ `/update-reference` เพื่ออัปเดท references ใน config files, markdown, JSON, YAML
 2. ค้นหาด้วย `grep_search` อีกครั้งเพื่อยืนยันว่าไม่มีชื่อเดิมเหลือ
 3. อัปเดท documentation ที่อ้างอิง identifier เดิม
 4. อัปเดท test files ที่อ้างอิง identifier เดิม
@@ -125,12 +125,12 @@ Rename code identifiers ด้วย ast-grep AST-based pattern matching — ไ
 
 Rename ต้องครอบคลุมทุกรูปแบบการใช้งาน:
 
-- **Function**: definition, call site, type reference, import/export
-- **Variable**: declaration, usage, destructuring, reassignment
-- **Type/Interface**: definition, type annotation, generic parameter, import/export
-- **Class**: definition, instantiation, type reference, import/export
-- **Enum**: definition, member access, import/export
-- **Property**: definition, access, destructuring, optional chaining
+- Function: definition, call site, type reference, import/export
+- Variable: declaration, usage, destructuring, reassignment
+- Type/Interface: definition, type annotation, generic parameter, import/export
+- Class: definition, instantiation, type reference, import/export
+- Enum: definition, member access, import/export
+- Property: definition, access, destructuring, optional chaining
 
 ### 3. Safety And Scope Control
 

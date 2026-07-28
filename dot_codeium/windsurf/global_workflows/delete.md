@@ -3,7 +3,7 @@ title: Delete
 description: ลบไฟล์หรือ folder และอัพเดท references ทั้งหมด
 auto_execution_mode: 3
 related:
-  - /edit-relative
+  - /update-reference
   - /update-references
 ---
 

@@ -96,10 +96,10 @@ related:
 
 ### 4. Setup Framework Integration
 
-1. **Next.js**: สร้าง `postcss.config.mjs` และเพิ่ม `@unocss all;` ใน `app/globals.css`
-2. **Nuxt**: เพิ่ม `@unocss/nuxt` module ใน `nuxt.config.ts`
-3. **Vite**: เพิ่ม UnoCSS plugin ใน `vite.config.ts` และ `@unocss all;` ใน `src/style.css`
-4. **Astro**: เพิ่ม UnoCSS integration ใน `astro.config.mjs`
+1. Next.js: สร้าง `postcss.config.mjs` และเพิ่ม `@unocss all;` ใน `app/globals.css`
+2. Nuxt: เพิ่ม `@unocss/nuxt` module ใน `nuxt.config.ts`
+3. Vite: เพิ่ม UnoCSS plugin ใน `vite.config.ts` และ `@unocss all;` ใน `src/style.css`
+4. Astro: เพิ่ม UnoCSS integration ใน `astro.config.mjs`
 
 ### 5. Use presetWind4 Features
 

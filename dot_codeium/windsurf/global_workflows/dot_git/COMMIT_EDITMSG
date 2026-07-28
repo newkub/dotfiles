@@ -1,3 +1,17 @@
-chore: add and update global workflows
+refactor: consolidate review-* workflows and remove bold markers
 
-sync and restructure workflow collection with new additions and revisions
+- consolidate 80+ review-* sub-workflows into 8 category orchestrators
+- fix broken backticks in Report steps across review-* workflows
+- fix Rules numbering jumps in 9 review-* workflows
+- add /follow-parallel and /follow-content-quality to all review-* related lists
+- add Health Score and Formatting rules to all review-* workflows
+- add health CLI retry logic to review-bug-prone, review-code-quality, review-techstack
+- fix broken /review-documentation reference in review-code-quality
+- improve review-techstack Report step with proper metrics tables
+- add /scan-codebase, /update-health-cli, /comment-todo to review.md related list
+- remove all ** bold markers from global workflows per /write-workflows rules
+- add /follow-principles-engineering to /refactor workflow
+- update /write-workflows with no-bold-markers rule
+- improve /template-workflows-review with validation step and health score
+- delete obsolete sub-workflows, plan.md, edit-relative.md, and other unused files
+- add improve-content-coverage.md and roleplay-regulator.md

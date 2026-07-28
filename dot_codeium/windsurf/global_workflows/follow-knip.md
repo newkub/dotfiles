@@ -83,7 +83,7 @@ related:
 
 ### 1. Avoid Ignore Patterns
 
-- ห้ามใช้ `ignore` แบบกว้างๆ เช่น `**/*.config.*`, `**/*.d.ts` — Knip ไม่ใช่ file-based linter แบบ ESLint
+- ห้ามใช้ `ignore` แบบกว้างๆ เช่น `/*.config.*`, `/*.d.ts` — Knip ไม่ใช่ file-based linter แบบ ESLint
 - `ignore` เป็นเพียงการ suppress reporting ไม่ใช่การ exclude จาก analysis — ทำให้เกิด blind spots
 - ใช้ `entry` และ `project` patterns ที่ถูกต้องแทนการ ignore
 - ถ้าจำเป็นจริงๆ ใช้ targeted options: `ignoreFiles`, `ignoreBinaries`, `ignoreDependencies`, `ignoreMembers`, `ignoreUnresolved`

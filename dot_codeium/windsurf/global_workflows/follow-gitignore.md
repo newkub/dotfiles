@@ -4,7 +4,7 @@ description: สร้างและจัดการ .gitignore ที่ roo
 auto_execution_mode: 3
 related:
   - /relocation
-  - /edit-relative
+  - /update-reference
 ---
 
 ## Goal
@@ -58,7 +58,7 @@ related:
 1. ตรวจสอบว่าไม่มี patterns ซ้ำกันระหว่าง root และ workspace
 2. ทดสอบด้วย `git check-ignore <file>` สำหรับไฟล์ที่ควรถูก ignore
 3. ตรวจสอบว่าไม่มีไฟล์ที่ไม่ควร commit ถูก tracked โดย Git
-4. ทำ `/edit-relative` หากมี file operations
+4. ทำ `/update-reference` หากมี file operations
 
 ## Rules
 
@@ -85,7 +85,7 @@ related:
 - Environment: `.env*`, `!.env.example`, `.dev.vars`, `*.local`
 - Logs: `*.log`, `logs/`
 - OS: `.DS_Store`, `Thumbs.db`, `desktop.ini`
-- Temporary: `*.tmp`, `*.temp`, `.cache/`, `.**/temp/`, `**/scripts/temp/`
+- Temporary: `*.tmp`, `*.temp`, `.cache/`, `./temp/`, `/scripts/temp/`
 - IDE: `.vscode/`, `.idea/`, `*.sublime-*`, `*.swp`, `*.swo`
 
 ### 4. Monorepo Guidelines

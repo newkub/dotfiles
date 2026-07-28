@@ -3,13 +3,13 @@ title: Improve Naming
 description: วิเคราะห์และปรับปรุง naming conventions ทั้ง code, API, database, files ให้ consistent และสื่อความหมาย
 auto_execution_mode: 3
 related:
-  - /review-naming
+  - /review-code-quality
   - /idea-improve-naming
   - /rename
   - /rename-to
   - /scan-codebase
   - /follow-best-practice
-  - /edit-relative
+  - /update-reference
   - /resolve-errors
   - /run-verify
   - /suggest-next-action
@@ -21,7 +21,7 @@ related:
 
 ## Scope
 
-ใช้สำหรับแก้ไข naming issues ที่ตรวจพบ: variables, functions, files, components, types, API endpoints, database tables/columns, CSS classes, constants — ไม่รวมการสร้างไอเดีย (ใช้ `/idea-improve-naming`) หรือ review เท่านั้น (ใช้ `/review-naming`)
+ใช้สำหรับแก้ไข naming issues ที่ตรวจพบ: variables, functions, files, components, types, API endpoints, database tables/columns, CSS classes, constants — ไม่รวมการสร้างไอเดีย (ใช้ `/idea-improve-naming`) หรือ review เท่านั้น (ใช้ `/review-code-quality`)
 
 ## Execute
 
@@ -31,7 +31,7 @@ related:
 
 > Goal: รู้ว่ามี naming issues อะไรบ้าง จัดลำดับตาม severity
 
-1. parallel: ทำ `/scan-codebase` ∥ ทำ `/review-naming` — ระบุ inconsistencies, abbreviations ที่สับสน, ชื่อที่ไม่สื่อความหมาย
+1. ทำ `/scan-codebase`, ทำ `/review-code-quality` — ระบุ inconsistencies, abbreviations ที่สับสน, ชื่อที่ไม่สื่อความหมาย
 2. ค้นหา patterns: inconsistent casing, misleading names, non-standard abbreviations, mismatched conventions
 3. จัดลำดับตาม severity: API/database naming > component/function naming > variable/file naming > CSS naming — ถ้าไม่มี issues → stop และ report
 
@@ -63,7 +63,7 @@ related:
 
 > Goal: Function และ variable naming consistent อ่านเข้าใจง่าย
 
-1. parallel: แก้ function naming (verb prefixes: get/fetch/load/retrieve) ∥ แก้ variable naming (camelCase consistency, ลด abbreviations)
+1. แก้ function naming (verb prefixes: get/fetch/load/retrieve), แก้ variable naming (camelCase consistency, ลด abbreviations)
 2. แก้ async function naming: prefix ด้วย `async` หรือ suffix ด้วย `Async` ตาม convention
 3. แก้ event handler naming: `on` prefix สำหรับ handlers, `handle` prefix สำหรับ internal handlers
 4. แก้ boolean naming: `is/has/can/should` prefix consistency
@@ -75,10 +75,10 @@ related:
 
 > Goal: File และ CSS naming consistent ตาม file type
 
-1. parallel: แก้ file naming (component: PascalCase, utility: camelCase, route: framework convention) ∥ แก้ CSS naming (BEM, utility classes, CSS variables)
+1. แก้ file naming (component: PascalCase, utility: camelCase, route: framework convention), แก้ CSS naming (BEM, utility classes, CSS variables)
 2. แก้ file extension: `.tsx` สำหรับ components, `.ts` สำหรับ pure logic
 3. แก้ prefix/suffix conventions: `use-*` สำหรับ composables, `*.server.ts` สำหรับ server-only
-4. ใช้ `/rename-to` สำหรับ rename files — ทำ `/edit-relative` หลังทุกการ rename file
+4. ใช้ `/rename-to` สำหรับ rename files — ทำ `/update-reference` หลังทุกการ rename file
 
 ### 6. Validate And Report
 
@@ -86,8 +86,8 @@ related:
 
 > Goal: Naming ดีขึ้น ผ่าน validation และมี report ชัดเจน
 
-1. parallel: รัน `tsgo --noEmit` ∥ รัน `bunx biome lint` ∥ ทำ `/run-verify`
-2. ทำ `/edit-relative` เพื่อตรวจสอบว่าไม่มี broken references
+1. รัน `tsgo --noEmit`, รัน `bunx biome lint`, ทำ `/run-verify`
+2. ทำ `/update-reference` เพื่อตรวจสอบว่าไม่มี broken references
 3. เทียบ before/after: inconsistent naming count, abbreviation count, misleading name count
 4. ถ้า validation fail → ทำ `/resolve-errors` แล้ว retry (max 3 → stop/report)
 5. รายงานเป็นตาราง: category | issues found | issues fixed | status — ทำ `/suggest-next-action`
@@ -105,7 +105,7 @@ related:
 - การ rename API endpoint และ database column ต้องมี dry run และ user confirmation ก่อนดำเนินการ
 - ตรวจสอบว่าชื่อใหม่ไม่ซ้ำกับ identifier ที่มีอยู่ก่อน rename
 - ถ้า rename ส่งผลกระทบ >10 ไฟล์ → ทำเป็น batches และ validate ทีละ batch
-- ทำ `/edit-relative` หลังทุกการ rename file เพื่ออัปเดท references
+- ทำ `/update-reference` หลังทุกการ rename file เพื่ออัปเดท references
 
 ### 3. High Impact Content
 

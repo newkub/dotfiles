@@ -33,7 +33,7 @@ related:
 
 1. สร้าง `vitest.config.ts` หรือใช้ `vite.config.ts` ที่มีอยู่
 2. เปิดใช้งาน `globals` เพื่อลดการ import
-3. ตั้งค่า test patterns เป็น `**/*.test.ts` หรือ `**/*.spec.ts`
+3. ตั้งค่า test patterns เป็น `/*.test.ts` หรือ `/*.spec.ts`
 4. กำหนด environment เป็น `node` หรือ `jsdom` ตามความต้องการ
 5. ตั้งค่า coverage ด้วย `@vitest/coverage-v8` พร้อม `coverage.include` แบบ explicit
 6. ตั้งค่า `test.include` และ `test.exclude` สำหรับ glob patterns

@@ -67,19 +67,19 @@ auto_execution_mode: 3
 
 ### 8. Setup Environment-Specific Configs
 
-**Node.js Config:**
+Node.js Config:
 - ใช้ target ESNext และ moduleResolution bundler
 - เพิ่ม @types/node ใน types
 
-**Bun Config:**
+Bun Config:
 - ใช้ target ESNext และ bun-types
 - เพิ่ม assumeChangesOnlyAffectDirectDependencies: true
 
-**Nuxt Config:**
+Nuxt Config:
 - ใช้ project references เพื่อ extend Nuxt configs
 - ตั้งค่า strict mode ใน nuxt.config.ts
 
-**Vite + TanStack Config:**
+Vite + TanStack Config:
 - ใช้ jsx: "react-jsx"
 - สร้าง tsconfig.node.json สำหรับ Vite config
 - ตั้งค่า path aliases ใน vite.config.ts

@@ -18,7 +18,7 @@ related:
 
 ติดตั้งและตั้งค่า Vite 7+ สำหรับ modern web applications ทั้ง single project และ monorepo
 
-**หมายเหตุ:** สำหรับ TypeScript library build ให้ใช้ `/follow-tsdown` แทน
+หมายเหตุ: สำหรับ TypeScript library build ให้ใช้ `/follow-tsdown` แทน
 
 ## Execute
 
@@ -94,14 +94,14 @@ Utility:
 
 ### 6. Performance Optimization
 
-1. **Audit plugins**: ตรวจสอบว่า community plugins ไม่ทำงานหนักใน `buildStart`, `config`, `configResolved` hooks
-2. **Reduce resolve operations**: ใช้ explicit import paths เช่น `import './Component.jsx'` แทน `import './Component'`
-3. **Avoid barrel files**: import จากไฟล์ตรงๆ เช่น `import { slash } from './utils/slash.js'` แทน `import { slash } from './utils'`
-4. **Warm up files**: ใช้ `server.warmup.clientFiles` สำหรับไฟล์ที่ใช้บ่อยและ transform ช้า
-5. **Use lesser or native tooling**: ใช้ CSS แทน Sass/Less เมื่อได้ และ import SVG เป็น string/URL แทน component
-6. **TypeScript**: เปิด `moduleResolution: "bundler"` และ `allowImportingTsExtensions: true`
-7. **Optimize deps**: ใช้ `optimizeDeps.include` สำหรับ deps ที่ Vite อาจ miss และ `optimizeDeps.exclude` สำหรับ ESM deps
-8. **Profile**: ใช้ `vite --profile` แล้วกด `p + enter` สำหรับบันทึก `.cpuprofile`
+1. Audit plugins: ตรวจสอบว่า community plugins ไม่ทำงานหนักใน `buildStart`, `config`, `configResolved` hooks
+2. Reduce resolve operations: ใช้ explicit import paths เช่น `import './Component.jsx'` แทน `import './Component'`
+3. Avoid barrel files: import จากไฟล์ตรงๆ เช่น `import { slash } from './utils/slash.js'` แทน `import { slash } from './utils'`
+4. Warm up files: ใช้ `server.warmup.clientFiles` สำหรับไฟล์ที่ใช้บ่อยและ transform ช้า
+5. Use lesser or native tooling: ใช้ CSS แทน Sass/Less เมื่อได้ และ import SVG เป็น string/URL แทน component
+6. TypeScript: เปิด `moduleResolution: "bundler"` และ `allowImportingTsExtensions: true`
+7. Optimize deps: ใช้ `optimizeDeps.include` สำหรับ deps ที่ Vite อาจ miss และ `optimizeDeps.exclude` สำหรับ ESM deps
+8. Profile: ใช้ `vite --profile` แล้วกด `p + enter` สำหรับบันทึก `.cpuprofile`
 
 ### 7. Monorepo Setup
 

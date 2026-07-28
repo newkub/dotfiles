@@ -49,9 +49,9 @@ related:
 
 ### Script Types
 
-- **Bun native APIs**: file operations, networking, database, compression, crypto
-- **pwsh**: Windows system administration, file system operations, automation
-- **ast-grep**: AST-based code search, linting, transformation
+- Bun native APIs: file operations, networking, database, compression, crypto
+- pwsh: Windows system administration, file system operations, automation
+- ast-grep: AST-based code search, linting, transformation
 
 ### File Locations
 

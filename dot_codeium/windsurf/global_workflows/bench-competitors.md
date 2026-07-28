@@ -6,7 +6,7 @@ related:
   - /bench-features
   - /deep-research
   - /pondering
-  - /plan
+  - /deep-plan
   - /ship-code
   - /update-docs
   - /review-performance
@@ -63,7 +63,7 @@ related:
 > Goal: ได้ roadmap ครอบทุกมิติ
 
 1. ทำ `/pondering` เพื่อทบทวน priority และผลกระทบ
-2. ทำ `/plan` เพื่อสร้าง roadmap ครอบทุกมิติ
+2. ทำ `/deep-plan` เพื่อสร้าง roadmap ครอบทุกมิติ
 3. ระบุ priority: Critical, High, Medium, Nice-to-have
 4. ถ้า scope ไม่ชัด → ใช้ `/ask-me` ก่อน plan
 

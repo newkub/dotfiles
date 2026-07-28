@@ -55,22 +55,22 @@ related:
 
 อัปเดท references ทั้งหมดที่พบตามประเภทการเปลี่ยนแปลง
 
-**สำหรับการย้ายไฟล์:**
+สำหรับการย้ายไฟล์:
 1. อัปเดท import paths ทั้งหมดใน codebase
 2. อัปเดท file path references ทั้งหมดใน global workflows และ skills
 3. อัปเดท workflow references ทั้งหมด
 
-**สำหรับการเปลี่ยนชื่อไฟล์:**
+สำหรับการเปลี่ยนชื่อไฟล์:
 1. อัปเดท import statements ทั้งหมดใน codebase
 2. อัปเดท file name references ทั้งหมดใน global workflows และ skills
 3. อัปเดท workflow references ทั้งหมด
 
-**สำหรับการลบไฟล์:**
+สำหรับการลบไฟล์:
 1. ลบ import statements ที่อ้างถึงไฟล์ที่ถูกลบ
 2. ลบ references ทั้งหมดใน global workflows และ skills
 3. แก้ไข code ที่ใช้ไฟล์ที่ถูกลบ
 
-**สำหรับการเปลี่ยนชื่อ workflow หรือ skill:**
+สำหรับการเปลี่ยนชื่อ workflow หรือ skill:
 1. อัปเดท references ใน global workflows (`/old-name` → `/new-name`)
 2. อัปเดท references ใน global skills
 3. อัปเดท references ใน `AGENTS.md` ของทุก workspace

@@ -33,7 +33,7 @@ related:
 ### 2. Task Configuration
 
 1. กำหนด `inputs` สำหรับ cache invalidation - ใช้ `$TURBO_DEFAULT$` เพื่อ include default inputs พร้อม custom
-2. กำหนด `outputs` สำหรับ caching artifacts (เช่น `dist/**`, `.next/**`)
+2. กำหนด `outputs` สำหรับ caching artifacts (เช่น `dist/`, `.next/`)
 3. ตั้งค่า `dependsOn` สำหรับ task dependencies:
    - `^task` - task ใน upstream dependencies ต้องทำก่อน
    - `task` - task ใน same package ต้องทำก่อน

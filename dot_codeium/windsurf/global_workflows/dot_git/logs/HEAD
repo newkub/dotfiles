@@ -46,3 +46,4 @@ e0d8ddc41426340d8eff98b12bc9cc523c9a31d1 2a35db9630fcdea3d930722314625aec91aa802
 2a35db9630fcdea3d930722314625aec91aa8022 f9995b1cc662ae71d5b381927c8b36130d9337b0 newkub <newkubise@gmail.com> 1784309594 +0700	commit: refactor: restructure global workflows - merge, split, and add new workflows
 f9995b1cc662ae71d5b381927c8b36130d9337b0 b48871443be3aa9a5df92eb917d992f142ec0c2a newkub <newkubise@gmail.com> 1784336233 +0700	commit: feat: add improve-naming, improve-test-coverage, improve-features-coverage, convert-workflows-to-skills, idea-implement workflows and update references
 b48871443be3aa9a5df92eb917d992f142ec0c2a 77d62d76df4f62b55720a8098103d1c99ff087c3 newkub <newkubise@gmail.com> 1784957241 +0700	commit: chore: add and update global workflows
+77d62d76df4f62b55720a8098103d1c99ff087c3 1a21c8a56faf42463a9b84e73897bb7545dcfa88 newkub <newkubise@gmail.com> 1785182388 +0700	commit: refactor: consolidate review-* workflows and remove bold markers

@@ -27,19 +27,19 @@ auto_execution_mode: 1
 ## 3. Vue/Nuxt Specific Refactoring
 
 ### ถ้าเป็น Nuxt Project
-- **Data Fetching**: ใช้ `useAsyncData` หรือ `useFetch` แทน `fetch` โดยตรง (สามารถใช้กับ `$fetch` ได้)
-- **Composables**: สร้างใน `composables/` directory ตามโครงสร้าง Nuxt
-- **State Management**: ใช้ Pinia ใน Composables พร้อม Typesafe Stores
-- **Error Handling**: ใช้ `throw createError()` แทน `try/catch` สำหรับ server errors
-- **Config**: ใช้ `useRuntimeConfig()` สำหรับ Environment Variables
-- **Optimization**: ทำให้ Composables เป็น Pure และ Reusable
-- **Type Inference**: เพิ่มสำหรับ Vue/Nuxt APIs เช่น `useRoute()`, `useRouter()`
+- Data Fetching: ใช้ `useAsyncData` หรือ `useFetch` แทน `fetch` โดยตรง (สามารถใช้กับ `$fetch` ได้)
+- Composables: สร้างใน `composables/` directory ตามโครงสร้าง Nuxt
+- State Management: ใช้ Pinia ใน Composables พร้อม Typesafe Stores
+- Error Handling: ใช้ `throw createError()` แทน `try/catch` สำหรับ server errors
+- Config: ใช้ `useRuntimeConfig()` สำหรับ Environment Variables
+- Optimization: ทำให้ Composables เป็น Pure และ Reusable
+- Type Inference: เพิ่มสำหรับ Vue/Nuxt APIs เช่น `useRoute()`, `useRouter()`
 
 ### ถ้าเป็น Vue Project
-- **Data Fetching**: ใช้ `useAsyncData` จาก VueUse แทน `fetch`
-- **Composables**: สร้างใน `composables/` หรือ `hooks/` directory
-- **State Management**: ใช้ Pinia หรือ provide/inject
-- **Error Handling**: ใช้ `try/catch` พร้อม proper error types
+- Data Fetching: ใช้ `useAsyncData` จาก VueUse แทน `fetch`
+- Composables: สร้างใน `composables/` หรือ `hooks/` directory
+- State Management: ใช้ Pinia หรือ provide/inject
+- Error Handling: ใช้ `try/catch` พร้อม proper error types
 
 ## 4. Performance Optimization
 

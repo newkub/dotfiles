@@ -107,10 +107,10 @@ Deploy ไป production เมื่อ staging ผ่าน
 
 1. ใช้ `wrangler secret put KEY_NAME` เพื่อ set secrets
 2. ใช้ `wrangler vars put KEY_NAME` เพื่อ set non-secret variables
-3. **KV**: สร้าง namespace ใน dashboard แล้วกำหนด binding
-4. **D1**: สร้าง database แล้วกำหนด `d1_databases`
-5. **R2**: สร้าง bucket แล้วกำหนด `r2_buckets`
-6. **Durable Objects**: กำหนด `durable_objects` ใน config
+3. KV: สร้าง namespace ใน dashboard แล้วกำหนด binding
+4. D1: สร้าง database แล้วกำหนด `d1_databases`
+5. R2: สร้าง bucket แล้วกำหนด `r2_buckets`
+6. Durable Objects: กำหนด `durable_objects` ใน config
 
 ### 9. CI/CD Deployment
 

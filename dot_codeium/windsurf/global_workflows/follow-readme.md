@@ -23,19 +23,19 @@
 </div>
 
 > [!TIP]
-> **Quick Start**: Copy workflows to your Windsurf global workflows directory and start using them immediately with slash commands (`/workflow-name`).
+> Quick Start: Copy workflows to your Windsurf global workflows directory and start using them immediately with slash commands (`/workflow-name`).
 
 > [!NOTE]
-> **Coverage**: Workflows cover all aspects of development - from project setup to deployment, testing to maintenance, and everything in between.
+> Coverage: Workflows cover all aspects of development - from project setup to deployment, testing to maintenance, and everything in between.
 
 > [!WARNING]
-> **Beta**: Some workflows are in active development. Report issues via GitHub issues for rapid fixes and improvements.
+> Beta: Some workflows are in active development. Report issues via GitHub issues for rapid fixes and improvements.
 
 > [!IMPORTANT]
-> **Version**: Workflows are continuously updated. Check the latest version before using to ensure you have the most recent improvements.
+> Version: Workflows are continuously updated. Check the latest version before using to ensure you have the most recent improvements.
 
 > [!CAUTION]
-> **Breaking Changes**: Some workflows may introduce breaking changes. Always test workflows in a non-production environment first.
+> Breaking Changes: Some workflows may introduce breaking changes. Always test workflows in a non-production environment first.
 
 <br/>
 
@@ -271,47 +271,47 @@ await executeWorkflow('analyze-project', {
 
 | Topic | Description |
 |-------|-------------|
-| **Core Workflows** | Project analysis, code quality, development, deployment, and maintenance workflows |
-| **Architecture Workflows** | Clean Architecture, DDD, Microservices, and Monorepo patterns |
-| **Framework Workflows** | Vue, React, Rust, and Bun framework-specific workflows |
-| **Utility Workflows** | Git, testing, and documentation utilities |
-| **Configuration** | Workflow, CLI, and environment variable configuration |
+| Core Workflows | Project analysis, code quality, development, deployment, and maintenance workflows |
+| Architecture Workflows | Clean Architecture, DDD, Microservices, and Monorepo patterns |
+| Framework Workflows | Vue, React, Rust, and Bun framework-specific workflows |
+| Utility Workflows | Git, testing, and documentation utilities |
+| Configuration | Workflow, CLI, and environment variable configuration |
 
 ### Core Workflows
 
 | Category | Workflows |
 |----------|-----------|
-| **Project Analysis** | `/analyze-project`, `/deep-analyze`, `/check-architecture` |
-| **Code Quality** | `/run-lint`, `/run-test`, `/run-typecheck`, `/run-verify` |
-| **Development** | `/run-dev`, `/run-build`, `/run-watch-build` |
-| **Deployment** | `/deploy`, `/deploy-to-cloudflare`, `/deploy-to-vercel` |
-| **Maintenance** | `/update-dependencies`, `/cleanup`, `/refactor` |
+| Project Analysis | `/analyze-project`, `/deep-analyze`, `/check-architecture` |
+| Code Quality | `/run-lint`, `/run-test`, `/run-typecheck`, `/run-verify` |
+| Development | `/run-dev`, `/run-build`, `/run-watch-build` |
+| Deployment | `/deploy`, `/deploy-to-cloudflare`, `/deploy-to-vercel` |
+| Maintenance | `/update-dependencies`, `/cleanup`, `/refactor` |
 
 ### Architecture Workflows
 
 | Pattern | Workflows |
 |---------|-----------|
-| **Clean Architecture** | `/clean-architecture` |
-| **DDD** | `/ddd` |
-| **Microservices** | `/microservices` |
-| **Monorepo** | `/monorepo`, `/turborepo`, `/moonrepo` |
+| Clean Architecture | `/clean-architecture` |
+| DDD | `/ddd` |
+| Microservices | `/microservices` |
+| Monorepo | `/monorepo`, `/turborepo`, `/moonrepo` |
 
 ### Framework Workflows
 
 | Framework | Workflows |
 |-----------|-----------|
-| **Vue** | `/vue`, `/nuxt`, `/vueuse` |
-| **React** | `/react`, `/next` |
-| **Rust** | `/rust` |
-| **Bun** | `/bun`, `/bun-native` |
+| Vue | `/vue`, `/nuxt`, `/vueuse` |
+| React | `/react`, `/next` |
+| Rust | `/rust` |
+| Bun | `/bun`, `/bun-native` |
 
 ### Utility Workflows
 
 | Category | Workflows |
 |----------|-----------|
-| **Git** | `/git-branch`, `/git-worktree`, `/git-submodule-add` |
-| **Testing** | `/test-function`, `/test-e2e`, `/test-integration` |
-| **Documentation** | `/update-readme`, `/update-docs` |
+| Git | `/git-branch`, `/git-worktree`, `/git-submodule-add` |
+| Testing | `/test-function`, `/test-e2e`, `/test-integration` |
+| Documentation | `/update-readme`, `/update-docs` |
 
 ### Configuration
 

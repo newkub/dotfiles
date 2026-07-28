@@ -32,14 +32,14 @@ auto_execution_mode: 3
 3. ตั้งค่า hooks พื้นฐาน: pre-push, pre-merge-commit
 4. เพิ่ม `assert_lefthook_installed: true` เพื่อ fail ถ้า lefthook ไม่ได้ติดตั้ง
 5. เพิ่ม `min_version` เพื่อ pin 最低 version
-6. ใช้ `parallel: true` สำหรับ performance
+6. ใช้ `true` สำหรับ performance
 
 ```yaml
 assert_lefthook_installed: true
 min_version: 2.0.0
 
 pre-push:
-  parallel: true
+  true
   commands:
     lint:
       run: bun run lint
@@ -71,7 +71,7 @@ pre-push:
 
 ```yaml
 pre-push:
-  parallel: true
+  true
   commands:
     lint:
       run: bun run lint
@@ -90,7 +90,7 @@ pre-push:
       fail_text: "Tests failed. Fix failing tests before pushing."
 
 pre-merge-commit:
-  parallel: true
+  true
   commands:
     typecheck:
       run: bun run typecheck
@@ -109,7 +109,7 @@ pre-merge-commit:
 
 ```yaml
 pre-push:
-  parallel: true
+  true
   commands:
     frontend-lint:
       root: "packages/frontend/"
@@ -147,7 +147,7 @@ pre-push:
 - ใช้ run ตามที่กำหนดใน package manifest หรือ task file
 - ใช้ `assert_lefthook_installed: true` เสมอเพื่อป้องกัน hooks ทำงานโดยไม่มี lefthook
 - ใช้ `min_version` เพื่อ pin 最低 version ที่รองรับ features ที่ใช้
-- ใช้ `parallel: true` เสมอเพื่อ performance
+- ใช้ `true` เสมอเพื่อ performance
 - ใช้ `stage_fixed: true` สำหรับ linter/formatter
 - ใช้ `glob` filters เพื่อ skip commands ที่ไม่เกี่ยวข้อง
 - ใช้ `exclude` เป็น YAML list format (ไม่ใช่ space-separated string)

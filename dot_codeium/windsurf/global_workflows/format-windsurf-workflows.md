@@ -9,12 +9,12 @@ auto_execution_mode: 3
 
 หลักการพื้นฐานของการจัดรูปแบบไฟล์ workflows ใน WindSurf ที่สอดคล้องกับ DeepSeek:
 
-- **Consistency**: รูปแบบที่สม่ำเสมอทั่วทั้งโปรเจค
-- **Readability**: อ่านง่าย เข้าใจได้เร็ว
-- **Maintainability**: ปรับปรุงแก้ไขได้ง่าย
-- **Modularity**: แยกส่วนต่างๆ ให้ชัดเจน
-- **Documentation**: มีคำอธิบายเพียงพอ
-- **DeepSeek Compatibility**: ตรงตามรูปแบบที่ DeepSeek ชอบ
+- Consistency: รูปแบบที่สม่ำเสมอทั่วทั้งโปรเจค
+- Readability: อ่านง่าย เข้าใจได้เร็ว
+- Maintainability: ปรับปรุงแก้ไขได้ง่าย
+- Modularity: แยกส่วนต่างๆ ให้ชัดเจน
+- Documentation: มีคำอธิบายเพียงพอ
+- DeepSeek Compatibility: ตรงตามรูปแบบที่ DeepSeek ชอบ
 
 ## Structure Guidelines
 
@@ -40,10 +40,10 @@ auto_execution_mode: 3
 
 ## Best Practices
 
-1. **Descriptive Section Headings**: ใช้หัวข้อที่สื่อความหมายชัดเจน
-2. **Step-by-Step Instructions**: แบ่งขั้นตอนเป็นลำดับที่ชัดเจน
-3. **Examples**: มีตัวอย่างการใช้งานจริง
-4. **Notes and Warnings**: ใส่ข้อควรระวังหรือหมายเหตุพิเศษ
+1. Descriptive Section Headings: ใช้หัวข้อที่สื่อความหมายชัดเจน
+2. Step-by-Step Instructions: แบ่งขั้นตอนเป็นลำดับที่ชัดเจน
+3. Examples: มีตัวอย่างการใช้งานจริง
+4. Notes and Warnings: ใส่ข้อควรระวังหรือหมายเหตุพิเศษ
 
 ## Example Workflow (DeepSeek Style)
 

@@ -4,7 +4,7 @@ description: Refactor packages ให้มี single responsibility และ�
 auto_execution_mode: 3
 related:
   - /refactor-modules
-  - /edit-relative
+  - /update-reference
   - /follow-code-quality
 ---
 
@@ -143,7 +143,7 @@ Refactor packages ให้มี single responsibility ตาม SRP และ�
 
 อัปเดท references ทั้งหมดที่เกี่ยวข้อง
 
-1. ทำตาม `/edit-relative`
+1. ทำตาม `/update-reference`
 2. อัปเดท `package.json` dependencies
 3. อัปเดท import paths ในทุก packages
 

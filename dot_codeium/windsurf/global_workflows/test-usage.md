@@ -31,14 +31,14 @@ related:
 
 1. ตรวจสอบ `package.json`, `Cargo.toml`, `go.mod` เพื่อระบุ project type และ entry points
 2. ตรวจสอบ interface types ที่ project มี:
-   - **CLI** — `bin/`, `src/cli/`, `src/index.ts` ที่รับ args
-   - **API** — `src/server/`, `src/routes/`, HTTP/WebSocket endpoints
-   - **Browser** — `src/routes/`, `index.html`, frontend framework
-   - **SDK** — `src/index.ts` ที่ export functions สำหรับ developers
-   - **TUI** — `ratatui`, `bubbletea`, `blessed`
-   - **Mobile** — `capacitor`, `react-native`, `flutter`
-   - **Extension** — `manifest.json`, `wxt.config.ts`
-   - **Bot** — `bot.py`, webhook handlers
+   - CLI — `bin/`, `src/cli/`, `src/index.ts` ที่รับ args
+   - API — `src/server/`, `src/routes/`, HTTP/WebSocket endpoints
+   - Browser — `src/routes/`, `index.html`, frontend framework
+   - SDK — `src/index.ts` ที่ export functions สำหรับ developers
+   - TUI — `ratatui`, `bubbletea`, `blessed`
+   - Mobile — `capacitor`, `react-native`, `flutter`
+   - Extension — `manifest.json`, `wxt.config.ts`
+   - Bot — `bot.py`, webhook handlers
 3. บันทึก test targets ที่ตรวจพบลงใน checklist
 
 ### 2. Test CLI Usage

@@ -148,12 +148,12 @@ related:
 
 เลือก tools ที่เหมาะสมกับแต่ละมิติ
 
-- **Structure**: `/scan-codebase`, tree command, `ast-grep outline`
-- **Architecture**: `/use-ast-grep`, `Grep`
-- **Features**: `/scan-codebase`, `/use-ast-grep`
-- **Code Quality**: `/use-ast-grep`, `Grep`, `/use-scripts`, check workflows
-- **Dependencies**: manifest files, `/check-vulnerability`
-- **Research**: `/deep-research`, DeepWiki, Context7, WebSearch
+- Structure: `/scan-codebase`, tree command, `ast-grep outline`
+- Architecture: `/use-ast-grep`, `Grep`
+- Features: `/scan-codebase`, `/use-ast-grep`
+- Code Quality: `/use-ast-grep`, `Grep`, `/use-scripts`, check workflows
+- Dependencies: manifest files, `/check-vulnerability`
+- Research: `/deep-research`, DeepWiki, Context7, WebSearch
 
 ### 3. Parallel Processing
 

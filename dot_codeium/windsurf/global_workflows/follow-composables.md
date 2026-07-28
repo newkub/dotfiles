@@ -45,7 +45,7 @@ composables/
     └── use<Validation>.ts
 ```
 
-**หลักการ:**
+หลักการ:
 - `core/` → Pure composables (ใช้ทุกที่)
 - `<feature>/` → Business logic เฉพาะ domain
 - `ui/` → UI state

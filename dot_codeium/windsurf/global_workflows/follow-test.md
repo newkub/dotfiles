@@ -70,16 +70,16 @@ related:
 ### 1. Test Strategy Levels
 
 เลือกระดับตามขนาดและความซับซ้อนของโปรเจกต์:
-- **Minimal** (Default): unit tests, basic coverage (70%) - เหมาะสำหรับโปรเจกต์เล็ก-กลาง
-- **Standard**: Minimal + integration tests, component tests, coverage (85%) - เหมาะสำหรับโปรเจกต์ที่ต้องการความมั่นใจสูง
-- **Complete**: Standard + e2e tests, performance tests, visual tests, contract tests, coverage (100%) - เหมาะสำหรับ production systems
+- Minimal (Default): unit tests, basic coverage (70%) - เหมาะสำหรับโปรเจกต์เล็ก-กลาง
+- Standard: Minimal + integration tests, component tests, coverage (85%) - เหมาะสำหรับโปรเจกต์ที่ต้องการความมั่นใจสูง
+- Complete: Standard + e2e tests, performance tests, visual tests, contract tests, coverage (100%) - เหมาะสำหรับ production systems
 
 ### 2. Test Pyramid Principle
 
 ใช้ test pyramid เพื่อ balance ระหว่าง test types:
-- **70% Unit Tests**: Test individual units in isolation - fast, cheap, maintainable
-- **20% Integration Tests**: Test interactions between components - moderate speed, cost
-- **10% E2E Tests**: Test complete user flows - slow, expensive, critical paths only
+- 70% Unit Tests: Test individual units in isolation - fast, cheap, maintainable
+- 20% Integration Tests: Test interactions between components - moderate speed, cost
+- 10% E2E Tests: Test complete user flows - slow, expensive, critical paths only
 
 ### 3. Test Scripts
 
@@ -127,26 +127,26 @@ tests/
 ### 6. Test Best Practices
 
 ทำตาม best practices สำหรับการเขียน tests:
-- **AAA Pattern**: Arrange, Act, Assert สำหรับ test structure
-- **Descriptive Names**: Test names ควรบอกว่าทดสอบอะไร
-- **One Assertion per Test**: ทดสอบสิ่งเดียวในแต่ละ test
-- **Independent Tests**: Tests ไม่ควรขึ้นต่อกัน
-- **Fast Feedback**: Unit tests ควรเร็ว (< 100ms per test)
-- **Mock External Dependencies**: Mock services, databases, APIs
-- **Test Edge Cases**: Boundary values, null, undefined, empty
-- **Use Fixtures**: Reuse test data และ setup code
-- **CI Integration**: Run tests ใน CI pipeline
-- **Test Documentation**: Tests เป็น documentation ของ code
+- AAA Pattern: Arrange, Act, Assert สำหรับ test structure
+- Descriptive Names: Test names ควรบอกว่าทดสอบอะไร
+- One Assertion per Test: ทดสอบสิ่งเดียวในแต่ละ test
+- Independent Tests: Tests ไม่ควรขึ้นต่อกัน
+- Fast Feedback: Unit tests ควรเร็ว (< 100ms per test)
+- Mock External Dependencies: Mock services, databases, APIs
+- Test Edge Cases: Boundary values, null, undefined, empty
+- Use Fixtures: Reuse test data และ setup code
+- CI Integration: Run tests ใน CI pipeline
+- Test Documentation: Tests เป็น documentation ของ code
 
 ### 7. Advanced Testing (Optional)
 
 สำหรับ Complete level เพิ่ม advanced testing:
-- **Mutation Testing**: Verify test quality ด้วย code mutation
-- **Performance Testing**: Benchmark critical paths และ bottlenecks
-- **Visual Testing**: Detect UI regressions ด้วย screenshot comparison
-- **Contract Testing**: Verify API contracts ระหว่าง services
-- **Security Testing**: Scan vulnerabilities ใน dependencies และ code
-- **Load Testing**: Test system ภายใต้ high load scenarios
+- Mutation Testing: Verify test quality ด้วย code mutation
+- Performance Testing: Benchmark critical paths และ bottlenecks
+- Visual Testing: Detect UI regressions ด้วย screenshot comparison
+- Contract Testing: Verify API contracts ระหว่าง services
+- Security Testing: Scan vulnerabilities ใน dependencies และ code
+- Load Testing: Test system ภายใต้ high load scenarios
 
 ## Expected Outcome
 
