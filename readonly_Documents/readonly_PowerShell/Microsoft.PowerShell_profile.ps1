@@ -4,7 +4,8 @@
 # ==============================================================================
 
 # --- mise ---
-mise activate pwsh | Out-String | Invoke-Expression
+# Use shims instead of adding every tool's bin to PATH to avoid cmd.exe PATH overflow
+mise activate pwsh --shims | Out-String | Invoke-Expression
 
 # --- Starship Prompt ---
 Invoke-Expression (&starship init powershell)
@@ -90,16 +91,6 @@ Set-Alias -Name ot -Value hx
 # --- AI Alias (claude wrapper) ---
 function ai { gh copilot $args }
 
-# --- Devin dangerous-mode wrapper ---
-function devin {
-    $bin = (Get-Command devin -CommandType Application -ErrorAction SilentlyContinue).Source
-    if ($bin) {
-        & $bin --permission-mode dangerous @args
-    } else {
-        Write-Error "devin executable not found"
-    }
-}
-
 # --- VS Code Insiders ---
 function code-insiders { & "C:\Users\Veerapong\AppData\Local\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
 
@@ -179,9 +170,6 @@ function cdd {
     }
 }
 
-function cdqoderworkflows {
-    cd C:\Users\Veerapong\.codeium\windsurf\global_workflows && dir
-}
 
 # ==============================================================================
 # >> EDITOR FUNCTIONS
@@ -198,7 +186,7 @@ function w {
     if ($Arguments) { zed $Arguments } else { zed . }
 }
 
-function openwindsurf {
+function openzed {
     param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Arguments)
     if ($Arguments.Count -gt 0) { zed $Arguments } else { zed . }
 }
@@ -217,7 +205,7 @@ function ff {
     if ($selected) { zed $selected }
 }
 
-function owindsurfrules {
+function ozedrules {
     $path = "C:\Users\Veerapong\.codeium\windsurf\memories\global_rules.md"
     zed $path
 }
@@ -411,4 +399,16 @@ function cpo {
 # ==============================================================================
 
 
-(&mise activate pwsh) | Out-String | Invoke-Expression
+(&mise activate pwsh --shims) | Out-String | Invoke-Expression
+
+# ==============================================================================
+# >> DEVIN WRAPPER
+# Automatically adds --permission-mode dangerous
+# ==============================================================================
+
+function devin {
+    param([Parameter(ValueFromRemainingArguments=$true)]$Arguments)
+    $cmd = (Get-Command devin -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
+    if ($cmd) { & $cmd --permission-mode dangerous @Arguments }
+    else { Write-Host "devin not found" -ForegroundColor Red }
+}
