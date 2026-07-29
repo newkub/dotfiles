@@ -281,6 +281,37 @@ end
 
 config.status_update_interval = 5000
 
+local function append_all(dst, src)
+  for _, v in ipairs(src) do
+    table.insert(dst, v)
+  end
+end
+
+local function format_metric(label, used, total, unit)
+  if not used or not total or total == 0 then
+    return nil
+  end
+  local percent = (used / total) * 100
+  local color = "#a6e3a1"
+  if percent >= 90 then
+    color = "#f38ba8"
+  elseif percent >= 70 then
+    color = "#f9e2af"
+  end
+  return {
+    { Foreground = { Color = "#cdd6f4" } },
+    { Text = label .. " " },
+    { Foreground = { Color = color } },
+    { Attribute = { Intensity = "Bold" } },
+    { Text = string.format("%.1f", used) },
+    { Attribute = { Intensity = "Normal" } },
+    { Foreground = { Color = "#6c7086" } },
+    { Text = "/" .. string.format("%.1f", total) .. unit },
+    { Foreground = { Color = "#a6adc8" } },
+    { Text = string.format(" %.0f%%", percent) },
+  }
+end
+
 local function get_ram_usage()
   local success, stdout, _ = wezterm.run_child_process({
     "powershell.exe",
@@ -291,13 +322,12 @@ local function get_ram_usage()
   if success and stdout then
     local total_mb, free_mb = stdout:match("(%d+):(%d+)")
     if total_mb and free_mb then
-      local total_gb = tonumber(total_mb) / 1024
-      local free_gb = tonumber(free_mb) / 1024
-      local used_gb = total_gb - free_gb
-      return string.format("RAM %.1f/%.1fGB", used_gb, total_gb)
+      local total = tonumber(total_mb) / 1024
+      local used = total - (tonumber(free_mb) / 1024)
+      return format_metric("RAM", used, total, "GB")
     end
   end
-  return ""
+  return nil
 end
 
 local function get_disk_usage(drive)
@@ -312,12 +342,12 @@ local function get_disk_usage(drive)
   if success and stdout then
     local total_mb, used_mb = stdout:match("(%d+):(%d+)")
     if total_mb and used_mb then
-      local total_gb = tonumber(total_mb) / 1024
-      local used_gb = tonumber(used_mb) / 1024
-      return string.format("%s %.1f/%.1fGB", drive, used_gb, total_gb)
+      local total = tonumber(total_mb) / 1024
+      local used = tonumber(used_mb) / 1024
+      return format_metric(drive, used, total, "GB")
     end
   end
-  return ""
+  return nil
 end
 
 wezterm.on("update-status", function(window, pane)
@@ -330,17 +360,35 @@ wezterm.on("update-status", function(window, pane)
     end
   end
 
-  local status = {}
+  local items = {
+    { Background = { Color = "#313244" } },
+    { Text = " " },
+  }
+  local first = true
+
   local ram = get_ram_usage()
-  if ram ~= "" then
-    table.insert(status, ram)
-  end
-  local disk = get_disk_usage(drive)
-  if disk ~= "" then
-    table.insert(status, disk)
+  if ram then
+    append_all(items, ram)
+    first = false
   end
 
-  window:set_right_status(table.concat(status, " | "))
+  local disk = get_disk_usage(drive)
+  if disk then
+    if not first then
+      table.insert(items, { Foreground = { Color = "#6c7086" } })
+      table.insert(items, { Text = " | " })
+    end
+    append_all(items, disk)
+    first = false
+  end
+
+  if not first then
+    table.insert(items, { Text = " " })
+    table.insert(items, "ResetAttributes")
+    window:set_right_status(wezterm.format(items))
+  else
+    window:set_right_status("")
+  end
 end)
 
 -- =====================================
