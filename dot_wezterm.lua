@@ -139,14 +139,14 @@ config.colors = {
 
 config.keys = {
   {
-    key = "F1",
-    mods = "NONE",
+    key = ".",
+    mods = "CTRL",
     action = wezterm.action.ActivateCommandPalette,
   },
 
   {
     key = "f",
-    mods = "CTRL",
+    mods = "CTRL|SHIFT",
     action = wezterm.action.Search({
       CaseInSensitiveString = "",
     }),
@@ -233,6 +233,40 @@ config.keys = {
   },
 }
 
+-- Split pane with Ctrl+Shift+Arrow keys
+table.insert(config.keys, {
+  key = "UpArrow",
+  mods = "CTRL|SHIFT",
+  action = wezterm.action.SplitPane({
+    direction = "Up",
+    size = { Percent = 50 },
+  }),
+})
+table.insert(config.keys, {
+  key = "DownArrow",
+  mods = "CTRL|SHIFT",
+  action = wezterm.action.SplitPane({
+    direction = "Down",
+    size = { Percent = 50 },
+  }),
+})
+table.insert(config.keys, {
+  key = "LeftArrow",
+  mods = "CTRL|SHIFT",
+  action = wezterm.action.SplitPane({
+    direction = "Left",
+    size = { Percent = 50 },
+  }),
+})
+table.insert(config.keys, {
+  key = "RightArrow",
+  mods = "CTRL|SHIFT",
+  action = wezterm.action.SplitPane({
+    direction = "Right",
+    size = { Percent = 50 },
+  }),
+})
+
 for i = 1, 9 do
   table.insert(config.keys, {
     key = tostring(i),
@@ -242,15 +276,85 @@ for i = 1, 9 do
 end
 
 -- =====================================
+-- Status Bar
+-- =====================================
+
+config.status_update_interval = 5000
+
+local function get_ram_usage()
+  local success, stdout, _ = wezterm.run_child_process({
+    "powershell.exe",
+    "-NoProfile",
+    "-Command",
+    [[Get-CimInstance Win32_OperatingSystem | ForEach-Object { "{0}:{1}" -f [math]::Round($_.TotalVisibleMemorySize/1024), [math]::Round($_.FreePhysicalMemory/1024) }]],
+  })
+  if success and stdout then
+    local total_mb, free_mb = stdout:match("(%d+):(%d+)")
+    if total_mb and free_mb then
+      local total_gb = tonumber(total_mb) / 1024
+      local free_gb = tonumber(free_mb) / 1024
+      local used_gb = total_gb - free_gb
+      return string.format("RAM %.1f/%.1fGB", used_gb, total_gb)
+    end
+  end
+  return ""
+end
+
+local function get_disk_usage(drive)
+  drive = drive or "C:"
+  local filter = [[Get-CimInstance Win32_LogicalDisk -Filter "DeviceID=']] .. drive .. [['" | ForEach-Object { "{0}:{1}" -f [math]::Round($_.Size/1MB), [math]::Round(($_.Size-$_.FreeSpace)/1MB) }]]
+  local success, stdout, _ = wezterm.run_child_process({
+    "powershell.exe",
+    "-NoProfile",
+    "-Command",
+    filter,
+  })
+  if success and stdout then
+    local total_mb, used_mb = stdout:match("(%d+):(%d+)")
+    if total_mb and used_mb then
+      local total_gb = tonumber(total_mb) / 1024
+      local used_gb = tonumber(used_mb) / 1024
+      return string.format("%s %.1f/%.1fGB", drive, used_gb, total_gb)
+    end
+  end
+  return ""
+end
+
+wezterm.on("update-status", function(window, pane)
+  local cwd = pane:get_current_working_dir()
+  local drive = "C:"
+  if cwd and cwd.file_path then
+    local letter = cwd.file_path:match("^([A-Za-z]):")
+    if letter then
+      drive = letter:upper() .. ":"
+    end
+  end
+
+  local status = {}
+  local ram = get_ram_usage()
+  if ram ~= "" then
+    table.insert(status, ram)
+  end
+  local disk = get_disk_usage(drive)
+  if disk ~= "" then
+    table.insert(status, disk)
+  end
+
+  window:set_right_status(table.concat(status, " | "))
+end)
+
+-- =====================================
 -- Startup
 -- =====================================
 
 wezterm.on("gui-startup", function(cmd)
   local tab, _, window = wezterm.mux.spawn_window(cmd or {})
 
-  window:spawn_tab({
-    cwd = "D:\\",
-  })
+  for _ = 1, 4 do
+    window:spawn_tab({
+      cwd = "D:\\",
+    })
+  end
 
   tab:activate()
 

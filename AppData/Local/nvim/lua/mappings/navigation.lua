@@ -21,11 +21,27 @@ end
 return {
 	n = {
 		-- File Explorer
-		["<leader>e"] = {
+		["<Esc>"] = { safe_dashboard, "Go to Home/Dashboard" },
+
+		["<C-p>"] = {
 			function()
 				require("snacks").picker.files()
 			end,
 			"File Picker",
+		},
+
+		["<F1>"] = {
+			function()
+				require("snacks").picker.commands()
+			end,
+			"Command Palette",
+		},
+
+		["<leader>e"] = {
+			function()
+				require("snacks").explorer()
+			end,
+			"File Explorer Sidebar",
 		},
 
 		-- Go Back/Forward

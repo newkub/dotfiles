@@ -59,16 +59,14 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
-    explorer = { enabled = true },
+    explorer = { enabled = true, replace_netrw = true },
     gitbrowse = {
       -- your gitbrowse configuration comes here
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
     image = {
-      -- your image configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
+      enabled = false, -- no Kitty graphics support in this WezTerm build
     },
     indent = { enabled = true },
     input = {
@@ -80,7 +78,7 @@ return {
       enabled = true,
       timeout = 3000,
     },
-    picker = { 
+    picker = {
       enabled = true,
       -- Add error handling for picker actions
       hooks = {
@@ -88,7 +86,36 @@ return {
         on_error = function(err)
           vim.notify("Picker error: " .. tostring(err), vim.log.levels.ERROR)
         end
-      }
+      },
+      win = {
+        input = {
+          keys = {
+            ["<C-c>"] = { function() vim.cmd("qa!") end, mode = { "i", "n" }, desc = "Quit Neovim" },
+          },
+        },
+        list = {
+          keys = {
+            ["<C-c>"] = { function() vim.cmd("qa!") end, mode = { "n" }, desc = "Quit Neovim" },
+          },
+        },
+        preview = {
+          keys = {
+            ["<C-c>"] = { function() vim.cmd("qa!") end, mode = { "n" }, desc = "Quit Neovim" },
+          },
+        },
+      },
+      sources = {
+        explorer = {
+          win = {
+            list = {
+              keys = {
+                ["<LeftMouse>"] = "confirm",
+                ["<F2>"] = "explorer_rename",
+              },
+            },
+          },
+        },
+      },
     },
     profiler = {
       -- your profiler configuration comes here
@@ -188,12 +215,20 @@ return {
       end, desc = "File Explorer" },
     { "<C-p>", function() 
         local status, err = pcall(function()
-          require("snacks").picker.smart()
+          require("snacks").picker.files()
         end)
         if not status then
-          vim.notify("Error opening smart file picker: " .. tostring(err), vim.log.levels.ERROR)
+          vim.notify("Error opening file picker: " .. tostring(err), vim.log.levels.ERROR)
         end
-      end, desc = "Smart File Picker" },
+      end, desc = "File Picker" },
+    { "<F1>", function()
+        local status, err = pcall(function()
+          require("snacks").picker.commands()
+        end)
+        if not status then
+          vim.notify("Error opening command palette: " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end, desc = "Command Palette" },
     { "<C-S-f>", function() 
         local status, err = pcall(function()
           require("snacks").picker.files()

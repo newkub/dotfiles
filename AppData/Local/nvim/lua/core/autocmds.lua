@@ -3,11 +3,12 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local function is_normal_buffer()
-	if vim.bo.buftype ~= "" then
+local function is_normal_buffer(bufnr)
+	bufnr = bufnr or 0
+	if vim.bo[bufnr].buftype ~= "" then
 		return false
 	end
-	if vim.fn.expand("%") == "" then
+	if vim.api.nvim_buf_get_name(bufnr) == "" then
 		return false
 	end
 	return true
@@ -102,14 +103,20 @@ autocmd("BufReadPost", {
 autocmd("BufWritePre", {
 	group = "CursorPosition",
 	pattern = "*",
-	callback = function()
+	callback = function(args)
+		if not is_normal_buffer(args.buf) then
+			return
+		end
 		pcall(vim.cmd, "silent! mkview")
 	end,
 })
 autocmd("BufWinEnter", {
 	group = "CursorPosition",
 	pattern = "*",
-	callback = function()
+	callback = function(args)
+		if not is_normal_buffer(args.buf) then
+			return
+		end
 		pcall(vim.cmd, "silent! loadview")
 	end,
 })
@@ -131,31 +138,6 @@ autocmd("InsertEnter", {
 		vim.defer_fn(function()
 			require("core.codeium").setup_tab_mapping()
 		end, 80)
-	end,
-})
-
--- Insert mode on enter
-augroup("InsertModeOnEnter", { clear = true })
-autocmd("BufEnter", {
-	group = "InsertModeOnEnter",
-	pattern = "*",
-	callback = function()
-		-- ใช้ vim.schedule เพื่อหน่วงเวลาให้ buffer พร้อมก่อน
-		vim.schedule(function()
-			local bufname = vim.fn.bufname()
-			local buftype = vim.bo.buftype
-			-- เข้า insert mode เมื่อเปิดไฟล์ปกติเท่านั้น
-			if
-				buftype == ""
-				and not is_excluded_bufname(bufname)
-				and not bufname:match("term://")
-			then
-				-- เช็คว่ายังอยู่ใน normal mode
-				if vim.fn.mode() == "n" then
-					vim.cmd("startinsert")
-				end
-			end
-		end)
 	end,
 })
 
@@ -184,7 +166,7 @@ autocmd("User", {
 		end
 
 		local tries = 0
-		local function open_picker()
+		local function open_file_picker()
 			tries = tries + 1
 			pcall(function()
 				local ok_lazy, lazy = pcall(require, "lazy")
@@ -201,11 +183,40 @@ autocmd("User", {
 				return
 			end
 			if tries < 12 then
-				vim.defer_fn(open_picker, 80)
+				vim.defer_fn(open_file_picker, 80)
 			end
 		end
 
-		vim.defer_fn(open_picker, 120)
+		vim.defer_fn(open_file_picker, 120)
+	end,
+})
+
+-- Auto reveal in file explorer sidebar when explorer is already open
+augroup("AutoExplorer", { clear = true })
+autocmd("BufEnter", {
+	group = "AutoExplorer",
+	pattern = "*",
+	callback = function(args)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+		local path = vim.api.nvim_buf_get_name(args.buf)
+		if path == "" then
+			return
+		end
+		if path:match("^%w+://") then
+			return
+		end
+		pcall(function()
+			local snacks = require("snacks")
+			if snacks.explorer and type(snacks.explorer.reveal) == "function" then
+				-- Only reveal if an explorer is already open to avoid stealing focus
+				local pickers = snacks.picker.get({ source = "explorer" })
+				if pickers and #pickers > 0 then
+					snacks.explorer.reveal({ file = path })
+				end
+			end
+		end)
 	end,
 })
 
@@ -225,48 +236,4 @@ autocmd("TermOpen", {
 	end,
 })
 
--- No normal mode
-augroup("NoNormalMode", { clear = true })
-autocmd("ModeChanged", {
-	group = "NoNormalMode",
-	pattern = "*",
-	callback = function()
-		local mode = vim.api.nvim_get_mode().mode
-		if mode ~= "n" then
-			return
-		end
-		local buftype = vim.bo.buftype
-		local bufname = vim.fn.bufname()
-		local ft = vim.bo.filetype
-		if buftype ~= "" then
-			return
-		end
-		if bufname == "" or bufname:match("dashboard") or bufname:match("alpha") then
-			return
-		end
-		if is_excluded_filetype(ft) then
-			return
-		end
-		vim.schedule(function()
-			if vim.fn.mode() == "n" then
-				vim.cmd("startinsert")
-			end
-		end)
-	end,
-})
 
-autocmd("CmdlineLeave", {
-	group = "NoNormalMode",
-	pattern = ":",
-	callback = function()
-		vim.schedule(function()
-			local ft = vim.bo.filetype
-			if is_excluded_filetype(ft) then
-				return
-			end
-			if vim.fn.mode() == "n" then
-				vim.cmd("startinsert")
-			end
-		end)
-	end,
-})

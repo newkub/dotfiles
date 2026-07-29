@@ -90,6 +90,16 @@ Set-Alias -Name ot -Value hx
 # --- AI Alias (claude wrapper) ---
 function ai { gh copilot $args }
 
+# --- Devin dangerous-mode wrapper ---
+function devin {
+    $bin = (Get-Command devin -CommandType Application -ErrorAction SilentlyContinue).Source
+    if ($bin) {
+        & $bin --permission-mode dangerous @args
+    } else {
+        Write-Error "devin executable not found"
+    }
+}
+
 # --- VS Code Insiders ---
 function code-insiders { & "C:\Users\Veerapong\AppData\Local\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
 
@@ -185,36 +195,36 @@ function o {
 
 function w {
     param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Arguments)
-    if ($Arguments) { windsurf --reuse-window $Arguments } else { windsurf . }
+    if ($Arguments) { zed $Arguments } else { zed . }
 }
 
 function openwindsurf {
     param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Arguments)
-    if ($Arguments.Count -gt 0) { windsurf $Arguments } else { windsurf . }
+    if ($Arguments.Count -gt 0) { zed $Arguments } else { zed . }
 }
 
 function f {
     param([string]$query = "")
     $files = if ($query) { fd -t f $query } else { fd -t f }
     $selected = $files | tv
-    if ($selected) { windsurf $selected }
+    if ($selected) { zed $selected }
 }
 
 function ff {
     param([string]$query = "")
     $dirs = if ($query) { fd -t d $query } else { fd -t d }
     $selected = $dirs | tv
-    if ($selected) { windsurf $selected }
+    if ($selected) { zed $selected }
 }
 
 function owindsurfrules {
     $path = "C:\Users\Veerapong\.codeium\windsurf\memories\global_rules.md"
-    windsurf $path
+    zed $path
 }
 
 function opowershellprofile {
     $path = "C:\Users\Veerapong\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
-    windsurf $path
+    zed $path
 }
 
 function otd { zed "d:\TODO.md" }
@@ -307,11 +317,11 @@ function notes {
         }
         New-Item -ItemType File -Path $fullPath | Out-Null
         Write-Host "Note created: $fullPath" -ForegroundColor Green
-        windsurf $fullPath
+        zed $fullPath
     } else {
         $query = if ($action) { $action } else { "." }
         $selected = fd -t f $query $notesDir | tv
-        if ($selected) { windsurf $selected }
+        if ($selected) { zed $selected }
     }
 }
 

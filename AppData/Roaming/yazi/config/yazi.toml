@@ -4,11 +4,12 @@ play = [
 	{ run = '"C:\Program Files\mpv.exe" %*', orphan = true, for = "windows" }
 ]
 edit = [
-	{ run = 'windsurf "$@"', block = true, for = "unix" },
-	{ run = "windsurf %*",  block = true, for = "windows" },
+	{ run = 'zed "$@"', block = true, for = "unix" },
+	{ run = "zed %*",  block = true, for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$@"', desc = "Open" },
+	{ run = 'zed "$@"', desc = "Open", for = "unix" },
+	{ run = "zed %*", desc = "Open", for = "windows" },
 ]
 
 [key]

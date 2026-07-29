@@ -1,2 +1,17 @@
 command_timeout = 10000
 scan_timeout = 400
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎"
+behind = "😰"
+diverged = "😵"
+up_to_date = "✓"
+untracked = "?"
+stashed = "$"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+style = "bold red"
+format = "([$all_status$ahead_behind]($style) )"
