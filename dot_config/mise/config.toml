@@ -1,28 +1,12 @@
-[tasks.update]
+[tasks.update-all]
 description = "update all tools"
 shell = "pwsh -Command"
-run = "winget source update && scoop update && winget upgrade --all && bun update -g && bun upgrade && uv self update && uv tool upgrade --all && mise upgrade && mise self-update -y && mise reshim && rustup update stable && gh extension upgrade --all && chezmoi-update && skills update"
+run = "winget source update --name msstore ; $null = $LASTEXITCODE ; winget source update --name winget ; $null = $LASTEXITCODE ; winget source update --name winget-font ; $null = $LASTEXITCODE ; scoop update && scoop update * ; $null = $LASTEXITCODE ; winget upgrade --all ; $null = $LASTEXITCODE ; bun update -g && bun upgrade ; $null = $LASTEXITCODE ; npm update -g ; $null = $LASTEXITCODE ; pnpm update -g ; $null = $LASTEXITCODE ; python -m pip install --upgrade pip 2>$null ; $null = $LASTEXITCODE ; pip-review --auto 2>$null ; $null = $LASTEXITCODE ; uv tool upgrade --all ; $null = $LASTEXITCODE ; pipx upgrade-all 2>$null ; $null = $LASTEXITCODE ; choco upgrade all -y 2>$null ; $null = $LASTEXITCODE ; cargo install-update -a 2>$null ; $null = $LASTEXITCODE ; wsl --update 2>$null ; $null = $LASTEXITCODE ; mise upgrade && mise prune --yes ; $null = $LASTEXITCODE ; mise self-update -y && mise reshim && rustup self-update ; $null = $LASTEXITCODE ; rustup update stable && gh extension upgrade --all && chezmoi-update && skills update"
 
 [tasks.cleanup]
 description = "cleanup caches"
 shell = "pwsh -Command"
-run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue && Get-ChildItem -Directory -Recurse -Filter node_modules -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue && cargo-clean-all ; podman system prune -af 2>$null ; mise prune --yes ; git gc --auto 2>$null ; exit 0"
-
-[tasks.audit]
-description = "security audit"
-shell = "pwsh -Command"
-run = "bun audit && cargo audit && gitleaks detect"
-
-[tasks.doctor]
-description = "check toolchain health"
-shell = "pwsh -Command"
-run = "mise doctor && git --version && bun --version && rustc --version && cargo --version && node --version && podman --version"
-
-[tasks.commit]
-description = "git add and commit"
-shell = "pwsh -Command"
-run = "git add . && aicommits"
-
+run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue ; npm cache clean --force 2>$null ; $null = $LASTEXITCODE ; pnpm store prune 2>$null ; $null = $LASTEXITCODE ; yarn cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache prune 2>$null ; $null = $LASTEXITCODE ; python -m pip cache purge 2>$null ; $null = $LASTEXITCODE ; bun pm cache rm 2>$null ; $null = $LASTEXITCODE ; mise cache clear 2>$null ; $null = $LASTEXITCODE ; Clear-RecycleBin -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:TEMP/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/mise/downloads/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:USERPROFILE/.cache/pip/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/Microsoft/Windows/WER/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/CrashDumps/* -Recurse -Force -ErrorAction SilentlyContinue ; npkill --delete-all -y 2>$null ; cargo-clean-all 2>$null ; podman system prune -af 2>$null ; mise prune --yes ; git gc --auto 2>$null ; if ($env:SCCACHE_DIR) { Remove-Item -Recurse -Force $env:SCCACHE_DIR -ErrorAction SilentlyContinue } ; exit 0"
 
 # chezmoi tasks
 [tasks.chezmoi-update]
@@ -30,16 +14,6 @@ description = "sync local dotfiles"
 dir = "C:/Users/Veerapong/.local/share/chezmoi"
 shell = "pwsh -Command"
 run = "chezmoi re-add"
-
-[tasks.start-podman]
-description = "start podman machine"
-shell = "pwsh -Command"
-run = "podman machine start"
-
-[tasks.stop-podman]
-description = "stop podman machine"
-shell = "pwsh -Command"
-run = "podman machine stop"
 
 
 [tasks.cargo-clean-all]
@@ -49,25 +23,10 @@ run_windows = "powershell -NoProfile -Command \"Get-ChildItem -Recurse -Filter C
 
 
 
-[tasks.create-nuxt]
-description = "nuxt minimal"
+[tasks.program-list]
+description = "list installed programs"
 shell = "pwsh -Command"
-run = "bun create nuxt --template minimal --packageManager bun --force --gitInit"
-
-[tasks.update-node-deps]
-description = "update project dependencies"
-shell = "pwsh -Command"
-run = "bunx taze -r -w && bun install"
-
-[tasks.remove-node-modules]
-description = "remove node_modules recursive"
-shell = "pwsh -Command"
-run = "Get-ChildItem -Directory -Recurse -Filter node_modules | Remove-Item -Recurse -Force"
-
-[tasks.remove-target]
-description = "remove target recursive"
-shell = "pwsh -Command"
-run = "Get-ChildItem -Directory -Recurse -Filter target | Remove-Item -Recurse -Force"
+run = '& { function Show-Section ($title, $script, $limit = 0) { Write-Host "`n=== $title ===" -ForegroundColor Cyan; try { $out = & $script 2>$null } catch { $out = $null }; if (-not $out) { Write-Host "  no output / not installed" -ForegroundColor Yellow } else { $lines = @($out); $total = $lines.Count; if ($limit -gt 0 -and $total -gt $limit) { $lines | Select-Object -First $limit | Out-Host; Write-Host "  ... $total lines total, showing first $limit" -ForegroundColor Gray } else { $lines | Out-Host; Write-Host "  $total lines" -ForegroundColor Gray } } }; Show-Section "Scoop" { scoop list }; Show-Section "Mise" { mise list }; Show-Section "Bun" { bun pm ls -g }; Show-Section "npm" { npm list -g --depth=0 }; Show-Section "pnpm" { pnpm list -g }; Show-Section "uv" { uv tool list }; Show-Section "pip" { python -m pip list }; Show-Section "winget" { winget list } 50; Show-Section "gh" { gh extension list } }'
 
 
 [env]
@@ -78,6 +37,8 @@ OPENROUTER_API_KEY = "${env:OPENROUTER_API_KEY}"
 DEEPSEEK_API_KEY = "${env:DEEPSEEK_API_KEY}"
 XAI_API_KEY = "${env:XAI_API_KEY}"
 MINIMAX_API_KEY = "${env:MINIMAX_API_KEY}"
+MISE_CACHE_DIR = 'D:\\.mise-cache'
+SCCACHE_DIR = "D:\\.cache\\sccache"
 
 
 [tools]
@@ -143,7 +104,6 @@ dotenv-linter = "latest"
 sccache = "latest"
 rg = "latest"
 powershell-core = "latest"
-biome = "latest"
 ast-grep = "latest"
 starship = "latest"
 viteplus = "latest"
@@ -211,6 +171,10 @@ podman = { version = "latest", rename_exe = "podman-remote" }
 pnpm = "latest"
 "cargo:ast-grep-mcp" = "latest"
 "npm:ctx7" = "latest"
+"npm:druk" = "latest"
+lazygit = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
+"npm:@biomejs/biome" = "latest"
 
 
 [settings]

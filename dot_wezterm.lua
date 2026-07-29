@@ -3,7 +3,6 @@ local config = wezterm.config_builder()
 
 wezterm.add_to_config_reload_watch_list(wezterm.config_dir .. "/wezterm_status.lua")
 local status_bar = require("wezterm_status")
-local resurrect = wezterm.plugin.require("https://github.com/YedPool/resurrect.wezterm")
 
 status_bar.apply_to_config(config)
 
@@ -292,13 +291,21 @@ wezterm.on("update-status", function(window, pane)
   window:set_right_status(status_bar.build(pane))
 end)
 
--- Auto session restore
-resurrect.setup(config, {
-  status_bar = false,
-  keybindings = false,
-  claude_hooks = false,
-  periodic_interval = 60,
-  auto_restore_prompt = true,
-})
+wezterm.on("gui-startup", function(cmd)
+  local tab, _, window = wezterm.mux.spawn_window(cmd or {})
+  if not window then
+    return
+  end
+
+  for _ = 1, 4 do
+    window:spawn_tab({})
+  end
+  tab:activate()
+
+  local gui_win = window:gui_window()
+  if gui_win then
+    gui_win:maximize()
+  end
+end)
 
 return config

@@ -1,102 +1,51 @@
--- VS Code style file operations key mappings for Neovim
+-- File & buffer operation keymaps
 
-return {
-	n = {
+local helpers = require("mappings.helpers")
 
-		-- Save File (VS Code style: Ctrl+S)
-		["<C-s>"] = { ":w<CR>", "Save File" },
+-- Space + e to open file explorer
+vim.keymap.set("n", "<leader>e", function()
+  local status, err = pcall(function()
+    require("snacks").explorer()
+  end)
+  if not status then
+    vim.notify("Error opening explorer: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "File Explorer" })
 
-		["<F2>"] = {
-			function()
-				local buftype = vim.bo.buftype
-				if buftype ~= "" then
-					return
-				end
-				local old = vim.fn.expand("%:p")
-				if old == "" then
-					return
-				end
-				if vim.bo.modified then
-					pcall(vim.cmd, "silent! write")
-				end
+-- F1 to open file picker (override default help)
+vim.keymap.set({ "n", "i" }, "<F1>", function()
+  local status, err = pcall(function()
+    require("snacks").picker()
+  end)
+  if not status then
+    vim.notify("Error opening picker: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "File Picker", noremap = true, silent = true })
 
-				local dir = vim.fn.fnamemodify(old, ":h")
-				local base = vim.fn.fnamemodify(old, ":t")
-				local input = vim.fn.input("Rename to: ", base)
-				if input == nil or input == "" or input == base then
-					return
-				end
-				local new = input
-				if not new:match("[\\/]" ) then
-					new = dir .. "/" .. new
-				end
-				new = vim.fn.fnamemodify(new, ":p")
+-- Ctrl+R to open recent files picker
+vim.keymap.set({ "n", "i" }, "<C-r>", function()
+  local status, err = pcall(function()
+    require("snacks").picker.recent()
+  end)
+  if not status then
+    vim.notify("Error opening recent files picker: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "Recent Files Picker" })
 
-				local ok, err = pcall(function()
-					local uv = vim.uv or vim.loop
-					assert(uv.fs_rename(old, new))
-				end)
-				if not ok then
-					vim.notify("Rename failed: " .. tostring(err), vim.log.levels.ERROR)
-					return
-				end
+-- Ctrl+P to open file picker (VS Code-like)
+vim.keymap.set({ "n", "i" }, "<C-p>", function()
+  local status, err = pcall(function()
+    require("snacks").picker.files()
+  end)
+  if not status then
+    vim.notify("Error opening file picker: " .. tostring(err), vim.log.levels.ERROR)
+  end
+end, { desc = "File Picker" })
 
-				vim.cmd("silent! edit " .. vim.fn.fnameescape(new))
-			end,
-			"Rename File",
-		},
-
-		["<Del>"] = {
-			function()
-				local buftype = vim.bo.buftype
-				if buftype ~= "" then
-					return
-				end
-				local path = vim.fn.expand("%:p")
-				if path == "" then
-					return
-				end
-				if vim.bo.modified then
-					pcall(vim.cmd, "silent! write")
-				end
-
-				local ok, err = pcall(function()
-					local uv = vim.uv or vim.loop
-					assert(uv.fs_unlink(path))
-				end)
-				if not ok then
-					vim.notify("Delete failed: " .. tostring(err), vim.log.levels.ERROR)
-					return
-				end
-
-				vim.cmd("silent! bdelete!")
-				vim.notify("Deleted: " .. path)
-			end,
-			"Delete File",
-		},
-
-		-- Undo Tree
-		["<leader>u"] = { ":UndotreeToggle<CR>", "Toggle Undo Tree" },
-	},
-
-	i = {
-		-- Save File
-		["<C-s>"] = { "<C-o>:w<CR>", "Save File" },
-
-		["<F2>"] = {
-			function()
-				vim.cmd("stopinsert")
-				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<F2>", true, false, true), "n", false)
-			end,
-			"Rename File",
-		},
-
-		["<Del>"] = {
-			function()
-				vim.cmd("stopinsert")
-				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Del>", true, false, true), "n", false)
-			end,
-			"Delete File",
-		},
-	},
-}
+-- Ctrl+L to toggle nvim-devin session panel
+vim.keymap.set({ "n", "i" }, "<C-l>", function()
+  if vim.fn.mode() == "i" then
+    vim.cmd("stopinsert")
+  end
+  helpers.toggle_devin()
+end, { desc = "Toggle Devin" })

@@ -49,4 +49,5 @@ return {
       })
     end,
   },
+  require("plugins.ai.devin"),
 }

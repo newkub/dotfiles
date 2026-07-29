@@ -1,5 +1,11 @@
 -- Core Neovim configuration
 
+-- Avoid false-negative Snacks.image health in headless / non-WezTerm environments.
+-- This only affects snacks.image checks; image rendering itself is disabled in config.
+if vim.fn.has("win32") == 1 and not vim.env.SNACKS_WEZTERM then
+	vim.env.SNACKS_WEZTERM = "1"
+end
+
 -- Disable optional providers that are not used (silences checkhealth warnings)
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
@@ -24,6 +30,7 @@ if vim.fn.has("win32") == 1 and vim.env.PATH and #vim.env.PATH > 8191 then
 			end
 		end
 	end
+
 	vim.env.PATH = table.concat(keep, ";")
 end
 
@@ -62,7 +69,7 @@ require("lazy").setup(require("plugins"), require("configs.lazy"))
 vim.api.nvim_create_autocmd("User", {
 	pattern = "VeryLazy",
 	callback = function()
-		require("mappings").setup()
+		require("mappings")
 	end,
 })
 

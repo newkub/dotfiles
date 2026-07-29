@@ -172,3 +172,7 @@ separator = "│"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
+
+# Devin AI: open the current file in a new Devin session
+[keys.normal.space]
+i = ":sh Start-Process devin -ArgumentList '--','edit %{buffer_name}'"

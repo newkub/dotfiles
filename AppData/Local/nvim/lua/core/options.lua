@@ -1,5 +1,23 @@
 -- Neovim options
 
+-- Disable OSC 52 clipboard capability query to avoid TermResponse errors
+vim.g.termfeatures = { osc52 = false }
+
+-- Use PowerShell as the default shell for terminal and system commands.
+-- Windows PowerShell (powershell) is preferred over pwsh for :! / system()
+-- because pwsh startup is slow and triggers the "Slow shell invocation" checkhealth
+-- warning. The <C-m> terminal toggle still uses pwsh (PowerShell 7+).
+if vim.fn.executable("powershell") == 1 then
+	vim.o.shell = "powershell"
+elseif vim.fn.executable("pwsh") == 1 then
+	vim.o.shell = "pwsh"
+end
+vim.o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+vim.o.shellquote = ""
+vim.o.shellxquote = ""
+
 -- Basic settings
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
@@ -25,8 +43,12 @@ vim.opt.tabstop = 2 -- Number of spaces that a <Tab> counts for
 vim.opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent
 vim.opt.softtabstop = 2 -- Number of spaces that a <Tab> counts for while editing
 
--- Move swap files to D: drive to avoid C: running out of space
-vim.opt.directory = "D:\\.nvim-swap//"
+-- Keep swap files in Neovim's data directory (C:\Users\Veerapong\AppData\Local\nvim-data\swap)
+local swap_dir = vim.fn.stdpath("data") .. "/swap"
+if vim.fn.isdirectory(swap_dir) == 0 then
+	vim.fn.mkdir(swap_dir, "p")
+end
+vim.opt.directory = swap_dir .. "//"
 vim.opt.swapfile = true
 
 -- Additional swap file management settings to reduce conflicts
@@ -44,3 +66,6 @@ vim.opt.virtualedit = "onemore"
 
 -- Enable ShaDa file to persist last cursor position marks
 vim.opt.shada = "!,'100,<50,s10,h"
+
+-- Use Snacks.statuscolumn for the status column
+vim.opt.statuscolumn = "%!v:lua.Snacks.statuscolumn.get()"

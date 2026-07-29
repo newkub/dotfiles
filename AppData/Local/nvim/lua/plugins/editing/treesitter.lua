@@ -23,6 +23,7 @@ return {
 			"regex",
 			"vue",
 			"python",
+			"latex",
 		}
 
 		require("nvim-treesitter").setup()

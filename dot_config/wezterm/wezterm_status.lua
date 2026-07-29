@@ -108,7 +108,8 @@ local function get_ram_usage()
     if total_mb and free_mb then
       local total = tonumber(total_mb) / 1024
       local used = total - (tonumber(free_mb) / 1024)
-      return format_metric("RAM", used, total, "GB")
+      local percent = (used / total) * 100
+      return format_percent("RAM", percent)
     end
   end
   return nil
@@ -131,7 +132,8 @@ local function get_all_disk_usage()
     if drive and total_mb and used_mb then
       local total = tonumber(total_mb) / 1024
       local used = tonumber(used_mb) / 1024
-      local seg = format_disk(drive, used, total, "GB")
+      local percent = (used / total) * 100
+      local seg = format_percent(drive .. ":", percent)
       if seg then
         table.insert(segments, seg)
       end

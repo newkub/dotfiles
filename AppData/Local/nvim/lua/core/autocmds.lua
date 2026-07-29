@@ -141,83 +141,19 @@ autocmd("InsertEnter", {
 	end,
 })
 
--- Auto file picker
-augroup("AutoFilePicker", { clear = true })
-
-autocmd("VimEnter", {
-	group = "AutoFilePicker",
-	pattern = "*",
-	once = true,
-	callback = function()
-		if vim.fn.argc() ~= 0 then
-			return
-		end
-		return
-	end,
-})
-
-autocmd("User", {
-	group = "AutoFilePicker",
-	pattern = "VeryLazy",
-	once = true,
-	callback = function()
-		if vim.fn.argc() ~= 0 then
-			return
-		end
-
-		local tries = 0
-		local function open_file_picker()
-			tries = tries + 1
-			pcall(function()
-				local ok_lazy, lazy = pcall(require, "lazy")
-				if ok_lazy and lazy and type(lazy.load) == "function" then
-					lazy.load({ plugins = { "snacks.nvim" } })
-				end
-			end)
-
-			local ok_snacks, snacks = pcall(require, "snacks")
-			if ok_snacks and snacks and snacks.picker and type(snacks.picker.files) == "function" then
-				pcall(function()
-					snacks.picker.files()
-				end)
-				return
-			end
-			if tries < 12 then
-				vim.defer_fn(open_file_picker, 80)
-			end
-		end
-
-		vim.defer_fn(open_file_picker, 120)
-	end,
-})
-
--- Auto open explorer sidebar on the left when entering a real file
+-- Auto open explorer sidebar once when starting Neovim with a real file
 augroup("AutoExplorer", { clear = true })
-autocmd("BufEnter", {
+autocmd("VimEnter", {
 	group = "AutoExplorer",
 	pattern = "*",
-	callback = function(args)
-		if vim.bo[args.buf].buftype ~= "" then
-			return
-		end
-		local path = vim.api.nvim_buf_get_name(args.buf)
-		if path == "" then
-			return
-		end
-		if path:match("^%w+://") then
+	once = true,
+	callback = function()
+		local buf = vim.api.nvim_get_current_buf()
+		if not is_normal_buffer(buf) then
 			return
 		end
 		pcall(function()
-			local snacks = require("snacks")
-			if not (snacks.explorer and snacks.picker and type(snacks.explorer.reveal) == "function") then
-				return
-			end
-			-- Open explorer on the left without stealing focus, then reveal the current file
-			local pickers = snacks.picker.get({ source = "explorer" })
-			if not pickers or #pickers == 0 then
-				snacks.picker.explorer({ focus = false })
-			end
-			snacks.explorer.reveal({ file = path })
+			require("snacks").explorer({ focus = false })
 		end)
 	end,
 })

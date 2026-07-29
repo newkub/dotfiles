@@ -13,6 +13,9 @@ return {
   },
 
   performance = {
+    -- Disable Lua bytecode cache to avoid Windows long-path cache corruption
+    -- See: https://github.com/neovim/neovim/issues/25008
+    cache = { enabled = false },
     rtp = {
       disabled_plugins = {
         "2html_plugin",
