@@ -229,6 +229,14 @@ return {
           vim.notify("Error opening command palette: " .. tostring(err), vim.log.levels.ERROR)
         end
       end, desc = "Command Palette" },
+    { "<C-r>", function()
+        local status, err = pcall(function()
+          require("snacks").picker.recent()
+        end)
+        if not status then
+          vim.notify("Error opening recent files picker: " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end, desc = "Recent Files" },
     { "<C-S-f>", function() 
         local status, err = pcall(function()
           require("snacks").picker.files()

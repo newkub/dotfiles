@@ -191,7 +191,7 @@ autocmd("User", {
 	end,
 })
 
--- Auto reveal in file explorer sidebar when explorer is already open
+-- Auto open explorer sidebar on the left when entering a real file
 augroup("AutoExplorer", { clear = true })
 autocmd("BufEnter", {
 	group = "AutoExplorer",
@@ -209,13 +209,15 @@ autocmd("BufEnter", {
 		end
 		pcall(function()
 			local snacks = require("snacks")
-			if snacks.explorer and type(snacks.explorer.reveal) == "function" then
-				-- Only reveal if an explorer is already open to avoid stealing focus
-				local pickers = snacks.picker.get({ source = "explorer" })
-				if pickers and #pickers > 0 then
-					snacks.explorer.reveal({ file = path })
-				end
+			if not (snacks.explorer and snacks.picker and type(snacks.explorer.reveal) == "function") then
+				return
 			end
+			-- Open explorer on the left without stealing focus, then reveal the current file
+			local pickers = snacks.picker.get({ source = "explorer" })
+			if not pickers or #pickers == 0 then
+				snacks.picker.explorer({ focus = false })
+			end
+			snacks.explorer.reveal({ file = path })
 		end)
 	end,
 })

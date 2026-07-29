@@ -37,6 +37,13 @@ return {
 			"Command Palette",
 		},
 
+		["<C-r>"] = {
+			function()
+				require("snacks").picker.recent()
+			end,
+			"Recent Files",
+		},
+
 		["<leader>e"] = {
 			function()
 				require("snacks").explorer()
