@@ -1,32 +1,18 @@
 {
   "mcpServers": {
-    "better-fullstack": {
-      "args": [
-        "-y",
-        "create-better-fullstack",
-        "mcp"
-      ],
-      "command": "bunx",
-      "disabled": true
-    },
     "chrome-devtools": {
       "args": [
         "chrome-devtools-mcp@latest"
       ],
       "command": "bunx",
-      "disabled": true
+      "disabled": false
     },
-    /*
-    "clickup": {
-      "disabled": true,
-      "serverUrl": "https://mcp.clickup.com/mcp"
-    },*/
     "crw": {
       "args": [
         "crw-mcp"
       ],
       "command": "bunx",
-      "disabled": true,
+      "disabled": false,
       "env": {
         "CRW_BROWSER_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
       }
@@ -51,21 +37,25 @@
       "registry": "io.windsurf/github-mcp-server",
       "url": "https://api.githubcopilot.com/mcp"
     },
+    "lightpanda": {
+      "args": [
+        "mcp"
+      ],
+      "command": "/path/to/lightpanda"
+    },
     "linear": {
       "args": [
         "-y",
         "mcp-remote",
         "https://mcp.linear.app/mcp"
       ],
-      "command": "bunx",
-      "disabled": true
+      "command": "bunx"
     },
     "mise": {
       "args": [
         "-y"
       ],
       "command": "mise",
-      "disabled": true,
       "env": {
         "MISE_EXPERIMENTAL": "1"
       }
@@ -93,8 +83,24 @@
       "disabled": true
     },
     "raindrop": {
-      "disabled": true,
-      "serverUrl": "https://api.raindrop.io/rest/v2/ai/mcp"
+      "command": "bunx",
+      "args": [
+        "@adeze/raindrop-mcp@latest"
+      ],
+      "env": {
+        "RAINDROP_ACCESS_TOKEN": "${RAINDROP_ACCESS_TOKEN}"
+      }
+    },
+    "rust-filesystem": {
+      "args": [
+        "D:/"
+      ],
+      "command": "rust-mcp-filesystem"
+    },
+    "ast-grep": {
+      "command": "ast-grep-mcp-server",
+      "args": [],
+      "env": {}
     },
     "sequential-thinking": {
       "args": [
@@ -104,9 +110,11 @@
       "command": "bunx",
       "disabled": true
     },
-    "stripe": {
-      "disabled": true,
-      "url": "https://mcp.stripe.com/mcp"
+    "context7": {
+      "serverUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
     },
     "vueuse": {
       "args": [
@@ -119,7 +127,7 @@
         "mcp-server-wezterm-rs"
       ],
       "command": "uvx",
-      "disabled": true
+      "disabled": false
     }
   }
 }

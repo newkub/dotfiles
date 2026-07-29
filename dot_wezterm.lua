@@ -1,6 +1,12 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+wezterm.add_to_config_reload_watch_list(wezterm.config_dir .. "/wezterm_status.lua")
+local status_bar = require("wezterm_status")
+local resurrect = wezterm.plugin.require("https://github.com/YedPool/resurrect.wezterm")
+
+status_bar.apply_to_config(config)
+
 -- =====================================
 -- Shell
 -- =====================================
@@ -95,7 +101,8 @@ config.enable_scroll_bar = false
 -- =====================================
 
 config.use_fancy_tab_bar = true
-config.hide_tab_bar_if_only_one_tab = true
+config.tab_bar_at_bottom = false
+config.hide_tab_bar_if_only_one_tab = false
 config.tab_max_width = 15
 
 -- =====================================
@@ -275,138 +282,23 @@ for i = 1, 9 do
   })
 end
 
+
+
 -- =====================================
 -- Status Bar
 -- =====================================
 
-config.status_update_interval = 5000
-
-local function append_all(dst, src)
-  for _, v in ipairs(src) do
-    table.insert(dst, v)
-  end
-end
-
-local function format_metric(label, used, total, unit)
-  if not used or not total or total == 0 then
-    return nil
-  end
-  local percent = (used / total) * 100
-  local color = "#a6e3a1"
-  if percent >= 90 then
-    color = "#f38ba8"
-  elseif percent >= 70 then
-    color = "#f9e2af"
-  end
-  return {
-    { Foreground = { Color = "#cdd6f4" } },
-    { Text = label .. " " },
-    { Foreground = { Color = color } },
-    { Attribute = { Intensity = "Bold" } },
-    { Text = string.format("%.1f", used) },
-    { Attribute = { Intensity = "Normal" } },
-    { Foreground = { Color = "#6c7086" } },
-    { Text = "/" .. string.format("%.1f", total) .. unit },
-    { Foreground = { Color = "#a6adc8" } },
-    { Text = string.format(" %.0f%%", percent) },
-  }
-end
-
-local function get_ram_usage()
-  local success, stdout, _ = wezterm.run_child_process({
-    "powershell.exe",
-    "-NoProfile",
-    "-Command",
-    [[Get-CimInstance Win32_OperatingSystem | ForEach-Object { "{0}:{1}" -f [math]::Round($_.TotalVisibleMemorySize/1024), [math]::Round($_.FreePhysicalMemory/1024) }]],
-  })
-  if success and stdout then
-    local total_mb, free_mb = stdout:match("(%d+):(%d+)")
-    if total_mb and free_mb then
-      local total = tonumber(total_mb) / 1024
-      local used = total - (tonumber(free_mb) / 1024)
-      return format_metric("RAM", used, total, "GB")
-    end
-  end
-  return nil
-end
-
-local function get_disk_usage(drive)
-  drive = drive or "C:"
-  local filter = [[Get-CimInstance Win32_LogicalDisk -Filter "DeviceID=']] .. drive .. [['" | ForEach-Object { "{0}:{1}" -f [math]::Round($_.Size/1MB), [math]::Round(($_.Size-$_.FreeSpace)/1MB) }]]
-  local success, stdout, _ = wezterm.run_child_process({
-    "powershell.exe",
-    "-NoProfile",
-    "-Command",
-    filter,
-  })
-  if success and stdout then
-    local total_mb, used_mb = stdout:match("(%d+):(%d+)")
-    if total_mb and used_mb then
-      local total = tonumber(total_mb) / 1024
-      local used = tonumber(used_mb) / 1024
-      return format_metric(drive, used, total, "GB")
-    end
-  end
-  return nil
-end
-
 wezterm.on("update-status", function(window, pane)
-  local cwd = pane:get_current_working_dir()
-  local drive = "C:"
-  if cwd and cwd.file_path then
-    local letter = cwd.file_path:match("^([A-Za-z]):")
-    if letter then
-      drive = letter:upper() .. ":"
-    end
-  end
-
-  local items = {
-    { Background = { Color = "#313244" } },
-    { Text = " " },
-  }
-  local first = true
-
-  local ram = get_ram_usage()
-  if ram then
-    append_all(items, ram)
-    first = false
-  end
-
-  local disk = get_disk_usage(drive)
-  if disk then
-    if not first then
-      table.insert(items, { Foreground = { Color = "#6c7086" } })
-      table.insert(items, { Text = " | " })
-    end
-    append_all(items, disk)
-    first = false
-  end
-
-  if not first then
-    table.insert(items, { Text = " " })
-    table.insert(items, "ResetAttributes")
-    window:set_right_status(wezterm.format(items))
-  else
-    window:set_right_status("")
-  end
+  window:set_right_status(status_bar.build(pane))
 end)
 
--- =====================================
--- Startup
--- =====================================
-
-wezterm.on("gui-startup", function(cmd)
-  local tab, _, window = wezterm.mux.spawn_window(cmd or {})
-
-  for _ = 1, 4 do
-    window:spawn_tab({
-      cwd = "D:\\",
-    })
-  end
-
-  tab:activate()
-
-  window:gui_window():maximize()
-end)
+-- Auto session restore
+resurrect.setup(config, {
+  status_bar = false,
+  keybindings = false,
+  claude_hooks = false,
+  periodic_interval = 60,
+  auto_restore_prompt = true,
+})
 
 return config

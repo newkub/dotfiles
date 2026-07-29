@@ -25,8 +25,8 @@ vim.opt.tabstop = 2 -- Number of spaces that a <Tab> counts for
 vim.opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent
 vim.opt.softtabstop = 2 -- Number of spaces that a <Tab> counts for while editing
 
--- Enhanced swap file settings to prevent E325 errors
-vim.opt.directory = vim.fn.stdpath("data") .. "/swap//"
+-- Move swap files to D: drive to avoid C: running out of space
+vim.opt.directory = "D:\\.nvim-swap//"
 vim.opt.swapfile = true
 
 -- Additional swap file management settings to reduce conflicts

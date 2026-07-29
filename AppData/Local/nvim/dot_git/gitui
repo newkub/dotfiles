@@ -1,5 +1,5 @@
 (
-    tab: 0,
+    tab: 1,
     diff: (
         ignore_whitespace: false,
         context: 3,

@@ -5,7 +5,7 @@ auto_execution_mode: 3
 related:
   - /follow-content-quality
   - /write-workflows
-  - /follow-consistency
+
 ---
 
 ## Goal

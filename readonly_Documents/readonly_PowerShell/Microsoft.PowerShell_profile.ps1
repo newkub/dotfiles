@@ -6,6 +6,16 @@
 # --- mise ---
 # Use shims instead of adding every tool's bin to PATH to avoid cmd.exe PATH overflow
 mise activate pwsh --shims | Out-String | Invoke-Expression
+# --- WezTerm CWD tracking (OSC 7) ---
+# Emits the current working directory so WezTerm can track pane CWD.
+function Invoke-Starship-PreCommand {
+    $current_location = $ExecutionContext.SessionState.Path.CurrentFileSystemLocation
+    if ($current_location -and $current_location.Provider.Name -eq "FileSystem") {
+        $ansi_escape = [char]27
+        $provider_path = $current_location.ProviderPath -replace "\\", "/"
+        $host.ui.Write("${ansi_escape}]7;file://${env:COMPUTERNAME}/${provider_path}${ansi_escape}\")
+    }
+}
 
 # --- Starship Prompt ---
 Invoke-Expression (&starship init powershell)
@@ -39,6 +49,11 @@ if (Test-Path "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1") 
 # >> ENVIRONMENT VARIABLES
 # Custom environment variable settings.
 # ==============================================================================
+
+# Use UTF-8 in the console so Thai and other non-ASCII text renders correctly
+[Console]::InputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+chcp 65001 >$null
 
 [Environment]::SetEnvironmentVariable("CLAUDE_CODE_GIT_BASH_PATH", "C:\Users\Veerapong\scoop\shims\git.exe", "User")
 
@@ -87,6 +102,12 @@ Set-Alias -Name y -Value yazi
 Set-Alias -Name n -Value nvim
 Set-Alias -Name v -Value bat
 Set-Alias -Name ot -Value hx
+
+# --- GitHub Issue Dashboard ---
+function github-issue { gh dash @args }
+
+# --- Superfile (TUI file manager) ---
+function files { spf @args }
 
 # --- AI Alias (claude wrapper) ---
 function ai { gh copilot $args }
@@ -403,12 +424,78 @@ function cpo {
 
 # ==============================================================================
 # >> DEVIN WRAPPER
-# Automatically adds --permission-mode dangerous
+# Launches devin inside an rmux session.
+#   - `devin` (no args): opens an interactive session picker
+#     (sessions on the left, info preview on the right). Arrow keys navigate;
+#     Left/Right scroll the preview; Enter resumes the selected session.
+#   - `devin <prompt>`: starts a new devin session in rmux.
 # ==============================================================================
 
+$script:DevinPreviewPath = Join-Path $env:USERPROFILE "Documents\PowerShell\devin-preview.ps1"
+
 function devin {
-    param([Parameter(ValueFromRemainingArguments=$true)]$Arguments)
-    $cmd = (Get-Command devin -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
-    if ($cmd) { & $cmd --permission-mode dangerous @Arguments }
-    else { Write-Host "devin not found" -ForegroundColor Red }
+    param(
+        [Parameter(ValueFromRemainingArguments=$true)]$Arguments
+    )
+
+    $devinCmd = (Get-Command devin -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
+    if (-not $devinCmd) {
+        Write-Host "devin not found" -ForegroundColor Red
+        return
+    }
+
+    if (-not (Get-Command rmux -CommandType Application -ErrorAction SilentlyContinue)) {
+        Write-Host "rmux not found. Install from https://rmux.io" -ForegroundColor Red
+        return
+    }
+
+    $sessionName = "devin"
+
+    # `devin ls` means open the session picker, same as bare `devin`
+    if ($Arguments -is [array] -and $Arguments.Count -eq 1 -and $Arguments[0] -eq 'ls') {
+        $Arguments = $null
+    }
+
+    # Avoid nesting if already inside rmux
+    if ($env:RMUX -or $env:TMUX) {
+        if ($Arguments) {
+            & $devinCmd --permission-mode dangerous @Arguments
+        } else {
+            & $script:DevinPreviewPath
+        }
+        return
+    }
+
+    if ($Arguments) {
+        # Start a new devin prompt in a single-pane chat layout
+        rmux has-session -t $sessionName 2>$null
+        if ($LASTEXITCODE -eq 0) { rmux kill-session -t $sessionName }
+        rmux new-session -d -s $sessionName -n "devin" -e DEVIN_SESSION_NAME=$sessionName pwsh -NoProfile -NoExit -Command 'chcp 65001 >$null; [Console]::InputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $OutputEncoding = [System.Text.Encoding]::UTF8'
+        if ($Arguments -is [array] -and $Arguments.Count -gt 0 -and $Arguments[0] -like '--*') {
+            $devinArgsString = ($Arguments | ForEach-Object {
+                $arg = $_ -replace "'", "''"
+                if ($arg -match '\s') { "'$arg'" } else { $arg }
+            }) -join ' '
+            rmux send-keys -t "$($sessionName):1.1" "devin $devinArgsString" Enter
+        } else {
+            $promptString = "'" + (($Arguments -join ' ') -replace "'", "''") + "'"
+            rmux send-keys -t "$($sessionName):1.1" "devin -- $promptString" Enter
+        }
+        rmux attach-session -t $sessionName
+        return
+    }
+
+    rmux has-session -t $sessionName 2>$null
+    $sessionExists = $LASTEXITCODE -eq 0
+    if ($sessionExists) {
+        rmux kill-session -t $sessionName
+    }
+
+    # 2-pane layout:
+    #   left  (1.1) = fzf session picker with an info preview on the bottom
+    #   right (1.2) = devin chat pane
+    rmux new-session -d -s $sessionName -n "devin" -e DEVIN_SESSION_NAME=$sessionName pwsh -NoProfile -NoExit -File $script:DevinPreviewPath
+    rmux split-window -h -p 60 -t "$($sessionName):1.1" pwsh -NoProfile -NoExit -Command 'chcp 65001 >$null; [Console]::InputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $OutputEncoding = [System.Text.Encoding]::UTF8'
+    rmux select-pane -t "$($sessionName):1.1"
+    rmux attach-session -t $sessionName
 }

@@ -101,7 +101,7 @@ related:
 2. ระบุ tech stack และ versions
 3. วิเคราะหา dependency graph
 4. ตรวจสอบ outdated dependencies
-5. วิเคราะหา security vulnerabilities ด้วย `/check-vulnerability`
+5. วิเคราะหา security vulnerabilities ด้วย `/run-audit`
 
 ### 8. Performance And Security
 
@@ -152,7 +152,7 @@ related:
 - Architecture: `/use-ast-grep`, `Grep`
 - Features: `/scan-codebase`, `/use-ast-grep`
 - Code Quality: `/use-ast-grep`, `Grep`, `/use-scripts`, check workflows
-- Dependencies: manifest files, `/check-vulnerability`
+- Dependencies: manifest files, `/run-audit`
 - Research: `/deep-research`, DeepWiki, Context7, WebSearch
 
 ### 3. Parallel Processing

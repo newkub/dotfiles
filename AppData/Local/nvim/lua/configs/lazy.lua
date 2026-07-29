@@ -1,6 +1,7 @@
 return {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
+  rocks = { hererocks = false, enabled = false },
 
   ui = {
     icons = {

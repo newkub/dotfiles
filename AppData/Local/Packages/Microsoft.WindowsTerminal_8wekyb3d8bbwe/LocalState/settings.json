@@ -61,7 +61,7 @@
     "compatibility.allowHeadless": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{a3146190-2d94-41ba-a279-904c44dd83f7}",
+    "defaultProfile": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
     "disableAnimations": false,
     "firstWindowPreference": "defaultProfile",
     "initialPosition": ",",
@@ -168,10 +168,7 @@
     {
         "defaults": 
         {
-            "colorScheme": 
-            {
-                "light": "Campbell"
-            },
+            "colorScheme": "Campbell",
             "font": 
             {
                 "face": "MesloLGL Nerd Font Mono",
@@ -219,8 +216,7 @@
                 {
                     "dark": "Vintage"
                 },
-                "commandline": "C:\\Users\\Veerapong\\scoop\\shims\\pwsh.exe",
-                "connectionType": "{d9fcfdfa-a479-412c-83b7-c5640e61cd62}",
+                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
                 "guid": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
                 "hidden": false,
                 "name": "Powershell"
