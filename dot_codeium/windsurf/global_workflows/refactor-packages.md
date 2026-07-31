@@ -1,324 +1,175 @@
 ---
 title: Refactor Packages
-description: Refactor packages ให้มี single responsibility และแนะนำ packages ที่เหมาะสม
+description: Refactor packages ตาม SRP และแนะนำ packages จาก workspace
 auto_execution_mode: 3
 related:
-  - /refactor-modules
+  - /analyze-project
+  - /dont-over-engineer
+  - /plan
+  - /use-or-refactor-to-modules
+  - /restructure
+  - /relocation
+  - /rename
+  - /all-workspaces
+  - /run-check
+  - /run-test
+  - /check-circular-dependencies
+  - /check-duplication
   - /update-reference
-  - /follow-code-quality
+  - /edit-relative
 ---
 
 ## Goal
 
-Refactor packages ให้มี single responsibility ตาม SRP และแนะนำ packages ที่เหมาะสมกับโปรเจกต์
+Refactor packages ให้มี single responsibility ตาม SRP และแนะนำ packages จาก workspace ที่เหมาะสมกับโปรเจกต์
 
 ## Scope
 
-ครอบคลุมการตัดสินใจว่าควร refactor packages หรือไม่, ประเมิน cohesion, change frequency, deployment boundaries, และแนะนำ packages จาก workspace ที่ควรนำมาใช้
+ใช้กับ monorepo หรือ project ที่มี packages หลายตัว โดยประเมินว่าควร split/merge/relocate packages หรือไม่ วิเคราะห์ cohesion, change frequency, deployment boundaries และแนะนำ packages ที่ควรนำมาใช้
 
 ## Execute
 
 ### 1. Analyze Current Project
 
-วิเคราะห์โปรเจกต์ปัจจุบัน
+วิเคราะห์โปรเจกต์ก่อนตัดสินใจ
 
-1. อ่าน `package.json`, `Cargo.toml`, หรือไฟล์จัดการ dependencies ที่เกี่ยวข้อง
-2. วิเคราะห์ dependencies ที่มีอยู่ในโปรเจกต์ปัจจุบัน
-3. ระบุประเภทโปรเจกต์ (web, backend, desktop, mobile, library, etc.)
-4. ระบุภาษาและ framework ที่ใช้
+> Goal: รู้ว่า project เป็นอะไร ใช้อะไร และมี packages อะไร
 
-### 2. Evaluate Package Complexity
+1. อ่าน `package.json`, `Cargo.toml`, `bun.lock`, หรือ manifest ที่เกี่ยวข้อง
+2. ระบุภาษา, framework, project type, และ workspace layout
+3. วิเคราะห์ dependencies ทั้งหมด (ภายใน/ภายนอก) และจุดประสงค์ของแต่ละ package
+4. ทำ `/analyze-project` เพื่อดูภาพรวม
 
-ประเมินว่า package ซับซ้อนเกินไปหรือไม่
+### 2. Evaluate Package Cohesion
 
-1. ทำ `/analyze-project` เพื่อดูภาพรวมโปรเจกต์
-2. ตรวจสอบ cognitive complexity และ navigability ของ package
-3. ระบุ reasons to change ที่หลากหลาย
-4. ตรวจสอบ coupling ระหว่าง concerns ภายใน package
-5. ประเมิน test setup complexity
-6. ตรวจสอบ dependencies ที่ไม่จำเป็น
+ประเมินว่า package ต่างๆ มี SRP หรือไม่
 
-### 3. Analyze Change Patterns
+> Goal: หา packages ที่ violate SRP หรือ over-coupled
 
-วิเคราะห์ patterns การเปลี่ยนแปลงของ package
+1. สร้างตาราง package: ชื่อ, ไฟล์, top-level symbols, imports/exports, จำนวน consumer
+2. ตรวจสอบ cognitive complexity, navigability, และ test setup ความยาก
+3. ระบุ reasons to change ของแต่ละ package (ควรมีหนึ่งเหตุผล)
+4. ตรวจ coupling ระหว่าง concerns ภายใน package และ dependencies ที่ไม่จำเป็น
+5. วิเคราะห์ change patterns: แต่ละส่วนเปลี่ยนพร้อมกันหรือไม่, maintain โดยทีมเดียวกัน, release lifecycle เดียวกัน
 
-- ส่วนต่างๆ ของ package เปลี่ยนพร้อมกันหรือไม่
-- ถูก maintain โดยทีมเดียวกันหรือไม่
-- มี release lifecycle เดียวกันหรือไม่
-- concerns เหล่านี้ evolve แยกกันหรือไม่
-- ถูกใช้โดย packages อื่นด้วย patterns เดียวกันหรือไม่
-
-### 4. Assess Refactor Necessity
+### 3. Assess Refactor Necessity
 
 ตัดสินใจว่าควร refactor หรือไม่
 
-- Package มีหลาย reasons to change
-- Package ยากต่อการ test เพราะ concerns ปนกัน
-- Package มี coupling สูงระหว่าง concerns
-- Package ไม่ appropriately coupled
-- Package ยากต่อการ understand และ maintain
-- Package มี dependencies ที่ไม่จำเป็น
-- Package ไม่ reusable ตามที่ควรจะเป็น
+> Goal: ไม่ refactor โดยใช้เหตุผลชัดเจน
 
-### 5. Consider Deployment Boundaries
+1. ทำ `/dont-over-engineer` เพื่อกำหนดขอบเขต
+2. เครื่องหมาย refactor: หลาย reasons to change, test ยาก, coupling สูง, ไม่ reusable, dependencies เกิน
+3. เครื่องหมายไม่ refactor: single responsibility ชัด, ยาวแต่ cohesive, เปลี่ยนด้วยกันเสมอ, refactor ทำลาย stability
+4. พิจารณา deployment/versioning boundary: concerns ที่ deploy ร่วมกันควรอยู่ด้วยกันถ้าแยกไม่มีประโยชน์
 
-พิจารณา deployment และ versioning boundaries
+### 4. Plan Refactor
 
-- พิจารณา deployment boundary และ versioning strategy
-- อย่าแยก concerns ที่ deploy ร่วมกันเสมอโดยไม่จำเป็น
-- พิจารณาว่า concerns มี deployment cohesion หรือไม่
-- พิจารณา semantic versioning impact
+วางแผนการ split/merge/relocate packages
 
-### 6. Plan Refactor Strategy
+> Goal: แผน minimal ที่กระทบน้อยที่สุด
 
-วางแผนการ refactor ถ้าจำเป็น
+1. ทำ `/plan` เพื่อสร้างแผน split, extract, merge, หรือ relocate
+2. ใช้ `/use-or-refactor-to-modules` สำหรับ packages ที่ยังแยกย่อยได้ในระดับ module
+3. ระบุ consumers ทั้งหมดและ public API ที่จะกระทบ
+4. กำหนดลำดับงาน: เริ่มจาก leaf packages ที่ไม่มี dependents
 
-1. ทำ `/refactor-modules` เพื่อแยก modules ภายใน package
-2. จัดลำดับ dependencies ระหว่าง packages ให้ชัดเจน
-3. สร้าง abstractions เมื่อจำเป็นและ beneficial
-4. วางแผน versioning strategy สำหรับ packages ใหม่
+### 5. Refactor Packages
 
-### 7. Scan Workspace Packages
+ดำเนินการ restructure packages ตามแผน
 
-สำรวจ packages ใน workspace
+> Goal: ทุก package มี single responsibility ชัดเจน
 
-1. สำรวจโครงสร้าง workspace
-2. อ่าน `package.json` หรือ `Cargo.toml` ของแต่ละ package
-3. จัดกลุ่ม packages ตามประเภท:
-   - UI Components
-   - Utilities
-   - Frameworks
-   - Libraries
-   - Tools
-   - Integrations
+1. split/merge packages ตาม domain concern
+2. ใช้ `/restructure` หรือ `/relocation` เมื่อต้องย้ายไฟล์ระหว่าง packages
+3. ใช้ `/rename` เมื่อต้องเปลี่ยนชื่อ package หรือ identifier
+4. ลบ dependencies ที่ไม่จำเป็น
+5. สร้าง abstractions เมื่อจำเป็นและลด coupling
 
-### 8. Analyze Package Relevance
+### 6. Scan and Recommend Workspace Packages
 
-สำหรับแต่ละ package ใน workspace:
+สำรวจ packages ใน workspace และแนะนำที่เหมาะสม
 
-1. ตรวจสอบความเข้ากันได้กับโปรเจกต์:
-   - ภาษาที่ใช้
-   - Platform ที่รองรับ
-   - Dependencies ที่ต้องการ
-2. ประเมินประโยชน์:
-   - ลด code duplication
-   - เพิ่มประสิทธิภาพ
-   - ปรับปรุง DX
-3. ตรวจสอบสถานะ:
-   - Version stability
-   - Maintenance status
-   - Documentation quality
+> Goal: แนะนำ packages ที่แก้ปัญหา, ลด duplication, หรือปรับปรุง DX
 
-### 9. Generate Recommendations
+1. parallel: ทำ `/all-workspaces` สำรวจ workspace ทั้งหมด ∥ อ่าน `package.json` หรือ `Cargo.toml` ของแต่ละ package
+2. จัดกลุ่ม packages: UI Components, Utilities, Frameworks, Libraries, Tools, Integrations
+3. สำหรับแต่ละ package ประเมิน: ภาษา/เข้ากันได้, stability, maintenance, documentation, adoption
+4. จัดลำดับความสำคัญ: Critical (แก้ปัญหา/ความปลอดภัย), High (ลด duplication/ประสิทธิภาพ), Medium (DX), Low (nice-to-have)
+5. ระบุ installation, usage, trade-offs, breaking changes
 
-สร้างรายงานแนะนำ packages:
+### 7. Verify Refactor Impact
 
-1. High Priority - Packages ที่ควรใช้ทันที:
-   - แก้ปัญหาที่มีอยู่
-   - ลด code duplication อย่างชัดเจน
-   - เพิ่มประสิทธิภาพอย่างมีนัยสำคัญ
+ตรวจสอบว่า packages ยังทำงานได้และดีขึ้น
 
-2. Medium Priority - Packages ที่ควรพิจารณา:
-   - ปรับปรุง DX
-   - เพิ่ม features ที่มีประโยชน์
-   - มี trade-offs ที่ต้องพิจารณา
+> Goal: ไม่มี regression, circular dependency, หรือ fragmentation
 
-3. Low Priority - Packages ที่อาจไม่จำเป็น:
-   - Over-engineering
-   - ไม่เข้ากับ requirements
-   - มี dependencies มากเกินไป
+1. parallel: ทำ `/run-check` สำหรับ lint/typecheck ∥ ทำ `/run-test` สำหรับ regression
+2. ทำ `/check-circular-dependencies` และ `/check-duplication`
+3. ประเมินว่า package ดีขึ้นหรือไม่: cohesion, coupling, consumer ใช้งานได้
+4. ถ้าไม่ผ่าน → กลับไปแก้ที่ Step 4-5 (สูงสุด 3 ครั้ง → stop/report)
 
-### 10. Verify Refactor Impact
+### 8. Update References and Report
 
-ตรวจสอบผลกระทบของ refactor
+อัปเดท references และสรุปผล
 
-1. ทำ `/run-test` เพื่อยืนยัน functionality
-2. ทำ `/run-lint` เพื่อตรวจสอบ code quality
-3. ประเมินว่า package ดีขึ้นหรือไม่
-4. ตรวจสอบว่าไม่เกิด circular dependencies ระหว่าง packages
-5. ประเมินว่าไม่เกิด fragmentation
-6. ตรวจสอบว่า consumers ยังใช้งานได้
+> Goal: ไม่มี broken references และมีรายงานชัดเจน
 
-### 11. Update References
-
-อัปเดท references ทั้งหมดที่เกี่ยวข้อง
-
-1. ทำตาม `/update-reference`
-2. อัปเดท `package.json` dependencies
-3. อัปเดท import paths ในทุก packages
+1. ทำ `/update-reference` เพื่ออัปเดท `package.json`, imports, path aliases, tsconfig, AGENTS.md, .devin/rules
+2. ทำ `/edit-relative` สำหรับ relative paths ที่เปลี่ยน
+3. สร้างรายงาน: ตาราง Before/After (package, reason to change, dependencies, consumer count, SRP status), actions ที่ทำ, recommendations, TODO ถ้ามี
 
 ## Rules
 
-### 1. Cohesion First
+### 1. Cohesion Over Separation
 
-Prefer high cohesion over artificial separation
-
-- ไม่แยก packages เพื่อ conceptual purity เท่านั้น
-- รวม code ที่ changes together, deploys together, tests together
-- รวม code ที่ understood better together
+- ไม่ split packages เพื่อ conceptual purity อย่างเดียว
+- รวม code ที่ change, deploy, test, และเข้าใจด้วยกัน
 - หลีกเลี่ยง fragmentation ที่เพิ่ม cognitive load
-- พิจารณา dependency graph complexity
 
-### 2. When To Refactor
+### 2. Refactor Signals
 
 Refactor เมื่อ:
 
-- Package มีหลาย reasons to change
-- Package ยากต่อการ test เพราะ concerns ปนกัน
-- Package มี coupling สูงระหว่าง concerns
-- Package ไม่ appropriately coupled
-- Package ยากต่อการ understand
-- Package มี dependencies ที่ไม่จำเป็น
-- Package ไม่ reusable ตามที่ควรจะเป็น
+- หลาย reasons to change
+- test ยากเพราะ concerns ปน
+- coupling สูง
+- ไม่ reusable
+- dependencies ไม่จำเป็น
 
-### 3. When Not To Refactor
+### 3. No-Refactor Signals
 
 ไม่ refactor เมื่อ:
 
-- Package มี single responsibility ชัดเจน
-- Package ยาวแต่ cohesive สูง
-- Package ไม่มีปัญหาในการ test
-- Package changes together, deploys together
-- Refactor จะทำลาย stability หรือเพิ่ม fragmentation
-- Refactor จะเพิ่ม dependency graph complexity มากเกินไป
+- single responsibility ชัด
+- ยาวแต่ cohesive
+- เปลี่ยนด้วยกันเสมอ
+- ทำลาย stability หรือเพิ่ม fragmentation
 
 ### 4. Appropriate Coupling
 
-Package appropriately coupled เมื่อ:
-
-- ใช้ abstractions เมื่อจำเป็นและ beneficial
+- ใช้ abstractions เมื่อจำเป็นจริง
 - ไม่ lock implementation โดยไม่จำเป็น
-- ใช้ language idioms อย่างเหมาะสม
-- สามารถ isolate ได้เมื่อจำเป็น
-- มี clear interfaces เมื่อจำเป็น
-- Dependencies ระหว่าง packages ชัดเจนและจำเป็น
+- interfaces ชัดเจน
+- dependencies ชัดเจนและจำเป็น
 
-### 5. Over-Refactoring Signs
+### 5. Avoid Over-Refactoring
 
-หลีกเลี่ยง over-refactoring เมื่อ:
+- ไม่สร้าง micro-packages
+- ไม่สร้าง abstractions ที่ไม่ใช้
+- ไม่เพิ่ม dependency graph depth โดยไม่ได้ผล
+- ไม่ส่ง dependencies จำนวนมากข้าม packages
 
-- แยก packages เล็กเกินไป (micro-packages)
-- สร้าง abstractions ที่ไม่จำเป็น
-- เพิ่ม complexity โดยไม่ได้ผล
-- แยกโดยไม่พิจารณา usage patterns
-- สร้าง dependencies ที่ซับซ้อน
-- แยกแล้วต้องส่ง dependencies เยอะ
-- เพิ่ม dependency graph depth มากเกินไป
+### 6. Verification Required
 
-### 6. Monorepo Principles
-
-หลักการสำหรับ monorepos
-
-- Single Responsibility Principle (SRP) - one reason to change
-- High Cohesion, Low Coupling
-- Separation of Concerns
-- Change Frequency Analysis
-- Deployment Boundary Awareness
-- Versioning Strategy Consistency
-- Dependency Graph Manageability
-
-### 7. Refactor Signals
-
-ใช้ signals เหล่านี้เพื่อตัดสินใจ:
-
-| Signal | Meaning | Refactor? |
-|--------|---------|-----------|
-| เปลี่ยนหลายเหตุผล | ต่ำ cohesion | ✅ |
-| Test setup ยุ่ง | concern ปน | ✅ |
-| แก้ bug แล้วกระทบหลายส่วน | coupling สูง | ✅ |
-| แยกแล้ว import วน | boundary ผิด | ❌ |
-| แยกแล้วต้องส่ง dependency เยอะ | over-splitting | ❌ |
-| คนอ่านต้องเปิด 8 files | fragmentation | ❌ |
-| ทุกอย่างเปลี่ยนพร้อมกันเสมอ | same lifecycle | ❌ |
-| Dependencies วนกัน | circular deps | ❌ |
-| Versioning ซับซ้อน | boundary ผิด | ❌ |
-
-### 8. Analysis Criteria
-
-ประเมิน packages ตามเกณฑ์:
-
-- Relevance: เข้ากับโปรเจกต์และ requirements
-- Compatibility: ใช้ภาษาและ platform เดียวกัน
-- Stability: Version stable และมีการ maintain
-- Documentation: มี docs ครบถ้วน
-- Adoption: มีการใช้งานจริงใน workspace
-- Maintenance: มีการอัพเดตสม่ำเสมอ
-
-### 9. Prioritization
-
-จัดลำดับความสำคัญ:
-
-1. Critical - แก้ปัญหาร้ายแรงหรือ security issues
-2. High - ลด duplication หรือเพิ่มประสิทธิภาพอย่างชัดเจน
-3. Medium - ปรับปรุง DX หรือเพิ่ม features
-4. Low - Nice-to-have หรือ future consideration
-
-### 10. Documentation
-
-รายงานต้องประกอบด้วย:
-
-- ชื่อ package และ version
-- คำอธิบายสั้นๆ
-- เหตุผลที่แนะนำ
-- วิธีการติดตั้ง
-- วิธีการใช้งาน
-- Trade-offs และ considerations
-- Breaking changes (ถ้ามี)
-
-### 11. Context Awareness
-
-พิจารณา context ของโปรเจกต์:
-
-- ขนาดโปรเจกต์ (small, medium, large)
-- ทีมขนาด (individual, small team, large team)
-- Timeline (MVP, production, maintenance)
-- Constraints (performance, security, compliance)
-
-### 12. Avoid Over-Engineering
-
-ไม่แนะนำ packages ที่:
-
-- ซับซ้อนเกินความจำเป็น
-- มี dependencies มากเกินไป
-- ไม่มี clear benefit
-- ไม่มีการ maintain
+- ต้องทำ `/analyze-project` ก่อนและหลัง
+- ต้องผ่าน `/run-check` และ `/run-test`
+- ต้องอัปเดท `/update-reference` หลังทุกครั้งที่ restructure
 
 ## Expected Outcome
 
-- Packages ที่มี single responsibility เมื่อจำเป็น
-- Packages ที่ appropriately coupled
-- High cohesion และ low coupling
-- ไม่ over-refactor
-- Code ที่ maintainable และ reusable
-- Dependencies ที่ชัดเจน
-- Dependency graph ที่จัดการได้
-- Versioning strategy ที่สม่ำเสมอ
-- รายงาน packages ที่ควรใช้แบ่งตาม priority
-- คำแนะนำ integration ที่ชัดเจน
-- การวิเคราะห์ trade-offs
-- ตัวอย่างการใช้งาน
-- คำแนะนำเกี่ยวกับ migration path
-
-## Common Mistakes
-
-- Refactor เมื่อไม่จำเป็น
-- Over-refactor จนเกินไป
-- ไม่พิจารณา change frequency
-- แยกโดยไม่ดู usage patterns
-- สร้าง abstractions ที่ไม่จำเป็น
-- ไม่ verify ผลกระทบ
-- แยกโดยไม่พิจารณา deployment boundaries
-- ไม่พิจารณา versioning impact
-- สร้าง circular dependencies
-
-## Anti-Patterns
-
-- ❌ Refactor ทุก package โดยไม่ประเมิน
-- ❌ แยก packages เล็กเกินไป
-- ❌ สร้าง abstractions ที่ไม่ใช้
-- ❌ Refactor โดยไม่ดู impact
-- ❌ แยก concerns ที่ operate ร่วมกัน
-- ❌ ไม่ verify ด้วย tests
-- ❌ ใช้ language idioms ผิด
-- ❌ สร้าง dependency graph ที่ซับซ้อน
-- ❌ ไม่พิจารณา versioning strategy
+- Packages มี single responsibility ชัดเจน
+- Dependencies ชัดเจน ไม่มี circular
+- ผ่าน lint, typecheck, test
+- รายงาน recommendations จัดลำดับตาม priority
+- รายงาน Before/After ของ SRP metrics และ actions ที่ทำ
