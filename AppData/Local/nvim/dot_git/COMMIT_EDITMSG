@@ -1,6 +1,16 @@
-feat: remove GitHub Copilot plugin and mappings
+refactor(mappings): split mappings.lua into SRP modules and fix loading
 
-- Remove copilot.lua plugin file
-- Remove Copilot key mappings from ai.lua
-- Keep only Windsurf (Codeium) and Avante AI plugins
-- Clean up AI configuration
+- split 390-line mappings.lua into 5 files by responsibility:
+  - helpers.lua: safe_dashboard, toggle_pwsh_terminal, toggle_devin (93 lines)
+  - editor.lua: ESC, Ctrl+C, editing keymaps (96 lines)
+  - files.lua: file explorer, picker, devin toggle (45 lines)
+  - terminal.lua: terminal toggle, BufEnter autocmd (30 lines)
+  - ai.lua: Copilot, Undotree (44 lines)
+  - mappings.lua: thin entry point (7 lines)
+- remove dead code in mappings/ subdirectory (old table-format files)
+- fix core/init.lua: change require('mappings').setup() to require('mappings')
+  for side-effect loading (new modules use require() not .setup())
+
+Generated with [Devin](https://devin.ai)
+
+Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>

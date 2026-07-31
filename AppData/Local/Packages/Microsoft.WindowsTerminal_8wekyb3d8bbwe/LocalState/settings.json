@@ -68,24 +68,28 @@
     "keybindings": 
     [
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
-        },
-        {
             "id": "User.openSettings.6CD791B",
             "keys": "ctrl+numpad_period"
         },
         {
-            "id": "User.tabSearch",
-            "keys": "ctrl+shift+b"
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+w"
         },
         {
             "id": "Terminal.CopyToClipboard",
             "keys": "ctrl+shift+c"
         },
         {
-            "id": "User.closeTab.0",
-            "keys": "ctrl+w"
+            "id": "User.tabSearch",
+            "keys": "ctrl+shift+b"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+shift+v"
         },
         {
             "id": "User.sendInput.Etx",
@@ -94,10 +98,6 @@
         {
             "id": "Terminal.PrevTab",
             "keys": "ctrl+shift+tab"
-        },
-        {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+shift+v"
         },
         {
             "id": "Terminal.OpenNewTab",
@@ -220,6 +220,12 @@
                 "guid": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
                 "hidden": false,
                 "name": "Powershell"
+            },
+            {
+                "guid": "{6cf7ac91-14b1-5265-b0e3-ca1dde7c0065}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "Microsoft.WSL"
             }
         ]
     },

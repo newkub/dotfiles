@@ -48,3 +48,9 @@ f9995b1cc662ae71d5b381927c8b36130d9337b0 b48871443be3aa9a5df92eb917d992f142ec0c2
 b48871443be3aa9a5df92eb917d992f142ec0c2a 77d62d76df4f62b55720a8098103d1c99ff087c3 newkub <newkubise@gmail.com> 1784957241 +0700	commit: chore: add and update global workflows
 77d62d76df4f62b55720a8098103d1c99ff087c3 1a21c8a56faf42463a9b84e73897bb7545dcfa88 newkub <newkubise@gmail.com> 1785182388 +0700	commit: refactor: consolidate review-* workflows and remove bold markers
 1a21c8a56faf42463a9b84e73897bb7545dcfa88 dc412ada5b495a8e26161f8f488c152137b197e2 newkub <newkubise@gmail.com> 1785285783 +0700	commit: refactor: rename, merge, delete, and create workflows for consistency
+dc412ada5b495a8e26161f8f488c152137b197e2 e707c5bcd2ddc703da2331a850ec8b7e75cb469a newkub <newkubise@gmail.com> 1785375642 +0700	commit: chore(workflows): add improve-all-devin-skill and update shell/markdown safety
+e707c5bcd2ddc703da2331a850ec8b7e75cb469a 1f0a19c3f4195f07a70c7857354a6be02658c0fe newkub <newkubise@gmail.com> 1785376117 +0700	commit: chore(workflows): merge improve-all-devin-skill into improve-all-skills, add /all-folders
+1f0a19c3f4195f07a70c7857354a6be02658c0fe 075723656862a20573c770149fc6a8a2fbdb2545 newkub <newkubise@gmail.com> 1785381490 +0700	commit: chore: update global workflow files and structure
+075723656862a20573c770149fc6a8a2fbdb2545 40ae1e9a7b5c3f7f3dd4717930e8398da7037d28 newkub <newkubise@gmail.com> 1785402538 +0700	commit: refactor: update workflows to use skills and simplify ship
+40ae1e9a7b5c3f7f3dd4717930e8398da7037d28 4247f1d9153b4650c1dd8a693371534369a39005 newkub <newkubise@gmail.com> 1785402875 +0700	commit: refactor: simplify suggest-next-action workflow to ask-me alias
+4247f1d9153b4650c1dd8a693371534369a39005 046d5812129349c1b52067df276edcf1d18a33ba newkub <newkubise@gmail.com> 1785403540 +0700	commit: chore: remove all global workflow files

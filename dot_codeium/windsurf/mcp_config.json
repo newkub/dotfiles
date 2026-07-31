@@ -1,11 +1,20 @@
 {
   "mcpServers": {
+    "ast-grep": {
+      "command": "ast-grep-mcp-server"
+    },
     "chrome-devtools": {
       "args": [
         "chrome-devtools-mcp@latest"
       ],
       "command": "bunx",
       "disabled": false
+    },
+    "context7": {
+      "headers": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      },
+      "serverUrl": "https://mcp.context7.com/mcp"
     },
     "crw": {
       "args": [
@@ -21,9 +30,36 @@
       "registry": "io.windsurf/deepwiki",
       "serverUrl": "https://mcp.deepwiki.com/mcp"
     },
-    "grep": {
+    "devin/cloudflare-docs": {
+      "registry": "devin/cloudflare-docs",
+      "url": "https://docs.mcp.cloudflare.com/mcp"
+    },
+    "devin/context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@1.0.31"
+      ],
+      "command": "npx",
       "disabled": true,
-      "url": "https://mcp.grep.app"
+      "registry": "devin/context7"
+    },
+    "devin/deepwiki": {
+      "registry": "devin/deepwiki",
+      "url": "https://mcp.deepwiki.com/mcp"
+    },
+    "devin/git": {
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/git"
+      ],
+      "command": "docker",
+      "registry": "devin/git"
+    },
+    "devin/github-mcp-server": {
+      "registry": "devin/github-mcp-server",
+      "url": "https://api.githubcopilot.com/mcp"
     },
     "io.windsurf/cloudflare-docs": {
       "registry": "io.windsurf/cloudflare-docs",
@@ -41,7 +77,8 @@
       "args": [
         "mcp"
       ],
-      "command": "/path/to/lightpanda"
+      "command": "/path/to/lightpanda",
+      "disabled": true
     },
     "linear": {
       "args": [
@@ -84,14 +121,14 @@
       "disabled": true
     },
     "raindrop": {
-      "command": "bunx",
       "args": [
         "@adeze/raindrop-mcp@latest"
       ],
+      "command": "bunx",
+      "disabled": true,
       "env": {
         "RAINDROP_ACCESS_TOKEN": "${RAINDROP_ACCESS_TOKEN}"
-      },
-      "disabled": true
+      }
     },
     "rust-filesystem": {
       "args": [
@@ -99,11 +136,6 @@
       ],
       "command": "rust-mcp-filesystem",
       "disabled": true
-    },
-    "ast-grep": {
-      "command": "ast-grep-mcp-server",
-      "args": [],
-      "env": {}
     },
     "sequential-thinking": {
       "args": [
@@ -113,11 +145,16 @@
       "command": "bunx",
       "disabled": true
     },
-    "context7": {
-      "serverUrl": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
-      }
+    "stripe": {
+      "url": "https://mcp.stripe.com"
+    },
+    "supabase": {
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:54321/mcp?read_only=true\u0026features=docs%2Cdatabase%2Cdebugging%2Cdevelopment"
+      ],
+      "command": "bunx"
     },
     "vueuse": {
       "args": [

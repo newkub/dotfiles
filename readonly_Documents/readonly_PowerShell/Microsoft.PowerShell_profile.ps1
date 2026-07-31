@@ -3,9 +3,62 @@
 # Tools and prompts that initialize when PowerShell starts.
 # ==============================================================================
 
+# --- Cached shell tool initializers ---
+# These tools emit PowerShell init scripts. Caching them avoids spawning TEST
+# the binary on every shell startup. Cache is invalidated when the tool binary changes.
+$script:ProfileCacheDir = Join-Path $env:LOCALAPPDATA "pwsh-profile-cache"
+if (-not (Test-Path $script:ProfileCacheDir)) {
+    New-Item -ItemType Directory -Path $script:ProfileCacheDir -Force | Out-Null
+}
+function Get-ProfileCachedInit {
+    param(
+        [Parameter(Mandatory)] [string] $Name,
+        [Parameter(Mandatory)] [string] $Command,
+        [string[]] $Arguments = @("init", "powershell"),
+        [int] $TtlDays = 7
+    )
+    $cacheFile = Join-Path $script:ProfileCacheDir "$Name-init.ps1"
+    $cacheTtl = New-TimeSpan -Days $TtlDays
+    # Use cache directly if it exists and is fresh; Get-Command can be slow on a large PATH.
+    if (Test-Path $cacheFile) {
+        $cacheAge = (Get-Date) - (Get-Item $cacheFile).LastWriteTime
+        if ($cacheAge -lt $cacheTtl) { return $cacheFile }
+    }
+    $tool = Get-Command $Command -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $tool) { return $null }
+    $toolPath = $tool.Source
+    if (-not (Test-Path $toolPath)) { return $null }
+    $toolTime = (Get-Item $toolPath).LastWriteTime
+    if (-not (Test-Path $cacheFile) -or (Get-Item $cacheFile).LastWriteTime -lt $toolTime) {
+        & $toolPath @Arguments | Out-File -FilePath $cacheFile -Encoding utf8 -Force
+    }
+    return $cacheFile
+}
+
+function Test-ProfileCachedCommand {
+    param(
+        [Parameter(Mandatory)] [string] $Name,
+        [int] $TtlDays = 1
+    )
+    $cacheFile = Join-Path $script:ProfileCacheDir "$Name-cmd"
+    $cacheTtl = New-TimeSpan -Days $TtlDays
+    if (Test-Path $cacheFile) {
+        $cacheAge = (Get-Date) - (Get-Item $cacheFile).LastWriteTime
+        if ($cacheAge -lt $cacheTtl) { return $true }
+    }
+    if (Get-Command $Name -CommandType Application -ErrorAction SilentlyContinue) {
+        New-Item -ItemType File -Path $cacheFile -Force | Out-Null
+        return $true
+    }
+    if (Test-Path $cacheFile) { Remove-Item $cacheFile -Force -ErrorAction SilentlyContinue }
+    return $false
+}
+
 # --- mise ---
 # Use shims instead of adding every tool's bin to PATH to avoid cmd.exe PATH overflow
-mise activate pwsh --shims | Out-String | Invoke-Expression
+$miseInit = Get-ProfileCachedInit -Name "mise" -Command "mise" -Arguments @("activate", "pwsh", "--shims")
+if ($miseInit) { . $miseInit }
+
 # --- WezTerm CWD tracking (OSC 7) ---
 # Emits the current working directory so WezTerm can track pane CWD.
 function Invoke-Starship-PreCommand {
@@ -18,31 +71,68 @@ function Invoke-Starship-PreCommand {
 }
 
 # --- Starship Prompt ---
-Invoke-Expression (&starship init powershell)
+# Use --print-full-init so the cached file is the full init script,
+# avoiding a starship.exe process spawn on every shell startup.
+$starshipInit = Get-ProfileCachedInit -Name "starship-full" -Command "starship" -Arguments @("init", "powershell", "--print-full-init")
+if ($starshipInit) { . $starshipInit }
 
 # --- Zoxide Navigation ---
 # https://github.com/ajeetdsouza/zoxide
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
+$zoxideInit = Get-ProfileCachedInit -Name "zoxide" -Command "zoxide"
+if ($zoxideInit) { . $zoxideInit }
 
 # --- PowerToys CommandNotFound ---
 # Shows suggestions from WinGet if a command is not found.
-if (Get-Command winget -ErrorAction SilentlyContinue) {
-    Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+# Lazy-load: the module import is slow (~1.2 s), so defer it until the first missing command.
+# Cache the winget lookup so Get-Command only runs once per day.
+if (Test-ProfileCachedCommand -Name "winget") {
+    $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = {
+        $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = $null
+        Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+    }
 }
 
 # --- x-cmd ---
 # Temporarily disabled due to atuin GetHistoryItems error
 # if (Test-Path "$Home\.x-cmd.root\local\data\pwsh\_index.ps1") { Set-ExecutionPolicy Bypass -Scope Process; . "$Home\.x-cmd.root\local\data\pwsh\_index.ps1" }
 
-# --- IntelliShell ---
+# --- IntelliShell (lazy-load on first prompt) ---
 # https://intellishell.app/
-if (Test-Path "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1") {
-    . "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1"
+$script:IntelliShellPath = "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1"
+$script:IntelliShellLoaded = $false
+function global:Initialize-IntelliShell {
+    if ($script:IntelliShellLoaded) { return }
+    if (Test-Path $script:IntelliShellPath) {
+        . $script:IntelliShellPath
+    }
+    $script:IntelliShellLoaded = $true
 }
 
-# --- Atuin ---
+# --- Atuin (lazy-load on first prompt) ---
 # https://atuin.sh/
-Invoke-Expression (& { (atuin init powershell) | Out-String })
+$script:AtuinInit = Get-ProfileCachedInit -Name "atuin" -Command "atuin"
+$script:AtuinLoaded = $false
+function global:Initialize-Atuin {
+    if ($script:AtuinLoaded) { return }
+    if ($script:AtuinInit -and (Test-Path $script:AtuinInit)) {
+        . $script:AtuinInit
+    }
+    $script:AtuinLoaded = $true
+}
+
+# --- Lazy-load Atuin and IntelliShell on first prompt ---
+# These tools touch PSReadLine/PSConsoleHostReadLine and are only needed for
+# interactive use, so skip loading them until the prompt is first rendered.
+$script:PromptLazyOriginal = $Function:prompt
+$script:PromptLazyLoaded = $false
+function global:prompt {
+    if (-not $script:PromptLazyLoaded) {
+        Initialize-Atuin
+        Initialize-IntelliShell
+        $script:PromptLazyLoaded = $true
+    }
+    & $script:PromptLazyOriginal @args
+}
 
 # ==============================================================================
 # >> ENVIRONMENT VARIABLES
@@ -50,11 +140,11 @@ Invoke-Expression (& { (atuin init powershell) | Out-String })
 # ==============================================================================
 
 # Use UTF-8 in the console so Thai and other non-ASCII text renders correctly
+$script:PreviousOutputEncoding = [Console]::OutputEncoding
 [Console]::InputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
-chcp 65001 >$null
-
-[Environment]::SetEnvironmentVariable("CLAUDE_CODE_GIT_BASH_PATH", "C:\Users\Veerapong\scoop\shims\git.exe", "User")
+# Avoid spawning chcp when the console is already UTF-8
+if ($script:PreviousOutputEncoding.CodePage -ne 65001) { chcp 65001 >$null }
 
 # --- Proto Configuration ---
 $env:PROTO_HOME = Join-Path $HOME ".proto"

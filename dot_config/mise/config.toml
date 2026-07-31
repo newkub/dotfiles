@@ -1,7 +1,7 @@
 [tasks.update-all]
 description = "update all tools"
 shell = "pwsh -Command"
-run = "winget source update --name msstore ; $null = $LASTEXITCODE ; winget source update --name winget ; $null = $LASTEXITCODE ; winget source update --name winget-font ; $null = $LASTEXITCODE ; scoop update && scoop update * ; $null = $LASTEXITCODE ; winget upgrade --all ; $null = $LASTEXITCODE ; bun update -g && bun upgrade ; $null = $LASTEXITCODE ; npm update -g ; $null = $LASTEXITCODE ; pnpm update -g ; $null = $LASTEXITCODE ; python -m pip install --upgrade pip 2>$null ; $null = $LASTEXITCODE ; pip-review --auto 2>$null ; $null = $LASTEXITCODE ; uv tool upgrade --all ; $null = $LASTEXITCODE ; pipx upgrade-all 2>$null ; $null = $LASTEXITCODE ; choco upgrade all -y 2>$null ; $null = $LASTEXITCODE ; cargo install-update -a 2>$null ; $null = $LASTEXITCODE ; wsl --update 2>$null ; $null = $LASTEXITCODE ; mise upgrade && mise prune --yes ; $null = $LASTEXITCODE ; mise self-update -y && mise reshim && rustup self-update ; $null = $LASTEXITCODE ; rustup update stable && gh extension upgrade --all && chezmoi-update && skills update"
+run = "winget source update --name msstore ; $null = $LASTEXITCODE ; winget source update --name winget ; $null = $LASTEXITCODE ; winget source update --name winget-font ; $null = $LASTEXITCODE ; scoop update && scoop update * ; $null = $LASTEXITCODE ; winget upgrade --all ; $null = $LASTEXITCODE ; bun update -g && bun upgrade ; $null = $LASTEXITCODE ; npm update -g ; $null = $LASTEXITCODE ; pnpm update -g ; $null = $LASTEXITCODE ; python -m pip install --upgrade pip 2>$null ; $null = $LASTEXITCODE ; pip-review --auto 2>$null ; $null = $LASTEXITCODE ; uv tool upgrade --all ; $null = $LASTEXITCODE ; pipx upgrade-all 2>$null ; $null = $LASTEXITCODE ; choco upgrade all -y 2>$null ; $null = $LASTEXITCODE ; cargo install-update -a 2>$null ; $null = $LASTEXITCODE ; wsl --update 2>$null ; $null = $LASTEXITCODE ; mise upgrade && mise prune --yes ; $null = $LASTEXITCODE ; mise self-update -y && mise reshim && rustup self-update ; $null = $LASTEXITCODE ; rustup update stable && gh extension upgrade --all && chezmoi-update && skills update && skills update -g"
 
 [tasks.cleanup]
 description = "cleanup caches"
@@ -37,7 +37,6 @@ OPENROUTER_API_KEY = "${env:OPENROUTER_API_KEY}"
 DEEPSEEK_API_KEY = "${env:DEEPSEEK_API_KEY}"
 XAI_API_KEY = "${env:XAI_API_KEY}"
 MINIMAX_API_KEY = "${env:MINIMAX_API_KEY}"
-MISE_CACHE_DIR = 'D:\\.mise-cache'
 SCCACHE_DIR = "D:\\.cache\\sccache"
 
 
@@ -175,11 +174,13 @@ pnpm = "latest"
 lazygit = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
 "npm:@biomejs/biome" = "latest"
+"npm:@native-sdk/cli" = "latest"
+"aqua:wasm-bindgen/wasm-pack" = "latest"
 
 
 [settings]
 env_shell_expand = false
-windows_shim_mode = "hardlink"
+windows_shim_mode = "exe"
 experimental = true
 minimum_release_age = "0"
 

@@ -1,16 +1,6 @@
-refactor: rename, merge, delete, and create workflows for consistency
+chore: remove all global workflow files
 
-- Rename news-* to report-* (ai-this-week, my-cli-update, my-tech-stack-update)
-- Rename review.md to review-codebase-issue.md
-- Rename run-profile.md to run-profiler.md
-- Rename run-test-browser.md to run-test-e2e.md
-- Create run-test-unit.md, run-test-integration.md
-- Update run-test.md to use run-test-unit/integration/e2e/coverage
-- Create review-coverage.md, review-debugging.md, review-dx.md
-- Delete improve-* workflows with existing review-* counterparts
-- Delete improve-composables.md, improve-hooks.md, improve-features.md (checklists/placeholders)
-- Delete watch-wezterm-and-fix.md
-- Delete redundant workflows (run-metrics, run-prepare, rename-to, etc.)
-- Update all references across workflows
-- Fix report.md to follow /write-workflows standards
-- Remove /update-health-cli from report-html.md related
+- All workflows have been converted to single-file skills in skills/
+- The skills repo now contains 647 skills
+
+Generated with Devin
