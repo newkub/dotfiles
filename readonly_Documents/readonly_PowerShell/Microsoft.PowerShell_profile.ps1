@@ -56,8 +56,8 @@ function Test-ProfileCachedCommand {
 
 # --- mise ---
 # Use shims instead of adding every tool's bin to PATH to avoid cmd.exe PATH overflow
-$miseInit = Get-ProfileCachedInit -Name "mise" -Command "mise" -Arguments @("activate", "pwsh", "--shims")
-if ($miseInit) { . $miseInit }
+$miseShims = Join-Path $env:LOCALAPPDATA "mise\shims"
+if (Test-Path $miseShims) { $env:Path = $miseShims + [IO.PATH]::PathSeparator + $env:Path }
 
 # --- WezTerm CWD tracking (OSC 7) ---
 # Emits the current working directory so WezTerm can track pane CWD.
@@ -70,16 +70,28 @@ function Invoke-Starship-PreCommand {
     }
 }
 
-# --- Starship Prompt ---
+# --- Starship Prompt (lazy-load on first prompt) ---
 # Use --print-full-init so the cached file is the full init script,
 # avoiding a starship.exe process spawn on every shell startup.
-$starshipInit = Get-ProfileCachedInit -Name "starship-full" -Command "starship" -Arguments @("init", "powershell", "--print-full-init")
-if ($starshipInit) { . $starshipInit }
+$script:StarshipInit = $null
+$script:StarshipLoaded = $false
 
-# --- Zoxide Navigation ---
+# --- Zoxide Navigation (lazy-load on first z/zi) ---
 # https://github.com/ajeetdsouza/zoxide
-$zoxideInit = Get-ProfileCachedInit -Name "zoxide" -Command "zoxide"
-if ($zoxideInit) { . $zoxideInit }
+$script:ZoxideInit = $null
+$script:ZoxideLoaded = $false
+function global:__LoadZoxide {
+    if ($script:ZoxideLoaded) { return }
+    if (-not $script:ZoxideInit) {
+        $script:ZoxideInit = Get-ProfileCachedInit -Name "zoxide" -Command "zoxide"
+    }
+    if ($script:ZoxideInit -and (Test-Path $script:ZoxideInit)) {
+        . $script:ZoxideInit
+    }
+    $script:ZoxideLoaded = $true
+}
+function global:z { __LoadZoxide; if (Test-Path Function:\__zoxide_z) { __zoxide_z @args } }
+function global:zi { __LoadZoxide; if (Test-Path Function:\__zoxide_zi) { __zoxide_zi @args } }
 
 # --- PowerToys CommandNotFound ---
 # Shows suggestions from WinGet if a command is not found.
@@ -110,28 +122,37 @@ function global:Initialize-IntelliShell {
 
 # --- Atuin (lazy-load on first prompt) ---
 # https://atuin.sh/
-$script:AtuinInit = Get-ProfileCachedInit -Name "atuin" -Command "atuin"
+$script:AtuinInit = $null
 $script:AtuinLoaded = $false
 function global:Initialize-Atuin {
     if ($script:AtuinLoaded) { return }
+    if (-not $script:AtuinInit) {
+        $script:AtuinInit = Get-ProfileCachedInit -Name "atuin" -Command "atuin"
+    }
     if ($script:AtuinInit -and (Test-Path $script:AtuinInit)) {
         . $script:AtuinInit
     }
     $script:AtuinLoaded = $true
 }
 
-# --- Lazy-load Atuin and IntelliShell on first prompt ---
+# --- Lazy-load Starship, Atuin and IntelliShell on first prompt ---
 # These tools touch PSReadLine/PSConsoleHostReadLine and are only needed for
 # interactive use, so skip loading them until the prompt is first rendered.
-$script:PromptLazyOriginal = $Function:prompt
 $script:PromptLazyLoaded = $false
 function global:prompt {
+    if (-not $script:StarshipLoaded) {
+        if (-not $script:StarshipInit) {
+            $script:StarshipInit = Get-ProfileCachedInit -Name "starship-full" -Command "starship" -Arguments @("init", "powershell", "--print-full-init")
+        }
+        if ($script:StarshipInit) { . $script:StarshipInit }
+        $script:StarshipLoaded = $true
+    }
     if (-not $script:PromptLazyLoaded) {
         Initialize-Atuin
         Initialize-IntelliShell
         $script:PromptLazyLoaded = $true
     }
-    & $script:PromptLazyOriginal @args
+    & $Function:prompt @args
 }
 
 # ==============================================================================
@@ -145,6 +166,13 @@ $script:PreviousOutputEncoding = [Console]::OutputEncoding
 $OutputEncoding = [System.Text.Encoding]::UTF8
 # Avoid spawning chcp when the console is already UTF-8
 if ($script:PreviousOutputEncoding.CodePage -ne 65001) { chcp 65001 >$null }
+
+# --- PSReadLine Options ---
+# Keep history bounded and deduplicated; enable predictions after cleanup.
+if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
+    Set-PSReadLineOption -MaximumHistoryCount 30000 -HistoryNoDuplicate -HistorySearchCursorMovesToEnd -ErrorAction SilentlyContinue
+    try { Set-PSReadLineOption -PredictionSource History } catch { }
+}
 
 # --- Proto Configuration ---
 $env:PROTO_HOME = Join-Path $HOME ".proto"
