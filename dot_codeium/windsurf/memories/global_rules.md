@@ -150,6 +150,7 @@ related:
 
 - ตรวจ ecosystem จาก `package.json`, `Cargo.toml`, `go.mod` ก่อนเลือก tools
 - ใช้ relative references และแปลง command equivalents ตาม ecosystem ไม่ผูกกับ AI tool เดียว
+- ถ้า workspace เป็น monorepo ให้ใช้ run command ของ monorepo (`moon run`, `turbo run`, `pnpm --recursive`, `bun run --filter` ตามที่ตรวจพบ) กับ skills `run-*` ต่างๆ แทนการรันผ่าน workspace เดี่ยว
 - ใช้ `use-*` skills สำหรับ tools/libraries เฉพาะเจาะจง และใช้ official docs เป็นแหล่งหลัก
 - ถ้าต้องติดตั้ง program แบบ global ให้พยายามใช้ `mise use -g <program>` ก่อน แล้วจึงพิจารณา package manager ของระบบ เช่น `scoop`, `brew`, `apt`, `winget`
 
