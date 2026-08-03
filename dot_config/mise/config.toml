@@ -176,6 +176,7 @@ lazygit = "latest"
 "npm:@biomejs/biome" = "latest"
 "npm:@native-sdk/cli" = "latest"
 "aqua:wasm-bindgen/wasm-pack" = "latest"
+imagemagick = "latest"
 
 
 [settings]
