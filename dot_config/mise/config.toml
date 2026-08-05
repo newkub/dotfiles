@@ -126,7 +126,6 @@ cowsay = "latest"
 "npm:git-split-diffs" = "latest"
 "npm:gitify" = "latest"
 "npm:jscpd" = "latest"
-"npm:npkill" = "latest"
 "npm:oxlint" = "latest"
 "npm:playwright" = "latest"
 "npm:rimraf" = "latest"
@@ -170,13 +169,14 @@ podman = { version = "latest", rename_exe = "podman-remote" }
 pnpm = "latest"
 "cargo:ast-grep-mcp" = "latest"
 "npm:ctx7" = "latest"
-"npm:druk" = "latest"
 lazygit = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
 "npm:@biomejs/biome" = "latest"
 "npm:@native-sdk/cli" = "latest"
 "aqua:wasm-bindgen/wasm-pack" = "latest"
 imagemagick = "latest"
+"npm:druk" = "latest"
+"npm:npkill" = "latest"
 
 
 [settings]
