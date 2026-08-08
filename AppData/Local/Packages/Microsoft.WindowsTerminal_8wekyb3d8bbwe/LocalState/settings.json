@@ -63,7 +63,7 @@
     "copyOnSelect": false,
     "defaultProfile": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
     "disableAnimations": false,
-    "firstWindowPreference": "defaultProfile",
+    "firstWindowPreference": "persistedWindowLayout",
     "initialPosition": ",",
     "keybindings": 
     [
@@ -199,12 +199,6 @@
                 "padding": "8, 8, 8, 8",
                 "snapOnInput": true,
                 "useAcrylic": false
-            },
-            {
-                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-                "hidden": false,
-                "name": "Git Bash",
-                "source": "Git"
             },
             {
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
