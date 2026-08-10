@@ -1,10 +1,10 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-wezterm.add_to_config_reload_watch_list(wezterm.config_dir .. "/wezterm_status.lua")
-local status_bar = require("wezterm_status")
+-- wezterm.add_to_config_reload_watch_list(wezterm.config_dir .. "/wezterm_status.lua")
+-- local status_bar = require("wezterm_status")
 
-status_bar.apply_to_config(config)
+-- status_bar.apply_to_config(config)
 
 -- =====================================
 -- Shell
@@ -209,16 +209,22 @@ config.keys = {
       local dims = pane:get_dimensions()
       local text = pane:get_lines_as_text(dims.viewport_rows)
       local lines = {}
+
       for line in text:gmatch("[^\r\n]+") do
         table.insert(lines, line)
       end
-      -- Find prompt lines (PowerShell: starts with "PS " or ends with ">")
+
       local last_prompt_idx = nil
       local second_last_prompt_idx = nil
+
       for i = #lines, 1, -1 do
         local line = lines[i]
-        -- Match common PowerShell prompt patterns: "PS path>" or "❯" or custom prompts
-        if line:match("^PS%s") or line:match("❯") or line:match("^➜") or line:match(">$") then
+
+        if line:match("^PS%s")
+          or line:match("❯")
+          or line:match("^➜")
+          or line:match(">$") then
+
           if last_prompt_idx == nil then
             last_prompt_idx = i
           elseif second_last_prompt_idx == nil then
@@ -227,19 +233,26 @@ config.keys = {
           end
         end
       end
-      -- If we found the second-to-last prompt, copy from there to end
-      -- Otherwise just copy the whole viewport
+
       local start_idx = second_last_prompt_idx or last_prompt_idx or 1
       local result = {}
+
       for i = start_idx, #lines do
         table.insert(result, lines[i])
       end
-      window:copy_to_clipboard(table.concat(result, "\n"), "Clipboard")
+
+      window:copy_to_clipboard(
+        table.concat(result, "\n"),
+        "Clipboard"
+      )
     end),
   },
 }
 
--- Split pane with Ctrl+Shift+Arrow keys
+-- =====================================
+-- Split Pane
+-- =====================================
+
 table.insert(config.keys, {
   key = "UpArrow",
   mods = "CTRL|SHIFT",
@@ -248,6 +261,7 @@ table.insert(config.keys, {
     size = { Percent = 50 },
   }),
 })
+
 table.insert(config.keys, {
   key = "DownArrow",
   mods = "CTRL|SHIFT",
@@ -256,6 +270,7 @@ table.insert(config.keys, {
     size = { Percent = 50 },
   }),
 })
+
 table.insert(config.keys, {
   key = "LeftArrow",
   mods = "CTRL|SHIFT",
@@ -264,6 +279,7 @@ table.insert(config.keys, {
     size = { Percent = 50 },
   }),
 })
+
 table.insert(config.keys, {
   key = "RightArrow",
   mods = "CTRL|SHIFT",
@@ -281,18 +297,21 @@ for i = 1, 9 do
   })
 end
 
-
-
 -- =====================================
 -- Status Bar
 -- =====================================
 
-wezterm.on("update-status", function(window, pane)
-  window:set_right_status(status_bar.build(pane))
-end)
+-- wezterm.on("update-status", function(window, pane)
+--   window:set_right_status(status_bar.build(pane))
+-- end)
+
+-- =====================================
+-- Startup
+-- =====================================
 
 wezterm.on("gui-startup", function(cmd)
   local tab, _, window = wezterm.mux.spawn_window(cmd or {})
+
   if not window then
     return
   end
@@ -300,9 +319,11 @@ wezterm.on("gui-startup", function(cmd)
   for _ = 1, 4 do
     window:spawn_tab({})
   end
+
   tab:activate()
 
   local gui_win = window:gui_window()
+
   if gui_win then
     gui_win:maximize()
   end

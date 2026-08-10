@@ -147,11 +147,11 @@ function global:prompt {
         if ($script:StarshipInit) { . $script:StarshipInit }
         $script:StarshipLoaded = $true
     }
-    if (-not $script:PromptLazyLoaded) {
-        Initialize-Atuin
-        Initialize-IntelliShell
-        $script:PromptLazyLoaded = $true
-    }
+    # if (-not $script:PromptLazyLoaded) {
+#     Initialize-Atuin
+#     Initialize-IntelliShell
+#     $script:PromptLazyLoaded = $true
+# }
     & $Function:prompt @args
 }
 
