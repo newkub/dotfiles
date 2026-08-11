@@ -16,33 +16,6 @@ config.default_prog = {
   "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
 }
 
-config.launch_menu = {
-  {
-    label = "PowerShell 7",
-    args = {
-      "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
-    },
-    cwd = "D:\\",
-  },
-  {
-    label = "Nushell",
-    args = {
-      "C:\\Users\\Veerapong\\scoop\\shims\\nu.exe",
-    },
-    cwd = "D:\\",
-  },
-  {
-    label = "CMD",
-    args = { "cmd.exe" },
-    cwd = "D:\\",
-  },
-  {
-    label = "WSL",
-    args = { "wsl.exe" },
-    cwd = "D:\\",
-  },
-}
-
 -- =====================================
 -- Font
 -- =====================================
