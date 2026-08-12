@@ -1,22 +1,16 @@
 [user]
-	email = newkubise@gmail.com
-	name = newkub
+email = newkubise@gmail.com
+name = newkub
 
 [core]
 autocrlf = false
 defaultBranch = main
-	pager = git-split-diffs --color X
-	editor = zed --wait
+editor = zed --wait
 
 [gitbutler]
 aiOpenAIKeyOption = butlerAPI
 aiModelProvider = openai
 gitbutlerCommitter = 0
-
-[split-diffs]
-	wrap-lines = true
-	theme-name = github-dark-dim
-
 [filter "lfs"]
 clean = git-lfs clean -- %f
 smudge = git-lfs smudge -- %f
@@ -24,7 +18,8 @@ process = git-lfs filter-process
 required = true
 
 [pager]
-	diff = true
+diff = delta
+blame = delta
 
 
 [fetch]
@@ -41,13 +36,13 @@ followTags = true
 rebase = true
 
 [init]
-	defaultBranch = main
+defaultBranch = main
 
 [rebase]
 autoStash = true
 
 [merge]
-conflictstyle = diff3
+conflictStyle = zdiff3
 tool = vscode
 
 [mergetool "vscode"]
@@ -61,7 +56,7 @@ opencommit = "!f() { git add . && opencommit; }; f"
 czgai = "!f() { git add . && czg ai; }; f"
 commit = "aicommits -a"
 upp = "!f() { git add . && git commit -m \"$1\" && git push; }; f"
-log = "git log --oneline --graph --decorate"
+log = "log --graph --all --decorate --date=relative --format=\"%C(auto)%h%C(reset) %C(dim)%ar%C(reset) %C(cyan)%an%C(reset) %C(yellow)%s%C(reset) %C(auto)%d\""
 status = "status -s"
 branch = "branch"
 unstage = "reset HEAD"
@@ -77,3 +72,14 @@ sync = "!f() { git pull && git push && git submodule sync --recursive && git sub
 	directory = *
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[delta]
+	navigate = false
+	paging = never
+	dark = true
+	hyperlinks = true
+[credential "https://github.com"]
+	helper = 
+	helper = !'C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\github-cli\\2.97.0\\bin\\gh.exe' auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !'C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\github-cli\\2.97.0\\bin\\gh.exe' auth git-credential

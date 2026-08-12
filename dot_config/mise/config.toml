@@ -123,7 +123,6 @@ cowsay = "latest"
 "npm:chrome-devtools-mcp" = "latest"
 "npm:giget" = "latest"
 "npm:gifify" = "latest"
-"npm:git-split-diffs" = "latest"
 "npm:gitify" = "latest"
 "npm:jscpd" = "latest"
 "npm:oxlint" = "latest"
@@ -177,6 +176,7 @@ lazygit = "latest"
 imagemagick = "latest"
 "npm:druk" = "latest"
 "npm:npkill" = "latest"
+"npm:git-split-diffs" = "latest"
 
 
 [settings]
