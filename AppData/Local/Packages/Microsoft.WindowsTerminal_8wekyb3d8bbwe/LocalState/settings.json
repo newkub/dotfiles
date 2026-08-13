@@ -68,28 +68,24 @@
     "keybindings": 
     [
         {
-            "id": "User.openSettings.6CD791B",
-            "keys": "ctrl+numpad_period"
-        },
-        {
             "id": "User.sendInput.8F63D3A9",
             "keys": "shift+enter"
         },
         {
-            "id": "User.closeTab.0",
-            "keys": "ctrl+w"
-        },
-        {
-            "id": "Terminal.CopyToClipboard",
-            "keys": "ctrl+shift+c"
+            "id": "User.openSettings.6CD791B",
+            "keys": "ctrl+numpad_period"
         },
         {
             "id": "User.tabSearch",
             "keys": "ctrl+shift+b"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+shift+v"
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+w"
         },
         {
             "id": "User.sendInput.Etx",
@@ -98,6 +94,10 @@
         {
             "id": "Terminal.PrevTab",
             "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+shift+v"
         },
         {
             "id": "Terminal.OpenNewTab",
@@ -220,6 +220,23 @@
                 "hidden": false,
                 "name": "Ubuntu",
                 "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "guid": "{0022853a-6348-5ddb-864a-dde8fa68cd98}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },

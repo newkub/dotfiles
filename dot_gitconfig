@@ -83,3 +83,5 @@ sync = "!f() { git pull && git push && git submodule sync --recursive && git sub
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !'C:\\Users\\Veerapong\\AppData\\Local\\mise\\installs\\github-cli\\2.97.0\\bin\\gh.exe' auth git-credential
+[url "git@github.com"]
+	insteadof = https://github.com/
