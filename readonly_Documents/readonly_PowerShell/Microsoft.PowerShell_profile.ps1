@@ -1,15 +1,15 @@
 # ==============================================================================
 # >> SHELL INITIALIZATION
-# Tools and prompts that initialize when PowerShell starts.
 # ==============================================================================
 
-# --- Cached shell tool initializers ---
-# These tools emit PowerShell init scripts. Caching them avoids spawning TEST
-# the binary on every shell startup. Cache is invalidated when the tool binary changes.
+# --- Cached tool initializers ---
+# Tools like starship/zoxide emit PowerShell init scripts. Cache them to avoid
+# spawning the binary on every startup. Cache invalidates when the binary changes.
 $script:ProfileCacheDir = Join-Path $env:LOCALAPPDATA "pwsh-profile-cache"
 if (-not (Test-Path $script:ProfileCacheDir)) {
     New-Item -ItemType Directory -Path $script:ProfileCacheDir -Force | Out-Null
 }
+
 function Get-ProfileCachedInit {
     param(
         [Parameter(Mandatory)] [string] $Name,
@@ -19,32 +19,23 @@ function Get-ProfileCachedInit {
     )
     $cacheFile = Join-Path $script:ProfileCacheDir "$Name-init.ps1"
     $cacheTtl = New-TimeSpan -Days $TtlDays
-    # Use cache directly if it exists and is fresh; Get-Command can be slow on a large PATH.
     if (Test-Path $cacheFile) {
-        $cacheAge = (Get-Date) - (Get-Item $cacheFile).LastWriteTime
-        if ($cacheAge -lt $cacheTtl) { return $cacheFile }
+        if ((Get-Date) - (Get-Item $cacheFile).LastWriteTime -lt $cacheTtl) { return $cacheFile }
     }
     $tool = Get-Command $Command -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-    if (-not $tool) { return $null }
-    $toolPath = $tool.Source
-    if (-not (Test-Path $toolPath)) { return $null }
-    $toolTime = (Get-Item $toolPath).LastWriteTime
+    if (-not $tool -or -not (Test-Path $tool.Source)) { return $null }
+    $toolTime = (Get-Item $tool.Source).LastWriteTime
     if (-not (Test-Path $cacheFile) -or (Get-Item $cacheFile).LastWriteTime -lt $toolTime) {
-        & $toolPath @Arguments | Out-File -FilePath $cacheFile -Encoding utf8 -Force
+        & $tool.Source @Arguments | Out-File -FilePath $cacheFile -Encoding utf8 -Force
     }
     return $cacheFile
 }
 
 function Test-ProfileCachedCommand {
-    param(
-        [Parameter(Mandatory)] [string] $Name,
-        [int] $TtlDays = 1
-    )
+    param([Parameter(Mandatory)] [string] $Name, [int] $TtlDays = 1)
     $cacheFile = Join-Path $script:ProfileCacheDir "$Name-cmd"
-    $cacheTtl = New-TimeSpan -Days $TtlDays
     if (Test-Path $cacheFile) {
-        $cacheAge = (Get-Date) - (Get-Item $cacheFile).LastWriteTime
-        if ($cacheAge -lt $cacheTtl) { return $true }
+        if ((Get-Date) - (Get-Item $cacheFile).LastWriteTime -lt (New-TimeSpan -Days $TtlDays)) { return $true }
     }
     if (Get-Command $Name -CommandType Application -ErrorAction SilentlyContinue) {
         New-Item -ItemType File -Path $cacheFile -Force | Out-Null
@@ -54,49 +45,33 @@ function Test-ProfileCachedCommand {
     return $false
 }
 
-# --- mise ---
-# Use shims instead of adding every tool's bin to PATH to avoid cmd.exe PATH overflow
-$miseShims = Join-Path $env:LOCALAPPDATA "mise\shims"
-if (Test-Path $miseShims) { $env:Path = $miseShims + [IO.PATH]::PathSeparator + $env:Path }
-
 # --- WezTerm CWD tracking (OSC 7) ---
-# Emits the current working directory so WezTerm can track pane CWD.
 function Invoke-Starship-PreCommand {
-    $current_location = $ExecutionContext.SessionState.Path.CurrentFileSystemLocation
-    if ($current_location -and $current_location.Provider.Name -eq "FileSystem") {
-        $ansi_escape = [char]27
-        $provider_path = $current_location.ProviderPath -replace "\\", "/"
-        $host.ui.Write("${ansi_escape}]7;file://${env:COMPUTERNAME}/${provider_path}${ansi_escape}\")
+    $loc = $ExecutionContext.SessionState.Path.CurrentFileSystemLocation
+    if ($loc -and $loc.Provider.Name -eq "FileSystem") {
+        $esc = [char]27
+        $path = $loc.ProviderPath -replace "\\", "/"
+        $host.ui.Write("${esc}]7;file://${env:COMPUTERNAME}/${path}${esc}\")
     }
 }
 
-# --- Starship Prompt (lazy-load on first prompt) ---
-# Use --print-full-init so the cached file is the full init script,
-# avoiding a starship.exe process spawn on every shell startup.
+# --- Starship prompt (lazy-load on first render) ---
 $script:StarshipInit = $null
 $script:StarshipLoaded = $false
 
-# --- Zoxide Navigation (lazy-load on first z/zi) ---
-# https://github.com/ajeetdsouza/zoxide
+# --- Zoxide (lazy-load on first z/zi) ---
 $script:ZoxideInit = $null
 $script:ZoxideLoaded = $false
 function global:__LoadZoxide {
     if ($script:ZoxideLoaded) { return }
-    if (-not $script:ZoxideInit) {
-        $script:ZoxideInit = Get-ProfileCachedInit -Name "zoxide" -Command "zoxide"
-    }
-    if ($script:ZoxideInit -and (Test-Path $script:ZoxideInit)) {
-        . $script:ZoxideInit
-    }
+    if (-not $script:ZoxideInit) { $script:ZoxideInit = Get-ProfileCachedInit -Name "zoxide" -Command "zoxide" }
+    if ($script:ZoxideInit -and (Test-Path $script:ZoxideInit)) { . $script:ZoxideInit }
     $script:ZoxideLoaded = $true
 }
 function global:z { __LoadZoxide; if (Test-Path Function:\__zoxide_z) { __zoxide_z @args } }
 function global:zi { __LoadZoxide; if (Test-Path Function:\__zoxide_zi) { __zoxide_zi @args } }
 
-# --- PowerToys CommandNotFound ---
-# Shows suggestions from WinGet if a command is not found.
-# Lazy-load: the module import is slow (~1.2 s), so defer it until the first missing command.
-# Cache the winget lookup so Get-Command only runs once per day.
+# --- WinGet CommandNotFound (lazy-load: module import is slow) ---
 if (Test-ProfileCachedCommand -Name "winget") {
     $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = {
         $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = $null
@@ -104,41 +79,7 @@ if (Test-ProfileCachedCommand -Name "winget") {
     }
 }
 
-# --- x-cmd ---
-# Temporarily disabled due to atuin GetHistoryItems error
-# if (Test-Path "$Home\.x-cmd.root\local\data\pwsh\_index.ps1") { Set-ExecutionPolicy Bypass -Scope Process; . "$Home\.x-cmd.root\local\data\pwsh\_index.ps1" }
-
-# --- IntelliShell (lazy-load on first prompt) ---
-# https://intellishell.app/
-$script:IntelliShellPath = "$env:USERPROFILE\.local\share\intelli-shell\shell\_intelli.ps1"
-$script:IntelliShellLoaded = $false
-function global:Initialize-IntelliShell {
-    if ($script:IntelliShellLoaded) { return }
-    if (Test-Path $script:IntelliShellPath) {
-        . $script:IntelliShellPath
-    }
-    $script:IntelliShellLoaded = $true
-}
-
-# --- Atuin (lazy-load on first prompt) ---
-# https://atuin.sh/
-$script:AtuinInit = $null
-$script:AtuinLoaded = $false
-function global:Initialize-Atuin {
-    if ($script:AtuinLoaded) { return }
-    if (-not $script:AtuinInit) {
-        $script:AtuinInit = Get-ProfileCachedInit -Name "atuin" -Command "atuin"
-    }
-    if ($script:AtuinInit -and (Test-Path $script:AtuinInit)) {
-        . $script:AtuinInit
-    }
-    $script:AtuinLoaded = $true
-}
-
-# --- Lazy-load Starship, Atuin and IntelliShell on first prompt ---
-# These tools touch PSReadLine/PSConsoleHostReadLine and are only needed for
-# interactive use, so skip loading them until the prompt is first rendered.
-$script:PromptLazyLoaded = $false
+# --- Prompt: lazy-load Starship on first render ---
 function global:prompt {
     if (-not $script:StarshipLoaded) {
         if (-not $script:StarshipInit) {
@@ -147,82 +88,52 @@ function global:prompt {
         if ($script:StarshipInit) { . $script:StarshipInit }
         $script:StarshipLoaded = $true
     }
-    # if (-not $script:PromptLazyLoaded) {
-#     Initialize-Atuin
-#     Initialize-IntelliShell
-#     $script:PromptLazyLoaded = $true
-# }
     & $Function:prompt @args
 }
 
 # ==============================================================================
-# >> ENVIRONMENT VARIABLES
-# Custom environment variable settings.
+# >> ENVIRONMENT
 # ==============================================================================
 
-# Use UTF-8 in the console so Thai and other non-ASCII text renders correctly
+# UTF-8 console for Thai and non-ASCII text
 $script:PreviousOutputEncoding = [Console]::OutputEncoding
 [Console]::InputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
-# Avoid spawning chcp when the console is already UTF-8
-if ($script:PreviousOutputEncoding.CodePage -ne 65001) { chcp 65001 >$null }
+if ($script:PreviousOutputEncoding.CodePage -ne 65001) { chcp 65001 > $null }
 
-# --- PSReadLine Options ---
-# Keep history bounded and deduplicated; enable predictions after cleanup.
+# PSReadLine: bounded, deduplicated history with predictions
 if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
     Set-PSReadLineOption -MaximumHistoryCount 30000 -HistoryNoDuplicate -HistorySearchCursorMovesToEnd -ErrorAction SilentlyContinue
     try { Set-PSReadLineOption -PredictionSource History } catch { }
 }
 
-# --- Proto Configuration ---
-$env:PROTO_HOME = Join-Path $HOME ".proto"
-$env:Path = @(
-    (Join-Path $env:PROTO_HOME "shims")
-    (Join-Path $env:PROTO_HOME "bin")
-    $env:Path
-) -join [IO.PATH]::PathSeparator
-
 # ==============================================================================
 # >> ALIASES
-# Custom shortcuts for frequently used commands.
 # ==============================================================================
 
-Remove-Item Alias:ni -Force -ErrorAction Ignore
-Remove-Item Alias:rd
-Remove-Item Alias:h
-Remove-Item Alias:cd
+# Clear conflicting built-in aliases so functions below can use those names
+Remove-Item Alias:ni, Alias:rd, Alias:h, Alias:cd, Alias:dir -Force -ErrorAction Ignore
 
-# --- General Aliases ---
-Remove-Item -Path Alias:dir -Force
-
-# Make `powershell` command point to pwsh (PowerShell 7)
+# `powershell` -> pwsh (PowerShell 7)
 if (Get-Command pwsh -ErrorAction SilentlyContinue) {
-    Remove-Item -Path Alias:powershell -Force -ErrorAction SilentlyContinue
-    Set-Alias -Name powershell -Value pwsh
+    Remove-Item Alias:powershell -Force -ErrorAction SilentlyContinue
+    Set-Alias powershell pwsh
 }
 
-# --- Tool Aliases ---
-Set-Alias -Name c -Value cls
-Set-Alias -Name new -Value New-Item
-Set-Alias -Name nu -Value $env:USERPROFILE\scoop\apps\nu\current\nu.exe
-Set-Alias -Name y -Value yazi
-Set-Alias -Name n -Value nvim
-Set-Alias -Name v -Value bat
-Set-Alias -Name ot -Value hx
+Set-Alias c cls
+Set-Alias new New-Item
+Set-Alias nu "$env:USERPROFILE\scoop\apps\nu\current\nu.exe"
+Set-Alias y yazi
+Set-Alias n nvim
+Set-Alias v bat
+Set-Alias ot hx
 
-# --- GitHub Issue Dashboard ---
 function github-issue { gh dash @args }
-
-# --- Superfile (TUI file manager) ---
 function files { spf @args }
+function code-insiders { & "$env:LOCALAPPDATA\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
 
-
-# --- VS Code Insiders ---
-function code-insiders { & "C:\Users\Veerapong\AppData\Local\Programs\Microsoft VS Code Insiders\bin\code-insiders.cmd" $args }
-
-# --- Copy File Content ---
 function cpc {
-    param([Parameter(Mandatory=$true)][string]$File)
+    param([Parameter(Mandatory)] [string] $File)
     if (Test-Path $File) {
         Get-Content $File -Raw | Set-Clipboard
         Write-Host "Content copied from: $File" -ForegroundColor Green
@@ -232,258 +143,183 @@ function cpc {
 }
 
 # ==============================================================================
-# >> NAVIGATION FUNCTIONS
-# Functions to quickly navigate to common directories.
+# >> NAVIGATION
 # ==============================================================================
 
+# Quick-jump functions generated from a location map
 $locationMap = @{
-    "home" = "$HOME"
-    "downloads" = "$HOME\Downloads"
-    "desktop" = "$HOME\Desktop"
-    "docs" = "$HOME\Documents"
-    "d" = "D:\"
-    "cnotes" = "C:\Users\Veerapong\Documents\notes"
-    "images" = "$HOME\Pictures"
-    "videos" = "$HOME\Videos"
-    "projects" = "$HOME\Projects"
-    "scripts" = "$HOME\Documents\PowerShell"
-    "appdata" = "$HOME\AppData"
-    "local" = "$HOME\AppData\Local"
-    "config" = "$HOME\.config"
-    ".config" = "$HOME\.config"
-    "dotfiles" = "$HOME\.local\share\chezmoi"
-    "temp" = "$env:TEMP"
+    home         = "$HOME"
+    downloads    = "$HOME\Downloads"
+    desktop      = "$HOME\Desktop"
+    docs         = "$HOME\Documents"
+    d            = "D:\"
+    cnotes       = "$HOME\Documents\notes"
+    images       = "$HOME\Pictures"
+    videos       = "$HOME\Videos"
+    projects     = "$HOME\Projects"
+    scripts      = "$HOME\Documents\PowerShell"
+    appdata      = "$HOME\AppData"
+    local        = "$HOME\AppData\Local"
+    config       = "$HOME\.config"
+    dotFiles     = "$HOME\.local\share\chezmoi"
+    temp         = "$env:TEMP"
     "windsurf-path" = "$HOME\.codeium\windsurf"
-    "newkub" = "D:\newkub"
+    newkub       = "D:\newkub"
 }
-
 foreach ($key in $locationMap.Keys) {
     Set-Item -Path "Function:$key" -Value ([ScriptBlock]::Create("Set-Location '$($locationMap[$key])'"))
 }
 
-function dd { explorer "C:\Users\Veerapong\downloads" }
-function ep { explorer "C:\Users\Veerapong" }
-function b { broot }
-
-function cc {
-    param([string]$query = "")
-    $root = "D:\"
-    $dirs = if ($query) { fd -t d $query $root } else { fd -t d . $root }
+# Helper: fuzzy-pick a directory under $Root and cd into it
+function Select-Directory {
+    param([string] $Root = ".", [string] $Query = "")
+    $dirs = if ($Query) { fd -t d $Query $Root } else { fd -t d . $Root }
     $selected = $dirs | tv
     if ($selected) { Set-Location $selected }
 }
 
+function dd { explorer "$HOME\downloads" }
+function ep { explorer $HOME }
+function b { broot }
+
+function cc {
+    param([string] $query = "")
+    Select-Directory -Root "D:\" -Query $query
+}
+
 function cd {
-    param([string]$query = "")
-    if ($query) {
-        Set-Location $query
-    } else {
-        $dirs = fd -t d
-        $selected = $dirs | tv
-        if ($selected) { Set-Location $selected }
-    }
+    param([string] $query = "")
+    if ($query) { Set-Location $query } else { Select-Directory }
 }
 
 function cdd {
-    param([string]$query = "")
-    $root = "D:\"
-    if ($query) {
-        Set-Location "$root$query"
-    } else {
-        $dirs = fd -t d . $root
-        $selected = $dirs | tv
-        if ($selected) { Set-Location $selected }
-    }
+    param([string] $query = "")
+    if ($query) { Set-Location "D:\$query" } else { Select-Directory -Root "D:\" }
 }
 
-
 # ==============================================================================
-# >> EDITOR FUNCTIONS
-# Functions to open files in various editors.
+# >> EDITORS
 # ==============================================================================
 
 function o {
-    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$Arguments)
+    param([Parameter(ValueFromRemainingArguments)] [string[]] $Arguments)
     if ($Arguments) { zed $Arguments } else { zed . }
 }
 
-function f {
-    param([string]$query = "")
-    $files = if ($query) { fd -t f $query } else { fd -t f }
-    $selected = $files | tv
-    if ($selected) { zed $selected }
-}
-
-function ff {
-    param([string]$query = "")
-    $dirs = if ($query) { fd -t d $query } else { fd -t d }
-    $selected = $dirs | tv
-    if ($selected) { zed $selected }
-}
-
-function ozedrules {
-    $path = "C:\Users\Veerapong\.codeium\windsurf\memories\global_rules.md"
-    zed $path
-}
-
-function opowershellprofile {
-    $path = "C:\Users\Veerapong\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
-    zed $path
-}
-
-function otd { zed "d:\TODO.md" }
-
 function h {
-    param([Parameter(ValueFromRemainingArguments = $true)][string[]]$Arguments)
+    param([Parameter(ValueFromRemainingArguments)] [string[]] $Arguments)
     if ($Arguments) { hx $Arguments } else { hx . }
 }
 
+# Helper: fuzzy-pick a path and open it in zed
+function Select-ZedPath {
+    param([string] $Type, [string] $Query, [string] $Root = ".")
+    $items = if ($Query) { fd -t $Type $Query $Root } else { fd -t $Type . $Root }
+    $selected = $items | tv
+    if ($selected) { zed $selected }
+}
+
+function f { param([string] $query = ""); Select-ZedPath -Type f -Query $query }
+function ff { param([string] $query = ""); Select-ZedPath -Type d -Query $query }
+
+function ozedrules { zed "$HOME\.codeium\windsurf\memories\global_rules.md" }
+function opowershellprofile { zed "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" }
+function otd { zed "D:\TODO.md" }
+
 # ==============================================================================
 # >> SCRIPT RUNNERS
-# Functions to run common development scripts.
 # ==============================================================================
 
-# --- Directory Listing with eza ---
 function dir { eza --long --git --git-repos --octal-permissions --total-size --time-style=relative --group-directories-first --color-scale=age,size --header --hyperlink --all }
 
-# --- mise task run ---
-function t { mise task run }
+# Helper: run `ni` then a package-manager script (bun or moon)
+function Invoke-Runner {
+    param([string] $Manager, [string] $Script)
+    ni
+    & $Manager $Script
+}
 
-# --- Bun Script Runners ---
-function rd { ni && bun run dev }
-function rw { ni && bun run watch }
-function rb { ni && bun run build }
-function rl { ni && bun run lint }
-function rt { ni && bun run test }
-function rr { ni && bun run review }
-function rf { ni && bun run format }
-function rc { ni && bun run typecheck }
+# Bun runners (rd=dev, rw=watch, rb=build, rl=lint, rt=test, rr=review, rf=format, rc=typecheck)
+foreach ($pair in @('rd,run dev','rw,run watch','rb,run build','rl,run lint','rt,run test','rr,run review','rf,run format','rc,run typecheck')) {
+    $name, $script = $pair -split ','
+    Set-Item -Path "Function:$name" -Value ([ScriptBlock]::Create("Invoke-Runner -Manager bun -Script '$script'"))
+}
 
-# --- Moon Script Runners ---
-function md { ni && moon run :dev }
-function mw { ni && moon run :watch }
-function mb { ni && moon run :build }
-function ml { ni && moon run :lint }
-function mt { ni && moon run :test }
-function mr { ni && moon run :review }
-function mf { ni && moon run :format }
-function mc { ni && moon run :typecheck }
+# Moon runners (md/mw/mb/ml/mt/mr/mf/mc)
+foreach ($pair in @('md,run :dev','mw,run :watch','mb,run :build','ml,run :lint','mt,run :test','mr,run :review','mf,run :format','mc,run :typecheck')) {
+    $name, $script = $pair -split ','
+    Set-Item -Path "Function:$name" -Value ([ScriptBlock]::Create("Invoke-Runner -Manager moon -Script '$script'"))
+}
 
 # ==============================================================================
 # >> FILE OPERATIONS
-# Functions for file and directory management.
 # ==============================================================================
 
 function rmi {
-    param([string]$query = "")
+    param([string] $query = "")
     $dirs = if ($query) { fd -t d --hidden $query } else { fd -t d --hidden }
     $selected = $dirs | tv
-    if ($selected) {
-        Write-Host "Select delete type:" -ForegroundColor Yellow
-        Write-Host "1. Normal delete" -ForegroundColor Cyan
-        Write-Host "2. Recursive delete" -ForegroundColor Cyan
-        $choice = Read-Host "Enter choice (1 or 2)"
-        if ($choice -eq '1') {
-            Write-Host "Delete normally '$selected'? (y/n)" -ForegroundColor Red
-            $confirm = Read-Host
-            if ($confirm -eq 'y') {
-                Remove-Item $selected
-                Write-Host "Deleted: $selected" -ForegroundColor Green
-            } else {
-                Write-Host "Canceled" -ForegroundColor Gray
-            }
-        } elseif ($choice -eq '2') {
-            Write-Host "Delete recursively '$selected'? (y/n)" -ForegroundColor Red
-            $confirm = Read-Host
-            if ($confirm -eq 'y') {
-                Remove-Item -Recurse -Force $selected
-                Write-Host "Deleted recursively: $selected" -ForegroundColor Green
-            } else {
-                Write-Host "Canceled" -ForegroundColor Gray
-            }
-        } else {
-            Write-Host "Invalid choice. Canceled" -ForegroundColor Gray
-        }
-    }
+    if (-not $selected) { return }
+    Write-Host "1=Normal  2=Recursive  (delete '$selected')" -ForegroundColor Yellow
+    $choice = Read-Host "Choice"
+    $recursive = switch ($choice) { '1' { $false } '2' { $true } default { Write-Host "Canceled" -ForegroundColor Gray; return } }
+    $confirm = Read-Host "Delete '$selected'? (y/n)"
+    if ($confirm -ne 'y') { Write-Host "Canceled" -ForegroundColor Gray; return }
+    if ($recursive) { Remove-Item -Recurse -Force $selected } else { Remove-Item $selected }
+    Write-Host "Deleted: $selected" -ForegroundColor Green
 }
 
 function notes {
-    param([string]$action = "")
-    $notesDir = "C:\Users\Veerapong\Documents\notes"
-    if (-not (Test-Path $notesDir)) {
-        New-Item -ItemType Directory -Path $notesDir | Out-Null
-    }
+    param([string] $action = "")
+    $notesDir = "$HOME\Documents\notes"
+    if (-not (Test-Path $notesDir)) { New-Item -ItemType Directory -Path $notesDir | Out-Null }
     if ($action -eq "new") {
         $fileName = Read-Host "Enter note name (no extension)"
-        if (-not $fileName) {
-            Write-Host "Cancelled" -ForegroundColor Yellow
-            return
-        }
+        if (-not $fileName) { Write-Host "Cancelled" -ForegroundColor Yellow; return }
         $fullPath = Join-Path $notesDir "$fileName.md"
-        if (Test-Path $fullPath) {
-            Write-Host "File exists: $fullPath" -ForegroundColor Red
-            return
-        }
+        if (Test-Path $fullPath) { Write-Host "File exists: $fullPath" -ForegroundColor Red; return }
         New-Item -ItemType File -Path $fullPath | Out-Null
         Write-Host "Note created: $fullPath" -ForegroundColor Green
         zed $fullPath
     } else {
-        $query = if ($action) { $action } else { "." }
-        $selected = fd -t f $query $notesDir | tv
+        $selected = fd -t f ($action ? $action : ".") $notesDir | tv
         if ($selected) { zed $selected }
     }
 }
 
 # ==============================================================================
-# >> UTILITY FUNCTIONS
-# Helper functions for various tasks.
+# >> UTILITIES
 # ==============================================================================
 
 function e { explorer . }
 function cpath { $PWD.Path | Set-Clipboard }
 
-# ==============================================================================
-# >> GITHUB FUNCTIONS
-# Functions for GitHub operations.
-# ==============================================================================
-
+# --- GitHub ---
 function new-repo {
     $name = Read-Host "Enter repo name"
     gh repo create $name --public --clone
 }
-
 function repo {
-    git rev-parse --is-inside-work-tree *>$null
-    if ($LASTEXITCODE -eq 0) {
-        gh repo view --web
-    } else {
-        open "https://github.com/newkub?tab=repositories"
-    }
+    git rev-parse --is-inside-work-tree *> $null
+    if ($LASTEXITCODE -eq 0) { gh repo view --web } else { Start-Process "https://github.com/newkub?tab=repositories" }
 }
 
-# ==============================================================================
-# >> SEARCH FUNCTIONS
-# Functions for searching the web.
-# ==============================================================================
-
+# --- Web search ---
 function g {
-    param([Parameter(ValueFromRemainingArguments=$true)][string[]]$args)
-    if (-not $args) {
-        Start-Process "https://www.google.com"
-        return
-    }
+    param([Parameter(ValueFromRemainingArguments)] [string[]] $args)
+    if (-not $args) { Start-Process "https://www.google.com"; return }
     $engines = @{
-        google = "https://www.google.com/search?q={0}"
-        npm    = "https://www.npmjs.com/search?q={0}"
-        github = "https://github.com/search?q={0}"
-        youtube= "https://www.youtube.com/results?search_query={0}"
+        google   = "https://www.google.com/search?q={0}"
+        npm      = "https://www.npmjs.com/search?q={0}"
+        github   = "https://github.com/search?q={0}"
+        youtube  = "https://www.youtube.com/results?search_query={0}"
         chatgpt  = "https://chat.openai.com/?q={0}"
-        crates  = "https://crates.io/search?q={0}"
+        crates   = "https://crates.io/search?q={0}"
     }
     $first = $args[0].ToLower()
     if ($engines.ContainsKey($first)) {
         $engine = $engines[$first]
-        $query = [uri]::EscapeDataString(($args[1..($args.Length-1)] -join ' '))
+        $query = [uri]::EscapeDataString(($args[1..($args.Length - 1)] -join ' '))
     } else {
         $engine = $engines.google
         $query = [uri]::EscapeDataString(($args -join ' '))
@@ -492,44 +328,35 @@ function g {
 }
 
 function op {
-    param([int]$port)
+    param([int] $port)
     Start-Process "http://localhost:$port"
 }
 
-# ==============================================================================
-# >> CLIPBOARD FUNCTIONS
-# Functions for clipboard operations.
-# ==============================================================================
-
+# --- Clipboard: copy output of last command ---
 function cpo {
     $last = Get-History -Count 1
-    if (-not $last) {
-        Write-Warning "No history found"
-        return
-    }
-    $cmd = $last[0].CommandLine
-    $output = Invoke-Expression $cmd | Out-String -Width 4096
-    $plainOutput = $output -replace "`e\[[\d;]*m", ''
-    $plainOutput.TrimEnd() | Set-Clipboard
+    if (-not $last) { Write-Warning "No history found"; return }
+    $output = Invoke-Expression $last[0].CommandLine | Out-String -Width 4096
+    ($output -replace "`e\[[\d;]*m", '').TrimEnd() | Set-Clipboard
     Write-Host "Last command output copied as plain text."
 }
 
 # ==============================================================================
-# >> ANALYSIS FUNCTIONS
-# Functions for code analysis.
-# ==============================================================================
-
-
-# ==============================================================================
 # >> DEVIN WRAPPER
-# `devin` always runs as `devin --permission-mode dangerous`.
+# `devin` always runs with --permission-mode dangerous.
 # ==============================================================================
 
 function devin {
     $devinCmd = (Get-Command devin -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source
-    if (-not $devinCmd) {
-        Write-Host "devin not found" -ForegroundColor Red
-        return
-    }
+    if (-not $devinCmd) { Write-Host "devin not found" -ForegroundColor Red; return }
     & $devinCmd --permission-mode dangerous @args
 }
+
+# ==============================================================================
+# >> MISE (must be last so it wraps the final prompt function)
+# Activates mise for PowerShell; tools are added to PATH dynamically per directory.
+# Uses MISE_DATA_DIR=D:\mise to avoid cmd.exe PATH overflow.
+# Full path to mise.exe because scoop shims break PowerShell pipes.
+# ==============================================================================
+
+(& 'C:\Users\Veerapong\scoop\apps\mise\current\bin\mise.exe' activate pwsh) | Out-String | Invoke-Expression

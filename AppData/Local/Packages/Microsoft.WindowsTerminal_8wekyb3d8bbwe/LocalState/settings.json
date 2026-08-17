@@ -1,14 +1,14 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
             "command": "closePane",
             "id": "User.closePane"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "openSettings",
                 "target": "settingsUI"
@@ -24,7 +24,7 @@
             "id": "User.tabSearch"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b\r"
@@ -32,7 +32,7 @@
             "id": "User.sendInput.8F63D3A9"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u0003"
@@ -40,14 +40,14 @@
             "id": "User.sendInput.Etx"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "closeTab"
             },
             "id": "User.closeTab.0"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "switchToTab",
                 "index": 8
@@ -65,7 +65,7 @@
     "disableAnimations": false,
     "firstWindowPreference": "persistedWindowLayout",
     "initialPosition": ",",
-    "keybindings": 
+    "keybindings":
     [
         {
             "id": "User.sendInput.8F63D3A9",
@@ -158,18 +158,18 @@
     ],
     "launchMode": "maximized",
     "minimizeToNotificationArea": false,
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "colorScheme": "Campbell",
-            "font": 
+            "font":
             {
                 "face": "MesloLGL Nerd Font Mono",
                 "features": {},
@@ -178,7 +178,7 @@
             "scrollbarState": "visible",
             "startingDirectory": "D:\\"
         },
-        "list": 
+        "list":
         [
             {
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
@@ -206,11 +206,11 @@
                 "name": "Command Prompt"
             },
             {
-                "colorScheme": 
+                "colorScheme":
                 {
                     "dark": "Vintage"
                 },
-                "commandline": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
+                "commandline": "C:\\pwsh\\pwsh.exe",
                 "guid": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
                 "hidden": false,
                 "name": "Powershell"
