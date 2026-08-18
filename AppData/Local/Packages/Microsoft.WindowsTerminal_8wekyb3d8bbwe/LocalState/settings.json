@@ -61,7 +61,7 @@
     "compatibility.allowHeadless": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
+    "defaultProfile": "{e9bcc755-5d6c-43c0-b1a4-f9251ae44706}",
     "disableAnimations": false,
     "firstWindowPreference": "persistedWindowLayout",
     "initialPosition": ",",
@@ -88,12 +88,12 @@
             "keys": "ctrl+w"
         },
         {
-            "id": "User.sendInput.Etx",
-            "keys": "ctrl+c"
-        },
-        {
             "id": "Terminal.PrevTab",
             "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": "User.sendInput.Etx",
+            "keys": "ctrl+c"
         },
         {
             "id": "Terminal.PasteFromClipboard",
@@ -206,37 +206,23 @@
                 "name": "Command Prompt"
             },
             {
-                "colorScheme":
-                {
-                    "dark": "Vintage"
-                },
-                "commandline": "C:\\pwsh\\pwsh.exe",
-                "guid": "{c68f75bd-dfc1-4044-b6b2-9aaf9452ac50}",
-                "hidden": false,
-                "name": "Powershell"
-            },
-            {
-                "guid": "{6cf7ac91-14b1-5265-b0e3-ca1dde7c0065}",
-                "hidden": false,
-                "name": "Ubuntu",
-                "source": "Microsoft.WSL"
-            },
-            {
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Windows PowerShell"
             },
             {
-                "guid": "{0022853a-6348-5ddb-864a-dde8fa68cd98}",
+                "altGrAliasing": true,
+                "antialiasingMode": "grayscale",
+                "closeOnExit": "automatic",
+                "commandline": "C:\\Users\\Veerapong\\scoop\\apps\\pwsh\\current\\pwsh.exe",
+                "cursorShape": "bar",
+                "guid": "{e9bcc755-5d6c-43c0-b1a4-f9251ae44706}",
                 "hidden": false,
-                "name": "Developer Command Prompt for VS 18",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 18",
-                "source": "Windows.Terminal.VisualStudio"
+                "historySize": 9001,
+                "name": "Pwsh",
+                "padding": "8, 8, 8, 8",
+                "snapOnInput": true,
+                "useAcrylic": false
             }
         ]
     },
