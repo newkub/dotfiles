@@ -1,1 +1,6 @@
-{}
+{
+  "dependencies": {
+    "agent-browser": "^0.34.0",
+    "node-gyp": "^13.0.1"
+  }
+}
