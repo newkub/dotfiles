@@ -31,11 +31,12 @@ related:
   - update-dot-devin
   - validate
   - run-check
-  - commit
+  - git-commit
   - ship
   - report
   - idea
-  - report-before
+  - report-only
+
 ---
 
 ## Goal
@@ -86,7 +87,7 @@ related:
 
 > Goal: ระบุ root cause, impact, consumers และแผนแก้ไขที่เล็กที่สุด
 
-1. ทำ `report-before` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน แล้วดำเนินการต่อทันที
+1. ทำ `report-only` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
 2. ทำ `follow-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
 3. ใช้ `use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
 4. ทำ `plan` ก่อนแก้ไขหลายไฟล์ และ `report-plan` ก่อนลงมือ
@@ -121,7 +122,7 @@ related:
 3. ถ้า package manifest เปลี่ยน → ทำ `update-dot-devin`
 4. ทำ `validate` ก่อนจบ task
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
-6. ทำ `commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
+6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
 7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
 8. ทำ `ask-me` เพื่อถาม user ว่าต้องการทำ action ถัดไปหรือไม่
 
