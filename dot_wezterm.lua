@@ -13,7 +13,7 @@ local config = wezterm.config_builder()
 config.default_cwd = "D:\\"
 
 config.default_prog = {
-  "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
+  "C:\\Users\\Veerapong\\scoop\\apps\\pwsh\\current\\pwsh.exe",
 }
 
 -- =====================================
@@ -173,6 +173,12 @@ config.keys = {
     key = "Tab",
     mods = "CTRL|SHIFT",
     action = wezterm.action.ActivateTabRelative(-1),
+  },
+
+  {
+    key = "Tab",
+    mods = "SHIFT",
+    action = wezterm.action.ActivatePaneDirection("Next"),
   },
 
   {

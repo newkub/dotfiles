@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "agent-browser": "^0.34.0",
+    "bunup": "^0.16.32",
+    "chalk": "^6.0.0",
+    "commander": "^15.0.0",
     "node-gyp": "^13.0.1"
   }
 }
