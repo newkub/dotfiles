@@ -152,7 +152,7 @@ aube = "latest"
 "npm:taze" = "latest"
 "npm:pake-cli" = "latest"
 ffmpeg = "latest"
-bun = "latest"
+bun = "1.3.14"
 opencode = "latest"
 podman-tui = "latest"
 podman = { version = "latest", rename_exe = "podman-remote" }
@@ -169,6 +169,7 @@ imagemagick = "latest"
 "npm:npkill" = "latest"
 "npm:git-split-diffs" = "latest"
 hk = "latest"
+"aqua:moonrepo/moon" = "2.5.2"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
