@@ -8,6 +8,7 @@ related:
   - continue
   - follow-your-suggestion
   - follow-skills
+  - follow-skills-map
   - check-reference
   - follow-best-practice
   - learn-from-web
@@ -32,10 +33,11 @@ related:
   - validate
   - run-check
   - git-commit
-  - ship
+  - ship-code
   - report
   - idea
   - report-only
+  - enhance-prompt
 
 ---
 
@@ -55,9 +57,10 @@ related:
 
 > Goal: ระบุ workspace, prompt, ขอบเขต และ references ชัดเจน
 
-1. ทำ `edit-relative` สำหรับงานที่เกี่ยวข้องกับไฟล์
-2. ใช้ "." เป็น trigger สำหรับ `/continue` หรือ `/suggest-next-action` — ถ้างานยังไม่เสร็จให้ทำ `/continue`, ถ้าต้องการแนะนำทิศทางให้ทำ `/suggest-next-action`
-3. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
+1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/report-plan` เพื่อรายงานแผนก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
+2. ทำ `edit-relative` สำหรับงานที่เกี่ยวข้องกับไฟล์
+3. ใช้ "." เป็น trigger สำหรับ `/continue` หรือ `/suggest-next-action` — ถ้างานยังไม่เสร็จให้ทำ `/continue`, ถ้าต้องการแนะนำทิศทางให้ทำ `/suggest-next-action`
+4. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 
 ### 2. Read References
 
@@ -65,7 +68,7 @@ related:
 
 > Goal: ใช้ข้อกำหนดที่มีอยู่จริง ไม่ซ้ำซ้อน
 
-1. ทำ `follow-skills` เพื่อเลือก skills ที่ตรงกับ task
+1. ทำ `follow-skills` หรือ `/follow-skills-map` เพื่อเลือก skills ที่ตรงกับ task
 2. ทำ `follow-write-devin-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
 3. ทำ `check-reference` เพื่อยื่นยันว่า references มีอยู่จริง
 4. ถ้า reference จำเป็นไม่มี → stop และ report
@@ -123,7 +126,7 @@ related:
 4. ทำ `validate` ก่อนจบ task
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
 6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
-7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
+7. ทำ `ship-code` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
 8. ทำ `ask-me` เพื่อถาม user ว่าต้องการทำ action ถัดไปหรือไม่
 
 ### 7. Report And Communicate
