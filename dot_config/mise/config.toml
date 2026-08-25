@@ -1,7 +1,150 @@
 [tasks.update-all]
 description = "update all tools"
-shell = "pwsh -Command"
-run = "winget source update --name msstore ; $null = $LASTEXITCODE ; winget source update --name winget ; $null = $LASTEXITCODE ; winget source update --name winget-font ; $null = $LASTEXITCODE ; scoop update && scoop update * ; $null = $LASTEXITCODE ; winget upgrade --all ; $null = $LASTEXITCODE ; bun update -g && bun upgrade ; $null = $LASTEXITCODE ; npm update -g ; $null = $LASTEXITCODE ; pnpm update -g ; $null = $LASTEXITCODE ; python -m pip install --upgrade pip 2>$null ; $null = $LASTEXITCODE ; pip-review --auto 2>$null ; $null = $LASTEXITCODE ; uv tool upgrade --all ; $null = $LASTEXITCODE ; pipx upgrade-all 2>$null ; $null = $LASTEXITCODE ; choco upgrade all -y 2>$null ; $null = $LASTEXITCODE ; cargo install-update -a 2>$null ; $null = $LASTEXITCODE ; wsl --update 2>$null ; $null = $LASTEXITCODE ; mise upgrade && mise prune --yes ; $null = $LASTEXITCODE ; mise self-update -y && mise reshim ; $null = $LASTEXITCODE ; rustup update stable && gh extension upgrade --all && mise run chezmoi-update && skills update && skills update -g"
+shell = "pwsh -NoProfile -Command"
+run = '''
+$ErrorActionPreference = "Continue"
+$ProgressPreference = "SilentlyContinue"
+$script:failed = 0
+
+function Strip-Ansi ($text) {
+    $text -replace '\x1b\[[0-9;]*m', ''
+}
+
+function Step ($name, $scriptblock) {
+    Write-Host "`n[update-all] $name" -ForegroundColor Cyan
+    try {
+        $lastExit = 0
+        $output = & $scriptblock 2>&1
+        $lastExit = $LASTEXITCODE
+        if ($lastExit -ne 0) { throw "exit code $lastExit" }
+        $output | ForEach-Object { Write-Host "  $_" }
+        Write-Host "  OK" -ForegroundColor Green
+    } catch {
+        Write-Host "  FAIL: $_" -ForegroundColor Red
+        $script:failed++
+    }
+}
+
+function Test-Admin {
+    $p = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
+    $p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+Step "winget sources" {
+    $ok = $true
+    winget source update --name msstore; if ($LASTEXITCODE -ne 0) { $ok = $false }
+    winget source update --name winget; if ($LASTEXITCODE -ne 0) { $ok = $false }
+    winget source update --name winget-font; if ($LASTEXITCODE -ne 0) { $ok = $false }
+    if (-not $ok) { exit 1 }
+}
+
+Step "scoop" {
+    scoop update | ForEach-Object { Write-Host "  $_" }
+    if ($LASTEXITCODE -ne 0) { throw }
+
+    scoop hold mise | ForEach-Object { Write-Host "  $_" }
+
+    $outdated = scoop status 6>&1 |
+        ForEach-Object { Strip-Ansi $_ } |
+        Select-String '^(?!Name|----|\s*$)([^\s]+)' |
+        ForEach-Object { $_.Matches.Groups[1].Value } |
+        Sort-Object -Unique
+
+    foreach ($pkg in $outdated) {
+        if ($pkg -eq 'mise') {
+            Write-Host "  skip $pkg (held/self-managed)" -ForegroundColor Yellow
+            continue
+        }
+        Write-Host "  update $pkg"
+        try {
+            $out = scoop update $pkg 2>&1
+            $out | ForEach-Object { Write-Host "    $_" }
+            if ($LASTEXITCODE -ne 0) { throw }
+            Write-Host "    OK" -ForegroundColor Green
+        } catch {
+            Write-Host "    FAIL: $_" -ForegroundColor Red
+            $script:failed++
+        }
+    }
+}
+
+Step "winget" {
+    $wingetSkip = @(
+        'BandicamCompany.Bandicam',
+        'BandicamCompany.Bandicut',
+        'Chocolatey.Chocolatey',
+        'Microsoft.Edge'
+    )
+    foreach ($id in $wingetSkip) {
+        winget pin add --id $id 2>&1 | ForEach-Object { Write-Host "  pin: $_" }
+        $null = $LASTEXITCODE
+    }
+    winget upgrade --all --accept-source-agreements --accept-package-agreements
+}
+
+Step "bun" { bun update -g }
+Step "npm" { npm update -g }
+Step "pnpm" { pnpm update -g }
+
+Step "pip" {
+    python -m pip install --upgrade pip
+    if ($LASTEXITCODE -ne 0) { throw }
+    python -m pip_review --auto
+}
+
+Step "uv" { uv tool upgrade --all }
+
+Step "pipx" {
+    if (Get-Command pipx -ErrorAction SilentlyContinue) {
+        pipx upgrade-all
+    } else {
+        Write-Host "  pipx not installed, skipping" -ForegroundColor Yellow
+    }
+}
+
+Step "choco" {
+    if (Test-Admin) {
+        choco upgrade all -y
+    } else {
+        Write-Host "  not admin, skipping choco" -ForegroundColor Yellow
+    }
+}
+
+Step "cargo" {
+    if (-not (Get-Command cargo-install-update -ErrorAction SilentlyContinue)) {
+        if (Get-Command cargo-binstall -ErrorAction SilentlyContinue) {
+            cargo-binstall cargo-update -y
+        } else {
+            cargo install cargo-update
+        }
+    }
+    cargo install-update -a
+}
+
+Step "wsl" {
+    if (Test-Admin -and (Get-Command wsl -ErrorAction SilentlyContinue)) {
+        wsl --update
+    } else {
+        Write-Host "  skip wsl (not admin or not installed)" -ForegroundColor Yellow
+    }
+}
+
+Step "mise tools" { mise upgrade }
+Step "mise prune" { mise prune --yes }
+Step "mise reshim" { mise reshim }
+Step "mise self-update" { mise self-update -y }
+
+Step "rustup" { rustup update stable }
+Step "gh extensions" { gh extension upgrade --all }
+Step "chezmoi" { mise run chezmoi-update }
+Step "skills" {
+    skills update
+    skills update -g
+}
+
+Write-Host "`n[update-all] completed with $failed failure(s)" -ForegroundColor $(if ($failed -eq 0) { 'Green' } else { 'Red' })
+exit $failed
+'''
 
 [tasks.cleanup]
 description = "cleanup caches"
@@ -25,13 +168,13 @@ shell = "pwsh -Command"
 run = '& { function Show-Section ($title, $script, $limit = 0) { Write-Host "`n=== $title ===" -ForegroundColor Cyan; try { $out = & $script 2>$null } catch { $out = $null }; if (-not $out) { Write-Host "  no output / not installed" -ForegroundColor Yellow } else { $lines = @($out); $total = $lines.Count; if ($limit -gt 0 -and $total -gt $limit) { $lines | Select-Object -First $limit | Out-Host; Write-Host "  ... $total lines total, showing first $limit" -ForegroundColor Gray } else { $lines | Out-Host; Write-Host "  $total lines" -ForegroundColor Gray } } }; Show-Section "Scoop" { scoop list }; Show-Section "Mise" { mise list }; Show-Section "Bun" { bun pm ls -g }; Show-Section "npm" { npm list -g --depth=0 }; Show-Section "pnpm" { pnpm list -g }; Show-Section "uv" { uv tool list }; Show-Section "pip" { python -m pip list }; Show-Section "winget" { winget list } 50; Show-Section "gh" { gh extension list } }'
 
 [env]
-OPENAI_API_KEY = "${env:OPENAI_API_KEY}"
-GEMINI_API_KEY = "${env:GEMINI_API_KEY}"
-CLAUDE_API_KEY = "${env:CLAUDE_API_KEY}"
-OPENROUTER_API_KEY = "${env:OPENROUTER_API_KEY}"
-DEEPSEEK_API_KEY = "${env:DEEPSEEK_API_KEY}"
-XAI_API_KEY = "${env:XAI_API_KEY}"
-MINIMAX_API_KEY = "${env:MINIMAX_API_KEY}"
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+GEMINI_API_KEY = "${GEMINI_API_KEY:-}"
+CLAUDE_API_KEY = "${CLAUDE_API_KEY:-}"
+OPENROUTER_API_KEY = "${OPENROUTER_API_KEY:-}"
+DEEPSEEK_API_KEY = "${DEEPSEEK_API_KEY:-}"
+XAI_API_KEY = "${XAI_API_KEY:-}"
+MINIMAX_API_KEY = "${MINIMAX_API_KEY:-}"
 SCCACHE_DIR = "D:\\.cache\\sccache"
 MISE_INSTALLS_DIR = "D:\\mise"
 
@@ -54,14 +197,13 @@ gitleaks = "latest"
 gitui = "latest"
 glow = "latest"
 hyperfine = "latest"
-github-cli = "latest"
 uv = "latest"
 yazi = "latest"
 ttyd = "latest"
 edit = "latest"
 task = "latest"
 television = "latest"
-ripgrep = "latest"
+rg = "latest"
 zig = "latest"
 rust = "latest"
 act = "latest"
@@ -82,7 +224,6 @@ gitu = "latest"
 git-lfs = "latest"
 dotenv-linter = "latest"
 sccache = "latest"
-rg = "latest"
 ast-grep = "latest"
 starship = "latest"
 viteplus = "latest"
@@ -152,7 +293,7 @@ aube = "latest"
 "npm:taze" = "latest"
 "npm:pake-cli" = "latest"
 ffmpeg = "latest"
-bun = "1.3.14"
+bun = "latest"
 opencode = "latest"
 podman-tui = "latest"
 podman = { version = "latest", rename_exe = "podman-remote" }
@@ -173,7 +314,7 @@ hk = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
-env_shell_expand = false
+env_shell_expand = true
 windows_shim_mode = "exe"
 experimental = true
 minimum_release_age = "0"
