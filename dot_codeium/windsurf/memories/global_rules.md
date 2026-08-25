@@ -1,43 +1,6 @@
 ---
-title: Global Rules
+name: global-rules
 description: ลำดับการทำงานทุก task ให้ปลอดภัย ตรวจสอบได้ และส่งมอบครบ
-auto_execution_mode: 3
-related:
-  - edit-relative
-  - suggest-next-action
-  - continue
-  - follow-your-suggestion
-  - follow-skills
-  - follow-skills-map
-  - check-reference
-  - follow-best-practice
-  - learn-from-web
-  - deep-research
-  - use-scripts
-  - plan
-  - report-plan
-  - deep-analyze-by-use-scripts
-  - scan-codebase
-  - resolve-errors
-  - ask-me
-  - refactor
-  - follow-architecture
-  - follow-write-devin-skills
-  - follow-config
-  - follow-deep
-  - follow-barrel-export
-  - restructure
-  - loop-until-complete
-  - realize-implementation
-  - update-dot-devin
-  - validate
-  - run-check
-  - git-commit
-  - ship-code
-  - report
-  - idea
-  - report-only
-  - enhance-prompt
 
 ---
 
@@ -126,7 +89,7 @@ related:
 4. ทำ `validate` ก่อนจบ task
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
 6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
-7. ทำ `ship-code` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
+7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
 8. ทำ `ask-me` เพื่อถาม user ว่าต้องการทำ action ถัดไปหรือไม่
 
 ### 7. Report And Communicate
@@ -145,8 +108,7 @@ related:
 ### 1. Structure And Consistency
 
 - เรียง `## Goal` → `## Scope` → `## Execute` → `## Rules` → `## Expected Outcome` ไม่เกิน 250 บรรทัด
-- Frontmatter: `title` Title Case, `description` ≤100 ตัวอักษร, `auto_execution_mode: 3`
-- `related` ต้องมีเฉพาะ skills ที่เรียกโดยตรง ไม่มี missing/unused
+- Frontmatter: `name` ตรง directory name lowercase คั่นด้วย `-`, `description` ≤100 ตัวอักษร
 - Heading ภาษาอังกฤษ Title Case, รายการภาษาไทย, backticks สำหรับ `tools`, `commands`, paths และ skill references
 - ทุก section ต้องสอดคล้องกันและให้ผลเหมือนเดิมเมื่อ input เหมือนเดิม
 
