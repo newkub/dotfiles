@@ -44,7 +44,7 @@ Step "scoop" {
 
     scoop hold mise | ForEach-Object { Write-Host "  $_" }
 
-    $outdated = scoop status 6>&1 |
+    $outdated = (scoop status 6>&1 | Out-String -Stream) |
         ForEach-Object { Strip-Ansi $_ } |
         Select-String '^(?!Name|----|\s*$)([^\s]+)' |
         ForEach-Object { $_.Matches.Groups[1].Value } |
@@ -160,7 +160,7 @@ run = "chezmoi re-add"
 [tasks.cargo-clean-all]
 description = "Clean all Rust projects recursively"
 shell = "pwsh -Command"
-run_windows = "powershell -NoProfile -Command \"Get-ChildItem -Recurse -Filter Cargo.toml | ForEach-Object { `$dir = `$_.DirectoryName; Write-Host \\\\\"Cleaning `$dir\\\\\"; Push-Location `$dir; cargo clean; Pop-Location }\""
+run_windows = '''powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter Cargo.toml | ForEach-Object { `$dir = `$_.DirectoryName; Write-Host \\"Cleaning `$dir\\"; Push-Location `$dir; cargo clean; Pop-Location }"'''
 
 [tasks.program-list]
 description = "list installed programs"
