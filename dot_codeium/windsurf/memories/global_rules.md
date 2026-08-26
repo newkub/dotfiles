@@ -22,8 +22,12 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/report-plan` เพื่อรายงานแผนก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
 2. ทำ `edit-relative` สำหรับงานที่เกี่ยวข้องกับไฟล์
-3. ใช้ "." เป็น trigger สำหรับ `/continue` หรือ `/suggest-next-action` — ถ้างานยังไม่เสร็จให้ทำ `/continue`, ถ้าต้องการแนะนำทิศทางให้ทำ `/suggest-next-action`
-4. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
+3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
+4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
+5. ถ้า `AGENTS.md` ระบุ workflows → พยายามเรียกใช้จาก `/follow-agents-md` แทนการทำเองโดยตรง
+6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
+8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 
 ### 2. Read References
 
@@ -53,8 +57,8 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ระบุ root cause, impact, consumers และแผนแก้ไขที่เล็กที่สุด
 
-1. ทำ `report-only` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
-2. ทำ `follow-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
+1. ทำ `report-before` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
+2. ทำ `follow-all-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
 3. ใช้ `use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
 4. ทำ `plan` ก่อนแก้ไขหลายไฟล์ และ `report-plan` ก่อนลงมือ
 5. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `deep-analyze-by-use-scripts`
@@ -72,10 +76,11 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `follow-architecture` และรักษา existing style
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
-5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `follow-write-devin-skills`
+5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `follow-write-devin-skills` และทำ `consider-use-in-another-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
 6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `follow-barrel-export`
 7. หลังเขียนหรือ refactor → ทำ `restructure`
-8. ถ้า check ไม่ผ่าน → ทำ `resolve-errors` และ recheck สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report
+8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
+9. ถ้า check ไม่ผ่าน → ทำ `resolve-errors` และ recheck สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report
 
 ### 6. Validate And Complete
 
@@ -132,6 +137,19 @@ description: ลำดับการทำงานทุก task ให้ป�
 - เก็บเฉพาะข้อกำหนดที่ทำให้ผลลัพธ์เปลี่ยนอย่างมีนัยสำคัญ ครอบคลุม impact สำคัญทั้งหมด
 - ทุก instruction ต้องระบุ action, condition หรือ expected result ที่ตีความได้ทางเดียว
 - ห้ามใช้ placeholder, generic filler, mock หรือ TODO ที่ไม่จำเป็น
+
+### 5. Skill And Subagent Discipline
+
+- พยายามเรียกใช้งานผ่าน `/follow-agents-md` ก่อน ถ้า `AGENTS.md` ระบุ workflow
+- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+- ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
+- ถ้าไม่แน่ใจว่าควรใช้ skill ใด → ทำ `/ask-me`
+
+### 6. Reference Discipline
+
+- ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์/ skill → ทำ `/update-references` เสมอ แล้ว verify ว่าไม่มี references เก่าเหลือ
+- ถ้าไฟล์ที่แก้ไม่มี references → ไม่ต้องทำ `/update-references`
+- หลัง rename skill หรือ workflow → อัปเดต `AGENTS.md`, `related`, และ `global_rules.md` ทันที
 
 ## Expected Outcome
 
