@@ -1,4 +1,4 @@
----
+﻿---
 name: global-rules
 description: ลำดับการทำงานทุก task ให้ปลอดภัย ตรวจสอบได้ และส่งมอบครบ
 
@@ -28,6 +28,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
 7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
+9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-files-in-computer` ก่อนดำเนินการต่อ
 
 ### 2. Read References
 
@@ -36,7 +37,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ใช้ข้อกำหนดที่มีอยู่จริง ไม่ซ้ำซ้อน
 
 1. ทำ `follow-skills` หรือ `/follow-skills-map` เพื่อเลือก skills ที่ตรงกับ task
-2. ทำ `follow-write-devin-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
+2. ทำ `follow-create-devin-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
 3. ทำ `check-reference` เพื่อยื่นยันว่า references มีอยู่จริง
 4. ถ้า reference จำเป็นไม่มี → stop และ report
 
@@ -58,7 +59,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ระบุ root cause, impact, consumers และแผนแก้ไขที่เล็กที่สุด
 
 1. ทำ `report-before` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
-2. ทำ `follow-all-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
+2. ทำ `follow-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
 3. ใช้ `use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
 4. ทำ `plan` ก่อนแก้ไขหลายไฟล์ และ `report-plan` ก่อนลงมือ
 5. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `deep-analyze-by-use-scripts`
@@ -76,7 +77,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `follow-architecture` และรักษา existing style
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
-5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `follow-write-devin-skills` และทำ `consider-use-in-another-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
+5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `follow-create-devin-skills` และทำ `consider-use-in-another-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
 6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `follow-barrel-export`
 7. หลังเขียนหรือ refactor → ทำ `restructure`
 8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
@@ -103,10 +104,11 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ผู้ใช้ทราบสิ่งที่เปลี่ยน ผลตรวจสอบ ข้อจำกัด และสถานะส่งมอบ
 
-1. ทำตาม `report` และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ
+1. ทำตาม `report-table` เป็นค่าเริ่มต้นในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — ถ้าควรมีสามารถใช้ `report-ansi`, `report-codeblock`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-progress`, `report-idea`, `report-flow`, `report-before`, `report-usage-md` ตาม context
 2. ไม่เริ่มด้วย acknowledgment phrase และไม่กล่าวอ้างผลที่ยังไม่ตรวจสอบ
 3. ถ้าตัดสินใจเรื่องเสี่ยงสูง → ใช้ `ask-me`; ถ้าผู้ใช้ขอ idea → ทำ `idea`
 4. ถ้างานไม่สมบูรณ์ → ระบุสิ่งที่ค้าง สาเหตุ และขั้นตอนที่จำเป็น
+5. ทุก report table ต้องมีคอลัมน์ "No." เป็นคอลัมน์แรก เรียงลำดับ 1, 2, 3, ... ตามลำดับของแถว โดยเริ่มจาก 1
 
 ## Rules
 
