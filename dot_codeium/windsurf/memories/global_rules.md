@@ -25,7 +25,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
 4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
 5. ถ้า `AGENTS.md` ระบุ workflows → พยายามเรียกใช้จาก `/follow-agents-md` แทนการทำเองโดยตรง
-6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/consider-use-subagents` ตาม context
 7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-files-in-computer` ก่อนดำเนินการต่อ
@@ -37,7 +37,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ใช้ข้อกำหนดที่มีอยู่จริง ไม่ซ้ำซ้อน
 
 1. ทำ `follow-skills` หรือ `/follow-skills-map` เพื่อเลือก skills ที่ตรงกับ task
-2. ทำ `follow-create-devin-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
+2. ทำ `update-devin-global-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
 3. ทำ `check-reference` เพื่อยื่นยันว่า references มีอยู่จริง
 4. ถ้า reference จำเป็นไม่มี → stop และ report
 
@@ -77,7 +77,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `follow-architecture` และรักษา existing style
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
-5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `follow-create-devin-skills` และทำ `consider-use-in-another-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
+5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `update-devin-global-skills` และทำ `consider-use-in-another-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
 6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `follow-barrel-export`
 7. หลังเขียนหรือ refactor → ทำ `restructure`
 8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
@@ -92,7 +92,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 1. ทบทวนแผนและทำ `loop-until-complete` เมื่อต้องตรวจซ้ำจนผ่าน
 2. ทำ `realize-implementation` หลัง implementation เสร็จ
 3. ถ้า package manifest เปลี่ยน → ทำ `update-dot-devin`
-4. ทำ `validate` ก่อนจบ task
+4. ทำ `/deep-validate` ก่อนจบ task
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
 6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
 7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
@@ -125,6 +125,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 - ใช้ relative references และแปลง command equivalents ตาม ecosystem ไม่ผูกกับ AI tool เดียว
 - ถ้า workspace เป็น monorepo ให้ใช้ run command ของ monorepo (`moon run`, `turbo run`, `pnpm --recursive`, `bun run --filter` ตามที่ตรวจพบ) กับ skills `run-*` ต่างๆ แทนการรันผ่าน workspace เดี่ยว
 - ใช้ `use-*` skills สำหรับ tools/libraries เฉพาะเจาะจง และใช้ official docs เป็นแหล่งหลัก
+- ก่อนเลือก dependencies หรือ libraries ใหม่ ให้ทำ `/follow-my-tech-stack` เพื่อตรวจสอบว่าสอดคล้องกับ tech stack ทีกำหนดไว้ และไม่ duplicate กับ tools ทีมีอยู่
 - ถ้าต้องติดตั้ง program แบบ global ให้พยายามใช้ `mise use -g <program>` ก่อน แล้วจึงพิจารณา package manager ของระบบ เช่น `scoop`, `brew`, `apt`, `winget`
 
 ### 3. Safety And Deterministic Execution
@@ -143,7 +144,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 ### 5. Skill And Subagent Discipline
 
 - พยายามเรียกใช้งานผ่าน `/follow-agents-md` ก่อน ถ้า `AGENTS.md` ระบุ workflow
-- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/consider-use-subagents` ตาม context
 - ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 - ถ้าไม่แน่ใจว่าควรใช้ skill ใด → ทำ `/ask-me`
 
@@ -152,6 +153,24 @@ description: ลำดับการทำงานทุก task ให้ป�
 - ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์/ skill → ทำ `/update-references` เสมอ แล้ว verify ว่าไม่มี references เก่าเหลือ
 - ถ้าไฟล์ที่แก้ไม่มี references → ไม่ต้องทำ `/update-references`
 - หลัง rename skill หรือ workflow → อัปเดต `AGENTS.md`, `related`, และ `global_rules.md` ทันที
+
+### 7. Prompt Question Handling
+
+- ถ้า prompt มีคำถามหรือข้อที่ต้องตอบจาก user ก่อนจึงจะเริ่มงานได้ → ต้องใช้ `/ask-me` เป็น prompt ให้ user เลือก/ตอบ ไม่ใช่ตอบแทน user ในแชท
+- ต้องตอบคำถามทั้งหมดให้ครบก่อนจึงจะเริ่มทำงาน
+- ถ้า prompt มีทั้งคำถามและคำสั่่งงาน ให้ถามคำถามก่อน แล้วค่อยลงมือ
+
+### 8. In-Chat Answers And Report Skills
+
+- เมื่อตอบคำถามหรืออธิบายผลในแชท ให้ระบุ `report-*` skills ที่ user สามารถใช้ดูผลลัพธ์อย่างเป็นระบบ
+- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-table`, `/report-file-structure`, `/report-plan` ฯลฯ ตาม context
+- ไม่ตอบยาวเกินจำเป็นในแชทถ้ามี report skill ที่รองรับ
+
+### 9. New Request While Old Work Is Pending
+
+- ถ้างานเดิมยังไม่เสร็จ และมี request ใหม่เข้ามา ให้ทำงานเดิมให้เสร็จก่อน แล้วจึงทำงานใหม่
+- ยกเว้น request ใหม่หักล้างหรือทำให้งานเดิมไม่มีความจำเป็นอีกต่อไป → ให้ใช้ `/rethink` แล้วทำงานใหม่แทน
+- ถ้าไม่แน่ใจวา request ใหม่หักล้างงานเดิมหรือไม่ → ใช้ `/ask-me` ถาม user ก่อน
 
 ## Expected Outcome
 
