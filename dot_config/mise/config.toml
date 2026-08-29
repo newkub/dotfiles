@@ -311,6 +311,7 @@ imagemagick = "latest"
 "npm:git-split-diffs" = "latest"
 hk = "latest"
 "aqua:moonrepo/moon" = "2.5.2"
+"npm:wrangler" = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
