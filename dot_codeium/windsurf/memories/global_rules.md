@@ -181,6 +181,12 @@ description: ลำดับการทำงานทุก task ให้ป�
 - ไม่เริ่ม implement หรือสร้าง plan ทันที จนกว่าผู้ใช้จะยืนยัน
 - ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/realize-implementation` หรือ `/create-plan-in-dot-devin` ตาม context
 
+### 11. Link/URL Handling
+
+- ถ้าผู้ใช้ส่ง link หรือ URL มา และไม่แน่ใจว่าคือ project หรือไฟล์อะไร → ใช้ `/search-project-in-drive-d` เพื่อหา project ทีตรงกับ link ใน `D:\`
+- ถ้าไม่พบใน `D:\` → ใช้ `/search-skills` หรือค้นหาใน `devin-skills` เพื่อหา references ทีเกี่ยวข้อง
+- ถ้ายังไม่ชัดเจน → ใช้ `/ask-me` ถาม user ก่อนตอบ
+
 ## Expected Outcome
 
 - ลำดับ prepare → read → research → analyze → write → validate → report อย่างชัดเจน
