@@ -96,7 +96,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
 6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
 7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
-8. ทำ `/report-progress` เสมอก่อนจบ task เพื่อรายงานความคืบหน้า งานเสร็จ งานค้าง และ next actions
+8. ทำ `/report-session-status` เสมอก่อนจบ task เพื่อรายงานความคืบหน้า งานเสร็จ งานค้าง และ next actions
 9. ทำ `ask-me` เพื่อถาม user ว่าต้องการทำ action ถัดไปหรือไม่
 
 ### 7. Report And Communicate
@@ -105,12 +105,12 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ผู้ใช้ทราบสิ่งที่เปลี่ยน ผลตรวจสอบ ข้อจำกัด และสถานะส่งมอบ
 
-1. ทำตาม `report-table` เป็นค่าเริ่มต้นในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — ถ้าควรมีสามารถใช้ `report-ansi`, `report-codeblock`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-progress`, `report-idea`, `report-flow`, `report-before`, `report-usage-md` ตาม context
+1. เลือกใช้ `report-*` skills ทีเหมาะสมตาม context ในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — เช่น `report-ansi`, `report-codeblock`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-session-status`, `report-idea`, `report-flow`, `report-before`, `report-usage-md`
 2. ไม่เริ่มด้วย acknowledgment phrase และไม่กล่าวอ้างผลที่ยังไม่ตรวจสอบ
 3. ถ้าตัดสินใจเรื่องเสี่ยงสูง → ใช้ `ask-me`; ถ้าผู้ใช้ขอ idea → ทำ `idea`
 4. ถ้างานไม่สมบูรณ์ → ระบุสิ่งที่ค้าง สาเหตุ และขั้นตอนที่จำเป็น
 5. ทุก report table ต้องมีคอลัมน์ "No." เป็นคอลัมน์แรก เรียงลำดับ 1, 2, 3, ... ตามลำดับของแถว โดยเริ่มจาก 1
-6. ทำ `/report-progress` ก่อนจบ task เสมอ เพื่อแสดง progress bar เปอร์เซ็นต์ งานเสร็จ งานค้าง และ next actions
+6. ทำ `/report-session-status` ก่อนจบ task เสมอ เพื่อแสดง progress bar เปอร์เซ็นต์ งานเสร็จ งานค้าง และ next actions
 
 ## Rules
 
@@ -165,7 +165,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 ### 8. In-Chat Answers And Report Skills
 
 - เมื่อตอบคำถามหรืออธิบายผลในแชท ให้ระบุ `report-*` skills ที่ user สามารถใช้ดูผลลัพธ์อย่างเป็นระบบ
-- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-table`, `/report-file-structure`, `/report-plan` ฯลฯ ตาม context
+- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-file-structure`, `/report-plan` ฯลฯ ตาม context
 - ไม่ตอบยาวเกินจำเป็นในแชทถ้ามี report skill ที่รองรับ
 
 ### 9. New Request While Old Work Is Pending
@@ -186,6 +186,13 @@ description: ลำดับการทำงานทุก task ให้ป�
 - ถ้าผู้ใช้ส่ง link หรือ URL มา และไม่แน่ใจว่าคือ project หรือไฟล์อะไร → ใช้ `/search-project-in-drive-d` เพื่อหา project ทีตรงกับ link ใน `D:\`
 - ถ้าไม่พบใน `D:\` → ใช้ `/search-skills` หรือค้นหาใน `devin-skills` เพื่อหา references ทีเกี่ยวข้อง
 - ถ้ายังไม่ชัดเจน → ใช้ `/ask-me` ถาม user ก่อนตอบ
+
+### 12. Global Skills Standards
+
+- ถ้าแก้ไข สร้าง หรือย้าย skill ใน `C:\Users\Veerapong\AppData\Roaming\devin\skills` → ทำ `/update-devin-global-skills` เสมอ
+- skill ใน global skills ใช้ภาษาไทยสำหรับเนื้อหา แต่คงคำศัพท์เทคนิค เช่น `git`, `lint`, `AST`, `CLI`, `JSON`, skill names, tool names, commands, paths ไว้เป็นภาษาอังกฤษ
+- project-local skills ใช้ภาษาอังกฤษทั้งหมด
+- ถ้า skill ใน global skills มีเนื้อหาเป็นภาษาอังกฤษทั้งหมด ให้แปลเป้นภาษาไทยโดยรักษาคำศัพท์เทคนิค
 
 ## Expected Outcome
 

@@ -1,185 +1,123 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions":
+    "actions": 
     [
         {
-            "command": "closePane",
-            "id": "User.closePane"
-        },
-        {
-            "command":
+            "command": 
             {
-                "action": "openSettings",
-                "target": "settingsUI"
+                "action": "splitPane",
+                "split": "up",
+                "splitMode": "duplicate"
             },
-            "id": "User.openSettings.6CD791B"
+            "id": "User.splitPane.7A967A9"
         },
         {
-            "command": "openSystemMenu",
-            "id": "User.openSystemMenu"
-        },
-        {
-            "command": "tabSearch",
-            "id": "User.tabSearch"
-        },
-        {
-            "command":
+            "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b\r"
+                "action": "splitPane",
+                "split": "left",
+                "splitMode": "duplicate"
             },
-            "id": "User.sendInput.8F63D3A9"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u0003"
-            },
-            "id": "User.sendInput.Etx"
-        },
-        {
-            "command":
-            {
-                "action": "closeTab"
-            },
-            "id": "User.closeTab.0"
-        },
-        {
-            "command":
-            {
-                "action": "switchToTab",
-                "index": 8
-            },
-            "id": "User.switchToTab.ED268D78"
+            "id": "User.splitPane.652D529A"
         }
     ],
-    "alwaysShowNotificationIcon": false,
-    "autoHideWindow": true,
-    "centerOnLaunch": true,
-    "compatibility.allowHeadless": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{e9bcc755-5d6c-43c0-b1a4-f9251ae44706}",
-    "disableAnimations": false,
-    "firstWindowPreference": "persistedWindowLayout",
-    "initialPosition": ",",
-    "keybindings":
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings": 
     [
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
+            "id": "User.splitPane.7A967A9",
+            "keys": "ctrl+up"
         },
         {
-            "id": "User.openSettings.6CD791B",
-            "keys": "ctrl+numpad_period"
+            "id": "Terminal.DuplicatePaneDown",
+            "keys": "ctrl+down"
         },
         {
-            "id": "User.tabSearch",
-            "keys": "ctrl+shift+b"
+            "id": "Terminal.DuplicatePaneRight",
+            "keys": "ctrl+right"
         },
         {
-            "id": "Terminal.CopyToClipboard",
-            "keys": "ctrl+shift+c"
+            "id": "Terminal.OpenSettingsUI",
+            "keys": "f1"
         },
         {
-            "id": "User.closeTab.0",
-            "keys": "ctrl+w"
-        },
-        {
-            "id": "Terminal.PrevTab",
-            "keys": "ctrl+shift+tab"
-        },
-        {
-            "id": "User.sendInput.Etx",
-            "keys": "ctrl+c"
-        },
-        {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+shift+v"
+            "id": "User.splitPane.652D529A",
+            "keys": "ctrl+left"
         },
         {
             "id": "Terminal.OpenNewTab",
             "keys": "ctrl+t"
         },
         {
-            "id": "Terminal.DuplicatePaneAuto",
-            "keys": "alt+shift+d"
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+comma"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         },
         {
             "id": "Terminal.FindText",
             "keys": "ctrl+f"
         },
         {
-            "id": "Terminal.ToggleCommandPalette",
-            "keys": "f1"
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "alt+shift+d"
         },
         {
-            "id": "Terminal.NextTab",
-            "keys": "ctrl+tab"
-        },
-        {
-            "id": "Terminal.SwitchToTab0",
-            "keys": "ctrl+1"
-        },
-        {
-            "id": "Terminal.SwitchToTab1",
-            "keys": "ctrl+2"
-        },
-        {
-            "id": "Terminal.SwitchToTab2",
-            "keys": "ctrl+3"
-        },
-        {
-            "id": "Terminal.SwitchToTab3",
-            "keys": "ctrl+4"
-        },
-        {
-            "id": "Terminal.SwitchToTab4",
-            "keys": "ctrl+5"
-        },
-        {
-            "id": "Terminal.SwitchToTab5",
-            "keys": "ctrl+6"
-        },
-        {
-            "id": "Terminal.SwitchToTab6",
-            "keys": "ctrl+7"
-        },
-        {
-            "id": "Terminal.SwitchToTab7",
-            "keys": "ctrl+8"
-        },
-        {
-            "id": "User.switchToTab.ED268D78",
-            "keys": "ctrl+9"
+            "id": null,
+            "keys": "ctrl+shift+t"
         }
     ],
     "launchMode": "maximized",
-    "minimizeToNotificationArea": false,
-    "newTabMenu":
+    "newTabMenu": 
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles":
+    "profiles": 
     {
-        "defaults":
+        "defaults": 
         {
-            "colorScheme": "Campbell",
-            "font":
+            "font": 
             {
                 "face": "MesloLGL Nerd Font Mono",
-                "features": {},
                 "size": 14
-            },
-            "scrollbarState": "visible",
-            "startingDirectory": "D:\\"
+            }
         },
-        "list":
+        "list": 
         [
+            {
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
+            },
+            {
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
+                "source": "Windows.Terminal.PowershellCore",
+                "startingDirectory": "D:\\"
+            },
             {
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
                 "hidden": false,
@@ -187,49 +125,19 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "altGrAliasing": true,
-                "antialiasingMode": "grayscale",
-                "closeOnExit": "automatic",
-                "commandline": "C:\\Users\\Veerapong\\scoop\\shims\\nu.exe",
-                "cursorShape": "bar",
-                "guid": "{a3146190-2d94-41ba-a279-904c44dd83f7}",
+                "guid": "{0022853a-6348-5ddb-864a-dde8fa68cd98}",
                 "hidden": false,
-                "historySize": 9001,
-                "name": "Nushell",
-                "padding": "8, 8, 8, 8",
-                "snapOnInput": true,
-                "useAcrylic": false
+                "name": "Developer Command Prompt for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "guid": "{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
                 "hidden": false,
-                "name": "Command Prompt"
-            },
-            {
-                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "hidden": false,
-                "name": "Windows PowerShell"
-            },
-            {
-                "altGrAliasing": true,
-                "antialiasingMode": "grayscale",
-                "closeOnExit": "automatic",
-                "commandline": "C:\\Users\\Veerapong\\scoop\\apps\\pwsh\\current\\pwsh.exe",
-                "cursorShape": "bar",
-                "guid": "{e9bcc755-5d6c-43c0-b1a4-f9251ae44706}",
-                "hidden": false,
-                "historySize": 9001,
-                "name": "Pwsh",
-                "padding": "8, 8, 8, 8",
-                "snapOnInput": true,
-                "useAcrylic": false
+                "name": "Developer PowerShell for VS 18",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
     "schemes": [],
-    "showTabsFullscreen": false,
-    "tabWidthMode": "equal",
-    "themes": [],
-    "useAcrylicInTabRow": false,
-    "windowingBehavior": "useAnyExisting"
+    "themes": []
 }
