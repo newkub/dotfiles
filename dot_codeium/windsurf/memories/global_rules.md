@@ -179,7 +179,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 - เมื่อผู้ใช้บอกว่าอยากทำอะไร หรืออยากได้ features อะไร → ใช้ `/suggest-me` หรือ `/ask-me` เพื่อถามความต้องการก่อน
 - ถามคำถามเหมือนกับ `/idea-features` แต่ไม่ต้องสร้าง report files
 - ไม่เริ่ม implement หรือสร้าง plan ทันที จนกว่าผู้ใช้จะยืนยัน
-- ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/realize-implementation` หรือ `/create-plan-in-dot-devin` ตาม context
+- ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/realize-implementation` หรือ `/create-plan-as-github-issue` ตาม context
 
 ### 11. Link/URL Handling
 
