@@ -9,7 +9,7 @@ related:
   - /follow-cloudflare-worker
   - /deploy-to-railway
   - /watch-browser
-  - /run-test-browser
+  - /run-test-website-by-agent-browser
   - /deep-review
   - /resolve-errors
   - /git-commit
@@ -83,7 +83,7 @@ Watch deployment ด้วย browser จนกว่าจะ live
 
 ตรวจสอบ deployment อย่างละเอียดหลัง deploy
 
-1. ทำ `/run-test-browser` เพื่อทดสอบ critical paths หลัง deploy
+1. ทำ `/run-test-website-by-agent-browser` เพื่อทดสอบ critical paths หลัง deploy
 2. ตรวจสอบ health endpoint และ readiness probes
 3. ตรวจสอบ error logs หลัง deploy 5-10 นาที
 4. ถ้าพบ critical errors ให้ทำ rollback ทันที และทำ `/resolve-errors`

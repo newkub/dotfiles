@@ -5,7 +5,7 @@ auto_execution_mode: 3
 related:
   - /test-cli
   - /run-test
-  - /run-test-browser
+  - /run-test-website-by-agent-browser
   - /run-test-coverage
   - /write-test
   - /deep-review
@@ -58,7 +58,7 @@ related:
 
 ทดสอบ browser interactions ถ้า project มี web frontend
 
-1. ทำ `/run-test-browser` สำหรับ E2E tests
+1. ทำ `/run-test-website-by-agent-browser` สำหรับ E2E tests
 2. ทดสอบ user flows หลัก (login, navigation, forms, search) และ responsive design
 3. ทดสอบ cross-browser compatibility และ accessibility (keyboard, screen reader, ARIA)
 4. ทดสอบ real-time features (WebSocket, SSE, live updates)

@@ -25,7 +25,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
 4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
 5. ถ้า `AGENTS.md` ระบุ workflows → พยายามเรียกใช้จาก `/follow-agents-md` แทนการทำเองโดยตรง
-6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/consider-use-subagents` ตาม context
 7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-files-in-computer` ก่อนดำเนินการต่อ
@@ -90,7 +90,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ไม่มี implementation gap, regression หรือ validation failure
 
 1. ทบทวนแผนและทำ `loop-until-complete` เมื่อต้องตรวจซ้ำจนผ่าน
-2. ทำ `realize-implementation` หลัง implementation เสร็จ
+2. ทำ `productionize-implementation` หลัง implementation เสร็จ
 3. ถ้า package manifest เปลี่ยน → ทำ `update-dot-devin`
 4. ทำ `/deep-validate` ก่อนจบ task
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
@@ -146,7 +146,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 ### 5. Skill And Subagent Discipline
 
 - พยายามเรียกใช้งานผ่าน `/follow-agents-md` ก่อน ถ้า `AGENTS.md` ระบุ workflow
-- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/consider-use-subagents` ตาม context
 - ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 - ถ้าไม่แน่ใจว่าควรใช้ skill ใด → ทำ `/ask-me`
 
@@ -179,7 +179,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 - เมื่อผู้ใช้บอกว่าอยากทำอะไร หรืออยากได้ features อะไร → ใช้ `/suggest-me` หรือ `/ask-me` เพื่อถามความต้องการก่อน
 - ถามคำถามเหมือนกับ `/idea-features` แต่ไม่ต้องสร้าง report files
 - ไม่เริ่ม implement หรือสร้าง plan ทันที จนกว่าผู้ใช้จะยืนยัน
-- ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/realize-implementation` หรือ `/create-plan-as-github-issue` ตาม context
+- ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/productionize-implementation` หรือ `/create-plan-as-github-issue` ตาม context
 
 ### 11. Link/URL Handling
 
