@@ -25,7 +25,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
 4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
 5. ถ้า `AGENTS.md` ระบุ workflows → พยายามเรียกใช้จาก `/follow-agents-md` แทนการทำเองโดยตรง
-6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/consider-use-subagents` ตาม context
+6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
 7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-files-in-computer` ก่อนดำเนินการต่อ
@@ -146,7 +146,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 ### 5. Skill And Subagent Discipline
 
 - พยายามเรียกใช้งานผ่าน `/follow-agents-md` ก่อน ถ้า `AGENTS.md` ระบุ workflow
-- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/consider-use-subagents` ตาม context
+- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
 - ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 - ถ้าไม่แน่ใจว่าควรใช้ skill ใด → ทำ `/ask-me`
 
