@@ -1,4 +1,4 @@
-﻿---
+---
 name: global-rules
 description: ลำดับการทำงานทุก task ให้ปลอดภัย ตรวจสอบได้ และส่งมอบครบ
 
@@ -21,7 +21,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ระบุ workspace, prompt, ขอบเขต และ references ชัดเจน
 
 1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/report-plan` เพื่อรายงานแผนก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
-2. ทำ `edit-relative` สำหรับงานที่เกี่ยวข้องกับไฟล์
+2. ทำ `update-references` สำหรับงานที่เกี่ยวข้องกับไฟล์
 3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
 4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
 5. ถ้า `AGENTS.md` ระบุ workflows → พยายามเรียกใช้จาก `/follow-agents-md` แทนการทำเองโดยตรง
@@ -58,7 +58,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ระบุ root cause, impact, consumers และแผนแก้ไขที่เล็กที่สุด
 
-1. ทำ `report-before` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
+1. ทำ `report-before-after` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
 2. ทำ `follow-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
 3. ใช้ `use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
 4. ทำ `plan` ก่อนแก้ไขหลายไฟล์ และ `report-plan` ก่อนลงมือ
@@ -105,7 +105,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ผู้ใช้ทราบสิ่งที่เปลี่ยน ผลตรวจสอบ ข้อจำกัด และสถานะส่งมอบ
 
-1. เลือกใช้ `report-*` skills ทีเหมาะสมตาม context ในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — เช่น `report-ansi`, `report-codeblock`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-session-status`, `report-idea`, `report-flow`, `report-before`, `report-usage-md`
+1. เลือกใช้ `report-*` skills ทีเหมาะสมตาม context ในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — เช่น `report-ansi`, `report-codeblock`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-session-status`, `report-idea`, `report-flow`, `report-before-after`, `report-usage-md`
 2. ไม่เริ่มด้วย acknowledgment phrase และไม่กล่าวอ้างผลที่ยังไม่ตรวจสอบ
 3. ถ้าตัดสินใจเรื่องเสี่ยงสูง → ใช้ `ask-me`; ถ้าผู้ใช้ขอ idea → ทำ `idea`
 4. ถ้างานไม่สมบูรณ์ → ระบุสิ่งที่ค้าง สาเหตุ และขั้นตอนที่จำเป็น
@@ -176,7 +176,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 ### 10. User Intent For Features
 
-- เมื่อผู้ใช้บอกว่าอยากทำอะไร หรืออยากได้ features อะไร → ใช้ `/suggest-me` หรือ `/ask-me` เพื่อถามความต้องการก่อน
+- เมื่อผู้ใช้บอกว่าอยากทำอะไร หรืออยากได้ features อะไร → ใช้ `/suggest-next-action` หรือ `/ask-me` เพื่อถามความต้องการก่อน
 - ถามคำถามเหมือนกับ `/idea-features` แต่ไม่ต้องสร้าง report files
 - ไม่เริ่ม implement หรือสร้าง plan ทันที จนกว่าผู้ใช้จะยืนยัน
 - ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/productionize-implementation` หรือ `/create-plan-as-github-issue` ตาม context
