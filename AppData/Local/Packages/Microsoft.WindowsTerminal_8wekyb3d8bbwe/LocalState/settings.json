@@ -36,10 +36,6 @@
             "keys": "ctrl+down"
         },
         {
-            "id": "Terminal.DuplicatePaneRight",
-            "keys": "ctrl+right"
-        },
-        {
             "id": "Terminal.OpenSettingsUI",
             "keys": "f1"
         },
@@ -48,24 +44,28 @@
             "keys": "ctrl+left"
         },
         {
-            "id": "Terminal.OpenNewTab",
-            "keys": "ctrl+t"
+            "id": "Terminal.DuplicatePaneRight",
+            "keys": "ctrl+right"
         },
         {
             "id": "Terminal.CopyToClipboard",
             "keys": "ctrl+c"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+f"
+            "id": "Terminal.OpenNewTab",
+            "keys": "ctrl+t"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         },
         {
             "id": null,
             "keys": "ctrl+comma"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
+            "id": null,
+            "keys": "ctrl+shift+f"
         },
         {
             "id": "Terminal.FindText",
@@ -135,6 +135,12 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 18",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{c7ee2225-6a73-57ee-908a-79e2255d66a3}",
+                "hidden": false,
+                "name": "podman-machine-default",
+                "source": "Microsoft.WSL"
             }
         ]
     },

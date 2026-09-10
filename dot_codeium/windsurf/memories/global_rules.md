@@ -20,12 +20,12 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ระบุ workspace, prompt, ขอบเขต และ references ชัดเจน
 
-1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/report-plan` เพื่อรายงานแผนก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
+1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/plan` เพื่อรายงานแผนก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
 2. ทำ `update-references` สำหรับงานที่เกี่ยวข้องกับไฟล์
 3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
-4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
+4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, `/ship-dont-ask-me`, หรือ `/ask-me` ตาม state ปัจจุบัน
 5. ถ้า `AGENTS.md` ระบุ workflows → พยายามเรียกใช้จาก `/follow-agents-md` แทนการทำเองโดยตรง
-6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/update-devin-global-subagents` หรือ `/use-subagents` ตาม context
 7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
 9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-files-in-computer` ก่อนดำเนินการต่อ
@@ -36,7 +36,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ใช้ข้อกำหนดที่มีอยู่จริง ไม่ซ้ำซ้อน
 
-1. ทำ `follow-skills` หรือ `/follow-skills-map` เพื่อเลือก skills ที่ตรงกับ task
+1. ทำ `/follow-skills-map` เพื่อเลือก skills ที่ตรงกับ task
 2. ทำ `update-devin-global-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
 3. ทำ `check-reference` เพื่อยื่นยันว่า references มีอยู่จริง
 4. ถ้า reference จำเป็นไม่มี → stop และ report
@@ -48,7 +48,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ข้อมูลถูกต้อง ทันสมัย มีแหล่งอ้างอิง
 
 1. ทำ `follow-best-practice` สำหรับ topic, tool หรือ library ที่เกี่ยวข้อง
-2. ทำ `learn-from-web` โดยให้ official docs เป็นแหล่งหลัก
+2. ทำ `learn-web` โดยให้ official docs เป็นแหล่งหลัก
 3. ทำ `deep-research` เมื่อต้อง cross-check หลายแหล่งหรือมีความเสี่ยงสูง
 4. ถ้าตรวจสอบข้อมูลสำคัญไม่ได้ → ระบุความไม่แน่นอนและ stop ก่อนเปลี่ยนแปลงที่เสี่ยง
 
@@ -61,8 +61,8 @@ description: ลำดับการทำงานทุก task ให้ป�
 1. ทำ `report-before-after` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
 2. ทำ `follow-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
 3. ใช้ `use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
-4. ทำ `plan` ก่อนแก้ไขหลายไฟล์ และ `report-plan` ก่อนลงมือ
-5. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `deep-analyze-by-use-scripts`
+4. ทำ `/plan` ก่อนแก้ไขหลายไฟล์ และรายงานแผนในแชทก่อนลงมือ
+5. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `/deep-analyze`
 6. ทำ `scan-codebase` เพื่อค้นหา symbols, call sites, consumers
 7. ทำ `follow-your-suggestion` เมื่อ task ให้ apply ข้อเสนอจากการวิเคราะห์ก่อนหน้า
 8. ถ้าพบ error → ทำ `resolve-errors`; ถ้าข้อกำหนดเสี่ยงสูงไม่ชัด → ใช้ `ask-me`
@@ -77,8 +77,8 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `follow-architecture` และรักษา existing style
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
-5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `update-devin-global-skills` และทำ `use-in-another-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
-6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `follow-barrel-export`
+5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `/update-devin-global-skills` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน
+6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `review-quality`
 7. หลังเขียนหรือ refactor → ทำ `restructure`
 8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
 9. ถ้า check ไม่ผ่าน → ทำ `resolve-errors` และ recheck สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report
@@ -90,13 +90,13 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ไม่มี implementation gap, regression หรือ validation failure
 
 1. ทบทวนแผนและทำ `loop-until-complete` เมื่อต้องตรวจซ้ำจนผ่าน
-2. ทำ `productionize-implementation` หลัง implementation เสร็จ
+2. ทำ `implement-to-production` หลัง implementation เสร็จ
 3. ถ้า package manifest เปลี่ยน → ทำ `update-dot-devin`
 4. ทำ `/deep-validate` ก่อนจบ task
 5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
 6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
 7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
-8. ทำ `/report-session-status` เสมอก่อนจบ task เพื่อรายงานความคืบหน้า งานเสร็จ งานค้าง และ next actions
+8. ทำ `/report-progress` เสมอก่อนจบ task เพื่อรายงานความคืบหน้า งานเสร็จ งานค้าง และ next actions
 9. ทำ `ask-me` เพื่อถาม user ว่าต้องการทำ action ถัดไปหรือไม่
 
 ### 7. Report And Communicate
@@ -105,12 +105,12 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ผู้ใช้ทราบสิ่งที่เปลี่ยน ผลตรวจสอบ ข้อจำกัด และสถานะส่งมอบ
 
-1. เลือกใช้ `report-*` skills ทีเหมาะสมตาม context ในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — เช่น `report-ansi`, `report-codeblock`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-session-status`, `report-idea`, `report-flow`, `report-before-after`, `report-usage-md`
+1. เลือกใช้ `report-*` skills ทีเหมาะสมตาม context ในการรายงานผล และสื่อสารเป็นภาษาไทยด้วย bullet points สั้นๆ — เช่น `report`, `report-file-structure`, `report-architecture-diagram`, `report-public-api`, `report-progress`, `idea`, `report-flow`, `report-before-after`, `report-usage`
 2. ไม่เริ่มด้วย acknowledgment phrase และไม่กล่าวอ้างผลที่ยังไม่ตรวจสอบ
 3. ถ้าตัดสินใจเรื่องเสี่ยงสูง → ใช้ `ask-me`; ถ้าผู้ใช้ขอ idea → ทำ `idea`
 4. ถ้างานไม่สมบูรณ์ → ระบุสิ่งที่ค้าง สาเหตุ และขั้นตอนที่จำเป็น
 5. ทุก report table ต้องมีคอลัมน์ "No." เป็นคอลัมน์แรก เรียงลำดับ 1, 2, 3, ... ตามลำดับของแถว โดยเริ่มจาก 1
-6. ทำ `/report-session-status` ก่อนจบ task เสมอ เพื่อแสดง progress bar เปอร์เซ็นต์ งานเสร็จ งานค้าง และ next actions
+6. ทำ `/report-progress` ก่อนจบ task เสมอ เพื่อแสดง progress bar เปอร์เซ็นต์ งานเสร็จ งานค้าง และ next actions
 
 ## Rules
 
@@ -146,9 +146,10 @@ description: ลำดับการทำงานทุก task ให้ป�
 ### 5. Skill And Subagent Discipline
 
 - พยายามเรียกใช้งานผ่าน `/follow-agents-md` ก่อน ถ้า `AGENTS.md` ระบุ workflow
-- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/follow-devin-global-subagents` หรือ `/use-subagents` ตาม context
+- ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/update-devin-global-subagents` หรือ `/use-subagents` ตาม context
 - ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 - ถ้าไม่แน่ใจว่าควรใช้ skill ใด → ทำ `/ask-me`
+- ก่อนเรียก `/run-*` ใดๆ → ทำ `review-*` หรือ `check-*` ที่ตรง domain ก่อนเสมอ (runner ต้องประเมินก่อนลงมือหลัก ห้ามข้ามไปทำงานหลักโดยไม่ review)
 
 ### 6. Reference Discipline
 
@@ -161,12 +162,14 @@ description: ลำดับการทำงานทุก task ให้ป�
 - ถ้า prompt มีคำถามหรือข้อที่ต้องตอบจาก user ก่อนจึงจะเริ่มงานได้ → ต้องใช้ `/ask-me` เป็น prompt ให้ user เลือก/ตอบ ไม่ใช่ตอบแทน user ในแชท
 - ต้องตอบคำถามทั้งหมดให้ครบก่อนจึงจะเริ่มทำงาน
 - ถ้า prompt มีทั้งคำถามและคำสั่่งงาน ให้ถามคำถามก่อน แล้วค่อยลงมือ
+- ถ้า session เปิด `/dont-ask-me` mode (หรือเคยใช้ `/ship-dont-ask-me`) → ทุก `/ask-me` และ `ask_user_question` ใน rules และ skills ทั้งหมดถูก override ด้วย `/follow-your-suggestion` + safe default จนจบ session — ทำงานค่อยเป็นค่อยไปทีละ step แบบ safe ห้ามข้าม และวนด้วย `/loop-until-complete`
 
 ### 8. In-Chat Answers And Report Skills
 
 - เมื่อตอบคำถามหรืออธิบายผลในแชท ให้ระบุ `report-*` skills ที่ user สามารถใช้ดูผลลัพธ์อย่างเป็นระบบ
-- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-file-structure`, `/report-plan` ฯลฯ ตาม context
+- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-file-structure`, `/plan` ฯลฯ ตาม context
 - ไม่ตอบยาวเกินจำเป็นในแชทถ้ามี report skill ที่รองรับ
+- ถ้าผู้ใช้ถามหรือต้องการคำตอบโดยยังไม่ลงมือทำ ให้ใช้ `/report-todo` ตอบในรูปแบบตาราง No., Action, Before, After, Why, File Change, Risk พร้อมสรุป `/report-in-numbered` ด้านล่าง
 
 ### 9. New Request While Old Work Is Pending
 
@@ -179,7 +182,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 - เมื่อผู้ใช้บอกว่าอยากทำอะไร หรืออยากได้ features อะไร → ใช้ `/suggest-next-action` หรือ `/ask-me` เพื่อถามความต้องการก่อน
 - ถามคำถามเหมือนกับ `/idea-features` แต่ไม่ต้องสร้าง report files
 - ไม่เริ่ม implement หรือสร้าง plan ทันที จนกว่าผู้ใช้จะยืนยัน
-- ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/productionize-implementation` หรือ `/create-plan-as-github-issue` ตาม context
+- ถ้าผู้ใช้ยืนยันแล้ว → ส่งต่อไปยัง `/idea-features`, `/implement-to-production` หรือ `/create-github-issue` ตาม context
 
 ### 11. Link/URL Handling
 
