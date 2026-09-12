@@ -314,6 +314,8 @@ lefthook = "latest"
 node = "latest"
 worktrunk = "latest"
 github-cli = "latest"
+longbridge-terminal = "latest"
+stripe = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]

@@ -6,6 +6,7 @@ name = newkub
 autocrlf = false
 defaultBranch = main
 editor = zed --wait
+	longpaths = true
 
 [gitbutler]
 aiOpenAIKeyOption = butlerAPI
