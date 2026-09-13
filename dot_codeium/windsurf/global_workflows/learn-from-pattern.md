@@ -40,7 +40,7 @@ related_workflows:
 2. ทำ `/scan-codebase` เพื่อ scan หา recurring structures
 3. ทำ `/use-ast-grep` สำหรับ AST-based pattern discovery
 4. ถ้าศึกษาจาก open-source ให้ทำ `/deep-research` เพื่อหา reference projects
-5. ถ้าศึกษาจาก competitor ให้ทำ `/bench-competitors` เพื่อวิเคราะห์ patterns ของคู่แข่ง
+5. ถ้าศึกษาจาก competitor ให้ทำ `/bench-competitors-and-deep-plan` เพื่อวิเคราะห์ patterns ของคู่แข่ง
 
 ### 3. Extract And Document Patterns
 

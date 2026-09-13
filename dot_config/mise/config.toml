@@ -316,6 +316,8 @@ worktrunk = "latest"
 github-cli = "latest"
 longbridge-terminal = "latest"
 stripe = "latest"
+yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
+"npm:@scalar/cli" = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
