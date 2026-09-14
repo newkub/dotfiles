@@ -12,44 +12,6 @@ if (-not (Test-Path $script:ProfileCacheDir)) {
 }
 
 # ============================================================================
-# Improved cd with fuzzy fallback
-# ============================================================================
-function cd {
-    [CmdletBinding()]
-    param(
-        [Parameter(ValueFromRemainingArguments = $true)]
-        [string[]] $Arguments
-    )
-    $query = $Arguments -join ' '
-    if ([string]::IsNullOrWhiteSpace($query)) {
-        $candidates = @(fd -t d --hidden . 'D:\' 2>$null)
-        if ($candidates.Count -eq 0) { return }
-        $selected = $candidates | tv --select-1
-        if ($selected) { Set-Location -Path $selected }
-        return
-    }
-    # Path-like: try normal cd first
-    if ($query -match '^[A-Za-z]:' -or $query -match '[\/]' -or $query.StartsWith('~') -or $query.StartsWith('.')) {
-        if (Test-Path -Path $query -PathType Container) {
-            Set-Location -Path $query
-            return
-        }
-        Set-Location -Path $query
-        return
-    }
-    # Simple keyword: fuzzy search in D:\
-    $tokens = $query -split '\s+'
-    $pattern = '(' + (($tokens | ForEach-Object { [regex]::Escape($_) }) -join '|') + ')'
-    $candidates = @(fd -t d --hidden $pattern 'D:\' 2>$null)
-    if ($candidates.Count -eq 0) {
-        Write-Host "No directory matched '$query' under D:\" -ForegroundColor Red
-        return
-    }
-    $selected = $candidates | tv --input=$query --select-1
-    if ($selected) { Set-Location -Path $selected }
-}
-
-# ============================================================================
 # Profile init caching helpers
 # ============================================================================
 function Get-ActualMiseBinaryPath {
@@ -195,7 +157,7 @@ if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
 # ============================================================================
 # Simple command aliases
 # ============================================================================
-Remove-Item Alias:ni, Alias:rd, Alias:h, Alias:cd, Alias:dir -Force -ErrorAction Ignore
+Remove-Item Alias:ni, Alias:rd, Alias:h, Alias:dir -Force -ErrorAction Ignore
 
 if (Get-Command pwsh -ErrorAction SilentlyContinue) {
     Remove-Item Alias:powershell -Force -ErrorAction SilentlyContinue
