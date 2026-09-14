@@ -127,7 +127,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 - ใช้ relative references และแปลง command equivalents ตาม ecosystem ไม่ผูกกับ AI tool เดียว
 - ถ้า workspace เป็น monorepo ให้ใช้ run command ของ monorepo (`moon run`, `turbo run`, `pnpm --recursive`, `bun run --filter` ตามที่ตรวจพบ) กับ skills `run-*` ต่างๆ แทนการรันผ่าน workspace เดี่ยว
 - ใช้ `use-*` skills สำหรับ tools/libraries เฉพาะเจาะจง และใช้ official docs เป็นแหล่งหลัก
-- ก่อนเลือก dependencies หรือ libraries ใหม่ ให้อ่าน canonical catalog ที่ `skills/review-dependencies/references/techstack-catalog.md` (ผ่าน `/review-dependencies`) เพื่อตรวจสอบว่าสอดคล้องกับ tech stack ทีกำหนดไว้ และไม่ duplicate กับ tools ทีมีอยู่
+- ก่อนเลือก dependencies หรือ libraries ใหม่ ให้ทำ `/follow-my-techstack` (อ่าน canonical catalog ที่ `skills/review-dependencies/references/techstack-catalog.md`) เพื่อตรวจสอบว่าสอดคล้องกับ tech stack ทีกำหนดไว้ และทำ `/use-lib-effective` เพื่อใช้ dep ที่มีอยู่แทนการ reinvent
 - ถ้าต้องติดตั้ง program แบบ global ให้พยายามใช้ `mise use -g <program>` ก่อน แล้วจึงพิจารณา package manager ของระบบ เช่น `scoop`, `brew`, `apt`, `winget`
 
 ### 3. Safety And Deterministic Execution
