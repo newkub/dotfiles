@@ -20,7 +20,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ระบุ workspace, prompt, ขอบเขต และ references ชัดเจน
 
-1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/plan` เพื่อรายงานแผนก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
+1. หลังรับ prompt ให้ทำ `enhance-prompt` เพื่อสรุปเป็น numbered แต่ละข้อมี single responsibility, ทำ `/deep-analyze-and-plan` เพื่อวิเคราะห์ลึกและรายงานแผน (deps, files, risks) ก่อนลงมือ, จากนั้นทำ `continue` เพื่อดำเนินการตามลำดับ
 2. ทำ `update-references` สำหรับงานที่เกี่ยวข้องกับไฟล์
 3. เมื่องาน/task เข้ามา ให้ทำ `/suggest-next-action` เสมอ โดย `/suggest-next-action` ต้อง follow `/follow-enter-dot` (ตรวจ state ก่อน)
 4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — ซึงจะเลือก `/continue`, `/suggest-next-action`, `/ship`, `/ship-dont-ask-me`, หรือ `/ask-me` ตาม state ปัจจุบัน
@@ -48,7 +48,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ข้อมูลถูกต้อง ทันสมัย มีแหล่งอ้างอิง
 
 1. ทำ `follow-best-practice` สำหรับ topic, tool หรือ library ที่เกี่ยวข้อง
-2. ทำ `/learn-web` โดยให้ official docs เป็นแหล่งหลัก
+2. ทำ `/learn-from-references` โดยให้ official docs เป็นแหล่งหลัก
 3. ทำ `deep-research` เมื่อต้อง cross-check หลายแหล่งหรือมีความเสี่ยงสูง
 4. ถ้าตรวจสอบข้อมูลสำคัญไม่ได้ → ระบุความไม่แน่นอนและ stop ก่อนเปลี่ยนแปลงที่เสี่ยง
 
@@ -61,7 +61,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 1. ทำ `report-before-after` เพื่อรายงานสถานะปัจจุบันก่อนเริ่มงาน จากนั้นดำเนินการตาม scope
 2. ทำ `follow-deep` เพื่อพิจารณาและเรียก `deep-*` skills ที่เกี่ยวข้องกับ context ของ task
 3. ใช้ `use-scripts` เมื่อต้องประมวลผลข้อมูลซับซ้อน
-4. ทำ `/plan` ก่อนแก้ไขหลายไฟล์ และรายงานแผนในแชทก่อนลงมือ
+4. ทำ `/deep-analyze-and-plan` ก่อนแก้ไขหลายไฟล์ และรายงานแผนครบมิติในแชทก่อนลงมือ
 5. ถ้า filename ขึ้นต้นด้วย `analyze-` → ทำ `/deep-analyze`
 6. ทำ `scan-codebase` เพื่อค้นหา symbols, call sites, consumers
 7. ทำ `follow-your-suggestion` เมื่อ task ให้ apply ข้อเสนอจากการวิเคราะห์ก่อนหน้า
@@ -74,7 +74,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: การเปลี่ยนแปลง minimal, runnable, สอดคล้องมาตรฐาน project
 
 1. อ่าน `refactor` ก่อนเขียน code
-2. ทำ `follow-architecture` และรักษา existing style
+2. ทำ `review-architecture` และรักษา existing style
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
 5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `/update-devin-global-skills` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน; ถ้า `SKILL.md` เรียก skill อื่น → ทำตาม `update-devin-global-skills` (`references/invoke-skills.md`)
@@ -167,7 +167,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 ### 8. In-Chat Answers And Report Skills
 
 - เมื่อตอบคำถามหรืออธิบายผลในแชท ให้ระบุ `report-*` skills ที่ user สามารถใช้ดูผลลัพธ์อย่างเป็นระบบ
-- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-file-structure`, `/plan` ฯลฯ ตาม context
+- สั้นๆ ตอบสาระสำคัญ แล้วชี้ไปยัง `/report-file-structure`, `/deep-analyze-and-plan` ฯลฯ ตาม context
 - ไม่ตอบยาวเกินจำเป็นในแชทถ้ามี report skill ที่รองรับ
 - ถ้าผู้ใช้ถามหรือต้องการคำตอบโดยยังไม่ลงมือทำ ให้ใช้ `/report-todo` ตอบในรูปแบบตาราง No., Action, Before, After, Why, File Change, Risk พร้อมสรุป `/report numbered` ด้านล่าง
 
@@ -192,7 +192,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 ### 12. Global Skills Standards
 
-- ถ้าแก้ไข สร้าง หรือย้าย skill ใน `C:\Users\Veerapong\AppData\Roaming\devin\skills` → ทำ `/update-devin-global-skills` เสมอ
+- ถ้าแก้ไข สร้าง ย้าย merge หรือลบ skill ใน `C:\Users\Veerapong\AppData\Roaming\devin\skills` → ทำ `/update-devin-global-skills` เสมอ และอัปเดต root `AGENTS.md` ของ repo ให้ sync ทันที (skill counts, family lists, related, merged notes) — `AGENTS.md` คือ root skill descriptor ของ `devin-global-skills`
 - skill ใน global skills ใช้ภาษาไทยสำหรับเนื้อหา แต่คงคำศัพท์เทคนิค เช่น `git`, `lint`, `AST`, `CLI`, `JSON`, skill names, tool names, commands, paths ไว้เป็นภาษาอังกฤษ
 - project-local skills ใช้ภาษาอังกฤษทั้งหมด
 - ถ้า skill ใน global skills มีเนื้อหาเป็นภาษาอังกฤษทั้งหมด ให้แปลเป้นภาษาไทยโดยรักษาคำศัพท์เทคนิค

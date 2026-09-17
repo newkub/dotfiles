@@ -11,7 +11,7 @@ related:
   - /follow-content-quality
   - /use-lang-en
   - /update-reference
-  - /report-uxui-sketch
+  - /report-uxui
 ---
 
 ## Goal
@@ -52,7 +52,7 @@ related:
 
 > Goal: มี sketch แสดง layout หลักของ workspace
 
-1. ทำ `/report-uxui-sketch` เพื่อวาด layout หลักของ workspace
+1. ทำ `/report-uxui` เพื่อวาด layout หลักของ workspace
 2. วาดเฉพาะหน้าหลักหรือหน้าที่สำคัญที่สุดของ workspace
 3. แปลง sketch เป็น text codeblock (ไม่ใช่ ANSI) สำหรับใส่ใน README
 4. วาง sketch ด้านบน Get Started โดยไม่ต้องมี heading — ถ้า sketch fail → retry (max 3 → stop/report)
@@ -84,7 +84,7 @@ related:
 
 - `Status Callout`: ด้านบนสุด - ใช้ `> 🚀` หรือ emoji ที่เหมาะสม
 - `Hero Section`: Title, Description, Badges (ชิดซ้าย, ไม่รวม License badge)
-- `UI Sketch`: text codeblock แสดง UX/UI layout sketch จาก `/report-uxui-sketch` (ไม่ใช่ ANSI, ใช้ text codeblock ธรรมดา) - วางด้านบน Get Started โดยไม่ต้องมี heading
+- `UI Sketch`: text codeblock แสดง UX/UI layout sketch จาก `/report-uxui` (ไม่ใช่ ANSI, ใช้ text codeblock ธรรมดา) - วางด้านบน Get Started โดยไม่ต้องมี heading
 - `## Get Started`: numbered steps ด้านบน, แต่ละ step มี heading + description ก่อน codeblock
 - `## Features`: Markdown table 5 columns (Icon, Feature, Description, Benefit, Usage) พร้อม colored icon จาก iconify CDN
 - `## Usage`: `### Usage via ...` heading สำหรับแต่ละ access method (Web, API, CLI, SDK, TUI, etc.) — ครอบคลุมทุก ways ที่ user ใช้งานได้ — ดู Rule `Usage Content Types`
