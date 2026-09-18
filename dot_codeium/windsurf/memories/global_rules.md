@@ -93,7 +93,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `implement-to-production` หลัง implementation เสร็จ
 3. ถ้า package manifest เปลี่ยน → ทำ `update-dot-devin`
 4. ทำ `/deep-validate` ก่อนจบ task
-5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ
+5. ทำ `run-check` เสมอหลังจบ task เพื่อตรวจสอบ lint, typecheck และ scan ก่อนส่งมอบ — test อยู่ใน `run-verify` อยู่แล้ว ไม่ต้องรัน `run-test` แยก
 6. ทำ `git-commit` เมื่อจบ sub-task สำคัญ งานเสี่ยงสูง หรือเปลี่ยนแปลงจำนวนมาก
 7. ทำ `ship` หลังเสร็จงาน; ถ้า validation ไม่ผ่าน → report สถานะและห้ามอ้างว่างานเสร็จ
 8. ทำ `/report-progress` เสมอก่อนจบ task เพื่อรายงานความคืบหน้า งานเสร็จ งานค้าง และ next actions
