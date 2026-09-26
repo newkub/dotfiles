@@ -6,6 +6,9 @@
 $env:MISE_INSTALLS_DIR = 'D:\mise'
 (& mise activate --shims pwsh) | Out-String | Invoke-Expression
 
+# mbx (mr-boxington) Cargo shim — must precede mise shims so plain `cargo` uses mbx
+$env:Path = "$env:LOCALAPPDATA\mbx\bin;$env:Path"
+
 $script:ProfileCacheDir = Join-Path $env:LOCALAPPDATA 'pwsh-profile-cache'
 if (-not (Test-Path $script:ProfileCacheDir)) {
     New-Item -ItemType Directory -Path $script:ProfileCacheDir -Force | Out-Null

@@ -204,7 +204,7 @@ task = "latest"
 television = "latest"
 rg = "latest"
 zig = "latest"
-rust = "latest"
+rust = { version = "latest", mr_boxington = true }
 act = "latest"
 gh = "latest"
 oxker = "latest"
@@ -320,6 +320,7 @@ yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
 "npm:@scalar/cli" = "latest"
 cmake = "4.4.3"
 "npm:lighthouse" = "latest"
+mr-boxington = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
