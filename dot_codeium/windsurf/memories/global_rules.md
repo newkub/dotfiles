@@ -36,7 +36,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 > Goal: ใช้ข้อกำหนดที่มีอยู่จริง ไม่ซ้ำซ้อน
 
-1. ทำ `/follow-skills-map` เพื่อเลือก skills ที่ตรงกับ task — map ครอบคลุม task → skill → CLI tool ด้วย (`references/tool-map.md`); ถ้าไม่แน่ใจว่า tool ติดตั้งแล้วหรือไม่ → ทำ `/check-my-global-cli`
+1. ทำ `/search-skills` เพื่อเลือก skills ที่ตรงกับ task — action → CLI tool map อยู่ที่ `skills/check-my-global-cli/references/tool-map.md`; ถ้าไม่แน่ใจว่า tool ติดตั้งแล้วหรือไม่ → ทำ `/check-my-global-cli`
 2. ทำ `update-devin-global-skills` เพื่ออ่านและทำความเข้าใจ skills และ global rules
 3. ทำ `check-reference` เพื่อยื่นยันว่า references มีอยู่จริง
 4. ถ้า reference จำเป็นไม่มี → stop และ report
@@ -78,7 +78,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
 5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `/update-devin-global-skills` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน; ถ้า `SKILL.md` เรียก skill อื่น → ทำตาม `update-devin-global-skills` (`references/invoke-skills.md`)
-6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `review-quality`
+6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `review-code-quality`
 7. หลังเขียนหรือ refactor → ทำ `restructure`
 8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
 9. ถ้า check ไม่ผ่าน → ทำ `resolve-errors` และ recheck สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report
