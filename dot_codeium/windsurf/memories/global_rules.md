@@ -48,7 +48,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 > Goal: ข้อมูลถูกต้อง ทันสมัย มีแหล่งอ้างอิง
 
 1. ทำ `follow-best-practice` สำหรับ topic, tool หรือ library ที่เกี่ยวข้อง
-2. ทำ `/learn-from-references` โดยให้ official docs เป็นแหล่งหลัก
+2. ทำ `/learn-from-web` โดยให้ official docs เป็นแหล่งหลัก (CLI → `/learn-from-cli`, API surface → `/learn-from-dts`)
 3. ทำ `deep-research` เมื่อต้อง cross-check หลายแหล่งหรือมีความเสี่ยงสูง
 4. ถ้าตรวจสอบข้อมูลสำคัญไม่ได้ → ระบุความไม่แน่นอนและ stop ก่อนเปลี่ยนแปลงที่เสี่ยง
 
@@ -77,9 +77,9 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `review-architecture` และรักษา existing style
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. ใช้ mock/TODO เฉพาะจำเป็น โดยระบุ `// MOCK` ใน `mock/` หรือ `// TODO` สำหรับงานที่ยังไม่เสร็จ
-5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `/update-devin-global-skills` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน; ถ้า `SKILL.md` เรียก skill อื่น → ทำตาม `update-devin-global-skills` (`references/invoke-skills.md`)
+5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `/update-devin-global-skills` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นสามารถใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน; ถ้า `SKILL.md` เรียก skill อื่น → ทำตาม `update-devin-global-skills` (`## Conventions → Invoke Skills`)
 6. ถ้าแก้ config → ทำ `follow-config`; ถ้าแก้ barrel export → ทำ `review-code-quality`
-7. หลังเขียนหรือ refactor → ทำ `restructure`
+7. หลังเขียนหรือ refactor → ทำ `/refactor` structure scope
 8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
 9. ถ้า check ไม่ผ่าน → ทำ `resolve-errors` และ recheck สูงสุด 3 รอบ; ถ้ายังไม่ผ่าน → stop และ report
 
