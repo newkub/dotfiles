@@ -321,6 +321,8 @@ yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
 cmake = "4.4.3"
 "npm:lighthouse" = "latest"
 mr-boxington = "latest"
+"cargo:cargo-fframes" = "latest"
+kotlin = { version = "latest", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
