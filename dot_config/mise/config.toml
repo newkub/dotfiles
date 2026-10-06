@@ -323,6 +323,7 @@ cmake = "4.4.3"
 mr-boxington = "latest"
 "cargo:cargo-fframes" = "latest"
 kotlin = { version = "latest", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
+portless = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
