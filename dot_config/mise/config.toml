@@ -308,7 +308,6 @@ imagemagick = "latest"
 "npm:npkill" = "latest"
 "npm:git-split-diffs" = "latest"
 hk = "latest"
-"npm:wrangler" = "latest"
 lefthook = "latest"
 "aqua:moonrepo/moon" = "latest"
 node = "latest"
@@ -324,6 +323,19 @@ mr-boxington = "latest"
 "cargo:cargo-fframes" = "latest"
 kotlin = { version = "latest", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 portless = "latest"
+claude = "latest"
+rust-analyzer = "latest"
+supabase = "latest"
+sqlite = "latest"
+onefetch = "latest"
+broot = { version = "latest", bin_path = '{{ arch(x64="x86_64", arm64="aarch64") }}-{{ os(macos="apple-darwin", linux="unknown-linux-gnu", windows="pc-windows-gnu") }}' }
+superfile = "latest"
+7zip = "latest"
+delta = "latest"
+infisical = { version = "latest", asset_pattern = "cli_{{ version }}_{{ os(macos='darwin') }}_{{ arch(x64='amd64') }}.tar.gz" }
+wrangler = { version = "latest", allow_builds = ["esbuild", "sharp", "workerd"] }
+cloudflared = "latest"
+"npm:@usebruno/cli" = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]

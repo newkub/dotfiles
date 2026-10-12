@@ -29,11 +29,11 @@
     [
         {
             "id": "User.splitPane.7A967A9",
-            "keys": "ctrl+up"
+            "keys": "ctrl+shift+up"
         },
         {
             "id": "Terminal.DuplicatePaneDown",
-            "keys": "ctrl+down"
+            "keys": "ctrl+shift+down"
         },
         {
             "id": "Terminal.OpenSettingsUI",
@@ -41,11 +41,11 @@
         },
         {
             "id": "User.splitPane.652D529A",
-            "keys": "ctrl+left"
+            "keys": "ctrl+shift+left"
         },
         {
             "id": "Terminal.DuplicatePaneRight",
-            "keys": "ctrl+right"
+            "keys": "ctrl+shift+right"
         },
         {
             "id": "Terminal.CopyToClipboard",
