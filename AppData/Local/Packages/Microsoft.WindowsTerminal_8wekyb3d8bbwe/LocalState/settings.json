@@ -1,10 +1,10 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "up",
@@ -13,7 +13,7 @@
             "id": "User.splitPane.7A967A9"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "left",
@@ -25,7 +25,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-    "keybindings": 
+    "keybindings":
     [
         {
             "id": "User.splitPane.7A967A9",
@@ -81,23 +81,23 @@
         }
     ],
     "launchMode": "maximized",
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
-            "font": 
+            "font":
             {
                 "face": "MesloLGL Nerd Font Mono",
                 "size": 14
             }
         },
-        "list": 
+        "list":
         [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -140,6 +140,30 @@
                 "guid": "{c7ee2225-6a73-57ee-908a-79e2255d66a3}",
                 "hidden": false,
                 "name": "podman-machine-default",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{8a18dd7a-17c9-5372-b817-75ed9c9b42cc}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{8b90260e-16a3-58ad-b917-9fe5648197f2}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{5553d4ff-b995-5b93-aaf6-81ef171f7b62}",
+                "hidden": false,
+                "name": "Alpine",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{9d8790ff-73b0-53f1-8f68-3d6fbb39f124}",
+                "hidden": false,
+                "name": "arch",
                 "source": "Microsoft.WSL"
             }
         ]

@@ -149,7 +149,7 @@ exit $failed
 [tasks.cleanup]
 description = "cleanup caches"
 shell = "pwsh -Command"
-run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue ; npm cache clean --force 2>$null ; $null = $LASTEXITCODE ; pnpm store prune 2>$null ; $null = $LASTEXITCODE ; yarn cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache prune 2>$null ; $null = $LASTEXITCODE ; python -m pip cache purge 2>$null ; $null = $LASTEXITCODE ; bun pm cache rm 2>$null ; $null = $LASTEXITCODE ; mise cache clear 2>$null ; $null = $LASTEXITCODE ; Clear-RecycleBin -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:TEMP/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/mise/downloads/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:USERPROFILE/.cache/pip/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/Microsoft/Windows/WER/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/CrashDumps/* -Recurse -Force -ErrorAction SilentlyContinue ; npkill --delete-all -y 2>$null ; cargo-clean-all 2>$null ; podman system prune -af 2>$null ; mise prune --yes ; git gc --auto 2>$null ; if ($env:SCCACHE_DIR) { Remove-Item -Recurse -Force $env:SCCACHE_DIR -ErrorAction SilentlyContinue } ; exit 0"
+run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue ; npm cache clean --force 2>$null ; $null = $LASTEXITCODE ; pnpm store prune 2>$null ; $null = $LASTEXITCODE ; yarn cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache prune 2>$null ; $null = $LASTEXITCODE ; python -m pip cache purge 2>$null ; $null = $LASTEXITCODE ; bun pm cache rm 2>$null ; $null = $LASTEXITCODE ; mise cache clear 2>$null ; $null = $LASTEXITCODE ; Clear-RecycleBin -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:TEMP/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/mise/downloads/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:USERPROFILE/.cache/pip/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/Microsoft/Windows/WER/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/CrashDumps/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:APPDATA/devin/cli/summaries/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:APPDATA/devin/cli/sessions.db* -Force -ErrorAction SilentlyContinue ; npkill --delete-all -y 2>$null ; cargo-clean-all 2>$null ; podman system prune -af 2>$null ; mise prune --yes ; git gc --auto 2>$null ; if ($env:SCCACHE_DIR) { Remove-Item -Recurse -Force $env:SCCACHE_DIR -ErrorAction SilentlyContinue } ; exit 0"
 
 [tasks.chezmoi-update]
 description = "sync local dotfiles"
@@ -245,7 +245,6 @@ cowsay = "latest"
 "npm:gitify" = "latest"
 "npm:jscpd" = "latest"
 "npm:oxlint" = "latest"
-"npm:playwright" = "latest"
 "npm:rimraf" = "latest"
 "npm:playwriter" = "latest"
 "npm:rumdl" = "latest"
@@ -336,6 +335,9 @@ infisical = { version = "latest", asset_pattern = "cli_{{ version }}_{{ os(macos
 wrangler = { version = "latest", allow_builds = ["esbuild", "sharp", "workerd"] }
 cloudflared = "latest"
 "npm:@usebruno/cli" = "latest"
+playwright = "latest"
+maestro = "latest"
+java = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
