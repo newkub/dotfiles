@@ -12,6 +12,6 @@
 
 ## 3. Test Usage Always
 
-- เวลา user สั่งให้ทำอะไร (create/implement feature, file, module, config, docs, skill หรือแก้ไขอะไรก็ตาม) → ทำ `/test-usage` ก่อนจบงานเสมอ เพื่อยืนยันว่า usage/examples/commands ทำงานได้จริง ไม่ข้าม
-- `/test-usage` เลือก `test-*` skills ที่ตรง domain เอง — website → `/test-website`, CLI → `/test-cli`, API → `/test-api`, e2e → `/test-e2e`, หลาย domain → `/run-test all`; docs usage examples → flow เดิมของ test-usage
-- ถ้า test-usage ไม่ applicable จริงๆ (เช่น research-only, report-only ที่ไม่มี runnable usage) → ระบุเหตุผลใน report แทนการข้ามเงียบๆ
+- เวลา user สั่งให้ทำอะไร (create/implement feature, file, module, config, docs, skill หรือแก้ไขอะไรก็ตาม) → ทำ `/deep-test usage` ก่อนจบงานเสมอ เพื่อยืนยันว่า usage/examples/commands ทำงานได้จริง ไม่ข้าม
+- `/deep-test usage` ยังเลือก domain test เพิ่มเติมได้ตรง domain เอง — website → `/deep-test website`, CLI → `/deep-test cli`, API → `/deep-test api`, e2e → `/deep-test e2e`, หลาย domain → `/deep-test all` (`/run-test` เป็น thin dispatcher ส่งต่อมาที่นี่)
+- ถ้า `/deep-test usage` ไม่ applicable จริงๆ (เช่น research-only, report-only ที่ไม่มี runnable usage) → ระบุเหตุผลใน report แทนการข้ามเงียบๆ
