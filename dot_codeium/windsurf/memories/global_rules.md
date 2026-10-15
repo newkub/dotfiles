@@ -2,9 +2,9 @@
 
 ## 1. Refactor-To-SRP Always
 
-- เวลา user สั่งให้ทำอะไรใหม่ (create/implement feature, file, module, config, docs, skill) หรือสั่งอัปเดต/แก้ไขอะไรก็ตาม → ทำตาม `/refactor-to-srp` เสมอ
+- เวลา user สั่งให้ทำอะไรใหม่ (create/implement feature, file, module, config, docs, skill) หรือสั่งอัปเดต/แก้ไขอะไรก็ตาม → ทำตาม `/refactor` SRP scope (`### 2. File And SRP Refactor`) เสมอ
 - ทุก unit/file ที่สร้างหรือแตะต้องมี single responsibility: 1 unit = 1 reason to change, ไฟล์ ≤250 บรรทัด (ยกเว้น barrel/index)
-- ก่อนเขียน → อ่าน `refactor/SKILL.md` `## Rules` + `/refactor-to-srp`; หลังเขียน/แก้เสร็จ → ทำ `/refactor` SRP scope กับไฟล์ที่แตะก่อนจบงานเสมอ ไม่ข้าม
+- ก่อนเขียน → อ่าน `refactor/SKILL.md` `## Rules` + `/refactor` SRP scope (`### 2. File And SRP Refactor`); หลังเขียน/แก้เสร็จ → ทำ `/refactor` SRP scope กับไฟล์ที่แตะก่อนจบงานเสมอ ไม่ข้าม
 
 ## 2. Plan Before Bulk Work
 
