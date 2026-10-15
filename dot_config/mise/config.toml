@@ -291,7 +291,6 @@ usage = "latest"
 "npm:pake-cli" = "latest"
 ffmpeg = "latest"
 bun = "latest"
-opencode = "latest"
 podman-tui = "latest"
 podman = { version = "latest", rename_exe = "podman-remote" }
 "github:dedene/raindrop-cli" = "latest"
@@ -338,6 +337,7 @@ cloudflared = "latest"
 playwright = "latest"
 maestro = "latest"
 java = "latest"
+opencode = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
