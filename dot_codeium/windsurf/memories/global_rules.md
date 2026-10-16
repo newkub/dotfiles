@@ -2,16 +2,16 @@
 
 ## 1. Refactor-To-SRP Always
 
-- เวลา user สั่งให้ทำอะไรใหม่ (create/implement feature, file, module, config, docs, skill) หรือสั่งอัปเดต/แก้ไขอะไรก็ตาม → ทำตาม `/refactor` SRP scope (`### 2. File And SRP Refactor`) เสมอ
-- ทุก unit/file ที่สร้างหรือแตะต้องมี single responsibility: 1 unit = 1 reason to change, ไฟล์ ≤250 บรรทัด (ยกเว้น barrel/index)
-- ก่อนเขียน → อ่าน `refactor/SKILL.md` `## Rules` + `/refactor` SRP scope (`### 2. File And SRP Refactor`); หลังเขียน/แก้เสร็จ → ทำ `/refactor` SRP scope กับไฟล์ที่แตะก่อนจบงานเสมอ ไม่ข้าม
+- Whenever the user asks for something new (create/implement a feature, file, module, config, docs, skill) or asks to update/edit anything → always follow the `/refactor` file/SRP scope (`### 3. Refactor` bullet `file/SRP`)
+- Every unit/file created or touched must have a single responsibility: 1 unit = 1 reason to change, file ≤250 lines (except barrel/index)
+- Before writing → read `refactor/SKILL.md` `## Rules` + the `/refactor` file/SRP scope (`### 3. Refactor` bullet `file/SRP`); after writing/editing → run the `/refactor` file/SRP scope on the touched files before finishing. Never skip
 
 ## 2. Plan Before Bulk Work
 
-- เวลา user สั่งให้ทำอะไรใหม่จำนวนเยอะในคราวเดียว (หลาย features/files/tasks พร้อมกัน) → ทำ `/create-plan-in-dot-devin` ก่อนเสมอ แล้วค่อย implement ตาม plan
+- When the user asks for many new things at once (multiple features/files/tasks together) → always run `/create-plan-in-dot-devin` first, then implement per the plan
 
 ## 3. Test Usage Always
 
-- เวลา user สั่งให้ทำอะไร (create/implement feature, file, module, config, docs, skill หรือแก้ไขอะไรก็ตาม) → ทำ `/deep-test usage` ก่อนจบงานเสมอ เพื่อยืนยันว่า usage/examples/commands ทำงานได้จริง ไม่ข้าม
-- `/deep-test usage` ยังเลือก domain test เพิ่มเติมได้ตรง domain เอง — website → `/deep-test website`, CLI → `/deep-test cli`, API → `/deep-test api`, e2e → `/deep-test e2e`, หลาย domain → `/deep-test all` (`/run-test` เป็น thin dispatcher ส่งต่อมาที่นี่)
-- ถ้า `/deep-test usage` ไม่ applicable จริงๆ (เช่น research-only, report-only ที่ไม่มี runnable usage) → ระบุเหตุผลใน report แทนการข้ามเงียบๆ
+- Whenever the user asks for anything (create/implement a feature, file, module, config, docs, skill, or any edit) → always run `/deep-test usage` before finishing, to confirm that usage/examples/commands actually work. Never skip
+- `/deep-test usage` can also pick an additional domain test that matches the domain — website → `/deep-test website`, CLI → `/deep-test cli`, API → `/deep-test api`, e2e → `/deep-test e2e`, multiple domains → `/deep-test all` (`/run-test` is a thin dispatcher that forwards here)
+- If `/deep-test usage` is genuinely not applicable (e.g., research-only or report-only with no runnable usage) → state the reason in the report instead of silently skipping
