@@ -1,10 +1,8 @@
 {
+  "trustedDependencies": [
+    "@opencode/cli"
+  ],
   "dependencies": {
-    "@moonrepo/cli": "2.5.3",
-    "agent-browser": "0.38.2",
-    "bunup": "^0.16.32",
-    "chalk": "^6.0.1",
-    "commander": "^15.0.0",
-    "node-gyp": "13.1.0"
+    "@opencode/cli": "^2.0.32"
   }
 }

@@ -294,7 +294,6 @@ bun = "latest"
 podman-tui = "latest"
 podman = { version = "latest", rename_exe = "podman-remote" }
 "github:dedene/raindrop-cli" = "latest"
-pnpm = "latest"
 "npm:ctx7" = "latest"
 lazygit = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
@@ -337,7 +336,10 @@ cloudflared = "latest"
 playwright = "latest"
 maestro = "latest"
 java = "latest"
-opencode = "latest"
+"github:HenryZhang-ZHY/dowse" = "latest"
+"github:tobi/disktree" = "latest"
+"github:vicanso/zedis" = "latest"
+"github:jholhewres/devpit" = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 
 [settings]
