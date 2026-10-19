@@ -179,8 +179,6 @@ SCCACHE_DIR = "D:\\.cache\\sccache"
 MISE_INSTALLS_DIR = "D:\\mise"
 
 [tools]
-"github:kristoferlund/ostt" = "latest"
-"github:stakpak/agent" = "latest"
 watchexec = "latest"
 cargo-binstall = "latest"
 docker-compose = "latest"
@@ -229,7 +227,6 @@ amp = "latest"
 oxfmt = "latest"
 cowsay = "latest"
 "npm:@antfu/ni" = "latest"
-"npm:@modelcontextprotocol/sdk" = "latest"
 "npm:@moonrepo/cli" = "latest"
 "npm:@openai/codex" = "latest"
 "npm:@shikijs/cli" = "latest"
@@ -289,7 +286,6 @@ usage = "latest"
 "npm:foam-cli" = "latest"
 "npm:taze" = "latest"
 "npm:pake-cli" = "latest"
-ffmpeg = "latest"
 bun = "latest"
 podman-tui = "latest"
 podman = { version = "latest", rename_exe = "podman-remote" }
@@ -299,17 +295,13 @@ lazygit = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
 "npm:@biomejs/biome" = "latest"
 "npm:@native-sdk/cli" = "latest"
-"aqua:wasm-bindgen/wasm-pack" = "latest"
-imagemagick = "latest"
 "npm:druk" = "latest"
 "npm:npkill" = "latest"
 "npm:git-split-diffs" = "latest"
 hk = "latest"
 lefthook = "latest"
-"aqua:moonrepo/moon" = "latest"
 node = "latest"
 worktrunk = "latest"
-github-cli = "latest"
 longbridge-terminal = "latest"
 stripe = "latest"
 yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
@@ -353,18 +345,15 @@ java = "latest"
 "npm:knip" = "latest"
 "npm:madge" = "latest"
 "npm:promptfoo" = "latest"
-"github:tokio-rs/console" = "latest"
 "cargo:cargo-llvm-cov" = "latest"
 "aqua:open-policy-agent/regal" = "latest"
 "npm:oxlint-tsgolint" = "latest"
 "pypi:semgrep" = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
-
 [settings]
 env_shell_expand = true
 windows_shim_mode = "exe"
 experimental = true
 minimum_release_age = "0"
-
 [settings.npm]
 bun = true
