@@ -349,6 +349,7 @@ java = "latest"
 "aqua:open-policy-agent/regal" = "latest"
 "npm:oxlint-tsgolint" = "latest"
 "pypi:semgrep" = "latest"
+"github:trycua/cua" = "latest"
 # powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
 [settings]
 env_shell_expand = true
