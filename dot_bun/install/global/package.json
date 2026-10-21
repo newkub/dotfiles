@@ -3,6 +3,6 @@
     "@opencode/cli"
   ],
   "dependencies": {
-    "@opencode/cli": "^2.0.32"
+    "@opencode/cli": "^2.1.2"
   }
 }

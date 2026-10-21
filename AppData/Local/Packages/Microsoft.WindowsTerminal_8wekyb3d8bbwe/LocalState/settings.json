@@ -112,6 +112,7 @@
                 "name": "Command Prompt"
             },
             {
+                "commandline": "pwsh.exe -NoExit -File C:\\Users\\Veerapong\\AppData\\Local\\WindowsTerminal\\cwd-integration.ps1",
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
@@ -174,6 +175,18 @@
             },
             {
                 "guid": "{26d3c578-4bdc-5405-b69a-aebdc9b44b1b}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{398d4a22-7802-5051-8c8d-cf771177811e}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{d0d4069d-6a37-5d21-92fc-b2b3d9aba930}",
                 "hidden": false,
                 "name": "archlinux",
                 "source": "Microsoft.WSL"
