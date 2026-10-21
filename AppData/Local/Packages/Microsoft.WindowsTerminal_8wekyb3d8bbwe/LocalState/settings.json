@@ -165,6 +165,18 @@
                 "hidden": false,
                 "name": "arch",
                 "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{ad4699ec-9ad4-5efd-b7c1-d2e6470108b5}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{26d3c578-4bdc-5405-b69a-aebdc9b44b1b}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
             }
         ]
     },

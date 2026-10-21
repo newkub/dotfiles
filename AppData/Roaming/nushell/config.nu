@@ -272,7 +272,7 @@ def g [
         chatgpt: "https://chat.openai.com/?q={0}"
         crates: "https://crates.io/search?q={0}"
     }
-    let first = ($args.0 | str downcase)
+    let first = ($args.0 | str lowercase)
     if $first in $engines {
         let engine = ($engines | get $first)
         let query = (($args | skip 1) | str join " " | url encode)
