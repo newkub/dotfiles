@@ -32,40 +32,40 @@
             "keys": "ctrl+shift+up"
         },
         {
-            "id": "Terminal.DuplicatePaneDown",
-            "keys": "ctrl+shift+down"
-        },
-        {
             "id": "Terminal.OpenSettingsUI",
             "keys": "f1"
         },
         {
-            "id": "User.splitPane.652D529A",
-            "keys": "ctrl+shift+left"
+            "id": "Terminal.DuplicatePaneDown",
+            "keys": "ctrl+shift+down"
         },
         {
             "id": "Terminal.DuplicatePaneRight",
             "keys": "ctrl+shift+right"
         },
         {
-            "id": "Terminal.CopyToClipboard",
-            "keys": "ctrl+c"
+            "id": "User.splitPane.652D529A",
+            "keys": "ctrl+shift+left"
         },
         {
             "id": "Terminal.OpenNewTab",
             "keys": "ctrl+t"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+f"
         },
         {
             "id": null,
             "keys": "ctrl+comma"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+f"
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         },
         {
             "id": "Terminal.FindText",
@@ -189,6 +189,12 @@
                 "guid": "{d0d4069d-6a37-5d21-92fc-b2b3d9aba930}",
                 "hidden": false,
                 "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{791e76e1-afa8-58ad-afbf-c3532340bd8b}",
+                "hidden": false,
+                "name": "rescue",
                 "source": "Microsoft.WSL"
             }
         ]

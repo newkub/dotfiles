@@ -7,6 +7,7 @@ autocrlf = false
 defaultBranch = main
 editor = zed --wait
 	longpaths = true
+	hooksPath = C:\\Users\\Veerapong\\AppData\\Roaming\\dev-prune\\hooks
 
 [gitbutler]
 aiOpenAIKeyOption = butlerAPI

@@ -146,10 +146,22 @@ Write-Host "`n[update-all] completed with $failed failure(s)" -ForegroundColor $
 exit $failed
 '''
 
+
 [tasks.cleanup]
-description = "cleanup caches"
-shell = "pwsh -Command"
-run = "scoop cleanup * && scoop cache rm * && Remove-Item -Recurse -Force $env:USERPROFILE/.bun/install/cache/* -ErrorAction SilentlyContinue ; npm cache clean --force 2>$null ; $null = $LASTEXITCODE ; pnpm store prune 2>$null ; $null = $LASTEXITCODE ; yarn cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache clean 2>$null ; $null = $LASTEXITCODE ; uv cache prune 2>$null ; $null = $LASTEXITCODE ; python -m pip cache purge 2>$null ; $null = $LASTEXITCODE ; bun pm cache rm 2>$null ; $null = $LASTEXITCODE ; mise cache clear 2>$null ; $null = $LASTEXITCODE ; Clear-RecycleBin -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:TEMP/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/mise/downloads/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:USERPROFILE/.cache/pip/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/Microsoft/Windows/WER/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:LOCALAPPDATA/CrashDumps/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:APPDATA/devin/cli/summaries/* -Recurse -Force -ErrorAction SilentlyContinue ; Remove-Item -Path $env:APPDATA/devin/cli/sessions.db* -Force -ErrorAction SilentlyContinue ; npkill --delete-all -y 2>$null ; cargo-clean-all 2>$null ; podman system prune -af 2>$null ; mise prune --yes ; git gc --auto 2>$null ; if ($env:SCCACHE_DIR) { Remove-Item -Recurse -Force $env:SCCACHE_DIR -ErrorAction SilentlyContinue } ; exit 0"
+description = "clean development artifacts and caches"
+shell = "pwsh -NoProfile -Command"
+run = '''
+devp run -y
+scoop cleanup *
+scoop cache rm *
+bun pm cache rm
+npm cache clean --force
+pnpm store prune
+uv cache clean
+python -m pip cache purge
+mise cache clear
+mise prune --yes
+'''
 
 [tasks.chezmoi-update]
 description = "sync local dotfiles"
@@ -157,10 +169,6 @@ dir = "C:/Users/Veerapong/.local/share/chezmoi"
 shell = "pwsh -Command"
 run = "chezmoi re-add"
 
-[tasks.cargo-clean-all]
-description = "Clean all Rust projects recursively"
-shell = "pwsh -Command"
-run_windows = '''powershell -NoProfile -Command "Get-ChildItem -Recurse -Filter Cargo.toml | ForEach-Object { `$dir = `$_.DirectoryName; Write-Host \\"Cleaning `$dir\\"; Push-Location `$dir; cargo clean; Pop-Location }"'''
 
 [tasks.program-list]
 description = "list installed programs"
@@ -223,81 +231,30 @@ sccache = "latest"
 ast-grep = "latest"
 starship = "latest"
 viteplus = "latest"
+bun = "latest"
+mr-boxington = "latest"
 amp = "latest"
-oxfmt = "latest"
 cowsay = "latest"
 "npm:@antfu/ni" = "latest"
-"npm:@moonrepo/cli" = "latest"
 "npm:@openai/codex" = "latest"
 "npm:@shikijs/cli" = "latest"
-"npm:@tanstack/intent" = "latest"
-"npm:@typescript/native-preview" = "latest"
-"npm:@vscode/vsce" = "latest"
 "npm:actions-up" = "latest"
 "npm:agent-browser" = "latest"
 "npm:changelogen" = "latest"
-"npm:chrome-devtools-mcp" = "latest"
 "npm:giget" = "latest"
 "npm:gifify" = "latest"
-"npm:gitify" = "latest"
 "npm:jscpd" = "latest"
-"npm:oxlint" = "latest"
 "npm:rimraf" = "latest"
 "npm:playwriter" = "latest"
 "npm:rumdl" = "latest"
 "npm:skills" = "latest"
-"npm:tauri" = "latest"
-"npm:tree-sitter-cli" = "latest"
-"npm:typescript" = "latest"
-"npm:unocss-language-server" = "latest"
-"npm:vitest" = "latest"
 "npm:vercel" = "latest"
-"npm:vue-tsc" = "latest"
-"npm:@schpet/linear-cli" = "latest"
 "aqua:eza-community/eza" = "latest"
-"cargo:rmz" = "latest"
-"cargo:open" = "latest"
-"cargo:git-x" = "latest"
 "cargo:xh" = "latest"
 "cargo:ast-grep-mcp" = "latest"
 "cargo:rust-mcp-filesystem" = "latest"
 "cargo:elio" = "latest"
-"cargo:bacon" = "latest"
-"cargo:slumber" = "latest"
-"cargo:rainfrog" = "latest"
-"cargo:crw-server" = "latest"
-"cargo:rmux" = "latest"
-"cargo:clean-dev-dirs" = "latest"
-"cargo:selene" = "latest"
-"cargo:cargo-sweep" = "latest"
-"cargo:cargo-show-asm" = "latest"
-"cargo:procs" = "latest"
-"cargo:node_module-nuke" = "latest"
-"cargo:cargo-clean-all" = "latest"
-"cargo:git-graph" = "latest"
-"cargo:rloc" = "latest"
-"cargo:loc" = "latest"
-usage = "latest"
-"npm:crw-mcp" = "latest"
-"npm:aicommits" = "latest"
-"github:us/crw" = "latest"
-"npm:gleanup" = "latest"
-"github:aubepkg/aube" = "latest"
-"npm:foam-cli" = "latest"
-"npm:taze" = "latest"
-"npm:pake-cli" = "latest"
-bun = "latest"
-podman-tui = "latest"
-podman = { version = "latest", rename_exe = "podman-remote" }
-"github:dedene/raindrop-cli" = "latest"
-"npm:ctx7" = "latest"
-lazygit = "latest"
-"npm:@mermaid-js/mermaid-cli" = "latest"
-"npm:@biomejs/biome" = "latest"
-"npm:@native-sdk/cli" = "latest"
-"npm:druk" = "latest"
 "npm:npkill" = "latest"
-"npm:git-split-diffs" = "latest"
 hk = "latest"
 lefthook = "latest"
 node = "latest"
@@ -305,11 +262,14 @@ worktrunk = "latest"
 longbridge-terminal = "latest"
 stripe = "latest"
 yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
-"npm:@scalar/cli" = "latest"
 cmake = "4.4.3"
 "npm:lighthouse" = "latest"
-mr-boxington = "latest"
-"cargo:cargo-fframes" = "latest"
+usage = "latest"
+"npm:crw-mcp" = "latest"
+"github:us/crw" = "latest"
+"github:aubepkg/aube" = "latest"
+"npm:taze" = "latest"
+"npm:pake-cli" = "latest"
 kotlin = { version = "latest", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 portless = "latest"
 claude = "latest"
@@ -325,34 +285,44 @@ infisical = { version = "latest", asset_pattern = "cli_{{ version }}_{{ os(macos
 wrangler = { version = "latest", allow_builds = ["esbuild", "sharp", "workerd"] }
 cloudflared = "latest"
 "npm:@usebruno/cli" = "latest"
-playwright = "latest"
 maestro = "latest"
 java = "latest"
+
 "github:HenryZhang-ZHY/dowse" = "latest"
 "github:tobi/disktree" = "latest"
 "github:vicanso/zedis" = "latest"
 "github:jholhewres/devpit" = "latest"
-"aqua:google/osv-scanner" = "2.7.0"
-"aqua:trufflesecurity/trufflehog" = "3.99.2"
-"aqua:rhysd/actionlint" = "1.7.12"
-"aqua:hadolint/hadolint" = "2.15.1"
-"aqua:lycheeverse/lychee" = "0.24.2"
-"aqua:anchore/syft" = "1.54.1"
-"aqua:anchore/grype" = "0.120.1"
+"aqua:rhysd/actionlint" = "latest"
+"aqua:lycheeverse/lychee" = "latest"
 "github:yannh/kubeconform" = "latest"
-"cargo:zizmor" = "latest"
-"npm:@stoplight/spectral-cli" = "latest"
+podman-tui = "latest"
+podman = { version = "latest", rename_exe = "podman-remote" }
+"github:dedene/raindrop-cli" = "latest"
+"npm:ctx7" = "latest"
+"npm:druk" = "latest"
 "npm:knip" = "latest"
 "npm:madge" = "latest"
-"npm:promptfoo" = "latest"
-"cargo:cargo-llvm-cov" = "latest"
-"aqua:open-policy-agent/regal" = "latest"
-"npm:oxlint-tsgolint" = "latest"
-"pypi:semgrep" = "latest"
 "github:trycua/cua" = "latest"
-# powershell-core = "latest"  # installed via scoop to avoid pwsh shim loading full mise env
+"npm:tsrs" = "latest"
+grex = "latest"
+"github:pvolok/dekit" = "latest"
+"github:h4ckf0r0day/obscura" = "latest"
+"github:jimmystridh/rloc" = "latest"
+"github:Kampfkarren/selene" = "latest"
+"github:dalance/procs" = "latest"
+"github:zizmorcore/zizmor" = "latest"
+"github:taiki-e/cargo-llvm-cov" = "latest"
+"github:clean-dev-dirs/clean-dev-dirs" = "latest"
+"github:Life-Experimentalist/dev-prune" = "latest"
+"npm:git-split-diffs" = "latest"
+
+
+
+
+
 [settings]
 env_shell_expand = true
+auto_install = true
 windows_shim_mode = "exe"
 experimental = true
 minimum_release_age = "0"

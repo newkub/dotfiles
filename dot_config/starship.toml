@@ -1,2 +1,48 @@
 command_timeout = 10000
 scan_timeout = 400
+
+format = """\
+${os}${env_var.STARSHIP_SHELL}\
+$username$hostname$localip$shlvl$singularity$kubernetes$nats$directory$vcsh$fossil_branch$fossil_metrics${git_branch}$git_commit$git_state$git_metrics$hg_branch$hg_state$pijul_channel$docker_context$package$bun$c$cmake$cobol$cpp$daml$dart$deno$dotnet$elixir$elm$erlang$fennel$fortran$gleam$golang$gradle$haskell$haxe$helm$java$julia$kotlin$lua$maven$mojo$nim$nodejs$ocaml$odin$opa$perl$php$pulumi$purescript$python$quarto$raku$rlang$red$ruby$rust$scala$solidity$swift$terraform$typst$vlang$vagrant$xmake$zig$buf$guix_shell$nix_shell$conda$pixi$meson$spack$memory_usage$aws$gcloud$openstack$azure$direnv$env_var$mise$crystal$sudo$cmd_duration${custom.git_info}$line_break$jobs$battery$status$container$netns$character"""
+
+[env_var.STARSHIP_SHELL]
+format = "[󰆍 $env_value]($style) "
+style = "bold cyan"
+
+[os]
+format = "[$symbol]($style) "
+style = "bold blue"
+disabled = false
+
+[os.symbols]
+Arch = "󰣇 "
+Linux = "󰌽 "
+Windows = "󰖳 "
+
+[directory]
+format = "[󰉋 $path$read_only]($style) "
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = "󰘬 "
+style = "bold purple"
+
+[git_status]
+disabled = true
+
+# version detection shells out to node via the mise shim (~2.5s per prompt)
+[nodejs]
+disabled = true
+
+[cmd_duration]
+format = "[󰔛 $duration]($style) "
+min_time = 2000
+style = "bold yellow"
+
+[custom.git_info]
+command = '. "$HOME/.config/starship/git-info.sh"'
+shell = ["sh"]
+when = true
+unsafe_no_escape = true
+format = "$output"
+style = "none"
