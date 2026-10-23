@@ -23,7 +23,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 - **Fast path** — คำถาม/อธิบาย/แก้ไฟล์เดียวที่ไม่เสี่ยง: ตอบหรือแก้ได้เลย ไม่ต้อง `enhance-prompt`, plan, หรือ report เต็มรูป
 - **Full path** — feature ใหม่, แก้หลายไฟล์, เปลี่ยน public API, หรืองานเสี่ยง: เดินครบทุก section
 
-1. Full path: ทำ `enhance-prompt` สรุปเป็น numbered (single responsibility ต่อข้อ) → `deep-plan` (หรือ `create-plan-in-dot-devin` เมื่อต้อง publish plan) → `continue`; Fast path ข้ามขั้นนี้
+1. Full path: ทำ `enhance-prompt` สรุปเป็น numbered (single responsibility ต่อข้อ) → `deep-plan` (หรือ `create-plan-in-dot-agents` เมื่อต้อง publish plan) → `continue`; Fast path ข้ามขั้นนี้
 2. อ่าน references ที่เกี่ยวข้องและยืนยันว่ามีจริงด้วย `check-reference` ก่อนแก้ไข (การอัปเดต references หลังแก้ให้ทำตามข้อ 5.8)
 3. ถ้ายังไม่ชัดว่าต้องทำอะไรต่อ → `/suggest-next-action` (follow `/follow-enter-dot`); ถ้า user ระบุ action ชัดแล้วให้ทำตามนั้น
 4. ใช้ "." เป็น trigger สำหรับ `/follow-enter-dot` — จะเลือก `/continue`, `/suggest-next-action`, `/ship`, หรือ `/ask-me` ตาม state ปัจจุบัน
@@ -31,7 +31,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 6. ถ้างานมี subtasks อิสระหลายด้าน → ใช้ `/update-devin-global-subagents` หรือ `/use-subagents` ตาม context
 7. ห้ามเรียกใช้ skills หรือ subagents ที่ไม่เกี่ยวข้องกับ task
 8. ถ้าเข้าถึง workspace ไม่ได้ → stop และ report โดยไม่แก้ไขไฟล์
-9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-files-in-computer` ก่อนดำเนินการต่อ
+9. ถ้า disk เต็มหรือใกล้เต็ม → ทำ `/cleanup-disk-computer` ก่อนดำเนินการต่อ
 
 ### 2. Read References
 
@@ -80,7 +80,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 2. ทำ `follow-architecture` และรักษา existing style; ถ้าเป็นการเปลี่ยนโครงสร้างสำคัญให้เพิ่ม `deep-review`
 3. ถ้าแก้ >10 ไฟล์ → ทำ `use-scripts`; ถ้าไฟล์ยาว >250 บรรทัด → ทำ `refactor` หลังจบ task
 4. mock ต้องอยู่ใน `mock/` และกำกับด้วย `// MOCK`; งานค้างใช้ `// TODO` เท่าที่จำเป็น
-5. ถ้าแก้ skills หรือ `global_rules.md` → ทำ `/update-devin-global-skills` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน; ถ้า `SKILL.md` เรียก skill อื่น → ทำตาม `update-devin-global-skills` (`## Conventions → Invoke Skills`)
+5. ถ้าแก้ skills หรือ `AGENTS.md` → ทำ `/update-agents-skills-global` เสมอ และทำ `/use-related-skills` เพื่อตรวจสอบว่า skill อื่นใช้ร่วมหรือขยายได้ ไม่ซ้ำซ้อน; ถ้า `SKILL.md` เรียก skill อื่น → ทำตาม `update-agents-skills-global` (`## Conventions → Invoke Skills`)
 6. ถ้าแก้ config → ทำ `follow-default-config`; ถ้าแก้ barrel export → ทำ `deep-review` หรือ `check-code-structure`
 7. หลังเขียนหรือ refactor → ทำ `/refactor` structure scope
 8. ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์ที่มี references → ทำ `/update-references` เสมอ
@@ -164,7 +164,7 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 - ถ้าแก้ไข ย้าย เปลี่ยนชื่อ หรือลบไฟล์/ skill → ทำ `/update-references` เสมอ แล้ว verify ว่าไม่มี references เก่าเหลือ
 - ถ้าไฟล์ที่แก้ไม่มี references → ไม่ต้องทำ `/update-references`
-- หลัง rename skill หรือ workflow → อัปเดต `AGENTS.md`, `related`, และ `global_rules.md` ทันที
+- หลัง rename skill หรือ workflow → อัปเดต `AGENTS.md`, `related`, และ `global-rules/AGENTS.md` ทันที
 
 ### 7. Prompt Question Handling
 
@@ -202,11 +202,11 @@ description: ลำดับการทำงานทุก task ให้ป�
 
 ### 12. Global Skills Standards
 
-- ถ้าแก้ไข สร้าง ย้าย merge หรือลบ skill ใน `%APPDATA%\devin\skills` → ทำ `/update-devin-global-skills` เสมอ และอัปเดต root `AGENTS.md` ของ repo ให้ sync ทันที (skill counts, family lists, related, merged notes) — `AGENTS.md` คือ root skill descriptor ของ `devin-global-skills`
-- skill ใน global skills ใช้ภาษาไทยสำหรับเนื้อหา แต่คงคำศัพท์เทคนิค เช่น `git`, `lint`, `AST`, `CLI`, `JSON`, skill names, tool names, commands, paths ไว้เป็นภาษาอังกฤษ
+- ถ้าแก้ไข สร้าง ย้าย merge หรือลบ skill ใน `%APPDATA%\devin\skills` → ทำ `/update-agents-skills-global` เสมอ และอัปเดต root `AGENTS.md` ของ repo ให้ sync ทันที (skill counts, family lists, related, merged notes) — `AGENTS.md` คือ root skill descriptor ของ `devin-global-skills`
+- skill content (`SKILL.md`, `references/`, `workflows/`) ใน global skills ใช้ภาษาอังกฤษ โดยคงคำศัพท์เทคนิค เช่น `git`, `lint`, `AST`, `CLI`, `JSON`, skill names, tool names, commands, paths ไว้ตามเดิม
 - project-local skills ใช้ภาษาอังกฤษทั้งหมด
-- ถ้า skill ใน global skills มีเนื้อหาเป็นภาษาอังกฤษทั้งหมด ให้แปลเป็นภาษาไทยโดยรักษาคำศัพท์เทคนิค
-- canonical copy ของไฟล์ rules นี้อยู่ที่ `D:/wrikka-harness/global-rules/AGENTS.md`; หลังแก้ต้อง sync ไปยัง client copy ทันที
+- แชทและ report ใช้ภาษาไทยตาม rules นี้; ไม่ต้องแปลเนื้อหา skill เป็นภาษาไทย
+- canonical copy ของไฟล์ rules นี้อยู่ที่ `D:/dot-agents/AGENTS.md`; หลังแก้ต้อง sync ไปยัง client copy ทันที
 
 ## Expected Outcome
 

@@ -312,9 +312,15 @@ grex = "latest"
 "github:dalance/procs" = "latest"
 "github:zizmorcore/zizmor" = "latest"
 "github:taiki-e/cargo-llvm-cov" = "latest"
-"github:clean-dev-dirs/clean-dev-dirs" = "latest"
 "github:Life-Experimentalist/dev-prune" = "latest"
 "npm:git-split-diffs" = "latest"
+"cargo:open" = "latest"
+"cargo:rloc" = "latest"
+"cargo:rmz" = "latest"
+"cargo:cargo-fframes" = "latest"
+"npm:@slidev/cli" = "latest"
+"npm:@slidev/theme-default" = "latest"
+"npm:@mcpjam/inspector" = "latest"
 
 
 
