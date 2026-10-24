@@ -161,6 +161,8 @@ uv cache clean
 python -m pip cache purge
 mise cache clear
 mise prune --yes
+# compact VHD/VHDX (self-elevates via UAC)
+mise run vhd:optimize
 '''
 
 [tasks.chezmoi-update]
@@ -174,6 +176,11 @@ run = "chezmoi re-add"
 description = "list installed programs"
 shell = "pwsh -Command"
 run = '& { function Show-Section ($title, $script, $limit = 0) { Write-Host "`n=== $title ===" -ForegroundColor Cyan; try { $out = & $script 2>$null } catch { $out = $null }; if (-not $out) { Write-Host "  no output / not installed" -ForegroundColor Yellow } else { $lines = @($out); $total = $lines.Count; if ($limit -gt 0 -and $total -gt $limit) { $lines | Select-Object -First $limit | Out-Host; Write-Host "  ... $total lines total, showing first $limit" -ForegroundColor Gray } else { $lines | Out-Host; Write-Host "  $total lines" -ForegroundColor Gray } } }; Show-Section "Scoop" { scoop list }; Show-Section "Mise" { mise list }; Show-Section "Bun" { bun pm ls -g }; Show-Section "npm" { npm list -g --depth=0 }; Show-Section "pnpm" { pnpm list -g }; Show-Section "uv" { uv tool list }; Show-Section "pip" { python -m pip list }; Show-Section "winget" { winget list } 50; Show-Section "gh" { gh extension list } }'
+
+[tasks."vhd:optimize"]
+description = "Scan, select, and compact VHD/VHDX files"
+dir = "C:/Users/Veerapong/.config/mise"
+run = "pwsh -NoProfile -File scripts/Optimize-VirtualDisks.ps1 -Optimize"
 
 [env]
 OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
@@ -321,6 +328,10 @@ grex = "latest"
 "npm:@slidev/cli" = "latest"
 "npm:@slidev/theme-default" = "latest"
 "npm:@mcpjam/inspector" = "latest"
+"github:ollaya-dev/ollaya" = "latest"
+"cargo:rmux" = "latest"
+"github:ctxrs/ctx" = "latest"
+herdr = "latest"
 
 
 

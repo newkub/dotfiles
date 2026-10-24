@@ -205,9 +205,24 @@ foreach ($key in $locationMap.Keys) {
 # Fuzzy selection helpers
 # ============================================================================
 function Select-Fuzzy {
-    param([string]$Type, [string]$Query, [string]$Root = '.')
-    $items = if ($Query) { fd -t $Type $Query $Root } else { fd -t $Type . $Root }
-    $items | tv
+    param([string]$Type, [string]$Query, [string]$Root = '.', [string]$Label = '')
+    if (-not $Label) { $Label = if ($Type -eq 'd') { 'dirs' } else { 'files' } }
+    $fdArgs = if ($Query) { @('-t', $Type, $Query, $Root) } else { @('-t', $Type, '.', $Root) }
+    $fzfArgs = @(
+        '--height=45%'
+        '--layout=reverse'
+        '--info=inline'
+        '--border=sharp'
+        "--border-label=  $Label  "
+        '--padding=1,0,0,0'
+        '--color=label:bold'
+        '--keep-right'
+        '--cycle'
+        '--no-sort'
+        '--exit-0'
+        '--bind=ctrl-z:ignore,btab:up,tab:down'
+    )
+    fd @fdArgs | fzf @fzfArgs
 }
 
 function Select-Directory {
@@ -276,7 +291,7 @@ function h {
 }
 
 function f { param([string] $query = ''); Select-ZedPath -Type f -Query $query }
-function ff { param([string] $query = ''); Select-ZedPath -Type d -Query $query }
+function ff { param([string] $query = ''); Select-Directory -Query $query }
 
 function ozedrules { zed "$env:USERPROFILE\.codeium\windsurf\memories\global_rules.md" }
 function opowershellprofile { zed "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" }

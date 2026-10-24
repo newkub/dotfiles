@@ -32,40 +32,40 @@
             "keys": "ctrl+shift+up"
         },
         {
-            "id": "Terminal.DuplicatePaneDown",
-            "keys": "ctrl+shift+down"
-        },
-        {
             "id": "Terminal.OpenSettingsUI",
             "keys": "f1"
         },
         {
-            "id": "User.splitPane.652D529A",
-            "keys": "ctrl+shift+left"
+            "id": "Terminal.DuplicatePaneDown",
+            "keys": "ctrl+shift+down"
         },
         {
             "id": "Terminal.DuplicatePaneRight",
             "keys": "ctrl+shift+right"
         },
         {
-            "id": "Terminal.CopyToClipboard",
-            "keys": "ctrl+c"
+            "id": "User.splitPane.652D529A",
+            "keys": "ctrl+shift+left"
         },
         {
             "id": "Terminal.OpenNewTab",
             "keys": "ctrl+t"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+f"
         },
         {
             "id": null,
             "keys": "ctrl+comma"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+f"
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         },
         {
             "id": "Terminal.FindText",
@@ -199,6 +199,24 @@
             },
             {
                 "guid": "{dc44f9a1-2fb5-53e8-b4b2-ea3b2d38c4f0}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{d3988827-4823-53fd-ab22-506ebd6a221f}",
+                "hidden": false,
+                "name": "alpinetest",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{389a1c38-b8ca-5f8c-a0a1-8c717e98e5f7}",
+                "hidden": false,
+                "name": "alpinetest",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{b8d7ebd1-0074-550a-932a-dc03a4fed30e}",
                 "hidden": false,
                 "name": "archlinux",
                 "source": "Microsoft.WSL"
