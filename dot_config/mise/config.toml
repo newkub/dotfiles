@@ -332,6 +332,7 @@ grex = "latest"
 "cargo:rmux" = "latest"
 "github:ctxrs/ctx" = "latest"
 herdr = "latest"
+"github:wez/wezterm" = "latest"
 
 
 
