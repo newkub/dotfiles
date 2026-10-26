@@ -333,6 +333,7 @@ grex = "latest"
 "github:ctxrs/ctx" = "latest"
 herdr = "latest"
 "github:wez/wezterm" = "latest"
+"github:rust-mcp-stack/rust-mcp-filesystem" = "latest"
 
 
 
