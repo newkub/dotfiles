@@ -334,6 +334,7 @@ grex = "latest"
 herdr = "latest"
 "github:wez/wezterm" = "latest"
 "github:rust-mcp-stack/rust-mcp-filesystem" = "latest"
+"npm:agent-desktop" = "latest"
 
 
 
