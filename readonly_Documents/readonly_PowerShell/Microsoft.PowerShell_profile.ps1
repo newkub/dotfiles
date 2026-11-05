@@ -1,3 +1,7 @@
+
+# atuin init powershell --disable-up-arrow | Out-String | Invoke-Expression
+
+
 #Requires -Version 7.0
 
 # ============================================================================
