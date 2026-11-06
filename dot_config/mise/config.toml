@@ -337,6 +337,7 @@ herdr = "latest"
 "npm:agent-desktop" = "latest"
 "github:cmzy/geetree" = "latest"
 "github:ltspace/dowse" = "latest"
+"npm:@biomejs/biome" = "latest"
 
 
 
