@@ -8,7 +8,7 @@ starship = "latest"
 "~/.bash_profile" = { mode = "track", variants = [{ os = "linux" }] }
 "~/.bashrc" = { mode = "track", variants = [{ os = "linux" }] }
 "~/.config/carapace" = { mode = "track", variants = [{ os = "linux" }] }
-"~/.config/devin" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/devin/config.json" = { mode = "track", variants = [{ os = "linux" }] }
 "~/.config/ghostty" = { mode = "track", variants = [{ os = "linux" }] }
 "~/.config/mise" = { mode = "track", variants = [{ os = "linux" }] }
 "~/.config/starship" = { mode = "track", variants = [{ os = "linux" }] }
