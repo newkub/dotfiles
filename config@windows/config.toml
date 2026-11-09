@@ -300,8 +300,6 @@ cloudflared = "latest"
 "npm:@usebruno/cli" = "latest"
 maestro = "latest"
 java = "latest"
-
-"github:HenryZhang-ZHY/dowse" = "latest"
 "github:tobi/disktree" = "latest"
 "github:vicanso/zedis" = "latest"
 "github:jholhewres/devpit" = "latest"
@@ -380,6 +378,7 @@ builtin = "history-watch"
 "~/.config/cli-git" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/cligit" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/devin/config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/fish" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/gh-dash" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/git" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/graphite" = { mode = "track", variants = [{ os = "windows" }] }
@@ -397,10 +396,12 @@ builtin = "history-watch"
 "~/.config/tanstack" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/thclaws" = { mode = "track", exclude = ["secrets.json"], variants = [{ os = "windows" }] }
 "~/.config/waveterm" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/wezterm" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/winfetch" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/workos" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.default_gitignore" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.dotfile-manager.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.gitconfig" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.inshellisenserc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.nuxtrc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.open-google-config.json" = { mode = "track", variants = [{ os = "windows" }] }
@@ -410,5 +411,16 @@ builtin = "history-watch"
 "~/.taskbook.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.wslconfig" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.zoxide.nu" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState" = { mode = "track", variants = [{ os = "windows" }], include = ["settings.json", "state.json"] }
+"~/Documents/PowerShell" = { mode = "track", variants = [{ os = "windows" }], include = ["*.ps1", "*.psm1"] }
 "~/computer-cleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/wcleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
+
+# Global task: save a dotfiles checkpoint, then sync with origin.
+[tasks.sync]
+description = "Save dotfiles checkpoint and sync with origin"
+run = "mise dotfiles save && mise dotfiles sync"
+
+[tasks.dotfiles-status]
+description = "Show dotfiles tracking status"
+run = "mise dotfiles status"

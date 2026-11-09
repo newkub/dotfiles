@@ -190,6 +190,20 @@
       ]
     },
     {
+      "path": "home/.config/fish",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/gh-dash",
       "autosave": true,
       "encrypt": false,
@@ -428,6 +442,20 @@
       ]
     },
     {
+      "path": "home/.config/wezterm",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/winfetch",
       "autosave": true,
       "encrypt": false,
@@ -471,6 +499,20 @@
     },
     {
       "path": "home/.dotfile-manager.json",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.gitconfig",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -607,6 +649,42 @@
           "profile": null,
           "default": false
         }
+      ]
+    },
+    {
+      "path": "home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ],
+      "include": [
+        "settings.json",
+        "state.json"
+      ]
+    },
+    {
+      "path": "home/Documents/PowerShell",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ],
+      "include": [
+        "*.ps1",
+        "*.psm1"
       ]
     },
     {
