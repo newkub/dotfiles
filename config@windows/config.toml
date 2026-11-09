@@ -340,11 +340,11 @@ herdr = "latest"
 "github:rust-mcp-stack/rust-mcp-filesystem" = "latest"
 "npm:agent-desktop" = "latest"
 "github:cmzy/geetree" = "latest"
-"github:ltspace/dowse" = "latest"
 "npm:@biomejs/biome" = "latest"
 dust = "latest"
 shellcheck = "latest"
 node = "latest"
+"github:HenryZhang-ZHY/dowse" = "latest"
 
 
 
