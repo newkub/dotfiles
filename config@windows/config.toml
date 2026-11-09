@@ -416,11 +416,6 @@ builtin = "history-watch"
 "~/computer-cleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/wcleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 
-# Global task: save a dotfiles checkpoint, then sync with origin.
-[tasks.sync]
-description = "Save dotfiles checkpoint and sync with origin"
-run = "mise dotfiles save && mise dotfiles sync"
-
 [tasks.dotfiles-status]
 description = "Show dotfiles tracking status"
 run = "mise dotfiles status"
