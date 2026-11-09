@@ -1,0 +1,25 @@
+[tools]
+eza = "latest"
+starship = "latest"
+
+# WSL/Linux dotfiles tracked in place. os = "linux" keeps separate content
+# streams from Windows at the same repo paths.
+[dotfiles]
+"~/.bash_profile" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.bashrc" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/carapace" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/devin" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/ghostty" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/mise" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/starship" = { mode = "track", variants = [{ os = "linux" }] }
+"~/.config/starship.toml" = { mode = "track", variants = [{ os = "linux" }] }
+
+# Global task: save a dotfiles checkpoint, then sync with origin.
+[tasks.sync]
+description = "Save dotfiles checkpoint and sync with origin"
+run = "mise dotfiles save && mise dotfiles sync"
+
+[tasks.dotfiles-status]
+description = "Show dotfiles tracking status"
+run = "mise dotfiles status"
+
