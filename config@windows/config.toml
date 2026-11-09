@@ -370,6 +370,7 @@ builtin = "history-watch"
 "~/.aicommitrc.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.bash_profile" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.bashrc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.bunfig.toml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.better-commits.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/agent-tui" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/amp" = { mode = "track", variants = [{ os = "windows" }] }
@@ -377,8 +378,12 @@ builtin = "history-watch"
 "~/.config/chezmoi/chezmoi.toml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/cli-git" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/cligit" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/agents" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/atuin" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/crush" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/devin/config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/fish" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/ghostty" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/gh-dash" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/git" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/graphite" = { mode = "track", variants = [{ os = "windows" }] }
@@ -387,9 +392,11 @@ builtin = "history-watch"
 "~/.config/medusa" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/micro/bindings.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/mise" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.czrc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/opencode" = { mode = "track", exclude = ["service.json", "node_modules", "package-lock.json"], variants = [{ os = "windows" }] }
 "~/.config/posting" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/search" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/scoop" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/starship" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/starship.toml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/stripe" = { mode = "track", variants = [{ os = "windows" }] }

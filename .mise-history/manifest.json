@@ -107,6 +107,20 @@
       ]
     },
     {
+      "path": "home/.bunfig.toml",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/agent-tui",
       "autosave": true,
       "encrypt": false,
@@ -121,7 +135,35 @@
       ]
     },
     {
+      "path": "home/.config/agents",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/amp",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.config/atuin",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -205,6 +247,20 @@
       ]
     },
     {
+      "path": "home/.config/crush",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/devin/config.json",
       "autosave": true,
       "encrypt": false,
@@ -260,7 +316,7 @@
       "variants": [
         {
           "os": [
-            "linux"
+            "windows"
           ],
           "profile": null,
           "default": false
@@ -372,6 +428,20 @@
     },
     {
       "path": "home/.config/posting",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.config/scoop",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -529,6 +599,20 @@
     },
     {
       "path": "home/.config/workos",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.czrc",
       "autosave": true,
       "encrypt": false,
       "variants": [
