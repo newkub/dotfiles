@@ -1,0 +1,172 @@
+{
+	"branch_action_default": "branch",
+	"branch_description": {
+		"max_length": 70,
+		"separator": ""
+	},
+	"branch_order": ["user", "version", "type", "ticket", "description"],
+	"branch_post_commands": [],
+	"branch_pre_commands": [],
+	"branch_ticket": {
+		"enable": true,
+		"required": false,
+		"separator": "-"
+	},
+	"branch_type": {
+		"enable": true,
+		"separator": "/"
+	},
+	"branch_user": {
+		"enable": true,
+		"required": false,
+		"separator": "/"
+	},
+	"branch_version": {
+		"enable": false,
+		"required": false,
+		"separator": "/"
+	},
+	"breaking_change": {
+		"add_exclamation_to_title": false
+	},
+	"check_status": true,
+	"check_ticket": {
+		"add_to_title": true,
+		"append_hashtag": false,
+		"confirm_ticket": false,
+		"infer_ticket": true,
+		"prepend_hashtag": "Never",
+		"surround": "",
+		"title_position": "start"
+	},
+	"commit_body": {
+		"enable": false,
+		"required": false
+	},
+	"commit_footer": {
+		"enable": false,
+		"initial_value": [],
+		"options": ["closes", "trailer", "breaking-change", "deprecated", "custom"]
+	},
+	"commit_scope": {
+		"custom_scope": true,
+		"enable": false,
+		"initial_value": "",
+		"max_items": 20,
+		"options": [
+			{
+				"label": "none",
+				"value": ""
+			},
+			{
+				"label": "apps",
+				"value": "apps"
+			},
+			{
+				"label": "packages",
+				"value": "packages"
+			}
+		]
+	},
+	"commit_title": {
+		"max_size": 70
+	},
+	"commit_type": {
+		"append_emoji_to_commit": true,
+		"append_emoji_to_label": true,
+		"enable": true,
+		"infer_type_from_branch": true,
+		"initial_value": "chore",
+		"max_items": 20,
+		"options": [
+			{
+				"emoji": "🌱",
+				"hint": "init",
+				"label": "init",
+				"trailer": "Changelog: init",
+				"value": "init"
+			},
+			{
+				"emoji": "🧹",
+				"hint": "deps, config, script, remove unused, format, comment, internal docs, refactor",
+				"label": "chore",
+				"trailer": "Changelog: chore",
+				"value": "chore"
+			},
+			{
+				"emoji": "✨",
+				"hint": "new features",
+				"label": "feat",
+				"trailer": "Changelog: feat",
+				"value": "feat"
+			},
+			{
+				"emoji": "🎨",
+				"hint": "styling",
+				"label": "style",
+				"trailer": "Changelog: style",
+				"value": "style"
+			},
+			{
+				"emoji": "🔧",
+				"hint": "fix bug",
+				"label": "fix",
+				"trailer": "Changelog: fix",
+				"value": "fix"
+			},
+			{
+				"emoji": "🏗️",
+				"hint": "Changes that affect the build system or external dependencies",
+				"label": "build",
+				"trailer": "Changelog: build",
+				"value": "build"
+			},
+			{
+				"emoji": "🤖",
+				"hint": "continuous integration",
+				"label": "ci",
+				"trailer": "Changelog: ci",
+				"value": "ci"
+			},
+			{
+				"emoji": "🧪",
+				"hint": "testing",
+				"label": "test",
+				"trailer": "Changelog: test",
+				"value": "test"
+			},
+			{
+				"emoji": "📚",
+				"hint": "documentation changes",
+				"label": "docs",
+				"trailer": "Changelog: documentation",
+				"value": "docs"
+			},
+			{
+				"emoji": "⚡",
+				"hint": "improve performance",
+				"label": "perf",
+				"trailer": "Changelog: perf",
+				"value": "perf"
+			},
+			{
+				"emoji": "🆕",
+				"hint": "code deployment or publishing to external repositories",
+				"label": "release",
+				"trailer": "Changelog: release",
+				"value": "release"
+			},
+			{
+				"label": "none",
+				"value": ""
+			}
+		]
+	},
+	"confirm_commit": true,
+	"confirm_with_editor": false,
+	"enable_worktrees": true,
+	"overrides": {},
+	"print_commit_output": true,
+	"worktree_post_commands": [],
+	"worktree_pre_commands": []
+}

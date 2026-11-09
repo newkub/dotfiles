@@ -1,0 +1,8 @@
+{
+  "presets": {
+    "google": "https://www.google.com/search?q=",
+    "youtube": "https://www.youtube.com/results?search_query=",
+    "github": "https://github.com/search?q=",
+    "npm": "https://www.npmjs.com/search?q="
+  }
+}

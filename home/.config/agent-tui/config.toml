@@ -1,0 +1,10 @@
+[layout]
+left_panel_width = 25
+right_panel_width = 25
+chat_input_height = 3
+
+[theme]
+name = "default"
+
+[font]
+family = "default"

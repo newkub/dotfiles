@@ -1,0 +1,13 @@
+{
+  "dotfilesDir": "C:\\Users\\Veerapong\\.dotfiles",
+  "files": [
+    {
+      "source": "d:\\cli\\dotfile-manager\\public\\dotfile-examples\\.vimrc",
+      "target": "C:\\Users\\Veerapong\\.dotfiles\\public\\dotfile-examples\\.vimrc"
+    },
+    {
+      "source": "d:\\cli\\dotfile-manager\\public\\dotfile-examples\\.gitconfig",
+      "target": "C:\\Users\\Veerapong\\.dotfiles\\public\\dotfile-examples\\.gitconfig"
+    }
+  ]
+}

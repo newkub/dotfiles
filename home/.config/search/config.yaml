@@ -1,0 +1,16 @@
+version: v1.0
+providers:
+- name: google
+  aliases:
+  - g
+  url: https://google.com/search?q={{ word | urlencode }}
+  browser: null
+- name: bing
+  aliases: null
+  url: https://www.bing.com/search?q={{ word | urlencode }}
+  browser: null
+- name: duckduckgo
+  aliases:
+  - d
+  url: https://duckduckgo.com/?q={{ word | urlencode }}
+  browser: null

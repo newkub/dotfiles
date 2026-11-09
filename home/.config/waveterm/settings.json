@@ -1,0 +1,7 @@
+{
+  "autoupdate:channel": "latest",
+  "autoupdate:enabled": true,
+  "term:fontsize": 16,
+  "app:globalhotkey" : "Ctrl + n"
+  
+}

@@ -1,0 +1,17 @@
+{
+  "patterns": [
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    ".turbo",
+    "bun.lockb",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "package-lock.json",
+    "*.log",
+    "target",
+    "__pycache__",
+    ".cache"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "providers": [
+    {
+      "OpenAICompatible": {
+        "id": "9cb9038d-cb55-4514-a21d-d7e23ea627fb",
+        "provider": "openai_compatible",
+        "api_key": "G6HrE5iBbxrR6NK15e81SEOAgf34sVHV",
+        "api_url": "https://api.deepinfra.com/v1/openai/chat/completions",
+        "model": "deepseek-ai/DeepSeek-V3.2-Exp",
+        "max_tokens": 200,
+        "temperature": 0.2
+      }
+    }
+  ],
+  "active_provider": "9cb9038d-cb55-4514-a21d-d7e23ea627fb",
+  "retry_attempts": 3
+}

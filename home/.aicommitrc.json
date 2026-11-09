@@ -1,0 +1,19 @@
+{
+  "llmProvider": "mastra",
+  "locale": "en",
+  "maxCommitLength": 50,
+  "commitTypes": [
+    "feat",
+    "fix",
+    "docs",
+    "style",
+    "refactor",
+    "test",
+    "chore"
+  ],
+  "enableEmojis": true,
+  "generateCount": 1,
+  "enableGitHook": false,
+  "enableHistory": true,
+  "historyLimit": 100
+}

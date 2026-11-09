@@ -1,0 +1,48 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "diffs": {
+    "wrap": "word",
+    "view": "auto",
+    "tree": true,
+    "single": false
+  },
+  "session": {
+    "sidebar": "auto",
+    "scrollbar": true,
+    "thinking": "show",
+    "markdown": "rendered",
+    "permissions": "autoaccept",
+    "new_location": "inherit",
+    "submit_scroll": "bottom",
+    "grouping": "auto",
+    "verbosity": "medium",
+    "image_preview": false,
+    "tps": true
+  },
+  "animations": true,
+  "debug": {
+    "devtools": false
+  },
+  "theme": {
+    "mode": "dark",
+    "name": "opencode"
+  },
+  "terminal": {
+    "title": true,
+    "copy": "manual"
+  },
+  "plugins": ["file:///C:/Users/Veerapong/.config/opencode/plugins/ghostex-v2/"],
+  "tabs": {
+    "mode": "on",
+    "scope": "global",
+    "layout": "horizontal",
+    "indicators": "status"
+  },
+  "attention": {
+    "notifications": true
+  },
+  "experimental": {
+    "client-mcp": false,
+    "new-designs": false
+  }
+}

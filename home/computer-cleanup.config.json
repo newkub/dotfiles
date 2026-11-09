@@ -1,0 +1,44 @@
+{
+  "patterns": [
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    ".turbo",
+    ".cache",
+    "bun.lockb",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "package-lock.json",
+    "*.log",
+    "npm-debug.log*",
+    "yarn-debug.log*",
+    "yarn-error.log*",
+    ".DS_Store",
+    "Thumbs.db",
+    ".vscode",
+    ".idea",
+    "target",
+    "__pycache__",
+    "*.class",
+    "*.o",
+    "*.obj"
+  ],
+  "scanPaths": [
+    "C:\\Users\\Veerapong",
+    "C:\\Users\\Veerapong\\Documents",
+    "C:\\Users\\Veerapong\\Downloads",
+    "C:\\Users\\Veerapong\\Desktop"
+  ],
+  "excludePatterns": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/AppData/**",
+    "**/Library/**",
+    "**/.Trash/**",
+    "**/$RECYCLE.BIN/**",
+    "**/Dropbox/**",
+    "**/OneDrive/**",
+    "**/iCloudDrive/**"
+  ]
+}
