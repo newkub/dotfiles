@@ -112,7 +112,7 @@
       "variants": []
     },
     {
-      "path": "home/.config/devin",
+      "path": "home/.config/devin/config.json",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -124,12 +124,6 @@
           "default": false
         }
       ]
-    },
-    {
-      "path": "home/.config/devin/config.json",
-      "autosave": true,
-      "encrypt": false,
-      "variants": []
     },
     {
       "path": "home/.config/gh-dash",
