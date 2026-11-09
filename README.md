@@ -9,7 +9,7 @@ repository.
 
 | Machine | OS | Tracked entries |
 |---------|----|-----------------|
-| Windows (`Veerapong`) | Windows 11 | `~/.config/*` app configs, `~/.bashrc`, `~/.bash_profile`, `~/.gitconfig`, wezterm, Windows Terminal `settings.json`/`state.json`, `~/Documents/PowerShell`, mise config |
+| Windows (`Veerapong`) | Windows 11 | `~/.config/*` app configs, agent CLIs (`.codex`, `.gemini`, `.continue`, `.copilot`, `.grok`, `.kiro`, ...), terminal/editor configs (alacritty, helix, yazi, rio, wezterm, Windows Terminal, Zed), `~/AppData/{Roaming,Local}` CLI configs, `~/.bashrc`, `~/.gitconfig`, `~/Documents/PowerShell`, mise config, `~/.config/agents/skills/` |
 | WSL (`ArchLinux`) | Arch Linux | `~/.bashrc`, `~/.bash_profile`, `~/.config/starship*`, `ghostty`, `carapace`, `devin`, mise config |
 
 Each machine declares its own `[dotfiles]` table in `~/.config/mise/config.toml`.
@@ -40,6 +40,7 @@ branch = "main"
 - `home@linux/` - WSL/Linux snapshots, mirroring `$HOME`
 - `config@windows/`, `config@linux/` - per-OS `~/.config/mise` contents
 - `.mise-history/` - mise history metadata (`format.toml`, `manifest.json`)
+- `home@windows/.config/agents/skills/check-config/` - the coverage-audit skill
 - `README.md` - this file
 
 `manifest.json` is the shared enrollment: each path lists every OS variant
@@ -49,7 +50,8 @@ lists of both sides.
 ## Usage
 
 ```bash
-mise run sync          # global task: `dot save` + `dot sync` in one shot
+mise run sync             # global task: `dot save` + `dot sync` in one shot
+mise run dotfiles:sync    # gated sync: gitleaks scan of pending checkpoints, then `dot sync`
 mise run dotfiles-status
 mise dot status        # state of tracked files and sync
 mise dot save          # save a checkpoint now
@@ -60,6 +62,18 @@ mise dot history       # browse saved versions
 mise dot rollback      # restore a previous version
 mise dot track <path>  # start tracking a new file/dir in place
 ```
+
+## Secret gate
+
+`mise run dotfiles:sync` is the only approved way to push. It runs
+`gitleaks git` over `origin/main..HEAD` in the local history repo and aborts
+before `mise dot sync` when it finds a leak. Bare `mise dot sync`/`push` skips
+the gate - do not use them.
+
+`~/.config/agents/skills/check-config/SKILL.md` (synced into this repo) holds
+the audit procedure: how to diff CLI config locations against `[dotfiles]`,
+the list of known secret-bearing paths that must stay untracked, and the
+exclude patterns for tracked directories.
 
 ## Automatic capture
 
@@ -84,8 +98,10 @@ capture as machine-local.
 
 ## Notes
 
-- Never track secrets (`*.env`, `secrets.json`, `hosts.yml` with tokens,
-  `.git-credentials`) - use `exclude` or keep them untracked.
+- Never track secrets (`*.env`, `auth.json`, `credentials*`, `secrets.json`,
+  `hosts.yml` with tokens, `.git-credentials`, `*.pem`, `*.key`) - use
+  `exclude` or keep them untracked. Known secret-bearing paths are listed in
+  the `check-config` skill.
 - `mode = "track"` records history only; it does not deploy/symlink files.
 - If `mise dot sync` reports an enrollment or manifest conflict, reconcile
   `manifest.json` by unioning both sides' `variants` lists, commit in the
