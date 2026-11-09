@@ -1,0 +1,414 @@
+[tasks.update-all]
+description = "update all tools"
+shell = "pwsh -NoProfile -Command"
+run = '''
+$ErrorActionPreference = "Continue"
+$ProgressPreference = "SilentlyContinue"
+$script:failed = 0
+
+function Strip-Ansi ($text) {
+    $text -replace '\x1b\[[0-9;]*m', ''
+}
+
+function Step ($name, $scriptblock) {
+    Write-Host "`n[update-all] $name" -ForegroundColor Cyan
+    try {
+        $lastExit = 0
+        $output = & $scriptblock 2>&1
+        $lastExit = $LASTEXITCODE
+        if ($lastExit -ne 0) { throw "exit code $lastExit" }
+        $output | ForEach-Object { Write-Host "  $_" }
+        Write-Host "  OK" -ForegroundColor Green
+    } catch {
+        Write-Host "  FAIL: $_" -ForegroundColor Red
+        $script:failed++
+    }
+}
+
+function Test-Admin {
+    $p = [Security.Principal.WindowsPrincipal]::new([Security.Principal.WindowsIdentity]::GetCurrent())
+    $p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+Step "winget sources" {
+    $ok = $true
+    winget source update --name msstore; if ($LASTEXITCODE -ne 0) { $ok = $false }
+    winget source update --name winget; if ($LASTEXITCODE -ne 0) { $ok = $false }
+    winget source update --name winget-font; if ($LASTEXITCODE -ne 0) { $ok = $false }
+    if (-not $ok) { exit 1 }
+}
+
+Step "scoop" {
+    scoop update | ForEach-Object { Write-Host "  $_" }
+    if ($LASTEXITCODE -ne 0) { throw }
+
+    scoop hold mise | ForEach-Object { Write-Host "  $_" }
+
+    $outdated = (scoop status 6>&1 | Out-String -Stream) |
+        ForEach-Object { Strip-Ansi $_ } |
+        Select-String '^(?!Name|----|\s*$)([^\s]+)' |
+        ForEach-Object { $_.Matches.Groups[1].Value } |
+        Sort-Object -Unique
+
+    foreach ($pkg in $outdated) {
+        if ($pkg -eq 'mise') {
+            Write-Host "  skip $pkg (held/self-managed)" -ForegroundColor Yellow
+            continue
+        }
+        Write-Host "  update $pkg"
+        try {
+            $out = scoop update $pkg 2>&1
+            $out | ForEach-Object { Write-Host "    $_" }
+            if ($LASTEXITCODE -ne 0) { throw }
+            Write-Host "    OK" -ForegroundColor Green
+        } catch {
+            Write-Host "    FAIL: $_" -ForegroundColor Red
+            $script:failed++
+        }
+    }
+}
+
+Step "winget" {
+    $wingetSkip = @(
+        'BandicamCompany.Bandicam',
+        'BandicamCompany.Bandicut',
+        'Chocolatey.Chocolatey',
+        'Microsoft.Edge'
+    )
+    foreach ($id in $wingetSkip) {
+        winget pin add --id $id 2>&1 | ForEach-Object { Write-Host "  pin: $_" }
+        $null = $LASTEXITCODE
+    }
+    winget upgrade --all --accept-source-agreements --accept-package-agreements
+}
+
+Step "bun" { bun update -g }
+Step "npm" { npm update -g }
+Step "pnpm" { pnpm update -g }
+
+Step "pip" {
+    python -m pip install --upgrade pip
+    if ($LASTEXITCODE -ne 0) { throw }
+    python -m pip_review --auto
+}
+
+Step "uv" { uv tool upgrade --all }
+
+Step "pipx" {
+    if (Get-Command pipx -ErrorAction SilentlyContinue) {
+        pipx upgrade-all
+    } else {
+        Write-Host "  pipx not installed, skipping" -ForegroundColor Yellow
+    }
+}
+
+Step "choco" {
+    if (Test-Admin) {
+        choco upgrade all -y
+    } else {
+        Write-Host "  not admin, skipping choco" -ForegroundColor Yellow
+    }
+}
+
+Step "cargo" {
+    if (-not (Get-Command cargo-install-update -ErrorAction SilentlyContinue)) {
+        if (Get-Command cargo-binstall -ErrorAction SilentlyContinue) {
+            cargo-binstall cargo-update -y
+        } else {
+            cargo install cargo-update
+        }
+    }
+    cargo install-update -a
+}
+
+Step "wsl" {
+    if (Test-Admin -and (Get-Command wsl -ErrorAction SilentlyContinue)) {
+        wsl --update
+    } else {
+        Write-Host "  skip wsl (not admin or not installed)" -ForegroundColor Yellow
+    }
+}
+
+Step "mise tools" { mise upgrade }
+Step "mise prune" { mise prune --yes }
+Step "mise reshim" { mise reshim }
+Step "mise self-update" { mise self-update -y }
+
+Step "rustup" { rustup update stable }
+Step "gh extensions" { gh extension upgrade --all }
+Step "chezmoi" { mise run chezmoi-update }
+Step "skills" {
+    skills update
+    skills update -g
+}
+
+Write-Host "`n[update-all] completed with $failed failure(s)" -ForegroundColor $(if ($failed -eq 0) { 'Green' } else { 'Red' })
+exit $failed
+'''
+
+
+[tasks.cleanup]
+description = "clean development artifacts and caches"
+shell = "pwsh -NoProfile -Command"
+run = '''
+devp run -y
+scoop cleanup *
+scoop cache rm *
+bun pm cache rm
+npm cache clean --force
+pnpm store prune
+uv cache clean
+python -m pip cache purge
+mise cache clear
+mise prune --yes
+# compact VHD/VHDX (self-elevates via UAC)
+mise run vhd:optimize
+'''
+
+[tasks.chezmoi-update]
+description = "sync local dotfiles"
+dir = "C:/Users/Veerapong/.local/share/chezmoi"
+shell = "pwsh -Command"
+run = "chezmoi re-add"
+
+
+[tasks.program-list]
+description = "list installed programs"
+shell = "pwsh -Command"
+run = '& { function Show-Section ($title, $script, $limit = 0) { Write-Host "`n=== $title ===" -ForegroundColor Cyan; try { $out = & $script 2>$null } catch { $out = $null }; if (-not $out) { Write-Host "  no output / not installed" -ForegroundColor Yellow } else { $lines = @($out); $total = $lines.Count; if ($limit -gt 0 -and $total -gt $limit) { $lines | Select-Object -First $limit | Out-Host; Write-Host "  ... $total lines total, showing first $limit" -ForegroundColor Gray } else { $lines | Out-Host; Write-Host "  $total lines" -ForegroundColor Gray } } }; Show-Section "Scoop" { scoop list }; Show-Section "Mise" { mise list }; Show-Section "Bun" { bun pm ls -g }; Show-Section "npm" { npm list -g --depth=0 }; Show-Section "pnpm" { pnpm list -g }; Show-Section "uv" { uv tool list }; Show-Section "pip" { python -m pip list }; Show-Section "winget" { winget list } 50; Show-Section "gh" { gh extension list } }'
+
+[tasks.fix-windows]
+description = "repair Windows system files and reset broken Store apps (self-elevates via UAC)"
+shell = "pwsh -NoProfile -Command"
+run = '''
+Start-Process pwsh -Verb RunAs -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','C:\Users\Veerapong\Desktop\fix-admin.ps1'
+'''
+
+[tasks."vhd:optimize"]
+description = "Scan, select, and compact VHD/VHDX files"
+dir = "C:/Users/Veerapong/.config/mise"
+run = "pwsh -NoProfile -File scripts/Optimize-VirtualDisks.ps1 -Optimize"
+
+[env]
+OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
+GEMINI_API_KEY = "${GEMINI_API_KEY:-}"
+CLAUDE_API_KEY = "${CLAUDE_API_KEY:-}"
+OPENROUTER_API_KEY = "${OPENROUTER_API_KEY:-}"
+DEEPSEEK_API_KEY = "${DEEPSEEK_API_KEY:-}"
+XAI_API_KEY = "${XAI_API_KEY:-}"
+MINIMAX_API_KEY = "${MINIMAX_API_KEY:-}"
+SCCACHE_DIR = "D:\\.cache\\sccache"
+MISE_INSTALLS_DIR = "D:\\mise"
+
+[tools]
+watchexec = "latest"
+cargo-binstall = "latest"
+docker-compose = "latest"
+rush = "latest"
+bat = "latest"
+bottom = "latest"
+chezmoi = "latest"
+dua = "latest"
+duf = "latest"
+fd = "latest"
+fzf = "latest"
+gitleaks = "latest"
+gitui = "latest"
+glow = "latest"
+hyperfine = "latest"
+uv = "latest"
+yazi = "latest"
+ttyd = "latest"
+edit = "latest"
+task = "latest"
+television = "latest"
+rg = "latest"
+zig = "latest"
+rust = { version = "latest", mr_boxington = true }
+act = "latest"
+gh = "latest"
+oxker = "latest"
+zoxide = "latest"
+atuin = "latest"
+helix = "latest"
+python = "latest"
+jq = "latest"
+yq = "latest"
+helm = "latest"
+k9s = "latest"
+kubectl = "latest"
+terraform = "latest"
+gitu = "latest"
+git-lfs = "latest"
+dotenv-linter = "latest"
+sccache = "latest"
+ast-grep = "latest"
+starship = "latest"
+viteplus = "latest"
+bun = "latest"
+mr-boxington = "latest"
+amp = "latest"
+cowsay = "latest"
+"npm:@antfu/ni" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:@shikijs/cli" = "latest"
+"npm:actions-up" = "latest"
+"npm:agent-browser" = "latest"
+"npm:changelogen" = "latest"
+"npm:giget" = "latest"
+"npm:gifify" = "latest"
+"npm:jscpd" = "latest"
+"npm:rimraf" = "latest"
+"npm:playwriter" = "latest"
+"npm:rumdl" = "latest"
+"npm:skills" = "latest"
+"npm:vercel" = "latest"
+"aqua:eza-community/eza" = "latest"
+"cargo:xh" = "latest"
+"cargo:ast-grep-mcp" = "latest"
+"cargo:rust-mcp-filesystem" = "latest"
+"cargo:elio" = "latest"
+"npm:npkill" = "latest"
+hk = "latest"
+lefthook = "latest"
+worktrunk = "latest"
+longbridge-terminal = "latest"
+stripe = "latest"
+yt-dlp = { version = "latest", rename_exe = "yt-dlp" }
+cmake = "4.4.3"
+"npm:lighthouse" = "latest"
+usage = "latest"
+"npm:crw-mcp" = "latest"
+"github:us/crw" = "latest"
+"github:aubepkg/aube" = "latest"
+"npm:taze" = "latest"
+"npm:pake-cli" = "latest"
+kotlin = { version = "latest", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
+portless = "latest"
+claude = "latest"
+rust-analyzer = "latest"
+supabase = "latest"
+sqlite = "latest"
+onefetch = "latest"
+broot = { version = "latest", bin_path = '{{ arch(x64="x86_64", arm64="aarch64") }}-{{ os(macos="apple-darwin", linux="unknown-linux-gnu", windows="pc-windows-gnu") }}' }
+superfile = "latest"
+7zip = "latest"
+delta = "latest"
+infisical = { version = "latest", asset_pattern = "cli_{{ version }}_{{ os(macos='darwin') }}_{{ arch(x64='amd64') }}.tar.gz" }
+wrangler = { version = "latest", allow_builds = ["esbuild", "sharp", "workerd"] }
+cloudflared = "latest"
+"npm:@usebruno/cli" = "latest"
+maestro = "latest"
+java = "latest"
+
+"github:HenryZhang-ZHY/dowse" = "latest"
+"github:tobi/disktree" = "latest"
+"github:vicanso/zedis" = "latest"
+"github:jholhewres/devpit" = "latest"
+"aqua:rhysd/actionlint" = "latest"
+"aqua:lycheeverse/lychee" = "latest"
+"github:yannh/kubeconform" = "latest"
+podman-tui = "latest"
+podman = { version = "latest", rename_exe = "podman-remote" }
+"github:dedene/raindrop-cli" = "latest"
+"npm:ctx7" = "latest"
+"npm:druk" = "latest"
+"npm:knip" = "latest"
+"npm:madge" = "latest"
+"github:trycua/cua" = "latest"
+"npm:tsrs" = "latest"
+grex = "latest"
+"github:pvolok/dekit" = "latest"
+"github:h4ckf0r0day/obscura" = "latest"
+"github:jimmystridh/rloc" = "latest"
+"github:Kampfkarren/selene" = "latest"
+"github:dalance/procs" = "latest"
+"github:zizmorcore/zizmor" = "latest"
+"github:taiki-e/cargo-llvm-cov" = "latest"
+"github:Life-Experimentalist/dev-prune" = "latest"
+"npm:git-split-diffs" = "latest"
+"cargo:open" = "latest"
+"cargo:rloc" = "latest"
+"cargo:rmz" = "latest"
+"cargo:cargo-fframes" = "latest"
+"npm:@slidev/cli" = "latest"
+"npm:@slidev/theme-default" = "latest"
+"npm:@mcpjam/inspector" = "latest"
+"github:ollaya-dev/ollaya" = "latest"
+"cargo:rmux" = "latest"
+"github:ctxrs/ctx" = "latest"
+herdr = "latest"
+"github:wez/wezterm" = "latest"
+"github:rust-mcp-stack/rust-mcp-filesystem" = "latest"
+"npm:agent-desktop" = "latest"
+"github:cmzy/geetree" = "latest"
+"github:ltspace/dowse" = "latest"
+"npm:@biomejs/biome" = "latest"
+dust = "latest"
+shellcheck = "latest"
+node = "latest"
+
+
+
+
+
+[settings]
+env_shell_expand = true
+auto_install = true
+windows_shim_mode = "exe"
+experimental = true
+minimum_release_age = "0"
+[settings.npm]
+bun = true
+
+[bootstrap.services.mise-history]
+builtin = "history-watch"
+
+# Dotfiles tracked in place (history only, never deployed). Each entry is
+# scoped to this OS via `variants` so Windows and WSL keep separate contents
+# at the same repo path. Secrets/state dirs are deliberately absent.
+[dotfiles]
+"~/.aicommit.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.aicommitrc.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.bash_profile" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.bashrc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.better-commits.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/agent-tui" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/amp" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/broot" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/chezmoi/chezmoi.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/cli-git" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/cligit" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/devin/config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/gh-dash" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/git" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/graphite" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/kilo/kilo.jsonc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/lsd" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/medusa" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/micro/bindings.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/mise" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/opencode" = { mode = "track", exclude = ["service.json", "node_modules", "package-lock.json"], variants = [{ os = "windows" }] }
+"~/.config/posting" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/search" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/starship" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/starship.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/stripe" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/tanstack" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/thclaws" = { mode = "track", exclude = ["secrets.json"], variants = [{ os = "windows" }] }
+"~/.config/waveterm" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/winfetch" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/workos" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.default_gitignore" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.dotfile-manager.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.inshellisenserc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.nuxtrc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.open-google-config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.open-web-from-cli.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.oxrc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.shinit" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.taskbook.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.wslconfig" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.zoxide.nu" = { mode = "track", variants = [{ os = "windows" }] }
+"~/computer-cleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/wcleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
