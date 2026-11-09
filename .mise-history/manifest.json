@@ -917,6 +917,20 @@
       ]
     },
     {
+      "path": "home/settings.json",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/wcleanup.config.json",
       "autosave": true,
       "encrypt": false,
