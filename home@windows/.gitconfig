@@ -1,0 +1,89 @@
+[user]
+email = newkubise@gmail.com
+name = newkub
+
+[core]
+autocrlf = false
+defaultBranch = main
+editor = zed --wait
+	longpaths = true
+	hooksPath = C:\\Users\\Veerapong\\AppData\\Roaming\\dev-prune\\hooks
+
+[gitbutler]
+aiOpenAIKeyOption = butlerAPI
+aiModelProvider = openai
+gitbutlerCommitter = 0
+[filter "lfs"]
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
+
+[pager]
+diff = delta
+blame = delta
+
+
+[fetch]
+prune = true
+all = true
+auto = true
+
+[push]
+default = simple
+followTags = true
+	autoSetupRemote = true
+
+[pull]
+rebase = true
+
+[init]
+defaultBranch = main
+
+[rebase]
+autoStash = true
+
+[merge]
+conflictStyle = zdiff3
+tool = vscode
+
+[mergetool "vscode"]
+cmd = code --wait $MERGED
+trustExitCode = true
+
+
+[alias]
+diff = diff -- . ':(exclude)*lock*' ':(exclude)package-lock.json' ':(exclude)pnpm-lock.yaml'
+opencommit = "!f() { git add . && opencommit; }; f"
+czgai = "!f() { git add . && czg ai; }; f"
+commit = "aicommits -a"
+upp = "!f() { git add . && git commit -m \"$1\" && git push; }; f"
+log = "log --graph --all --decorate --date=relative --format=\"%C(auto)%h%C(reset) %C(dim)%ar%C(reset) %C(cyan)%an%C(reset) %C(yellow)%s%C(reset) %C(auto)%d\""
+status = "status -s"
+branch = "branch"
+unstage = "reset HEAD"
+edit-commit = "commit --amend"
+edit-commit-custom = "!f() { git rebase -i HEAD~$1; }; f"
+undo = "reset --soft HEAD~1"
+sync = "!f() { git pull && git push && git submodule sync --recursive && git submodule update --init --recursive --remote; }; f"
+[credential]
+	helper = manager
+[credential "helperselector"]
+	selected = manager
+[safe]
+	directory = *
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[delta]
+	navigate = false
+	paging = never
+	dark = true
+	hyperlinks = true
+[credential "https://github.com"]
+	helper = 
+	helper = !'D:\\mise\\gh\\2.100.0\\bin\\gh.exe' auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !'D:\\mise\\gh\\2.100.0\\bin\\gh.exe' auth git-credential
+[url "git@github.com"]
+	insteadof = https://github.com/
