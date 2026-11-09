@@ -215,6 +215,13 @@
           ],
           "profile": null,
           "default": false
+        },
+        {
+          "os": [
+            "linux"
+          ],
+          "profile": null,
+          "default": false
         }
       ]
     },
