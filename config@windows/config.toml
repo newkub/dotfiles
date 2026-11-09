@@ -380,7 +380,6 @@ builtin = "history-watch"
 "~/.config/cligit" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/agents" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/atuin" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.config/crush" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/devin/config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/fish" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/ghostty" = { mode = "track", variants = [{ os = "windows" }] }

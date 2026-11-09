@@ -247,20 +247,6 @@
       ]
     },
     {
-      "path": "home/.config/crush",
-      "autosave": true,
-      "encrypt": false,
-      "variants": [
-        {
-          "os": [
-            "windows"
-          ],
-          "profile": null,
-          "default": false
-        }
-      ]
-    },
-    {
       "path": "home/.config/devin/config.json",
       "autosave": true,
       "encrypt": false,
