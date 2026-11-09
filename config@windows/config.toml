@@ -359,6 +359,12 @@ bun = true
 [bootstrap.services.mise-history]
 builtin = "history-watch"
 
+# mise's built-in plaintext scan flags env-var refs and placeholder values
+# (e.g. "${VAR}", "YOUR_TOKEN") as secrets. All real credentials are untracked;
+# the gitleaks gate in the dotfiles:sync task remains the real secret check.
+[settings.history]
+allow_plaintext_history = true
+
 # Encrypted history: files that legitimately contain key-like lines (env refs,
 # placeholders) are stored as age ciphertext; the working files stay plaintext.
 # Identity: ~/.ssh/id_ed25519 (no passphrase). Add a recovery recipient later.
