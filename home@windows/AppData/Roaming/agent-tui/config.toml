@@ -1,0 +1,7 @@
+theme = "default"
+font = "default"
+
+[layout]
+left_panel_width = 25
+right_panel_width = 25
+chat_input_height = 3

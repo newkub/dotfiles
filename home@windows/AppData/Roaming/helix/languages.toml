@@ -1,0 +1,117 @@
+# Language Server Protocol configurations
+# See: https://helix-editor.com/docs/languages.html
+
+[[language]]
+name = "rust"
+language-servers = ["rust-analyzer"]
+
+[[language]]
+name = "toml"
+language-servers = ["taplo"]
+
+[[language]]
+name = "typescript"
+language-servers = ["typescript-language-server", "deno"]
+
+[[language]]
+name = "tsx"
+language-servers = ["typescript-language-server", "deno"]
+
+[[language]]
+name = "jsx"
+language-servers = ["typescript-language-server", "deno"]
+
+[[language]]
+name = "javascript"
+language-servers = ["typescript-language-server", "deno"]
+
+[[language]]
+name = "json"
+language-servers = ["json-lsp"]
+
+[[language]]
+name = "html"
+language-servers = ["html-lsp"]
+
+[[language]]
+name = "css"
+language-servers = ["css-lsp"]
+
+[[language]]
+name = "scss"
+language-servers = ["css-lsp"]
+
+[[language]]
+name = "vue"
+language-servers = ["volar"]
+
+[[language]]
+name = "svelte"
+language-servers = ["svelte-language-server"]
+
+[[language]]
+name = "lua"
+language-servers = ["lua-language-server"]
+
+[[language]]
+name = "yaml"
+language-servers = ["yaml-language-server"]
+
+[[language]]
+name = "python"
+language-servers = ["ruff", "pyright"]
+
+# UnoCSS is not an LSP - it's a CSS tool
+# It integrates via the framework's dev server
+
+[language-server.rust-analyzer]
+command = "rust-analyzer"
+args = []
+
+[language-server.taplo]
+command = "taplo"
+args = ["lang", "--stdio"]
+
+[language-server.typescript-language-server]
+command = "typescript-language-server"
+args = ["--stdio"]
+
+[language-server.deno]
+command = "deno"
+args = ["lsp"]
+
+[language-server.json-lsp]
+command = "vscode-json-languageserver"
+args = ["--stdio"]
+
+[language-server.html-lsp]
+command = "vscode-html-languageserver"
+args = ["--stdio"]
+
+[language-server.css-lsp]
+command = "vscode-css-languageserver"
+args = ["--stdio"]
+
+[language-server.volar]
+command = "vue-language-server"
+args = ["--stdio"]
+
+[language-server.svelte-language-server]
+command = "svelte-language-server"
+args = ["--stdio"]
+
+[language-server.lua-language-server]
+command = "lua-language-server"
+args = []
+
+[language-server.yaml-language-server]
+command = "yaml-language-server"
+args = ["--stdio"]
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+[language-server.pyright]
+command = "pyright"
+args = ["--stdio"]

@@ -1,0 +1,8 @@
+{
+  "trustedDependencies": [
+    "@opencode/cli"
+  ],
+  "dependencies": {
+    "@opencode/cli": "2.2.6"
+  }
+}

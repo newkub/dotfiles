@@ -1,0 +1,19 @@
+[accounts.gmail]
+default = true
+email = "newkubise@gmail.com"
+display-name = "newkubise"
+downloads-dir = 'C:\Users\Veerapong/Downloads'
+backend.type = "imap"
+backend.host = "imap.gmail.com"
+backend.port = 993
+backend.login = "newkubise@gmail.com"
+backend.encryption.type = "tls"
+backend.auth.type = "password"
+backend.auth.raw = ""
+message.send.backend.type = "smtp"
+message.send.backend.host = "smtp.gmail.com"
+message.send.backend.port = 465
+message.send.backend.login = "newkubise@gmail.com"
+message.send.backend.encryption.type = "tls"
+message.send.backend.auth.type = "password"
+message.send.backend.auth.raw = ""

@@ -1,0 +1,46 @@
+[profiles.default]
+api_endpoint = "https://apiv2.stakpak.dev"
+provider = "remote"
+
+[profiles.readonly]
+api_endpoint = "https://apiv2.stakpak.dev"
+
+[profiles.readonly.warden]
+enabled = true
+volumes = [
+    "~/.stakpak/config.toml:/home/agent/.stakpak/config.toml:ro",
+    "~/.stakpak/auth.toml:/home/agent/.stakpak/auth.toml:ro",
+    "~/.stakpak/data/local.db:/home/agent/.stakpak/data/local.db",
+    "~/.stakpak/knowledge:/home/agent/.stakpak/knowledge",
+    "~/.agent-board/data.db:/home/agent/.agent-board/data.db",
+    "./:/agent:ro",
+    "./.stakpak:/agent/.stakpak",
+    "~/.aws/config:/home/agent/.aws/config:ro",
+    "~/.aws/credentials:/home/agent/.aws/credentials:ro",
+    "~/.aws/sso:/home/agent/.aws/sso",
+    "~/.aws/cli:/home/agent/.aws/cli",
+    "~/.config/gcloud/active_config:/home/agent/.config/gcloud/active_config:ro",
+    "~/.config/gcloud/configurations:/home/agent/.config/gcloud/configurations:ro",
+    "~/.config/gcloud/application_default_credentials.json:/home/agent/.config/gcloud/application_default_credentials.json:ro",
+    "~/.config/gcloud/credentials.db:/home/agent/.config/gcloud/credentials.db:ro",
+    "~/.config/gcloud/access_tokens.db:/home/agent/.config/gcloud/access_tokens.db:ro",
+    "~/.config/gcloud/logs:/home/agent/.config/gcloud/logs",
+    "~/.config/gcloud/cache:/home/agent/.config/gcloud/cache",
+    "~/.azure/config:/home/agent/.azure/config:ro",
+    "~/.azure/clouds.config:/home/agent/.azure/clouds.config:ro",
+    "~/.azure/azureProfile.json:/home/agent/.azure/azureProfile.json:ro",
+    "~/.azure/msal_token_cache.json:/home/agent/.azure/msal_token_cache.json",
+    "~/.azure/msal_http_cache.bin:/home/agent/.azure/msal_http_cache.bin",
+    "~/.azure/logs:/home/agent/.azure/logs",
+    "~/.digitalocean:/home/agent/.digitalocean:ro",
+    "~/.kube:/home/agent/.kube:ro",
+    "~/.ssh:/home/agent/.ssh:ro",
+    "stakpak-aqua-cache:/home/agent/.local/share/aquaproj-aqua",
+]
+
+[settings]
+machine_name = "humorous-coach-2488"
+auto_append_gitignore = true
+anonymous_id = "7798fe3b-b7fe-4f64-9d6a-8562695e459d"
+collect_telemetry = true
+editor = "nano"

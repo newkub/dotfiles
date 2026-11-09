@@ -1,0 +1,178 @@
+theme = "github_dark_dimmed"
+
+############################################
+# NORMAL MODE
+############################################
+[keys.normal]
+
+# File operations
+C-s = ":w"
+C-S-s = ":wa"
+C-q = ":q"
+C-S-q = ":qa"
+C-c = ":wqa"
+
+C-n = ":new"
+C-o = ":open"
+
+C-w = ":buffer-close"
+C-S-w = ":buffer-close-others"
+
+# Edit
+C-z = "undo"
+C-S-z = "redo"
+
+C-y = "yank"
+C-v = "paste_clipboard_after"
+C-S-v = "paste_clipboard_before"
+
+C-x = ["extend_to_line_bounds", "delete_selection"]
+C-a = "select_all"
+C-d = "delete_selection"
+
+# Find
+C-f = "search"
+C-S-f = "global_search"
+
+# Navigation
+C-p = "file_picker"
+C-b = "buffer_picker"
+C-g = "goto_line"
+C-home = "goto_file_start"
+C-end = "goto_file_end"
+
+# Line movement
+C-up = "move_line_up"
+C-down = "move_line_down"
+
+# Comment
+"C-/" = "toggle_line_comments"
+
+# Terminal / explorer
+C-t = ":sh"
+C-e = ":sh explorer ."
+
+# Tabs
+A-left = ":buffer-previous"
+A-right = ":buffer-next"
+"C-tab" = ":buffer-next"
+"C-S-tab" = ":buffer-previous"
+C-S-j = ":buffer-previous"
+C-S-k = ":buffer-next"
+
+
+############################################
+# INSERT MODE
+############################################
+[keys.insert]
+
+# save
+C-s = ":w"
+C-S-s = ":wa"
+
+# copy/paste (VS Code style)
+C-c = "normal_mode"
+C-v = "paste_clipboard_before"
+C-S-v = "paste_clipboard_after"
+
+# undo/redo
+C-z = "undo"
+C-S-z = "redo"
+
+# navigation
+C-a = "select_all"
+C-backspace = "delete_selection"
+C-e = "goto_line_end"
+
+C-left = "move_prev_word_start"
+C-right = "move_next_word_end"
+
+# delete word
+C-del = "delete_word_forward"
+
+# comment + completion
+"C-/" = "toggle_line_comments"
+C-space = "completion"
+
+
+############################################
+# SELECT MODE
+############################################
+[keys.select]
+
+C-c = "yank_main_selection_to_clipboard"
+C-x = ["extend_to_line_bounds", "delete_selection"]
+C-a = "select_all"
+
+
+############################################
+# EDITOR
+############################################
+[editor]
+true-color = true
+color-modes = true
+
+auto-save = true
+auto-format = true
+auto-pairs = true
+auto-completion = true
+
+bufferline = "multiple"
+line-number = "relative"
+cursorline = true
+
+gutters = []
+
+# Scroll context
+scrolloff = 5
+scroll-lines = 3
+
+# Editor behavior
+middle-click-paste = true
+shell = ["pwsh", "-c"]
+
+# LSP
+idle-timeout = 400
+
+# Search
+[editor.search]
+smart-case = true
+
+[editor.inline-diagnostics]
+cursor-line = "error"
+other-lines = "warning"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.soft-wrap]
+enable = false
+
+[editor.whitespace]
+render = "none"
+space = "·"
+tab = "▸"
+nbsp = "␣"
+
+[editor.indent-guides]
+render = false
+
+[editor.file-picker]
+hidden = true
+git-ignore = true
+follow-symlinks = true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+right = ["position", "diagnostics", "file-type", "file-line-ending", "file-encoding"]
+separator = "│"
+
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+# Devin AI: open the current file in a new Devin session
+[keys.normal.space]
+i = ":sh Start-Process devin -ArgumentList '--','edit %{buffer_name}'"

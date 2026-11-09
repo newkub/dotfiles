@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "context7": {
+      "command": "",
+      "args": [],
+      "env": {},
+      "shared": true,
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}

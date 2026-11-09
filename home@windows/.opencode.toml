@@ -1,40 +1,9 @@
-# MiniMax OpenAI-Compatible API Configuration
-# Docs: https://platform.minimax.io/docs/token-plan/other-tools#openai-compatible-protocol
-# Base URL: https://api.minimax.io/v1
-
-[providers]
-[providers.minimax]
-name = "MiniMax"
-api_key = "YOUR_MINIMAX_API_KEY_HERE"
-base_url = "https://api.minimax.io/v1"
-
-[defaults]
-model_provider = "minimax"
-model = "minimax-chat"
-
-# MiniMax Models - Chat
-[models.minimax-chat]
-provider = "minimax"
-name = "abab6.5g-chat"
-
-[models.minimax-chat-fast]
-provider = "minimax"
-name = "abab6.5s-chat"
-
-[models.minimax-chat-flash]
-provider = "minimax"
-name = "abab6.5g-flash"
-
-# MiniMax Models - Text
-[models.minimax-text-01]
-provider = "minimax"
-name = "MiniMax-Text-01"
-
-[models.minimax-text-01-preview]
-provider = "minimax"
-name = "MiniMax-Text-01-Preview"
-
-# MiniMax Models - Function Calling
-[models.minimax-function]
-provider = "minimax"
-name = "abab6.5s-funcall"
+mise-encrypted-file-v1
+„¤path»home@windows/.opencode.toml¤mode¦100644¦schemeÙ@700d5da01f23f7bf489a0b131e028e954484f80a82f8f87ba3359900fa6d33c3ªciphertextÅìage-encryption.org/v1
+-> ssh-ed25519 VBoVlw QXB9pA5GIaijWwLeE4SLMnyoff1In3QA6zmzHd4zy1M
+1rMbEqt0iI+hjGzEa5xJs4zfsS2sCoQ+8GEDEq3mev4
+-> KrC4-grease h* k^Nis/
+F8NU3R0Hb8L6NQ
+--- tJhIObSDXVTbV0yxwOHgxpUxNlvThTVuD0obiuCd1VY
+EŽ«¸ñ™´³þ:¡»\nÕ¿Óž¤jg´©W/þ~¯mY’ôk D½øü<à.¸Wk¢"nÑLz	ÛÏ•ãuÍ€Î9m1ßü$YÜ$Hvj1ŒËôh2¥Wì:ôê´ZÐVÎ¸nJ¯1N§Z®ü7VÉûo¯ºNQPZ=€à´/8ÕaÀÆk„wTÈû>Lc°yJ·T~íSì.\·¸}84o×ox‡U´UãÍYcð+NÑ3_Žœª·µÑ»({iPié ‡¾ÙöàÍx‚\NVÎÀòíJÂV¢,?ÁÉŸöÇŒ¨‡E…µ|1IBfXÀøñSÕrzs¶þV¨A†³	ãy[Öäuü‰³¡ìZ_€éLþYÇŸ°êTõ%\­“atÇÒ×ŸGD¡B´>E“oƒöa]‹`_ŒÉ-Æ Á—¶jÊsÔ~6)†yKñd5àœ•	Ä¡&ºkºj[ñs‘ˆCó²°‰yJSevÓ·V}jQäY¤ÍÁéV¤äú6BSVK^5I¦Ž²@‹iØÑÍ4®y0¯7Ý»<_•âïÊ×¬·_‚œý¤þâ’ì+(áy
+ä—|½’þ§ÛÇà6ê¶æYâs°:wÍ•hf Ù\$½_}©ì"~o¨ù9ÑÄ!ñÛ¾iN(kˆŽÇ;¥/åÚm{òåß¡f¨ºíOá÷ÚNÝ

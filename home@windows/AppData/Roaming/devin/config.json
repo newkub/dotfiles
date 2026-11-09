@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "devin": {
+    "org_id": "org-4e47413a2c1043578fdefa90049323d0"
+  },
+  "shell": {
+    "setup_complete": true
+  },
+  "theme_mode": "dark",
+  "agent": {
+    "model": "swe-2-high",
+    "thinking": {}
+  },
+  "auto_update": true,
+  "read_config_from": {
+    "windsurf": false,
+    "cursor": false,
+    "agents_standard": true,
+    "claude": false,
+    "opencode": false,
+    "zed": false
+  },
+  "show_path": true,
+  "notify": "never",
+  "mouse_capture": true,
+  "unicode_mode": "auto",
+  "permissions": {
+    "allow": [],
+    "deny": [
+      "npx"
+    ],
+    "ask": []
+  },
+  "show_hints": false,
+  "theme_auto_detect": "always",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "^(write|edit|multi_edit|apply_patch|notebook_edit)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh.exe -NoLogo -NoProfile -NonInteractive -File \"C:\\Users\\Veerapong\\AppData\\Roaming\\devin\\hooks\\check-long-files.ps1\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "legacy_terminal": true
+}

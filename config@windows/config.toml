@@ -190,13 +190,8 @@ dir = "C:/Users/Veerapong/.config/mise"
 run = "pwsh -NoProfile -File scripts/Optimize-VirtualDisks.ps1 -Optimize"
 
 [env]
-OPENAI_API_KEY = "${OPENAI_API_KEY:-}"
-GEMINI_API_KEY = "${GEMINI_API_KEY:-}"
-CLAUDE_API_KEY = "${CLAUDE_API_KEY:-}"
-OPENROUTER_API_KEY = "${OPENROUTER_API_KEY:-}"
-DEEPSEEK_API_KEY = "${DEEPSEEK_API_KEY:-}"
-XAI_API_KEY = "${XAI_API_KEY:-}"
-MINIMAX_API_KEY = "${MINIMAX_API_KEY:-}"
+# *_API_KEY vars live in config.local.toml (machine-local, not captured by
+# dotfiles history) so the tracked config snapshot stays free of key names.
 SCCACHE_DIR = "D:\\.cache\\sccache"
 MISE_INSTALLS_DIR = "D:\\mise"
 
@@ -345,6 +340,8 @@ dust = "latest"
 shellcheck = "latest"
 node = "latest"
 "github:HenryZhang-ZHY/dowse" = "latest"
+"github:telegramdesktop/tdesktop" = "latest"
+"github:Ray-lea/Argus" = "latest"
 
 
 
@@ -362,17 +359,22 @@ bun = true
 [bootstrap.services.mise-history]
 builtin = "history-watch"
 
+# Encrypted history: files that legitimately contain key-like lines (env refs,
+# placeholders) are stored as age ciphertext; the working files stay plaintext.
+# Identity: ~/.ssh/id_ed25519 (no passphrase). Add a recovery recipient later.
+[history.encryption]
+recipients = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILut7f/gaJdn4QhkifTdkzQIZffjQn3qrNSowVKlHYz newkubise@gmail.com"]
+
 # Dotfiles tracked in place (history only, never deployed). Each entry is
 # scoped to this OS via `variants` so Windows and WSL keep separate contents
 # at the same repo path. Secrets/state dirs are deliberately absent.
 [dotfiles]
-"~/.aicommit.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.aicommitrc.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.bash_profile" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.bashrc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.bunfig.toml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.better-commits.json" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.config/agent-tui" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/agent-tui" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
 "~/.config/amp" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/broot" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/chezmoi/chezmoi.toml" = { mode = "track", variants = [{ os = "windows" }] }
@@ -386,7 +388,7 @@ builtin = "history-watch"
 "~/.config/gh-dash" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/git" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/graphite" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.config/kilo/kilo.jsonc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/kilo" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/lsd" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/medusa" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/micro/bindings.json" = { mode = "track", variants = [{ os = "windows" }] }
@@ -409,10 +411,10 @@ builtin = "history-watch"
 "~/.dotfile-manager.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.gitconfig" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.inshellisenserc" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.kogit.config.ts" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.kogit.config.ts" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
 "~/.nirc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.nuxtrc" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.opencode.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.opencode.toml" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
 "~/.open-google-config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.open-web-from-cli.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.oxrc" = { mode = "track", variants = [{ os = "windows" }] }
@@ -422,12 +424,90 @@ builtin = "history-watch"
 "~/.wezterm.lua" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.zoxide.nu" = { mode = "track", variants = [{ os = "windows" }] }
 "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState" = { mode = "track", variants = [{ os = "windows" }], include = ["settings.json", "state.json"] }
-"~/AppData/Roaming/nushell" = { mode = "track", variants = [{ os = "windows" }], include = ["*.nu"] }
-"~/Documents/PowerShell" = { mode = "track", variants = [{ os = "windows" }], include = ["*.ps1", "*.psm1"] }
+"~/AppData/Roaming/nushell" = { mode = "track", exclude = ["vendor"], variants = [{ os = "windows" }], include = ["*.nu"] }
+"~/Documents/PowerShell" = { mode = "track", exclude = ["Modules"], variants = [{ os = "windows" }], include = ["*.ps1", "*.psm1"] }
 "~/computer-cleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/wcleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 
+# --- chezmoi archive coverage: paths the old chezmoi source state managed ---
+"~/.chezmoi-daily.ps1" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.chezmoi-readd.ts" = { mode = "track", variants = [{ os = "windows" }] }
+"~/chezmoi-daily-update.ps1" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.opencommit" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
+"~/.bun/install/global/package.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.codeium/windsurf/memories" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/containers" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Local/rio/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/helix" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/yazi" = { mode = "track", exclude = ["state"], variants = [{ os = "windows" }] }
+
+# --- CLI configs: agent CLIs ---
+"~/.agent-tui/config.json" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
+"~/.claude/CLAUDE.md" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.codex/AGENTS.md" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.codex/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.codex/hooks.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.continue" = { mode = "track", exclude = ["auth.json", "dev_data", "index", "logs", "sessions", "types", "input_history.json", ".onboarding_complete", "*.sqlite*"], variants = [{ os = "windows" }] }
+"~/.copilot/config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.copilot/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.copilot/permissions-config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.copilot/copilot-instructions.md" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.devin/argv.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.gemini/GEMINI.md" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.gemini/config" = { mode = "track", exclude = ["projects"], variants = [{ os = "windows" }] }
+"~/.gemini/settings.json" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
+"~/.grok/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.grok/hooks" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.jcode/keymap-snapshot.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.jcode/mcp.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.kiro/argv.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.kiro/steering" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.qodersec/config.yaml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.quokka/config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.semgrep/settings.yml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.skilld" = { mode = "track", exclude = ["embeddings.db", "repos", "references"], variants = [{ os = "windows" }] }
+"~/.stakpak/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.storybook/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
+
+# --- CLI configs: terminal / editor / misc tools ---
+"~/.crossnote" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.git-assistance/git-assistance.config.ts" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.look" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.logseq" = { mode = "track", exclude = ["graphs"], variants = [{ os = "windows" }] }
+"~/.promptfoo/promptfoo.yaml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/alacritty/alacritty.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/agent-terminal/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/agent-tui/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/bottom/bottom.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/devin/config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/devin/mcp_config.json" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
+"~/AppData/Roaming/devin/User/keybindings.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/devin/User/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/devin/User/tasks.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/himalaya/config.toml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/slumber/config.yml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/terminalizer/config.yml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/Zed/AGENTS.md" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/Zed/settings.json" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
+"~/AppData/Roaming/com.vercel.cli/Data/config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Local/glow/Config/glow.yml" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Local/GitKrakenCLI/gk.cfg" = { mode = "track", variants = [{ os = "windows" }] }
+
 [tasks.dotfiles-status]
 description = "Show dotfiles tracking status"
 run = "mise dotfiles status"
+
+[tasks."dotfiles:sync"]
+description = "Secret-scan pending dotfiles checkpoints, then sync to origin (blocks on leaks)"
+shell = "pwsh -NoProfile -Command"
+run = '''
+$repo = "C:\Users\Veerapong\.local\state\mise\history\repo.git"
+$gitleaks = (Get-Command gitleaks -ErrorAction SilentlyContinue).Source
+if (-not $gitleaks) { Write-Host "gitleaks not found - install with: mise use -g gitleaks" -ForegroundColor Red; exit 1 }
+Write-Host "[dotfiles:sync] scanning unpushed checkpoints with gitleaks..." -ForegroundColor Cyan
+& $gitleaks git $repo --log-opts="origin/main..HEAD" --redact --exit-code 1
+if ($LASTEXITCODE -ne 0) { Write-Host "[dotfiles:sync] BLOCKED: possible secrets in pending checkpoints - review before syncing" -ForegroundColor Red; exit 1 }
+Write-Host "[dotfiles:sync] clean - syncing" -ForegroundColor Green
+mise dot sync
+'''

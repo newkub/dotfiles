@@ -70,7 +70,7 @@ Five verbs cover every task. The owner skills hold the detail — this file fixe
 
 ## Pointers
 
-One common path. On a fresh clone run `bun scripts/hooks/install.ts` once — it installs the pre-commit gate (`scripts/gate.ts --changed`) into this repo's git hooks; re-running is a no-op and a foreign hook is refused, never overwritten. After changing a skill or a plugin manifest, run `bun scripts/plugins.ts build --materialize` first; then `bun scripts/gate.ts` — it runs the structure, citation, table, routes-table, and rules-pointer checks ratcheted against `scripts/gate-baseline.json` (a new finding, a stale entry, an uncovered new skill, or an exemption naming a vanished skill fails), the `check-skills` lint at its critical tier (a skill that would fail to load, warnings report without gating), `plugins.ts verify`, the client drift gate, the secrets scan, and every `*.test.ts` under `skills/` and `scripts/` — and exits non-zero naming the failing gate. A suite whose bare import is not installed is skipped by name and recorded in the baseline, so a new skip fails until the package is installed or the skip is accepted. `--update-baseline` re-records the accepted findings, exemptions, and skips only after the fixable ones are fixed. `--changed` is the pre-commit path: rows whose inputs did not change are skipped, a skill edit narrows the scan, and secrets cover only the listed paths — CI and releases always run the full gate (`--ci` also drops the client row, which a headless runner has no configs for).
+One common path. On a fresh clone run `bun scripts/hooks/install.ts` once — it installs the pre-commit gate (`scripts/gate.ts --changed`) into this repo's git hooks; re-running is a no-op and a foreign hook is refused, never overwritten. After changing a skill or a plugin manifest, run `bun scripts/plugins.ts build --materialize` first; then `bun scripts/gate.ts` — it runs the structure, citation, table, routes-table, and rules-pointer checks ratcheted against `scripts/gate-baseline.json` (a new finding, a stale entry, an uncovered new skill, or an exemption naming a vanished skill fails), the `/update-dot-agents-global checks` lint at its critical tier (a skill that would fail to load, warnings report without gating), `plugins.ts verify`, the client drift gate, the secrets scan, and every `*.test.ts` under `skills/` and `scripts/` — and exits non-zero naming the failing gate. A suite whose bare import is not installed is skipped by name and recorded in the baseline, so a new skip fails until the package is installed or the skip is accepted. `--update-baseline` re-records the accepted findings, exemptions, and skips only after the fixable ones are fixed. `--changed` is the pre-commit path: rows whose inputs did not change are skipped, a skill edit narrows the scan, and secrets cover only the listed paths — CI and releases always run the full gate (`--ci` also drops the client row, which a headless runner has no configs for).
 
 Topic → owner. Read the owner; never restate it here.
 
@@ -101,7 +101,7 @@ Topic → owner. Read the owner; never restate it here.
 | syncing references after a move or rename | `/edit refs` |
 | inspecting past agent sessions | `/check-agents-session` |
 | a bare link or URL | `/search` (project-in-drive-d, then skills) |
-| harness review and repair | `/review-dot-agents-global`, `/improve-dot-agents-global` |
+| harness review and repair | `/update-dot-agents-global review`, `/improve-dot-agents-global` |
 
 ## Expected Outcome
 

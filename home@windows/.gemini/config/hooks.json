@@ -1,0 +1,77 @@
+{
+  "ghostex": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "PostInvocation": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "turn-completion": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "Notification": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "SessionEnd": [
+      {
+        "type": "command",
+        "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+        "timeout": 10
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\current\\RESOUR~1\\native\\gxserver.exe agent-hook-notify-native C:\\Users\\VEERAP~1\\AppData\\Local\\Ghostex\\Data\\hooks\\AGENT-~2.SH antigravity",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

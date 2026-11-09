@@ -1,12 +1,4 @@
 {
-	"dismissedBadges" :
-	[
-		"page.actions"
-	],
-	"dismissedMessages" :
-	[
-		"closeOnExitInfo"
-	],
 	"generatedProfiles" :
 	[
 		"{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -16,6 +8,6 @@
 		"{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
 		"{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}"
 	],
-	"settingsHash" : "6d7ed5404fb51c13-01dd7048cf70e5e4",
+	"settingsHash" : "42ae2250b3e86eee-01dd7077e7aea9ae",
 	"sshFolderGenerated" : false
 }

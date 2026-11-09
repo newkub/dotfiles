@@ -199,7 +199,7 @@ $locationMap = @{
     dotfiles        = "$env:USERPROFILE\.local\share\chezmoi"
     temp            = $env:TEMP
     'windsurf-path' = "$env:USERPROFILE\.codeium\windsurf"
-    newkub          = 'D:\newkub'
+    newkub            = 'D:\opensource\newkub'
 }
 foreach ($key in $locationMap.Keys) {
     Set-Item -Path "Function:$key" -Value ([ScriptBlock]::Create("Set-Location -Path '$($locationMap[$key])'"))

@@ -1,0 +1,6 @@
+
+[projects.'D:\product\buuyook']
+trust_level = "trusted"
+
+[tui]
+screen_reader_detection_done = true

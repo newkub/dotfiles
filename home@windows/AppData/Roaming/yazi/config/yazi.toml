@@ -1,0 +1,33 @@
+[opener]
+play = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+	{ run = '"C:\Program Files\mpv.exe" %*', orphan = true, for = "windows" }
+]
+edit = [
+	{ run = 'zed "$@"', block = true, for = "unix" },
+	{ run = "zed %*",  block = true, for = "windows" },
+]
+open = [
+	{ run = 'zed "$@"', desc = "Open", for = "unix" },
+	{ run = "zed %*", desc = "Open", for = "windows" },
+]
+
+[key]
+# Navigation
+"j" = "move down"
+"k" = "move up"
+"h" = "move left"
+"l" = "move right"
+"gg" = "move top"
+"G" = "move bottom"
+
+# File operations
+"dd" = "delete"
+"yy" = "yank"
+"pp" = "paste"
+"<enter>" = "open"
+"<space>" = "select"
+
+# Toggles
+"s" = "toggle linemode"
+"z" = "toggle hidden"

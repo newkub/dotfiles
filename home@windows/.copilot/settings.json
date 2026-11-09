@@ -1,0 +1,23 @@
+{
+  "footer": {
+    "showModelEffort": true,
+    "showDirectory": true,
+    "showBranch": true,
+    "showContextWindow": true,
+    "showQuota": true,
+    "showAiUsed": true,
+    "showAgent": true,
+    "showCodeChanges": true,
+    "showUsername": true,
+    "showSandbox": true,
+    "showCustom": true
+  },
+  "colorMode": "default",
+  "experimental": true,
+  "allowedUrls": [
+    "http://localhost:5173",
+    "https://svelte.dev",
+    "https://comark.dev",
+    "http://localhost:5175"
+  ]
+}

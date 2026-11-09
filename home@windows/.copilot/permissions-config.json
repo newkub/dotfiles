@@ -1,0 +1,121 @@
+{
+  "locations": {
+    "D:\\saas\\booking-platform": {
+      "tool_approvals": [
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "bun"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "type",
+            "more"
+          ]
+        },
+        {
+          "kind": "write"
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "cmd",
+            "findstr"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "powershell"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "dir"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "Remove-Item"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "New-Item"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "Invoke-WebRequest"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "bunx"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "mkdir"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "curl"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "Tee-Object"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "Move-Item"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "git checkout"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "Format-Hex"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "tee"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "Rename-Item"
+          ]
+        },
+        {
+          "kind": "commands",
+          "commandIdentifiers": [
+            "node"
+          ]
+        }
+      ]
+    }
+  }
+}

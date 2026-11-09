@@ -1,0 +1,28 @@
+launch_at_login=true
+
+# Added by look update
+app_scan_roots=C:/ProgramData/Microsoft/Windows/Start Menu/Programs,~/AppData/Roaming/Microsoft/Windows/Start Menu/Programs
+app_scan_depth=3
+app_exclude_paths=
+app_exclude_names=
+file_scan_roots=Desktop,Documents,Downloads,Pictures,Videos
+file_scan_extra_roots=
+file_scan_depth=4
+file_scan_limit=8000
+file_exclude_paths=
+ignored_patterns_sample=
+lazy_indexing_enabled=true
+super_actions_enabled=false
+localized_app_names=false
+skip_dir_names=node_modules,target,build,dist,library,applications,old firefox data,deriveddata,pods,vendor,out,coverage,tmp,cache,venv
+clipboard_history_limit=10
+query_retention_seconds=5
+hints_enabled=true
+search_placeholder=Type whatever you want
+launcher_hotkey=alt+space
+alias_note=Notion|Obsidian|Notes|Apple Notes|Bear|Logseq|OneNote|Microsoft OneNote|Sticky Notes|Joplin
+alias_code=Visual Studio Code|VSCode|Cursor|Windsurf|IntelliJ IDEA|PyCharm|WebStorm|Neovim|Xcode|Zed|Visual Studio|Notepad++|Sublime Text
+alias_term=Terminal|iTerm|iTerm2|Ghostty|WezTerm|Alacritty|Kitty|Warp|Windows Terminal|PowerShell|Command Prompt|wsl
+alias_chat=Slack|Discord|Telegram|Messages|Microsoft Teams|Teams|WhatsApp|Signal|Zoom
+alias_music=Spotify|Apple Music|Music|YouTube Music|VLC|Windows Media Player|foobar2000
+alias_brow=Safari|Arc|Google Chrome|Chrome|Firefox|Brave|Microsoft Edge|Edge|Brave Browser|Vivaldi|Opera

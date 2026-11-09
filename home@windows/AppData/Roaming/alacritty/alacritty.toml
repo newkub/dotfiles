@@ -1,0 +1,12 @@
+[general]
+working_directory = "D:\\"
+
+[terminal.shell]
+program = "C:\\Users\\Veerapong\\scoop\\shims\\nu.exe"
+
+
+[font]
+size = 16
+
+[window]
+startup_mode = "Maximized"

@@ -68,6 +68,12 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
+                "guid": "{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
+            },
+            {
                 "guid": "{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}",
                 "hidden": false,
                 "name": "ArchLinux",

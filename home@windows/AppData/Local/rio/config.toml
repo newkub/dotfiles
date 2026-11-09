@@ -1,0 +1,83 @@
+working-dir = 'D:' 
+
+
+
+env-vars = ["EDITOR=nvim"]
+
+
+confirm-before-quit = false
+
+
+
+[keyboard]
+use-kitty-keyboard-protocol = false
+disable-ctlseqs-alt = false
+
+
+
+placeholder = "❯"
+
+
+
+
+[cursor]
+shape = 'beam'
+blinking = false
+blinking-interval = 800
+hide-if-single = true
+
+
+[renderer]
+performance = "High"
+disable-unfocused-render = false
+level = 1
+target-fps = 120
+
+
+
+
+
+[fonts]
+size = 22
+use-drawable-chars = true
+symbol-map = []
+disable-warnings-not-found = false
+additional-dirs = []
+hinting = true
+
+[scroll]
+multiplier = 3.0
+divider = 1.0
+
+
+[window]
+mode = "Maximized"
+blur = true
+decorations = "enabled"
+width = 600
+height = 400
+windows-corner-preference = "Round"
+
+
+
+
+
+
+[navigation]
+clickable = true
+hide-if-single = true
+use-split = true
+use-current-path = false
+color-automation = [
+  { program = "nvim", color = "#FFFF00" }
+]
+
+[shell]
+program = "pwsh"
+
+[platform]
+windows.shell.program = "pwsh"
+windows.shell.args = []
+
+linux.shell.program = "pwsh"
+linux.shell.args = []

@@ -1,0 +1,4 @@
+[opener]
+open = [
+	{ run = 'zed "$1"', desc = "Open with Zed" },
+]

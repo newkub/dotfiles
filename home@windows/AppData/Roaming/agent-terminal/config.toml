@@ -1,0 +1,38 @@
+[window]
+width = 800
+height = 600
+padding_x = 0
+padding_y = 4
+opacity = 1.0
+decorations = true
+startup_mode = "windowed"
+
+[colors]
+background = "#0F0D0E"
+foreground = "#F9F4DA"
+cursor = "#F712FF"
+black = "#4C4345"
+red = "#ED203D"
+green = "#0BA95B"
+yellow = "#FCBA28"
+blue = "#006EE6"
+magenta = "#7B5EA7"
+cyan = "#88DAF2"
+white = "#F1F1F1"
+
+[cursor]
+shape = "block"
+blinking = false
+blink_interval_ms = 800
+
+[font]
+family = "JetBrains Mono"
+size = 14.0
+
+[shell]
+program = "cmd.exe"
+args = []
+
+[terminal]
+cols = 80
+rows = 24

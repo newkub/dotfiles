@@ -1,0 +1,8 @@
+agent: windsurf
+features:
+  search: true
+  issues: true
+  discussions: true
+  releases: true
+projects:
+  - "D:\\"

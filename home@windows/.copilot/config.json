@@ -1,0 +1,85 @@
+// User settings belong in settings.json.
+// This file is managed automatically.
+{
+  "firstLaunchAt": "2026-05-24T00:24:13.623Z",
+  "expAssignmentsCache": {
+    "v1:be999ab2ca36e6471ebebb6cb4941c501538aa223fb67b1ec626f774b9963e3c": {
+      "schemaVersion": 1,
+      "retrievedAt": "2026-06-05T17:43:30.982Z",
+      "response": {
+        "Features": [
+          "cli_aa_c",
+          "553h5936",
+          "h7c07110",
+          "e974i579",
+          "h0649438",
+          "gpt-default",
+          "i810g980",
+          "ibdi6602",
+          "cjf2j356",
+          "7f4g8540",
+          "122j5628",
+          "40003418",
+          "405c7929",
+          "7483-disabled",
+          "cli_aa_monitor_t",
+          "gfgja144"
+        ],
+        "Flights": {
+          "9dd4c115-7dcb-c453-d2b5-339c74a1ded6": "cli_aa_c",
+          "f81660f7-c021-d3ce-e95c-70ba7561213d": "553h5936",
+          "c845d17b-3348-6a8b-6435-e4352da2f268": "h7c07110",
+          "cdbba11c-53d2-d2f3-6039-88f91f7dbd10": "e974i579",
+          "36115216-e8ea-0eb0-d3a5-0919cf86df38": "h0649438",
+          "5d699f9a-3230-7187-2b5b-71ee26021ada": "gpt-default",
+          "10146615-ae8f-4853-6838-078ac94b4a14": "i810g980",
+          "2033b9f3-b9e1-6d25-898e-5f14c616a72b": "ibdi6602",
+          "117598bf-6eec-9b69-3ebb-8db6bc949bcf": "cjf2j356",
+          "6941fe83-83fe-f2a0-0128-4c4a5cdc393f": "7f4g8540",
+          "d5402b0a-d2cf-5fe2-d6a8-4111560c4366": "122j5628",
+          "f7039b47-82c2-7db1-cecf-6848b0d2c143": "40003418",
+          "9a31b9c3-0000-2d68-6830-e7f7b34a7a31": "405c7929",
+          "bba80291-0189-dff2-4fe9-7eaefa9d7724": "7483-disabled",
+          "535e4d56-d57b-cbea-68e4-6ed90f421902": "cli_aa_monitor_t",
+          "3984780f-aaba-06a9-8e42-a8a11e07cb01": "gfgja144"
+        },
+        "Configs": [
+          {
+            "Id": "default",
+            "Parameters": {
+              "copilot_cli": true,
+              "copilot_cli_anthropic_messages_api": true,
+              "copilot_cli_gh_cli_over_mcp": true,
+              "copilot_cli_gpt_5_4_for_subagents": true,
+              "copilot_cli_gpt_5_4_mini_for_explore": true,
+              "copilot_cli_gpt_default_model": true,
+              "copilot_cli_mcp_allowlist": true,
+              "copilot_cli_mcp_enterprise_allowlist": true,
+              "copilot_cli_number": -39,
+              "copilot_cli_remove_cwd_listing": true,
+              "copilot_cli_remove_parallel_tool_prompt": true,
+              "copilot_cli_session_based_subagents": false,
+              "copilot_cli_shell_error_classification": true,
+              "copilot_cli_sql_intent_tracking": false,
+              "copilot_cli_string": "c_string",
+              "copilot_cli_subagent_parallelism_prompts": true,
+              "copilot_cli_websocket_responses": true
+            }
+          }
+        ],
+        "ParameterGroups": null,
+        "FlightingVersion": 1751,
+        "ImpressionId": "A54983D28FD143A1BDA95B5C7C457484",
+        "AssignmentContext": "cli_aa_c:1136621;553h5936:1187636;h7c07110:1176015;e974i579:1132406;h0649438:1154840;gpt-default:1141887;i810g980:1183187;ibdi6602:1183171;cjf2j356:1160400;7f4g8540:1183174;122j5628:1178748;40003418:1197442;405c7929:1196236;7483-disabled:1197435;cli_aa_monitor_t:1169029;gfgja144:1196333;"
+      }
+    }
+  },
+  "trustedFolders": [
+    "D:\\newkub\\side-projects\\dept-saw",
+    "D:\\newkub\\wpackages\\rust-packages",
+    "D:\\"
+  ],
+  "askedSetupTerminals": [
+    "windows-terminal"
+  ]
+}

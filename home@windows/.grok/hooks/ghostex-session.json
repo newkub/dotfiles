@@ -1,0 +1,103 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/VEERAP~1/AppData/Local/Ghostex/current/RESOUR~1/native/gxserver.exe agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'grok'",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

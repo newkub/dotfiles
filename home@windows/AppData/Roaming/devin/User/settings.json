@@ -1,0 +1,247 @@
+{
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[dockercompose]": {
+		"editor.autoIndent": "advanced",
+		"editor.defaultFormatter": "redhat.vscode-yaml",
+		"editor.insertSpaces": true,
+		"editor.tabSize": 2
+	},
+	"[github-actions-workflow]": {
+		"editor.defaultFormatter": "redhat.vscode-yaml"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[jsx, tsx]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[markdown]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[md]": {
+		"editor.defaultFormatter": "dprint.dprint"
+	},
+	"[mdx]": {
+		"editor.defaultFormatter": "vscode.markdown-language-features"
+	},
+	"[tailwindcss]": {
+		"editor.defaultFormatter": "antfu.unocss"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"breadcrumbs.enabled": false,
+	"chat.detectParticipant.enabled": true,
+	"cssVariables.trace.server": "messages",
+	"database-client.autoSync": true,
+	"debug.openDebug": "openOnDebugBreak",
+	"debug.showInStatusBar": "always",
+	"docker.extension.enableComposeLanguageServer": false,
+	"editor.cursorBlinking": "solid",
+	"editor.cursorSmoothCaretAnimation": "off",
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.quickSuggestions": "on",
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"editor.inlineSuggest.syntaxHighlightingEnabled": true,
+	"editor.largeFileOptimizations": true,
+	"editor.pasteAs.preferences": [],
+	"editor.scrollBeyondLastLine": false,
+	"editor.semanticHighlighting.enabled": false,
+	"editor.smoothScrolling": false,
+	"editor.stickyScroll.enabled": false,
+	"editor.suggest.showWords": false,
+	"editor.tabCompletion": "on",
+	"editor.wordBasedSuggestions": "off",
+	"editor.wordWrap": "on",
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmPasteNative": false,
+	"extensions.ignoreRecommendations": true,
+	"files.autoSave": "afterDelay",
+	"files.eol": "\r\n",
+	"files.watcherExclude": {
+		"**/.git/**": true,
+		"**/.nuxt/**": true,
+		"**/.output/**": true,
+		"**/build/**": true,
+		"**/dist/**": true,
+		"**/node_modules/**": true
+	},
+	"git.openRepositoryInParentFolders": "never",
+	"js/ts.tsserver.maxMemory": 8192,
+	"js/ts.preferences.importModuleSpecifier": "relative",
+	"js/ts.preferences.includePackageJsonAutoImports": "auto",
+	"js/ts.preferences.quoteStyle": "single",
+	"js/ts.suggest.autoImports": true,
+	"js/ts.suggest.includeAutomaticOptionalChainCompletions": true,
+	"js/ts.format.semicolons": "insert",
+	"js/ts.format.insertSpaceAfterConstructor": true,
+	"js/ts.tsserver.experimental.useVsCodeWatcher": true,
+	"js/ts.tsserver.watchOptions": {
+		"excludeDirectories": [
+			"**/node_modules",
+			"**/.git",
+			"**/dist",
+			"**/build",
+			"**/.output",
+			"**/.nuxt"
+		],
+		"watchDirectory": "useFsEvents",
+		"watchFile": "useFsEvents"
+	},
+	"mise.binPath": "C:\\Users\\Veerapong\\scoop\\shims\\mise.exe",
+	"npm-intellisense.packageSubfoldersIntellisense": true,
+	"npm.scriptRunner": "bun",
+	"nuxt-intellisense.showWelcomeMessage": false,
+	"nuxtr.defaultPackageManager": "Bun",
+	"nuxtr.vueFiles.firstTag": "script",
+	"nuxtr.vueFiles.style.addStyleTag": false,
+	"oxc.typeAware": true,
+	"redhat.telemetry.enabled": false,
+	"remote.downloadExtensionsLocally": true,
+	"search.exclude": {
+		"**/.git": true,
+		"**/.nuxt": true,
+		"**/.output": true,
+		"**/build": true,
+		"**/dist": true,
+		"**/node_modules": true
+	},
+	"terminal.integrated.commandsToSkipShell": [
+		"kilo-code.new.agentManagerOpen",
+		"kilo-code.new.agentManager.showTerminal"
+	],
+	"terminal.integrated.cursorStyle": "line",
+	"terminal.integrated.defaultProfile.windows": "pwsh",
+	"terminal.integrated.profiles.windows": {
+		"pwsh": {
+			"path": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\pwsh.exe",
+			"icon": "terminal-powershell"
+		},
+		"nushell": {
+			"path": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\nushell.exe",
+			"icon": "terminal-powershell"
+		},
+		"Opencode": {
+			"path": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\opencode.exe",
+			"icon": "terminal-powershell"
+		},
+		"droid": {
+			"path": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\droid.exe",
+			"icon": "terminal-powershell"
+		},
+		"helix": {
+			"path": "C:\\Users\\Veerapong\\AppData\\Local\\mise\\shims\\helix.exe",
+			"icon": "terminal-powershell"
+		}
+	},
+	"terminal.integrated.enableMultiLinePasteWarning": "never",
+	"terminal.integrated.env.windows": {},
+	"terminal.integrated.focusAfterRun": "terminal",
+	"terminal.integrated.gpuAcceleration": "auto",
+	"terminal.integrated.persistentSessionReviveProcess": "never",
+	"terminal.integrated.shellIntegration.enabled": false,
+	"terminal.integrated.showCommandHint": false,
+	"terminal.integrated.stickyScroll.enabled": false,
+	"unocss.autocomplete.strict": true,
+	"vue.autoInsert.bracketSpacing": true,
+	"vue.autoInsert.dotValue": true,
+	"vue.codeActions.askNewComponentName": true,
+	"vue.format.script.initialIndent": true,
+	"vue.format.style.initialIndent": true,
+	"vue.format.template.initialIndent": true,
+	"vue.inlayHints.destructuredProps": true,
+	"vue.inlayHints.inlineHandlerLeading": true,
+	"vue.inlayHints.missingProps": true,
+	"vue.inlayHints.optionsWrapper": true,
+	"vue.inlayHints.vBindShorthand": true,
+	"vue.server.includeLanguages": [
+		"vue"
+	],
+	"vue.trace.server": "off",
+	"window.customTitleBarVisibility": "windowed",
+	"window.newWindowDimensions": "maximized",
+	"windsurf.marketplaceExtensionGalleryServiceURL": "https://marketplace.visualstudio.com/_apis/public/gallery",
+	"windsurf.marketplaceGalleryItemURL": "https://marketplace.visualstudio.com/items",
+	"workbench.colorCustomizations": {
+		"pings.custom_color-00e60f": "#00e60f",
+		"pings.custom_color-d600e6": "#d600e6",
+		"pings.custom_color-e67a00": "#e67a00",
+		"pings.custom_color-fa6c00": "#fa6c00"
+	},
+	"workbench.colorTheme": "GitHub Dark Dimmed",
+	"workbench.editor.closeEmptyGroups": true,
+	"workbench.editor.enablePreview": false,
+	"workbench.editorAssociations": {
+		"README.md": "vscode.markdown.preview.editor",
+		"LICENSE.md": "vscode.markdown.preview.editor",
+		"AGENTS.md": "vscode.markdown.preview.editor",
+		"TODO.md": "vscode.markdown.preview.editor",
+		"**/spec/**/*.md": "vscode.markdown.preview.editor"
+	},
+	"workbench.experimental.share.enabled": true,
+	"workbench.list.smoothScrolling": false,
+	"security.workspace.trust.untrustedFiles": "open",
+	"codeCounter.debug": "none",
+	"scm.repositories.selectionMode": "single",
+	"js/ts.updateImportsOnFileMove.enabled": "always",
+	"files.autoSaveDelay": 1,
+	"js/ts.experimental.useTsgo": true,
+	"workbench.activityBar.location": "bottom",
+	"workbench.sideBar.location": "left",
+	"kilo-code.new.autoApprove.enabled": true,
+	"kilo-code.new.autocomplete.enableAutoTrigger": false,
+	"kilo-code.new.fontSize": 13,
+	"editor.formatOnSave": true,
+	"chat.viewSessions.orientation": "stacked",
+	"chat.tips.enabled": false,
+	"github.copilot.chat.agent.currentEditorContext.enabled": false,
+	"chat.editing.confirmEditRequestRemoval": false,
+	"workbench.panel.showLabels": false,
+	"package-manager-enhancer.enablePackageJsonDependenciesCodeLens": false,
+	"json.schemaDownload.trustedDomains": {
+		"https://schemastore.azurewebsites.net/": true,
+		"https://raw.githubusercontent.com/microsoft/vscode/": true,
+		"https://raw.githubusercontent.com/devcontainers/spec/": true,
+		"https://www.schemastore.org/": true,
+		"https://json.schemastore.org/": true,
+		"https://json-schema.org/": true,
+		"https://developer.microsoft.com/json-schemas/": true,
+		"https://biomejs.dev": true
+	},
+	"devin.acp.agentPreferences": {
+		"devin-cli": {
+			"model": "swe-2-flash-medium",
+			"mode": "accept-edits"
+		},
+		"devin-cloud": {
+			"org_id": "org-4e47413a2c1043578fdefa90049323d0"
+		},
+		"opencode-v2": {
+			"model": "opencode/deepseek-v4.1-flash-free"
+		}
+	},
+	"devin.autoContinue": 0,
+	"devin.acp.enabledAgents": {
+		"amp-acp": false,
+		"devin-cli": true,
+		"devin-cloud": true,
+		"qoder": false,
+		"opencode-v2": true
+	},
+	"devin.acp.preferredAgent": "devin-cli"
+}
