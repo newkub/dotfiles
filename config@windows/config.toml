@@ -410,17 +410,23 @@ builtin = "history-watch"
 "~/.dotfile-manager.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.gitconfig" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.inshellisenserc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.kogit.config.ts" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.nirc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.nuxtrc" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.opencode.toml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.open-google-config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.open-web-from-cli.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.oxrc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.shinit" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.taskbook.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.wslconfig" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.wezterm.lua" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.zoxide.nu" = { mode = "track", variants = [{ os = "windows" }] }
 "~/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState" = { mode = "track", variants = [{ os = "windows" }], include = ["settings.json", "state.json"] }
+"~/AppData/Roaming/nushell" = { mode = "track", variants = [{ os = "windows" }], include = ["*.nu"] }
 "~/Documents/PowerShell" = { mode = "track", variants = [{ os = "windows" }], include = ["*.ps1", "*.psm1"] }
 "~/computer-cleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/wcleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 
 [tasks.dotfiles-status]

@@ -612,6 +612,20 @@
       ]
     },
     {
+      "path": "home/.czrc",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.default_gitignore",
       "autosave": true,
       "encrypt": false,
@@ -668,6 +682,34 @@
       ]
     },
     {
+      "path": "home/.kogit.config.ts",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.nirc",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.nuxtrc",
       "autosave": true,
       "encrypt": false,
@@ -710,6 +752,20 @@
       ]
     },
     {
+      "path": "home/.opencode.toml",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.oxrc",
       "autosave": true,
       "encrypt": false,
@@ -739,6 +795,20 @@
     },
     {
       "path": "home/.taskbook.json",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.wezterm.lua",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -795,6 +865,23 @@
       "include": [
         "settings.json",
         "state.json"
+      ]
+    },
+    {
+      "path": "home/AppData/Roaming/nushell",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ],
+      "include": [
+        "*.nu"
       ]
     },
     {
