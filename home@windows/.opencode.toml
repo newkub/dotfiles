@@ -1,0 +1,40 @@
+# MiniMax OpenAI-Compatible API Configuration
+# Docs: https://platform.minimax.io/docs/token-plan/other-tools#openai-compatible-protocol
+# Base URL: https://api.minimax.io/v1
+
+[providers]
+[providers.minimax]
+name = "MiniMax"
+api_key = "YOUR_MINIMAX_API_KEY_HERE"
+base_url = "https://api.minimax.io/v1"
+
+[defaults]
+model_provider = "minimax"
+model = "minimax-chat"
+
+# MiniMax Models - Chat
+[models.minimax-chat]
+provider = "minimax"
+name = "abab6.5g-chat"
+
+[models.minimax-chat-fast]
+provider = "minimax"
+name = "abab6.5s-chat"
+
+[models.minimax-chat-flash]
+provider = "minimax"
+name = "abab6.5g-flash"
+
+# MiniMax Models - Text
+[models.minimax-text-01]
+provider = "minimax"
+name = "MiniMax-Text-01"
+
+[models.minimax-text-01-preview]
+provider = "minimax"
+name = "MiniMax-Text-01-Preview"
+
+# MiniMax Models - Function Calling
+[models.minimax-function]
+provider = "minimax"
+name = "abab6.5s-funcall"

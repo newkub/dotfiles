@@ -107,6 +107,20 @@
       ]
     },
     {
+      "path": "home/.bunfig.toml",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/agent-tui",
       "autosave": true,
       "encrypt": false,
@@ -121,7 +135,35 @@
       ]
     },
     {
+      "path": "home/.config/agents",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/amp",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.config/atuin",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -260,7 +302,7 @@
       "variants": [
         {
           "os": [
-            "linux"
+            "windows"
           ],
           "profile": null,
           "default": false
@@ -372,6 +414,20 @@
     },
     {
       "path": "home/.config/posting",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.config/scoop",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -542,6 +598,20 @@
       ]
     },
     {
+      "path": "home/.czrc",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.default_gitignore",
       "autosave": true,
       "encrypt": false,
@@ -598,6 +668,34 @@
       ]
     },
     {
+      "path": "home/.kogit.config.ts",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.nirc",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.nuxtrc",
       "autosave": true,
       "encrypt": false,
@@ -640,6 +738,20 @@
       ]
     },
     {
+      "path": "home/.opencode.toml",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.oxrc",
       "autosave": true,
       "encrypt": false,
@@ -669,6 +781,20 @@
     },
     {
       "path": "home/.taskbook.json",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.wezterm.lua",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -728,6 +854,23 @@
       ]
     },
     {
+      "path": "home/AppData/Roaming/nushell",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ],
+      "include": [
+        "*.nu"
+      ]
+    },
+    {
       "path": "home/Documents/PowerShell",
       "autosave": true,
       "encrypt": false,
@@ -747,6 +890,20 @@
     },
     {
       "path": "home/computer-cleanup.config.json",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/settings.json",
       "autosave": true,
       "encrypt": false,
       "variants": [
