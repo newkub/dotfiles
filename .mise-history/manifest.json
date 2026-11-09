@@ -20,6 +20,12 @@
       "variants": []
     },
     {
+      "path": "home/.bashrc",
+      "autosave": true,
+      "encrypt": false,
+      "variants": []
+    },
+    {
       "path": "home/.better-commits.json",
       "autosave": true,
       "encrypt": false,
@@ -39,6 +45,12 @@
     },
     {
       "path": "home/.config/broot",
+      "autosave": true,
+      "encrypt": false,
+      "variants": []
+    },
+    {
+      "path": "home/.config/carapace",
       "autosave": true,
       "encrypt": false,
       "variants": []
@@ -69,6 +81,12 @@
     },
     {
       "path": "home/.config/gh-dash",
+      "autosave": true,
+      "encrypt": false,
+      "variants": []
+    },
+    {
+      "path": "home/.config/ghostty",
       "autosave": true,
       "encrypt": false,
       "variants": []
@@ -128,6 +146,18 @@
     },
     {
       "path": "home/.config/search",
+      "autosave": true,
+      "encrypt": false,
+      "variants": []
+    },
+    {
+      "path": "home/.config/starship",
+      "autosave": true,
+      "encrypt": false,
+      "variants": []
+    },
+    {
+      "path": "home/.config/starship.toml",
       "autosave": true,
       "encrypt": false,
       "variants": []
