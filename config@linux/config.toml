@@ -23,3 +23,6 @@ run = "mise dotfiles save && mise dotfiles sync"
 description = "Show dotfiles tracking status"
 run = "mise dotfiles status"
 
+
+[bootstrap.services.mise-history]
+builtin = "history-watch"
