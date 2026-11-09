@@ -12,6 +12,13 @@
           ],
           "profile": null,
           "default": false
+        },
+        {
+          "os": [
+            "linux"
+          ],
+          "profile": null,
+          "default": false
         }
       ]
     },
@@ -54,6 +61,13 @@
           ],
           "profile": null,
           "default": false
+        },
+        {
+          "os": [
+            "linux"
+          ],
+          "profile": null,
+          "default": false
         }
       ]
     },
@@ -65,6 +79,13 @@
         {
           "os": [
             "windows"
+          ],
+          "profile": null,
+          "default": false
+        },
+        {
+          "os": [
+            "linux"
           ],
           "profile": null,
           "default": false
@@ -131,7 +152,15 @@
       "path": "home/.config/carapace",
       "autosave": true,
       "encrypt": false,
-      "variants": []
+      "variants": [
+        {
+          "os": [
+            "linux"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
     },
     {
       "path": "home/.config/chezmoi/chezmoi.toml",
@@ -221,7 +250,15 @@
       "path": "home/.config/ghostty",
       "autosave": true,
       "encrypt": false,
-      "variants": []
+      "variants": [
+        {
+          "os": [
+            "linux"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
     },
     {
       "path": "home/.config/git",
@@ -365,6 +402,13 @@
           ],
           "profile": null,
           "default": false
+        },
+        {
+          "os": [
+            "linux"
+          ],
+          "profile": null,
+          "default": false
         }
       ]
     },
@@ -376,6 +420,13 @@
         {
           "os": [
             "windows"
+          ],
+          "profile": null,
+          "default": false
+        },
+        {
+          "os": [
+            "linux"
           ],
           "profile": null,
           "default": false
