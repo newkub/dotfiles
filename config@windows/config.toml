@@ -392,7 +392,6 @@ builtin = "history-watch"
 "~/.config/medusa" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/micro/bindings.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/mise" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.czrc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/opencode" = { mode = "track", exclude = ["service.json", "node_modules", "package-lock.json"], variants = [{ os = "windows" }] }
 "~/.config/posting" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/search" = { mode = "track", variants = [{ os = "windows" }] }
@@ -406,6 +405,7 @@ builtin = "history-watch"
 "~/.config/wezterm" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/winfetch" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/workos" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.czrc" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.default_gitignore" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.dotfile-manager.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.gitconfig" = { mode = "track", variants = [{ os = "windows" }] }
