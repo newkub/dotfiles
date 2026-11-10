@@ -1,6 +1,5 @@
 
 Import-Module PSReadLine
-atuin init powershell --disable-up-arrow | Out-String | Invoke-Expression
 
 
 #Requires -Version 7.0
@@ -9,9 +8,10 @@ atuin init powershell --disable-up-arrow | Out-String | Invoke-Expression
 # Environment & Mise
 # ============================================================================
 $env:MISE_INSTALLS_DIR = 'D:\mise'
-(& mise activate --shims pwsh) | Out-String | Invoke-Expression
+$env:DOTNET_TieredPGO = '1'
+$env:DOTNET_TC_QuickJitForLoops = '1'
 
-# mbx (mr-boxington) Cargo shim — must precede mise shims so plain `cargo` uses mbx
+# mbx (mr-boxington) Cargo shim â€” must precede mise shims so plain `cargo` uses mbx
 $env:Path = "$env:LOCALAPPDATA\mbx\bin;$env:Path"
 
 $script:ProfileCacheDir = Join-Path $env:LOCALAPPDATA 'pwsh-profile-cache'
@@ -148,6 +148,12 @@ function global:prompt {
     }
     & $Function:prompt @args
 }
+# ============================================================================
+# Cached tool inits (mise)
+# ============================================================================
+
+$script:MiseInit = Get-ProfileCachedInit -Name 'mise-activate' -Command 'mise' -Arguments @('activate', '--shims', 'pwsh')
+if ($script:MiseInit) { . $script:MiseInit }
 
 # ============================================================================
 # Encoding & PSReadLine
@@ -155,7 +161,6 @@ function global:prompt {
 $script:PreviousOutputEncoding = [Console]::OutputEncoding
 [Console]::InputEncoding = [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
-if ($script:PreviousOutputEncoding.CodePage -ne 65001) { chcp 65001 > $null }
 
 if (Get-Command Set-PSReadLineOption -ErrorAction SilentlyContinue) {
     Set-PSReadLineOption -MaximumHistoryCount 30000 -HistoryNoDuplicate -HistorySearchCursorMovesToEnd -ErrorAction SilentlyContinue
@@ -180,6 +185,9 @@ Set-Alias n nvim
 Set-Alias v bat
 Set-Alias ot hx
 Set-Alias task argus
+
+# Short alias for `mise task run` — `t` lists tasks, `t <name>` runs one
+function t { mise task run @args }
 
 # ============================================================================
 # Navigation functions (auto-generated from map)

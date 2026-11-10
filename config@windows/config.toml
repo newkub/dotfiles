@@ -151,13 +151,18 @@ exit $failed
 description = "clean development artifacts and caches"
 shell = "pwsh -NoProfile -Command"
 run = '''
+$ErrorActionPreference = "Continue"
 devp run -y
 scoop cleanup *
 scoop cache rm *
 bun pm cache rm
 npm cache clean --force
-pnpm store prune
-uv cache clean
+if (Get-Command pnpm -ErrorAction SilentlyContinue) { pnpm store prune } else { Write-Host "  skip pnpm (not installed)" }
+# uv cache is locked by running uv-tool MCP servers (mcp-for-blender etc.);
+# stop them first - they respawn on the next MCP call. prune keeps in-use
+# venvs, clean would delete them outright.
+Get-CimInstance Win32_Process | Where-Object { $_.Name -in @('uv.exe','uvx.exe') -or ($_.ExecutablePath -and $_.ExecutablePath -match 'uv\\cache') } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+uv cache prune --force
 python -m pip cache purge
 mise cache clear
 mise prune --yes
@@ -277,7 +282,6 @@ usage = "latest"
 "github:us/crw" = "latest"
 "github:aubepkg/aube" = "latest"
 "npm:taze" = "latest"
-"npm:pake-cli" = "latest"
 kotlin = { version = "latest", asset_pattern = "kotlin-compiler-*.zip", bin_path = "kotlinc/bin" }
 portless = "latest"
 claude = "latest"
@@ -345,7 +349,12 @@ powershell = "latest"
 imagemagick = "latest"
 poppler = "latest"
 make = "latest"
-powershell-core = "latest"
+"github:vibex-ai/vibex" = "latest"
+ffmpeg = "latest"
+"npm:pake-cli" = "latest"
+"github:PowerShell/PowerShell" = "latest"
+gallery-dl = "latest"
+"github:wainmann/agent-manager" = "latest"
 
 
 
@@ -529,24 +538,33 @@ Write-Host "[dotfiles:sync] clean - syncing" -ForegroundColor Green
 mise dot sync
 '''
 
-[tasks.save-session]
-description = "Snapshot open app windows and write a Desktop restore launcher"
+[tasks.save-terminal-session]
+description = "Snapshot open terminal sessions (agent CLIs and shells) and write a Desktop restore launcher"
 shell = "pwsh -NoProfile -Command"
 run = '''
 $desktop = [Environment]::GetFolderPath('Desktop')
+$terminalNames = @(
+    'WindowsTerminal', 'wt', 'wezterm-gui', 'alacritty', 'kitty',
+    'powershell', 'pwsh', 'cmd', 'bash', 'nu', 'fish',
+    'devin', 'qoder', 'codex', 'claude', 'gemini', 'kilo', 'opencode', 'amp'
+)
+$sessions = Get-Process |
+    Where-Object { $terminalNames -contains $_.ProcessName } |
+    Sort-Object -Property Path -Unique |
+    ForEach-Object { [pscustomobject]@{ Name = $_.ProcessName; Title = $_.MainWindowTitle; Path = $_.Path } }
 $apps = Get-Process |
     Where-Object { $_.MainWindowTitle -and $_.Path -and $_.Path -notlike "$env:SystemRoot*" } |
     Sort-Object -Property Path -Unique |
     ForEach-Object { [pscustomobject]@{ Name = $_.ProcessName; Title = $_.MainWindowTitle; Path = $_.Path } }
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
-$lines = @("# Session snapshot $stamp", "# $($apps.Count) window(s)", "")
-foreach ($a in $apps) {
+$lines = @("# Terminal session snapshot $stamp", "# $($sessions.Count) terminal/agent process(es), $($apps.Count) window(s) total", "")
+foreach ($a in $sessions) {
     $p = $a.Path -replace "'", "''"
     $lines += "Start-Process -FilePath '$p'"
 }
-$ps1 = Join-Path $desktop 'session-restore.ps1'
+$ps1 = Join-Path $desktop 'terminal-session-restore.ps1'
 $lines | Set-Content -Path $ps1 -Encoding utf8
-$bat = Join-Path $desktop 'Restore Session.bat'
+$bat = Join-Path $desktop 'Restore Terminal Session.bat'
 Set-Content -Path $bat -Encoding ascii -Value "@echo off`r`npwsh -NoProfile -ExecutionPolicy Bypass -File `"$ps1`""
-Write-Host "[save-session] $($apps.Count) app(s) -> $bat" -ForegroundColor Green
+Write-Host "[save-terminal-session] $($sessions.Count) terminal session(s) -> $bat" -ForegroundColor Green
 '''

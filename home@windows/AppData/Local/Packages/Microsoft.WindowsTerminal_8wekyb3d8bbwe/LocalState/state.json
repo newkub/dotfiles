@@ -3,16 +3,111 @@
 	[
 		"page.actions"
 	],
+	"dismissedMessages" :
+	[
+		"closeOnExitInfo"
+	],
 	"generatedProfiles" :
 	[
 		"{574e775e-4f2a-5b96-ac1e-a2962a402336}",
 		"{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
 		"{0022853a-6348-5ddb-864a-dde8fa68cd98}",
 		"{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
-		"{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}",
 		"{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
+		"{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}",
 		"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"
 	],
-	"settingsHash" : "40cfcba5a64aece4-01dd70e2ee398f7f",
+	"persistedWindowLayouts" :
+	[
+		{
+			"initialPosition" : "-31991,-32000",
+			"initialSize" :
+			{
+				"height" : 784.79998779296875,
+				"width" : 1536
+			},
+			"launchMode" : "maximized",
+			"tabLayout" :
+			[
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{39015828-09c4-4ea6-934e-8fc26a7ea56f}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{7a250fee-1f54-41f4-a91a-f3f74ebc63f2}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{584e5bbb-cd91-48a3-beb0-6aaa942580bc}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{872b7d66-5016-4877-a6bf-07b72f61f24a}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{c89982e5-2fe4-4f16-b4d4-4bd2205cd6b8}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{b9e95d18-da46-4296-9b55-2fffafc70e2d}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{d16a9333-0bc7-43ab-9151-0bb07e1ba1e6}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{fc537c2e-a598-4d0d-bd08-4383ef31feef}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "switchToTab",
+					"index" : 0
+				}
+			]
+		}
+	],
+	"settingsHash" : "90ac607b7a01c081-01dd715ab6574f23",
 	"sshFolderGenerated" : false
 }
