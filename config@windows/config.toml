@@ -287,7 +287,6 @@ sqlite = "latest"
 onefetch = "latest"
 broot = { version = "latest", bin_path = '{{ arch(x64="x86_64", arm64="aarch64") }}-{{ os(macos="apple-darwin", linux="unknown-linux-gnu", windows="pc-windows-gnu") }}' }
 superfile = "latest"
-7zip = "latest"
 delta = "latest"
 infisical = { version = "latest", asset_pattern = "cli_{{ version }}_{{ os(macos='darwin') }}_{{ arch(x64='amd64') }}.tar.gz" }
 wrangler = { version = "latest", allow_builds = ["esbuild", "sharp", "workerd"] }
@@ -331,7 +330,6 @@ grex = "latest"
 "cargo:rmux" = "latest"
 "github:ctxrs/ctx" = "latest"
 herdr = "latest"
-"github:wez/wezterm" = "latest"
 "github:rust-mcp-stack/rust-mcp-filesystem" = "latest"
 "npm:agent-desktop" = "latest"
 "github:cmzy/geetree" = "latest"
@@ -340,8 +338,14 @@ dust = "latest"
 shellcheck = "latest"
 node = "latest"
 "github:HenryZhang-ZHY/dowse" = "latest"
-"github:telegramdesktop/tdesktop" = "latest"
 "github:Ray-lea/Argus" = "latest"
+"github:dstrml/wu" = "latest"
+nu = "latest"
+powershell = "latest"
+imagemagick = "latest"
+poppler = "latest"
+make = "latest"
+powershell-core = "latest"
 
 
 
@@ -364,6 +368,12 @@ builtin = "history-watch"
 # the gitleaks gate in the dotfiles:sync task remains the real secret check.
 [settings.history]
 allow_plaintext_history = true
+
+# History checkpoint commits are created by mise, not git — the author name is
+# fixed to "mise"; git_email controls the author/committer email so GitHub can
+# attribute the commits to this account.
+[history]
+git_email = "newkubise@gmail.com"
 
 # Encrypted history: files that legitimately contain key-like lines (env refs,
 # placeholders) are stored as age ciphertext; the working files stay plaintext.
@@ -499,6 +509,7 @@ recipients = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILut7f/gaJdn4QhkifTdkzQIZffj
 "~/AppData/Roaming/com.vercel.cli/Data/config.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/AppData/Local/glow/Config/glow.yml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/AppData/Local/GitKrakenCLI/gk.cfg" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Brave Apps" = { mode = "track", variants = [{ os = "windows" }] }
 
 [tasks.dotfiles-status]
 description = "Show dotfiles tracking status"
@@ -516,4 +527,26 @@ Write-Host "[dotfiles:sync] scanning unpushed checkpoints with gitleaks..." -For
 if ($LASTEXITCODE -ne 0) { Write-Host "[dotfiles:sync] BLOCKED: possible secrets in pending checkpoints - review before syncing" -ForegroundColor Red; exit 1 }
 Write-Host "[dotfiles:sync] clean - syncing" -ForegroundColor Green
 mise dot sync
+'''
+
+[tasks.save-session]
+description = "Snapshot open app windows and write a Desktop restore launcher"
+shell = "pwsh -NoProfile -Command"
+run = '''
+$desktop = [Environment]::GetFolderPath('Desktop')
+$apps = Get-Process |
+    Where-Object { $_.MainWindowTitle -and $_.Path -and $_.Path -notlike "$env:SystemRoot*" } |
+    Sort-Object -Property Path -Unique |
+    ForEach-Object { [pscustomobject]@{ Name = $_.ProcessName; Title = $_.MainWindowTitle; Path = $_.Path } }
+$stamp = Get-Date -Format 'yyyy-MM-dd HH:mm'
+$lines = @("# Session snapshot $stamp", "# $($apps.Count) window(s)", "")
+foreach ($a in $apps) {
+    $p = $a.Path -replace "'", "''"
+    $lines += "Start-Process -FilePath '$p'"
+}
+$ps1 = Join-Path $desktop 'session-restore.ps1'
+$lines | Set-Content -Path $ps1 -Encoding utf8
+$bat = Join-Path $desktop 'Restore Session.bat'
+Set-Content -Path $bat -Encoding ascii -Value "@echo off`r`npwsh -NoProfile -ExecutionPolicy Bypass -File `"$ps1`""
+Write-Host "[save-session] $($apps.Count) app(s) -> $bat" -ForegroundColor Green
 '''

@@ -1,5 +1,6 @@
 
-# atuin init powershell --disable-up-arrow | Out-String | Invoke-Expression
+Import-Module PSReadLine
+atuin init powershell --disable-up-arrow | Out-String | Invoke-Expression
 
 
 #Requires -Version 7.0
@@ -178,6 +179,7 @@ Set-Alias y yazi
 Set-Alias n nvim
 Set-Alias v bat
 Set-Alias ot hx
+Set-Alias task argus
 
 # ============================================================================
 # Navigation functions (auto-generated from map)

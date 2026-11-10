@@ -1450,6 +1450,20 @@
       ]
     },
     {
+      "path": "home/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Brave Apps",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/AppData/Roaming/Zed/AGENTS.md",
       "autosave": true,
       "encrypt": false,

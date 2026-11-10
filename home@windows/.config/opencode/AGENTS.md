@@ -22,7 +22,7 @@ Thirteen principles every skill inherits. The test column is the signal that pro
 | 3 | Freshness | read changing facts from the primary source and record its version | a claim with no source and version fails |
 | 4 | Evidence | every claim carries the instrument and its result | the report shows command + output |
 | 5 | Uncertainty | state confidence and unknowns; "unknown" is a valid answer | unknowns are listed, not guessed |
-| 6 | Redundancy | a "done" claim needs two independent signals | the verifier is not the producer |
+| 6 | Redundancy | a "done" claim needs two independent signals | the verifier is not the producer — a fresh context, not the same session |
 | 7 | State First | read the current state before changing it | a baseline exists before the edit |
 | 8 | Locality | smallest blast radius; fix the source, not the copies | changed files sit inside the stated scope |
 | 9 | Safety | reversible first; dry run and confirm; no secrets; no unrequested shared-state change | a destructive command is classified before it runs |
@@ -67,6 +67,7 @@ Five verbs cover every task. The owner skills hold the detail — this file fixe
 16. Act without waiting to be told for reversible inspection and local automation — open and read pages with `/use-browser`, drive the desktop with `/use-computer`; anything touching credentials, secrets, payments, account/security settings, or external sends → describe the exact step and let the user do it themselves
 17. Edit the source in `D:/dot-agents` only — client copies (`~/.agents` plus every client link in `scripts/lib/client-links.ts`: qoder, claude, codex, gemini, opencode, amp, Zed, Devin) are generated; change them through the sync gate, never by hand
 18. After editing this file, a skill, or a `plugins/*/plugin.json` → run `bun scripts/gate.ts`; a non-zero exit names the failing gate
+19. Finish the work to its end in one pass — never stop mid-task to ask whether to continue; ask only when genuinely unsure or a real decision appears
 
 ## Pointers
 
@@ -85,10 +86,11 @@ Topic → owner. Read the owner; never restate it here.
 | subagents and parallelism | `/use-subagents` |
 | file and folder operations | `/use-mcp` (filesystem server first) |
 | tool discovery and the CLI inventory | `/use-cli` |
-| planning a multi-file change | `/follow-deep plan` |
-| deep multi-source research and source verification | `/follow-deep research` (docs, repos, packages, benchmarks, security, compatibility), `/learn-references` (single-source quick learn) |
-| dependency choice and setup | `/follow-my-techstack`, `/follow-dep-setup`, `/follow-dep-setup config` |
+| deliberating a decision or weighing options | `/pondering` |
+| deep work — planning, research, or structured thinking on complex/high-risk tasks; always route through the dispatcher, never improvise | `/follow-deep <plan\|research\|thinking>`; single-source quick learn → `/learn-references` |
+| dependency choice and setup | `/follow-my-techstack`, `/update-config dep-setup`, `/update-config dep-setup-config` |
 | running dev, tests, and checks | `/run` |
+| running a test domain or independently verifying a change | `/test <domain>`, `/test all`, `/validate` |
 | report shape and columns | `/report` |
 | release and shipping | `/ship <improve\|optimize\|refactor\|review\|update\|release\|hotfix>` (specialty pass, then hands off), `/ship-release` (canonical verify → push → PR → merge) |
 | feature intake and idea validation | `/idea features`, `/validate idea`, `/create-plan-in-dot-agents` |
