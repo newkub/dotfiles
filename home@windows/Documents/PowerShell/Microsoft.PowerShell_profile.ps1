@@ -419,3 +419,12 @@ function notes {
         if ($selected) { zed $selected }
     }
 }
+
+# ============================================================================
+# rmux session resume — reattach persistent session on interactive launch
+# ============================================================================
+$script:RmuxCmd = Get-Command rmux -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+if ($script:RmuxCmd -and -not $env:TMUX -and -not $env:RMUX -and -not $env:RMUX_ATTACHED -and -not $env:SSH_CONNECTION) {
+    $env:RMUX_ATTACHED = '1'
+    & $script:RmuxCmd.Source new-session -A -s main 'pwsh.exe -NoLogo'
+}
