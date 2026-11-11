@@ -47,4 +47,5 @@ Bring a machine's tracked dotfiles up to date with `origin/main` — fetch, appl
 - Never hand-edit files inside `~/.local/state/mise/history/repo.git` — resolve via `mise dot` commands only
 - OS variants are isolated: a `windows` entry never overwrites `linux` content at the same repo path; a cross-OS diff means the `variants` list is wrong — fix `config.toml`, do not merge contents
 - After pulling config changes, re-read `~/.config/mise/config.toml` before running tasks — a pulled config can change task definitions
-- Fresh machine setup order: install mise → declare `[dotfiles]` + `[history.origin]` → `mise dot pull` → `mise bootstrap services apply`
+- Fresh machine setup order: install mise → declare `[dotfiles]` + `[history.origin]` → `mise dot pull` → `mise run restore-programs` (installs winget/scoop/mise inventories from `~/.config/machine/`) → `mise bootstrap services apply`
+- `restore-programs` is idempotent; apps that were not exportable (listed in `winget-packages.json` warnings) need manual reinstall — report them to the user
