@@ -243,7 +243,6 @@ docker-compose = "latest"
 rush = "latest"
 bat = "latest"
 bottom = "latest"
-chezmoi = "latest"
 dua = "latest"
 duf = "latest"
 fd = "latest"
@@ -436,7 +435,6 @@ recipients = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILut7f/gaJdn4QhkifTdkzQIZffj
 "~/.config/agent-tui" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
 "~/.config/amp" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/broot" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.config/chezmoi/chezmoi.toml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/cli-git" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/cligit" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/agents" = { mode = "track", variants = [{ os = "windows" }] }
@@ -490,10 +488,7 @@ recipients = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILut7f/gaJdn4QhkifTdkzQIZffj
 "~/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/wcleanup.config.json" = { mode = "track", variants = [{ os = "windows" }] }
 
-# --- chezmoi archive coverage: paths the old chezmoi source state managed ---
-"~/.chezmoi-daily.ps1" = { mode = "track", variants = [{ os = "windows" }] }
-"~/.chezmoi-readd.ts" = { mode = "track", variants = [{ os = "windows" }] }
-"~/chezmoi-daily-update.ps1" = { mode = "track", variants = [{ os = "windows" }] }
+# --- misc dot paths ---
 "~/.opencommit" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
 "~/.bun/install/global/package.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.codeium/windsurf/memories" = { mode = "track", variants = [{ os = "windows" }] }
