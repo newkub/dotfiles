@@ -1,0 +1,23 @@
+# Project config for the dotfiles repo itself.
+#
+# Live dotfiles are managed by the GLOBAL mise config
+# (~/.config/mise/config.toml) in `track` mode — files stay in place and
+# `mise dot save` snapshots them into the history repo that syncs to
+# github.com:newkub/dotfiles (this repo). This file only adds
+# repo-local convenience tasks; it is not itself a tracked dotfile.
+
+[tasks.sync]
+description = "checkpoint local edits, scan for secrets, push to origin"
+run = "mise dot save && mise run dotfiles:sync"
+
+[tasks.status]
+description = "show dotfiles tracking status"
+run = "mise dotfiles status"
+
+[tasks.export]
+description = "refresh program inventories in ~/.config/machine"
+run = "mise run program-export"
+
+[tasks.restore]
+description = "reinstall programs from ~/.config/machine inventories"
+run = "mise run restore-programs"
