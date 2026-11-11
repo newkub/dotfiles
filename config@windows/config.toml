@@ -84,7 +84,9 @@ Step "winget" {
 
 Step "bun" { bun update -g }
 Step "npm" { npm update -g }
-Step "pnpm" { pnpm update -g }
+Step "pnpm" {
+    if (Get-Command pnpm -ErrorAction SilentlyContinue) { pnpm update -g } else { Write-Host "  pnpm not installed, skipping" -ForegroundColor Yellow }
+}
 
 Step "pip" {
     python -m pip install --upgrade pip
@@ -136,7 +138,7 @@ Step "mise self-update" { mise self-update -y }
 
 Step "rustup" { rustup update stable }
 Step "gh extensions" { gh extension upgrade --all }
-Step "chezmoi" { mise run chezmoi-update }
+Step "program-export" { mise run program-export }
 Step "skills" {
     skills update
     skills update -g
