@@ -40,7 +40,7 @@ branch = "main"
 - `home@linux/` - WSL/Linux snapshots, mirroring `$HOME`
 - `config@windows/`, `config@linux/` - per-OS `~/.config/mise` contents
 - `.mise-history/` - mise history metadata (`format.toml`, `manifest.json`)
-- `home@windows/.config/agents/skills/check-config/` - the coverage-audit skill
+- `home@windows/.config/agents/skills/` - synced agent skills (`check-config`, `sync-to-remote`, `apply-to-computer`, ...)
 - `README.md` - this file
 
 `manifest.json` is the shared enrollment: each path lists every OS variant
@@ -75,6 +75,17 @@ the audit procedure: how to diff CLI config locations against `[dotfiles]`,
 the list of known secret-bearing paths that must stay untracked, and the
 exclude patterns for tracked directories.
 
+## Synced skills
+
+`~/.config/agents/skills/` is tracked, so the workflow skills travel with the
+dotfiles:
+
+| Skill | Purpose |
+|-------|---------|
+| `check-config` | audit `[dotfiles]` coverage + secret-bearing paths before sync |
+| `sync-to-remote` | push checkpoints to origin through the gitleaks gate |
+| `apply-to-computer` | pull incoming changes, resolve conflicts, verify, rollback |
+
 ## Automatic capture
 
 Both machines run the history watcher, so edits are checkpointed automatically:
@@ -87,6 +98,9 @@ builtin = "history-watch"
 Apply once per machine with `mise bootstrap services apply` (Windows scheduled
 task / Linux systemd user service). `config.local.toml` is always omitted from
 capture as machine-local.
+
+If the watcher is disabled on a machine, run `mise dot save` manually before
+`mise run dotfiles:sync` or `mise run sync` - checkpoints are not automatic.
 
 ## Adding a new machine
 
