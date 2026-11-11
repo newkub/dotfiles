@@ -40,7 +40,7 @@ Five verbs cover every task. The owner skills hold the detail — this file fixe
 | FIND | locate the file, symbol, skill, or fact from an index before reading bodies; when two skills could match, choose by `description` first | the target is named and confirmed to exist | `/check find code`, `/analyze quick`, `/check find`, `/use-tools cli` |
 | LEARN | read current requirements from the primary source and record its version | the claim has a source, or is reported unknown | `/check`, `/follow-deep research`, `/use-tools mcp`, `/follow-principles` |
 | CHANGE | state the baseline, then make the smallest change that satisfies the need | the change is in scope, reversible, and its references are updated | `/fix refactor`, `/follow-architecture`, `/files edit refs`, `/implement` |
-| JUDGE | run the gate the change actually affects; before a runner that starts the app or tests, run the matching `check-*` or `review-*` first | the gate passed, or the failure is reported with its cause | `/run check`, `/review validate`, `/review codebase`, `/review-*`, `/check-*` |
+| JUDGE | run the gate the change actually affects; before a runner that starts the app or tests, run the matching `check-*` or `review-*` first | the gate passed, or the failure is reported with its cause | `/task check`, `/review validate`, `/review codebase`, `/review-*`, `/check-*` |
 | DELIVER | report what changed, the evidence, and what remains | the user has the state and the next action | `/report`, `/ship`, `/git commit`, `/dot suggest` |
 
 1. Order is fixed: FIND → LEARN → CHANGE → JUDGE → DELIVER
@@ -62,7 +62,7 @@ Every prompt walks the same stages in order. This file fixes the order and the s
 | 7. Review | independent check of the result when risk or size warrants | `/review` |
 | 8. Report | what changed, the evidence, what remains | `/report` |
 | 9. Status | state snapshot and the next action | `/report status`, `/dot suggest` |
-| 10. Cleanup | release what the task created — temp files, scratch scripts, orphan processes, stale artifacts | `/cleanup` |
+| 10. Cleanup | release what the task created — temp files, scratch scripts, orphan processes, stale artifacts | `/computer` |
 
 The five verbs map onto it: FIND+LEARN cover stages 3–4, CHANGE is 5, JUDGE is 6–7, DELIVER is 8–9. Veto and Ask gate every stage — a prompt can exit at any point with a stated reason.
 
@@ -80,10 +80,10 @@ The five verbs map onto it: FIND+LEARN cover stages 3–4, CHANGE is 5, JUDGE is
 10. Commit or push only when the user asks
 11. A new request does not cancel unfinished work — finish it first, or `/follow-deep thinking` when the new request makes it unnecessary
 12. Skills are English; chat and reports are Thai
-13. A new dependency needs a stated reason, a compatible license, a pinned version (never `latest`/`*`), and a clean `/run audit` — reuse an installed dep or a project package first
+13. A new dependency needs a stated reason, a compatible license, a pinned version (never `latest`/`*`), and a clean `/task audit` — reuse an installed dep or a project package first
 14. Never promise a completion time or ETA without a measured basis — report steps remaining and blockers instead
 15. A command that runs long → run it in the background, keep its handle, and report pid/port/how to stop; never block silently or leave an orphan process
-16. Act without waiting to be told for reversible inspection and local automation — open a page, repo, folder, or dashboard for the user with `/open` (use `/use-browser` when the task needs to read or drive the page), drive the desktop with `/use-computer`; anything touching credentials, secrets, payments, account/security settings, or external sends → describe the exact step and let the user do it themselves
+16. Act without waiting to be told for reversible inspection and local automation — open a page, repo, folder, or dashboard for the user with `/open` (use `/use-browser` when the task needs to read or drive the page), drive the desktop with `/computer use`; anything touching credentials, secrets, payments, account/security settings, or external sends → describe the exact step and let the user do it themselves
 17. Edit the source in `D:/dot-agents` only — client copies (`~/.agents` plus every client link in `scripts/lib/client-links.ts`: qoder, claude, codex, gemini, opencode, amp, Zed, Devin) are generated; change them through the sync gate, never by hand
 18. After editing this file, a skill, or a `plugins/*/plugin.json` → run `bun scripts/gate.ts`; a non-zero exit names the failing gate
 19. Finish the work to its end in one pass — never stop mid-task to ask whether to continue; ask only when genuinely unsure or a real decision appears
@@ -113,8 +113,8 @@ Topic → owner. Read the owner; never restate it here.
 | deep work — planning, research, or structured thinking on complex/high-risk tasks; always route through the dispatcher, never improvise | `/follow-deep <plan\|research\|thinking>`; single-source quick learn → `/check` |
 | applying general engineering principles — reuse, freshness, resilience, security — to any artifact | `/follow-principles` |
 | dependency choice and setup | `/follow-techstack`, `/update-project config dep-setup`, `/update-project config dep-setup-config` |
-| running dev, tests, and checks | `/run` |
-| running a test domain or independently verifying a change | `/run test <domain>`, `/run test all`, `/review validate` |
+| running dev, tests, and checks | `/task` |
+| running a test domain or independently verifying a change | `/task test <domain>`, `/task test all`, `/review validate` |
 | report shape and columns | `/report` |
 | release and shipping | `/ship <improve\|optimize\|refactor\|review\|update\|release\|hotfix>` (specialty pass, then hands off), `/ship` (canonical verify → push → PR → merge) |
 | feature intake and idea validation | `/idea features`, `/review validate idea`, `/follow-deep plan-issue` |
@@ -124,7 +124,7 @@ Topic → owner. Read the owner; never restate it here.
 | locating issues, code, web pages, sessions, projects, skills, bookmarks | `/find <issue\|code\|web\|session\|project\|skill\|bookmark>` |
 | improving anything per user request or feedback | `/improve <domain>` (skill improvements → `/harness improve`) |
 | capturing screen images or recording video | `/capture <image\|video>` |
-| auditing the machine's dotfiles (mise, repos, config links) | `/my-dotfiles audit` |
+| auditing the machine's dotfiles (mise, repos, config links) | `/computer update dotfiles` |
 | checking external registries are fresh (dotfiles, stars, bookmarks) | `/check update` |
 | proving a claim/change correct by running the smallest real check | `/check correctness` |
 | working the dot-agents store to its goal autonomously | `/follow-harness`, `/dot harness` |
