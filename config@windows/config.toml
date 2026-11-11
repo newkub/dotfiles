@@ -189,6 +189,35 @@ mise list | Out-File "$dir\mise-tools.txt" -Encoding utf8
 Write-Host "[program-export] wrote $dir" -ForegroundColor Green
 '''
 
+[tasks.restore-programs]
+description = "Restore programs from ~/.config/machine inventories (winget import + scoop install + mise install)"
+shell = "pwsh -NoProfile -Command"
+run = '''
+$dir = "$env:USERPROFILE\.config\machine"
+$ErrorActionPreference = "Continue"
+
+if (Test-Path "$dir\winget-packages.json") {
+    Write-Host "`n[restore] winget import" -ForegroundColor Cyan
+    winget import -i "$dir\winget-packages.json" --accept-source-agreements --accept-package-agreements
+    if ($LASTEXITCODE -ne 0) { Write-Host "  winget import had failures (some packages are not exportable)" -ForegroundColor Yellow }
+} else { Write-Host "`n[restore] no winget-packages.json, skipping" -ForegroundColor Yellow }
+
+if ((Test-Path "$dir\scoop-packages.txt") -and (Get-Command scoop -ErrorAction SilentlyContinue)) {
+    Write-Host "`n[restore] scoop install" -ForegroundColor Cyan
+    $names = Get-Content "$dir\scoop-packages.txt" | Where-Object { $_ -match '^\S' -and $_ -notmatch '^\s*-{3,}' -and ($_ -split '\s+')[0] -ne 'Name' } | ForEach-Object { ($_ -split '\s+')[0] } | Sort-Object -Unique
+    foreach ($pkg in $names) {
+        Write-Host "  scoop install $pkg"
+        scoop install $pkg
+        if ($LASTEXITCODE -ne 0) { Write-Host "    FAIL $pkg" -ForegroundColor Red }
+    }
+} else { Write-Host "`n[restore] scoop list missing or scoop not installed, skipping" -ForegroundColor Yellow }
+
+Write-Host "`n[restore] mise install" -ForegroundColor Cyan
+mise install
+
+Write-Host "`n[restore] done - reinstall apps that were not exportable manually (see winget-packages.json warnings)" -ForegroundColor Green
+'''
+
 [tasks.fix-windows]
 description = "repair Windows system files and reset broken Store apps (self-elevates via UAC)"
 shell = "pwsh -NoProfile -Command"
