@@ -419,3 +419,4 @@ function notes {
         if ($selected) { zed $selected }
     }
 }
+

@@ -299,7 +299,7 @@
                 {
                     "dark": "Campbell"
                 },
-                "commandline": "wsl",
+                "commandline": "wsl --cd D:\\",
                 "guid": "{46b8224c-c7e3-413a-a2da-7c507a6739fb}",
                 "hidden": false,
                 "icon": "C:\\Users\\Veerapong\\AppData\\Local\\TerminalIcons\\archlinux-logo.png",

@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -49,7 +49,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -60,7 +60,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -71,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]
@@ -82,7 +82,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
+            "command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo -NoProfile -NonInteractive -WindowStyle Hidden -Command \"& 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\current\\resources\\native\\gxserver.exe' agent-hook-notify-native 'C:\\Users\\Veerapong\\AppData\\Local\\Ghostex\\Data\\hooks/agent-shell-notify.sh' 'devin'\"",
             "timeout": 10
           }
         ]

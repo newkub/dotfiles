@@ -45,6 +45,18 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh.exe -NoLogo -NoProfile -NonInteractive -File \"C:\\Users\\Veerapong\\AppData\\Roaming\\devin\\hooks\\update-activity.ps1\"",
+            "timeout": 15
+          }
+        ]
+      }
     ]
   },
   "legacy_terminal": true

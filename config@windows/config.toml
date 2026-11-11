@@ -170,13 +170,6 @@ mise prune --yes
 mise run vhd:optimize
 '''
 
-[tasks.chezmoi-update]
-description = "sync local dotfiles"
-dir = "C:/Users/Veerapong/.local/share/chezmoi"
-shell = "pwsh -Command"
-run = "chezmoi re-add"
-
-
 [tasks.program-list]
 description = "list installed programs"
 shell = "pwsh -Command"
@@ -186,7 +179,7 @@ run = '& { function Show-Section ($title, $script, $limit = 0) { Write-Host "`n=
 description = "repair Windows system files and reset broken Store apps (self-elevates via UAC)"
 shell = "pwsh -NoProfile -Command"
 run = '''
-Start-Process pwsh -Verb RunAs -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','C:\Users\Veerapong\Desktop\fix-admin.ps1'
+Start-Process pwsh -Verb RunAs -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','D:\fix-admin.ps1'
 '''
 
 [tasks."vhd:optimize"]
@@ -331,7 +324,7 @@ grex = "latest"
 "npm:@slidev/theme-default" = "latest"
 "npm:@mcpjam/inspector" = "latest"
 "github:ollaya-dev/ollaya" = "latest"
-"cargo:rmux" = "latest"
+"github:Helvesec/rmux" = "latest"
 "github:ctxrs/ctx" = "latest"
 herdr = "latest"
 "github:rust-mcp-stack/rust-mcp-filesystem" = "latest"
@@ -355,6 +348,7 @@ ffmpeg = "latest"
 "github:PowerShell/PowerShell" = "latest"
 gallery-dl = "latest"
 "github:wainmann/agent-manager" = "latest"
+"github:herdrdev/herdr" = "latest"
 
 
 
@@ -368,9 +362,6 @@ experimental = true
 minimum_release_age = "0"
 [settings.npm]
 bun = true
-
-[bootstrap.services.mise-history]
-builtin = "history-watch"
 
 # mise's built-in plaintext scan flags env-var refs and placeholder values
 # (e.g. "${VAR}", "YOUR_TOKEN") as secrets. All real credentials are untracked;
