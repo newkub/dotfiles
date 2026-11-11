@@ -1,4 +1,4 @@
-
+﻿
 Import-Module PSReadLine
 
 
@@ -11,7 +11,7 @@ $env:MISE_INSTALLS_DIR = 'D:\mise'
 $env:DOTNET_TieredPGO = '1'
 $env:DOTNET_TC_QuickJitForLoops = '1'
 
-# mbx (mr-boxington) Cargo shim â€” must precede mise shims so plain `cargo` uses mbx
+# mbx (mr-boxington) Cargo shim Ã¢â‚¬â€ must precede mise shims so plain `cargo` uses mbx
 $env:Path = "$env:LOCALAPPDATA\mbx\bin;$env:Path"
 
 $script:ProfileCacheDir = Join-Path $env:LOCALAPPDATA 'pwsh-profile-cache'
@@ -186,7 +186,7 @@ Set-Alias v bat
 Set-Alias ot hx
 Set-Alias task argus
 
-# Short alias for `mise task run` — `t` lists tasks, `t <name>` runs one
+# Short alias for `mise task run` â€” `t` lists tasks, `t <name>` runs one
 function t { mise task run @args }
 
 # ============================================================================
@@ -418,13 +418,4 @@ function notes {
         $selected = Select-Fuzzy -Type f -Query ($action ? $action : '.') -Root $notesDir
         if ($selected) { zed $selected }
     }
-}
-
-# ============================================================================
-# rmux session resume — reattach persistent session on interactive launch
-# ============================================================================
-$script:RmuxCmd = Get-Command rmux -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-if ($script:RmuxCmd -and -not $env:TMUX -and -not $env:RMUX -and -not $env:RMUX_ATTACHED -and -not $env:SSH_CONNECTION) {
-    $env:RMUX_ATTACHED = '1'
-    & $script:RmuxCmd.Source new-session -A -s main 'pwsh.exe -NoLogo'
 }

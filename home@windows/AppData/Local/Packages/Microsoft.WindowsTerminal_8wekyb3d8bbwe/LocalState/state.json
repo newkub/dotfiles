@@ -13,11 +13,65 @@
 		"{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
 		"{0022853a-6348-5ddb-864a-dde8fa68cd98}",
 		"{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
-		"{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
 		"{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}",
+		"{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
 		"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"
 	],
-	"persistedWindowLayouts" : [],
+	"persistedWindowLayouts" :
+	[
+		{
+			"initialPosition" : "0,-9",
+			"initialSize" :
+			{
+				"height" : 784.79998779296875,
+				"width" : 1536
+			},
+			"launchMode" : "maximized",
+			"tabLayout" :
+			[
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{2f1fa078-f4de-47af-b627-8c16a14c032c}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{0609645d-82a5-4a8c-b551-054e138faba4}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{7f07511d-8867-4c5c-ac36-286a0988ffa4}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "newTab",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{620af586-3629-4b89-98d4-b373ba176be6}",
+					"startingDirectory" : "D:\\",
+					"suppressApplicationTitle" : false,
+					"tabTitle" : "PowerShell"
+				},
+				{
+					"action" : "switchToTab",
+					"index" : 0
+				}
+			]
+		}
+	],
 	"settingsHash" : "90ac607b7a01c081-01dd715ab6574f23",
 	"sshFolderGenerated" : false
 }
