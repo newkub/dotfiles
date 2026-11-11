@@ -520,6 +520,20 @@
       ]
     },
     {
+      "path": "home/.config/machine",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/medusa",
       "autosave": true,
       "encrypt": false,

@@ -175,6 +175,18 @@ description = "list installed programs"
 shell = "pwsh -Command"
 run = '& { function Show-Section ($title, $script, $limit = 0) { Write-Host "`n=== $title ===" -ForegroundColor Cyan; try { $out = & $script 2>$null } catch { $out = $null }; if (-not $out) { Write-Host "  no output / not installed" -ForegroundColor Yellow } else { $lines = @($out); $total = $lines.Count; if ($limit -gt 0 -and $total -gt $limit) { $lines | Select-Object -First $limit | Out-Host; Write-Host "  ... $total lines total, showing first $limit" -ForegroundColor Gray } else { $lines | Out-Host; Write-Host "  $total lines" -ForegroundColor Gray } } }; Show-Section "Scoop" { scoop list }; Show-Section "Mise" { mise list }; Show-Section "Bun" { bun pm ls -g }; Show-Section "npm" { npm list -g --depth=0 }; Show-Section "pnpm" { pnpm list -g }; Show-Section "uv" { uv tool list }; Show-Section "pip" { python -m pip list }; Show-Section "winget" { winget list } 50; Show-Section "gh" { gh extension list } }'
 
+[tasks.program-export]
+description = "Export installed programs (winget/scoop/mise) into tracked ~/.config/machine/"
+shell = "pwsh -NoProfile -Command"
+run = '''
+$dir = "$env:USERPROFILE\.config\machine"
+New-Item -ItemType Directory -Path $dir -Force | Out-Null
+winget export -o "$dir\winget-packages.json" --accept-source-agreements
+if (Get-Command scoop -ErrorAction SilentlyContinue) { scoop list | Out-File "$dir\scoop-packages.txt" -Encoding utf8 }
+mise list | Out-File "$dir\mise-tools.txt" -Encoding utf8
+Write-Host "[program-export] wrote $dir" -ForegroundColor Green
+'''
+
 [tasks.fix-windows]
 description = "repair Windows system files and reset broken Store apps (self-elevates via UAC)"
 shell = "pwsh -NoProfile -Command"
@@ -407,6 +419,7 @@ recipients = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILut7f/gaJdn4QhkifTdkzQIZffj
 "~/.config/kilo" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/lsd" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/medusa" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/machine" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/micro/bindings.json" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/mise" = { mode = "track", variants = [{ os = "windows" }] }
 "~/.config/opencode" = { mode = "track", exclude = ["service.json", "node_modules", "package-lock.json"], variants = [{ os = "windows" }] }
