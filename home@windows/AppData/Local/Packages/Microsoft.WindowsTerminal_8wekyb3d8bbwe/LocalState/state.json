@@ -59,12 +59,12 @@
 				},
 				{
 					"action" : "newTab",
-					"commandline" : "%SystemRoot%\\System32\\cmd.exe",
-					"profile" : "{3ad42e7b-e073-5f3e-ac57-1c259ffa86a8}",
-					"sessionId" : "{6bae540f-c638-479e-936b-0394199bd5e3}",
+					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
+					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
+					"sessionId" : "{bf361530-49e1-454b-a975-8fabcf2efb6b}",
 					"startingDirectory" : "D:\\",
 					"suppressApplicationTitle" : false,
-					"tabTitle" : "Default"
+					"tabTitle" : "PowerShell"
 				},
 				{
 					"action" : "switchToTab",

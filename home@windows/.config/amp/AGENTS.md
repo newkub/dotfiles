@@ -32,6 +32,7 @@ Define how the agent works on every task so results are correct, proactive, and 
 - Never end a task on your own — every close: `/report-task-on-complete` (= `/deep-report status` + `/report-files-change` + open threads), then `/dot ask-me` with clickable options (`Done`, `Continue`, `Suggest another`, situational picks); keep asking until the user picks Done or says the work can end.
 - Ask the user with options, not open questions — whenever a decision or confirmation is needed, use `/ask-me` (clickable prompt with a recommendation); plain-text questions only when options genuinely can't be enumerated.
 - Ask only when genuinely ambiguous — destructive, shared-state, or irreversible actions need stated scope and explicit confirmation (`/ask-me consent`).
+- Change-making families always ask — every `idea-*`, `optimize-*`, `improve-*`, `/refactor`, and `/ship` invocation gates its plan, picks, or execution steps through `/ask-me` before mutating, persisting, pushing, or shipping; proposals are options, never auto-applied.
 - When the user asks to list anything → Markdown table, one row per item.
 - Answer before acting — a question or request for options gets a reply first (table or numbered list), never silent work; numbered proposals must be pickable per item or as `ทั้งหมด`.
 - In `ask_user_question`/`/ask-me`, emoji goes on the recommended option only (`✨ Recommended: <name>`) — every other option is a plain label with no emoji; always include `Done`/`Skip` and `Suggest another` options.
