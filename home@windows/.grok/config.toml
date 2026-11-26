@@ -9,3 +9,7 @@ compact_mode = false
 
 [marketplace]
 default_skills_installs_purged = true
+
+[mcp_servers.browse]
+command = 'C:\Users\Veerapong\.local\bin\browse.exe'
+args = ["mcp"]

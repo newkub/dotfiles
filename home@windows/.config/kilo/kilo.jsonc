@@ -3,5 +3,14 @@
   "layout": "stretch",
   "permission": {
     "bash": "allow"
+  },
+  "mcp": {
+    "browse": {
+      "type": "local",
+      "command": [
+        "C:\\Users\\Veerapong\\.local\\bin\\browse.exe",
+        "mcp"
+      ]
+    }
   }
 }

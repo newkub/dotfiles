@@ -13,6 +13,7 @@
 		"{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
 		"{0022853a-6348-5ddb-864a-dde8fa68cd98}",
 		"{a31a409b-7cba-5b36-8b3e-932aae9f58f2}",
+		"{82e7ac4d-0149-5da9-bcec-fe0d82847fe8}",
 		"{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}",
 		"{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
 		"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"
@@ -33,7 +34,7 @@
 					"action" : "newTab",
 					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
 					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
-					"sessionId" : "{805a5f1e-e717-424f-ad35-8df8a414533a}",
+					"sessionId" : "{91732c3a-f9c3-490c-89ab-f77dfee3c1c9}",
 					"startingDirectory" : "D:\\",
 					"suppressApplicationTitle" : false,
 					"tabTitle" : "PowerShell"
@@ -42,7 +43,7 @@
 					"action" : "newTab",
 					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
 					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
-					"sessionId" : "{082a2b3a-6f32-493f-9afd-6c62ed3a4038}",
+					"sessionId" : "{2093d12a-c214-4bd2-869d-f196cce82408}",
 					"startingDirectory" : "D:\\",
 					"suppressApplicationTitle" : false,
 					"tabTitle" : "PowerShell"
@@ -51,27 +52,27 @@
 					"action" : "newTab",
 					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
 					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
-					"sessionId" : "{2630cf53-182e-4e28-aa46-373f1ee9f8d3}",
+					"sessionId" : "{15824edc-5ee4-4ab7-beea-18d0b4825d30}",
 					"startingDirectory" : "D:\\",
 					"suppressApplicationTitle" : false,
 					"tabTitle" : "PowerShell"
 				},
 				{
 					"action" : "newTab",
-					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
-					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
-					"sessionId" : "{6585da6a-6d62-40e3-b4fe-c96d04b94121}",
+					"commandline" : "%SystemRoot%\\System32\\cmd.exe",
+					"profile" : "{3ad42e7b-e073-5f3e-ac57-1c259ffa86a8}",
+					"sessionId" : "{6bae540f-c638-479e-936b-0394199bd5e3}",
 					"startingDirectory" : "D:\\",
 					"suppressApplicationTitle" : false,
-					"tabTitle" : "PowerShell"
+					"tabTitle" : "Default"
 				},
 				{
 					"action" : "switchToTab",
-					"index" : 0
+					"index" : 1
 				}
 			]
 		}
 	],
-	"settingsHash" : "d6da67618ef231ed-01dd71a9474aae3d",
+	"settingsHash" : "681700c6e0bca0c2-01dd728b5b677ed5",
 	"sshFolderGenerated" : false
 }

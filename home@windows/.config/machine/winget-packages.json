@@ -1,6 +1,6 @@
 {
 	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
-	"CreationDate" : "2026-11-12T03:57:41.877-00:00",
+	"CreationDate" : "2026-11-18T21:40:37.898-00:00",
 	"Sources" : 
 	[
 		{
@@ -10,37 +10,31 @@
 					"PackageIdentifier" : "AdventDevelopmentInc.Kudu"
 				},
 				{
-					"PackageIdentifier" : "RedHat.Podman"
+					"PackageIdentifier" : "Podman.CLI"
+				},
+				{
+					"PackageIdentifier" : "Amazon.AWSCLI"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VCRedist.2008.x64"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.WindowsPCHealthCheck"
+					"PackageIdentifier" : "RedHat.Podman"
 				},
 				{
 					"PackageIdentifier" : "Cloudflare.Warp"
 				},
 				{
-					"PackageIdentifier" : "GitButler.GitButler"
-				},
-				{
 					"PackageIdentifier" : "BlenderFoundation.Blender"
 				},
 				{
-					"PackageIdentifier" : "Podman.CLI"
+					"PackageIdentifier" : "GitButler.GitButler"
 				},
 				{
 					"PackageIdentifier" : "Microsoft.VisualStudio.BuildTools"
 				},
 				{
 					"PackageIdentifier" : "AppFlowy.AppFlowy"
-				},
-				{
-					"PackageIdentifier" : "BandicamCompany.BandicamMPEG-1Decoder"
-				},
-				{
-					"PackageIdentifier" : "BandicamCompany.Bandicam"
 				},
 				{
 					"PackageIdentifier" : "BandicamCompany.Bandicut"
@@ -58,22 +52,19 @@
 					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x86"
 				},
 				{
-					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"
-				},
-				{
-					"PackageIdentifier" : "Microsoft.WindowsInstallationAssistant"
-				},
-				{
 					"PackageIdentifier" : "Microsoft.DotNet.DesktopRuntime.8"
 				},
 				{
 					"PackageIdentifier" : "Google.ChromeRemoteDesktopHost"
 				},
 				{
+					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"
+				},
+				{
 					"PackageIdentifier" : "CapSoftware.Cap"
 				},
 				{
-					"PackageIdentifier" : "maddada.Ghostex"
+					"PackageIdentifier" : "Google.CloudSDK"
 				},
 				{
 					"PackageIdentifier" : "ZacharyL2.KeyEcho"
@@ -89,9 +80,6 @@
 				},
 				{
 					"PackageIdentifier" : "Codeium.Windsurf"
-				},
-				{
-					"PackageIdentifier" : "Alibaba.QoderIDE"
 				},
 				{
 					"PackageIdentifier" : "ZedIndustries.Delta"

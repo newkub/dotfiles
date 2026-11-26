@@ -3,6 +3,7 @@
     "@opencode/cli"
   ],
   "dependencies": {
+    "@moonrepo/cli": "2.6.5",
     "@opencode/cli": "2.2.6"
   }
 }

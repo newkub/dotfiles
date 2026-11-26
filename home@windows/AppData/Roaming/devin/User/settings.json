@@ -226,7 +226,7 @@
 	"devin.acp.agentPreferences": {
 		"devin-cli": {
 			"model": "swe-2-flash-medium",
-			"mode": "accept-edits"
+			"mode": "bypass"
 		},
 		"devin-cloud": {
 			"org_id": "org-4e47413a2c1043578fdefa90049323d0"
@@ -241,7 +241,7 @@
 		"devin-cli": true,
 		"devin-cloud": true,
 		"qoder": false,
-		"opencode-v2": true
+		"opencode-v2": false
 	},
 	"devin.acp.preferredAgent": "devin-cli"
 }
