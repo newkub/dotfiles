@@ -1,0 +1,33 @@
+amends "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Config.pkl"
+import "package://github.com/jdx/hk/releases/download/v2.12.0/hk@2.12.0#/Builtins.pkl"
+// Using a coding agent? See https://hk.jdx.dev/agents
+
+// Shared steps — run by `hk check`/`hk fix` and inherited by hooks.
+steps = new Mapping {
+    ["check-added-large-files"] = Builtins.check_added_large_files
+    ["check-merge-conflict"] = Builtins.check_merge_conflict
+    ["detect-private-key"] = Builtins.detect_private_key
+    ["mixed-line-ending"] = Builtins.mixed_line_ending
+    ["newlines"] = Builtins.newlines
+    ["shellcheck"] = Builtins.shellcheck
+    ["shellharden"] = Builtins.shellharden
+    ["shfmt"] = Builtins.shfmt
+    ["trailing-whitespace"] = Builtins.trailing_whitespace
+}
+
+hooks {
+    ["commit-msg"] {
+        steps {
+            ["conventional-commit"] = Builtins.check_conventional_commit
+        }
+    }
+    ["pre-push"] {
+        steps {
+            // Block pushes containing secrets — scans commits on local branches
+            // not reachable from any remote-tracking ref.
+            ["gitleaks-unpushed"] {
+                check = "gitleaks git . --log-opts=\"--branches --not --remotes\" --redact"
+            }
+        }
+    }
+}
