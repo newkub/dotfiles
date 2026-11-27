@@ -87,24 +87,24 @@
     "keybindings":
     [
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
-        },
-        {
             "id": "User.openSettings.6CD791B",
             "keys": "ctrl+numpad_period"
         },
         {
-            "id": "User.tabSearch",
-            "keys": "ctrl+shift+b"
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+w"
         },
         {
             "id": "Terminal.CopyToClipboard",
             "keys": "ctrl+shift+c"
         },
         {
-            "id": "User.closeTab.0",
-            "keys": "ctrl+w"
+            "id": "User.tabSearch",
+            "keys": "ctrl+shift+b"
         },
         {
             "id": "User.clearBuffer",
@@ -127,24 +127,24 @@
             "keys": "ctrl+t"
         },
         {
-            "id": "Terminal.SwitchToTab2",
-            "keys": "ctrl+shift+3"
-        },
-        {
             "id": "Terminal.DuplicatePaneAuto",
             "keys": "alt+shift+d"
+        },
+        {
+            "id": "Terminal.SwitchToTab2",
+            "keys": "ctrl+shift+3"
         },
         {
             "id": "Terminal.FindText",
             "keys": "ctrl+f"
         },
         {
-            "id": "User.toggleFullscreen",
-            "keys": "ctrl+shift+enter"
-        },
-        {
             "id": "Terminal.ToggleCommandPalette",
             "keys": "f1"
+        },
+        {
+            "id": "User.toggleFullscreen",
+            "keys": "ctrl+shift+enter"
         },
         {
             "id": "Terminal.NextTab",
@@ -159,12 +159,12 @@
             "keys": "ctrl+2"
         },
         {
-            "id": "User.switchToTab.ED268D78",
-            "keys": "ctrl+shift+9"
-        },
-        {
             "id": "Terminal.SwitchToTab2",
             "keys": "ctrl+3"
+        },
+        {
+            "id": "User.switchToTab.ED268D78",
+            "keys": "ctrl+shift+9"
         },
         {
             "id": "Terminal.SwitchToTab3",
@@ -183,32 +183,32 @@
             "keys": "ctrl+7"
         },
         {
-            "id": "Terminal.NextTab",
-            "keys": "ctrl+shift+right"
+            "id": "Terminal.SwitchToTab7",
+            "keys": "ctrl+8"
         },
         {
             "id": "Terminal.ToggleCommandPalette",
             "keys": "ctrl+shift+p"
         },
         {
-            "id": "Terminal.SwitchToTab7",
-            "keys": "ctrl+8"
-        },
-        {
-            "id": "Terminal.SwitchToTab5",
-            "keys": "ctrl+shift+6"
+            "id": "Terminal.NextTab",
+            "keys": "ctrl+shift+right"
         },
         {
             "id": "User.switchToTab.ED268D78",
             "keys": "ctrl+9"
         },
         {
-            "id": "Terminal.SwitchToTab3",
-            "keys": "ctrl+shift+4"
+            "id": "Terminal.SwitchToTab5",
+            "keys": "ctrl+shift+6"
         },
         {
             "id": "Terminal.OpenNewTab",
             "keys": "ctrl+shift+t"
+        },
+        {
+            "id": "Terminal.SwitchToTab3",
+            "keys": "ctrl+shift+4"
         },
         {
             "id": "User.closePane",
@@ -231,12 +231,12 @@
             "keys": "ctrl+shift+1"
         },
         {
-            "id": "Terminal.SwitchToTab4",
-            "keys": "ctrl+shift+5"
-        },
-        {
             "id": "Terminal.SwitchToTab1",
             "keys": "ctrl+shift+2"
+        },
+        {
+            "id": "Terminal.SwitchToTab4",
+            "keys": "ctrl+shift+5"
         },
         {
             "id": "Terminal.SwitchToTab6",
@@ -320,6 +320,12 @@
                 "guid": "{82e7ac4d-0149-5da9-bcec-fe0d82847fe8}",
                 "hidden": false,
                 "name": "PCMClawUbuntu",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "guid": "{1ba6fa1b-b171-523e-ba6a-271b3d809f11}",
+                "hidden": false,
+                "name": "archlinux",
                 "source": "Microsoft.WSL"
             }
         ]

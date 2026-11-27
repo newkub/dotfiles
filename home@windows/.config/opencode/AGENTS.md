@@ -11,25 +11,25 @@ Define how the agent works on every task so results are correct, proactive, and 
 
 | When | Do | Owner | Verify |
 |---|---|---|---|
-| Request | clarify intent; ideas → evidence tables, never prose | `/ask-me`, `/idea-new-features`, `/review`, `/refactor` | table has real citations, not prose |
+| Request | clarify intent; ideas → evidence tables, never prose | `/ask-me`, `/idea-features`, `/review`, `/refactor` | table has real citations, not prose |
 | Start | snapshot state; learn codebase before planning; present plan, wait for ok, then persist `.agents/plans/` | `/deep-report status`, `/deep-learn codebase`, `/plan` | plan file exists + user approved |
 | Plan | refactor before adding behavior | `/refactor` | green before and after |
-| Build | watch→wait→resolve; git-first debugging; ast-grep for codemods; git ops for file moves; package manager first; open ports → open the page; browser → `/use-agent-browser`; scripts prefer bun/OS shell | `/use-agents-terminal watch`, `/commit`, `/push`, `/list-global-cli`, `/setup-task`, `/open-browser` | `/deep-report run` on the build command |
+| Build | watch→wait→resolve; git-first debugging; ast-grep for codemods; git ops for file moves; package manager first; open ports → open the page; browser → `/use-agent-browser`; scripts prefer bun/OS shell | `/use-agents-terminal watch`, `/commit`, `/push`, `/list-global-cli`, `/setup-task`, `/open browser` | `/deep-report run` on the build command |
 | Test | validate intent after green — passing tests ≠ delivered | `/ship verify`, `/improve-test-coverage` | verify green + intent check |
 | Review | review diff/PR before calling done | `/review`, `/review-pr` | findings table + verdict |
 | Done | verify gate; close with `/deep-report status`; suggest next via `/continue`; leave trace | `/ship verify`, `/deep-report`, `/continue` | `/deep-report status` + journal entry |
 | Ship | install hooks; verify → push → PR → merge | `/setup-githooks`, `/ship` | `/deep-report run ship` — merged or blocked |
 | Release `on-demand` | staging→prod promote, canary, flags | `/ship promote`, `/ship deploy`, `/ship canary` | `/deep-report run deploy` — live URL verified |
 | Operate `on-demand` | health/deploy checks on running targets | `/ship verify health`, `/ship verify deploy`, `/use-agents-terminal watch` | health evidence, not assumption |
-| Maintain `on-demand` | cleanup, dep refresh, activity sync | `/cleanup-scan` `/cleanup-*`, `/update-project deps`, `/update-project activity` | dry-run + confirm before delete |
+| Maintain `on-demand` | cleanup, dep refresh, activity sync | `/cleanup <domain>`, `/update-project deps`, `/update-project activity` | dry-run + confirm before delete |
 | Secrets `on-demand` | values via temp file → secrets manager/deploy target; never printed or committed | `/setup-env` | presence check only — value never echoed |
-| Learn | turn the session into rules/skills/journal | `/dot`, `/dot mine`, `/maintain-harness` | cited findings persisted |
+| Learn | turn the session into rules/skills/journal | `/dot`, `/dot mine`, `/improve-harness` | cited findings persisted |
 ## Always
 
 - Follow these rules first — they override habit and convenience.
 - Verify before claiming done — run the real check, show its evidence, never fabricate results.
 - Plan before building — every non-trivial task starts with `/deep-plan` (research + analyze + thinking → persisted plan + ask-me gate) unless the user explicitly says skip; trivial one-step fixes may go direct but say so.
-- Never end a task on your own — every close: `/report-task-on-complete` (= `/deep-report status` + `/report-files-change` + open threads), then `/dot ask-me` with clickable options (`Done`, `Continue`, `Suggest another`, situational picks); keep asking until the user picks Done or says the work can end.
+- Never end a task on your own — every close: `/report-task-on-complete` (= `/deep-report status` + git diff + open threads), then `/dot ask-me` with clickable options (`Done`, `Continue`, `Suggest another`, situational picks); keep asking until the user picks Done or says the work can end.
 - Ask the user with options, not open questions — whenever a decision or confirmation is needed, use `/ask-me` (clickable prompt with a recommendation); plain-text questions only when options genuinely can't be enumerated.
 - Ask only when genuinely ambiguous — destructive, shared-state, or irreversible actions need stated scope and explicit confirmation (`/ask-me consent`).
 - Change-making families always ask — every `idea-*`, `optimize-*`, `improve-*`, `/refactor`, and `/ship` invocation gates its plan, picks, or execution steps through `/ask-me` before mutating, persisting, pushing, or shipping; proposals are options, never auto-applied.
@@ -41,12 +41,12 @@ Define how the agent works on every task so results are correct, proactive, and 
 - Use the latest stable dependencies — check versions, pick maintained options, never `latest`/`*` (`/compare`, `/list-dependencies`).
 - Weigh architecture and code quality — simplest readable solution wins; follow project conventions, formatters, linters, specs.
 - Be proactive — do every doable step yourself; payments, account/security settings, and external sends are described step-by-step for the user.
-- When the user must act on a page — API key, login, dashboard, secret entry → open it yourself via `/open-browser <target>` in the same turn; never just print a URL and wait.
+- When the user must act on a page — API key, login, dashboard, secret entry → open it yourself via `/open browser <target>` in the same turn; never just print a URL and wait.
 - Bench before tuning — measure before and after, never tune blind (`/optimize-all`).
 - Edit routing first — structural code changes (rename/move/pattern rewrite/codemod) go through `/astgrep`; literal find/replace across files → `/edit-relative-files`; then `bun` scripts or POSIX shell for the rest, never Python heredocs; Python is last resort when neither skill nor shell can express the transform.
 - Spend context wisely — search before reading whole files, batch reads, ground repo claims in a real check.
-- After editing files, run `/update-references` — generated surfaces (`index/`, plugin manifests, client links) refresh from sources on every edit; generated files are never hand-edited.
-- Domain-specific work (config, data, docs, incident, onboarding) routes via the skill catalog — `skills/AGENTS.md` + `index/skills.json`; this table covers lifecycle moments only.
+- After editing files, run `/update-references` — generated surfaces (`skills/CATALOG.md`, `plugins/registry.json`, client links) refresh from sources on every edit; generated files are never hand-edited.
+- Domain-specific work (config, data, docs, incident, onboarding) routes via the skill catalog — `skills/AGENTS.md` + `skills/CATALOG.md`; this table covers lifecycle moments only.
 
 ## Expected Outcome
 
