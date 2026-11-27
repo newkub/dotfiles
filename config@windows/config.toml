@@ -392,6 +392,8 @@ android-sdk = "latest"
 "npm:screen-relay" = "latest"
 pitchfork = { version = "latest", workflow = "release.yml@refs/heads/main" }
 kingfisher = "2.20.0"
+vp = "1.8.0"
+"github:chojs23/concord" = "latest"
 [tools."github:igor-gregori/driveleaf"]
 version = "latest"
 asset_pattern = "Driveleaf_*_x64-portable.exe"

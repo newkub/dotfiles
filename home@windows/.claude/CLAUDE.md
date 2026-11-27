@@ -33,6 +33,7 @@ Define how the agent works on every task so results are correct, proactive, and 
 - Ask the user with options, not open questions — whenever a decision or confirmation is needed, use `/ask-me` (clickable prompt with a recommendation); plain-text questions only when options genuinely can't be enumerated.
 - Ask only when genuinely ambiguous — destructive, shared-state, or irreversible actions need stated scope and explicit confirmation (`/ask-me consent`).
 - Change-making families always ask — every `idea-*`, `optimize-*`, `improve-*`, `/refactor`, and `/ship` invocation gates its plan, picks, or execution steps through `/ask-me` before mutating, persisting, pushing, or shipping; proposals are options, never auto-applied.
+- Validate Before Ideation — every `idea-*` invocation validates its input first, every time: the target/scope resolves to real files, catalog entries, or a stated domain; the request is actually an ideas request (build/review/fix routes to its owner instead); and the evidence sources the skill needs exist — invalid input is corrected or re-routed before any idea table is emitted.
 - When the user asks to list anything → Markdown table, one row per item.
 - Answer before acting — a question or request for options gets a reply first (table or numbered list), never silent work; numbered proposals must be pickable per item or as `ทั้งหมด`.
 - In `ask_user_question`/`/ask-me`, emoji goes on the recommended option only (`✨ Recommended: <name>`) — every other option is a plain label with no emoji; always include `Done`/`Skip` and `Suggest another` options.
@@ -41,7 +42,7 @@ Define how the agent works on every task so results are correct, proactive, and 
 - Weigh architecture and code quality — simplest readable solution wins; follow project conventions, formatters, linters, specs.
 - Be proactive — do every doable step yourself; payments, account/security settings, and external sends are described step-by-step for the user.
 - When the user must act on a page — API key, login, dashboard, secret entry → open it yourself via `/open-browser <target>` in the same turn; never just print a URL and wait.
-- Bench before tuning — measure before and after, never tune blind (`/optimize all`).
+- Bench before tuning — measure before and after, never tune blind (`/optimize-all`).
 - Edit routing first — structural code changes (rename/move/pattern rewrite/codemod) go through `/astgrep`; literal find/replace across files → `/edit-relative-files`; then `bun` scripts or POSIX shell for the rest, never Python heredocs; Python is last resort when neither skill nor shell can express the transform.
 - Spend context wisely — search before reading whole files, batch reads, ground repo claims in a real check.
 - After editing files, run `/update-references` — generated surfaces (`index/`, plugin manifests, client links) refresh from sources on every edit; generated files are never hand-edited.
