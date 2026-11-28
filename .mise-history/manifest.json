@@ -492,20 +492,6 @@
       ]
     },
     {
-      "path": "home/.config/goose",
-      "autosave": true,
-      "encrypt": false,
-      "variants": [
-        {
-          "os": [
-            "windows"
-          ],
-          "profile": null,
-          "default": false
-        }
-      ]
-    },
-    {
       "path": "home/.config/graphite",
       "autosave": true,
       "encrypt": false,
@@ -1691,20 +1677,6 @@
       "path": "home/AppData/Roaming/devin/mcp_config.json",
       "autosave": true,
       "encrypt": true,
-      "variants": [
-        {
-          "os": [
-            "windows"
-          ],
-          "profile": null,
-          "default": false
-        }
-      ]
-    },
-    {
-      "path": "home/AppData/Roaming/gitbutler",
-      "autosave": true,
-      "encrypt": false,
       "variants": [
         {
           "os": [
