@@ -387,7 +387,6 @@ gallery-dl = "latest"
 "github:herdrdev/herdr" = "latest"
 powershell = "latest"
 "npm:@opencode/browse" = "latest"
-android-sdk = "latest"
 "npm:screen-relay" = "latest"
 pitchfork = { version = "latest", workflow = "release.yml@refs/heads/main" }
 kingfisher = "2.20.0"
