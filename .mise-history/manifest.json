@@ -317,6 +317,20 @@
       ]
     },
     {
+      "path": "home/.config/browse/settings.json",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/.config/carapace",
       "autosave": true,
       "encrypt": false,
@@ -376,6 +390,20 @@
       "path": "home/.config/containers",
       "autosave": true,
       "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.config/context7/credentials.json",
+      "autosave": true,
+      "encrypt": true,
       "variants": [
         {
           "os": [
@@ -451,6 +479,20 @@
     },
     {
       "path": "home/.config/git",
+      "autosave": true,
+      "encrypt": false,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/.config/goose",
       "autosave": true,
       "encrypt": false,
       "variants": [
@@ -1464,6 +1506,20 @@
       ]
     },
     {
+      "path": "home/AppData/Roaming/GitHub CLI",
+      "autosave": true,
+      "encrypt": true,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
       "path": "home/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Brave Apps",
       "autosave": true,
       "encrypt": false,
@@ -1635,6 +1691,20 @@
       "path": "home/AppData/Roaming/devin/mcp_config.json",
       "autosave": true,
       "encrypt": true,
+      "variants": [
+        {
+          "os": [
+            "windows"
+          ],
+          "profile": null,
+          "default": false
+        }
+      ]
+    },
+    {
+      "path": "home/AppData/Roaming/gitbutler",
+      "autosave": true,
+      "encrypt": false,
       "variants": [
         {
           "os": [

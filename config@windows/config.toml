@@ -560,6 +560,11 @@ recipients = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILut7f/gaJdn4QhkifTdkzQIZffj
 "~/AppData/Local/glow/Config/glow.yml" = { mode = "track", variants = [{ os = "windows" }] }
 "~/AppData/Local/GitKrakenCLI/gk.cfg" = { mode = "track", variants = [{ os = "windows" }] }
 "~/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Brave Apps" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/goose" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/browse/settings.json" = { mode = "track", variants = [{ os = "windows" }] }
+"~/AppData/Roaming/GitHub CLI" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
+"~/AppData/Roaming/gitbutler" = { mode = "track", variants = [{ os = "windows" }] }
+"~/.config/context7/credentials.json" = { mode = "track", encrypt = true, variants = [{ os = "windows" }] }
 
 [tasks.dotfiles-status]
 description = "Show dotfiles tracking status"

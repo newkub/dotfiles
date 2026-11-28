@@ -1,0 +1,133 @@
+{
+  "selectedAgents": [
+    "opencode",
+    "amp",
+    "antigravity",
+    "claude",
+    "claude-desktop",
+    "cline",
+    "codebuddy",
+    "codex",
+    "dsh",
+    "droid",
+    "gemini",
+    "copilot",
+    "grok",
+    "hermes",
+    "kilo",
+    "kiro",
+    "pi",
+    "qoder",
+    "qwen-code",
+    "windsurf",
+    "zed"
+  ],
+  "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe",
+  "version": "0.1.5",
+  "method": "bunx",
+  "agents": [
+    {
+      "name": "claude",
+      "file": "C:\\Users\\Veerapong\\.claude.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "codex",
+      "file": "C:\\Users\\Veerapong\\.codex\\config.toml",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "windsurf",
+      "file": "C:\\Users\\Veerapong\\AppData\\Roaming\\devin/mcp_config.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "claude-desktop",
+      "file": "C:\\Users\\Veerapong\\AppData\\Roaming\\Claude/claude_desktop_config.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "gemini",
+      "file": "C:\\Users\\Veerapong\\.gemini/settings.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "zed",
+      "file": "C:\\Users\\Veerapong\\AppData\\Roaming\\Zed\\settings.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "cline",
+      "file": "C:\\Users\\Veerapong\\.cline\\data\\settings/cline_mcp_settings.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "kilo",
+      "file": "C:\\Users\\Veerapong\\.config\\kilo\\kilo.jsonc",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "amp",
+      "file": "C:\\Users\\Veerapong\\.config/amp/settings.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "kiro",
+      "file": "C:\\Users\\Veerapong\\.kiro/settings/mcp.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "droid",
+      "file": "C:\\Users\\Veerapong\\.factory/mcp.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "copilot",
+      "file": "C:\\Users\\Veerapong\\.copilot\\mcp-config.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "qwen-code",
+      "file": "C:\\Users\\Veerapong\\.qwen/settings.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "antigravity",
+      "file": "C:\\Users\\Veerapong\\.gemini/config/mcp_config.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "codebuddy",
+      "file": "C:\\Users\\Veerapong\\.codebuddy/.mcp.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "dsh",
+      "file": "C:\\Users\\Veerapong\\.dsh\\cordis.patch.yml",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "hermes",
+      "file": "C:\\Users\\Veerapong\\.hermes\\config.yaml",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "grok",
+      "file": "C:\\Users\\Veerapong\\.grok\\config.toml",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "qoder",
+      "file": "C:\\Users\\Veerapong\\.qoder/settings.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    },
+    {
+      "name": "pi",
+      "file": "C:\\Users\\Veerapong\\.pi/agent\\mcp.json",
+      "entry": "C:\\Users\\Veerapong\\.local\\bin\\browse.exe"
+    }
+  ],
+  "opencodeConfigs": [
+    "C:\\Users\\Veerapong\\.config\\opencode\\opencode.jsonc"
+  ]
+}

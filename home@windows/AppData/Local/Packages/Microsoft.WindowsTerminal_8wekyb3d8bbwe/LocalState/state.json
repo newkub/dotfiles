@@ -16,33 +16,10 @@
 		"{82e7ac4d-0149-5da9-bcec-fe0d82847fe8}",
 		"{f7f61e60-d3bb-55d1-a9e4-bbccf4b32615}",
 		"{01cfc039-6a5f-5e6e-a5b9-6d3e20cbcdb2}",
-		"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-		"{1ba6fa1b-b171-523e-ba6a-271b3d809f11}"
+		"{1ba6fa1b-b171-523e-ba6a-271b3d809f11}",
+		"{61c54bbd-c2c6-5271-96e7-009a87ff44bf}"
 	],
-	"persistedWindowLayouts" :
-	[
-		{
-			"initialPosition" : "-31991,-32000",
-			"initialSize" :
-			{
-				"height" : 784.79998779296875,
-				"width" : 1536
-			},
-			"launchMode" : "maximized",
-			"tabLayout" :
-			[
-				{
-					"action" : "newTab",
-					"commandline" : "D:\\mise\\github-power-shell-power-shell\\latest\\pwsh.exe",
-					"profile" : "{b4a95234-138c-404c-b4fd-66b4da800607}",
-					"sessionId" : "{3306eebf-4569-4c59-8460-baa244e23e82}",
-					"startingDirectory" : "D:\\",
-					"suppressApplicationTitle" : false,
-					"tabTitle" : "PowerShell"
-				}
-			]
-		}
-	],
-	"settingsHash" : "1a5e8798877fbc6c-01dd7eb733868c59",
+	"persistedWindowLayouts" : [],
+	"settingsHash" : "3ad7f2bd0bfd3552-01dd7edc6eed3397",
 	"sshFolderGenerated" : false
 }
